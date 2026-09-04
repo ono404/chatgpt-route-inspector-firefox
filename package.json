@@ -7,6 +7,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "build:e2e": "node scripts/build.mjs e2e",
+    "build:firefox": "node scripts/build.mjs firefox",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run --coverage",

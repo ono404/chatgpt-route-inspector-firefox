@@ -1,0 +1,62 @@
+[
+ {
+  "check": "0.session",
+  "ok": true,
+  "detail": "c1fe3f9b-7923-4606-8be7-60c2c0349236"
+ },
+ {
+  "check": "1.install-no-manifest-error",
+  "ok": true,
+  "detail": "chatgpt-route-inspector-firefox@local"
+ },
+ {
+  "check": "1b.addon-uuid",
+  "ok": true,
+  "detail": "handles=4 uuid=2aad4a2b-fc14-46a7-b738-a42215242f36 last_url=moz-extension://2aad4a2b-fc14-46a7-b738-a42215242f36/ui/onboarding/index.html"
+ },
+ {
+  "check": "2.ext-namespaces",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "check": "3.ext-chrome.storage-promise",
+  "ok": true,
+  "detail": "42"
+ },
+ {
+  "check": "4.ext-get-state-roundtrip",
+  "ok": true,
+  "detail": "{'ok': True, 'hasState': True}"
+ },
+ {
+  "check": "5.ext-tabs-i18n-getURL",
+  "ok": true,
+  "detail": "{'tabs': 4, 'lang': 'zh-CN', 'url': 'moz-extension://2aad4a2b-fc14-46a7-b738-a42215242f36/ui/popup/index.html'}"
+ },
+ {
+  "check": "6.popup-renders",
+  "ok": true,
+  "detail": "\n  \n    \n      \n      \n        \n          Route Inspector\n          Created by @liuqi\n        \n        服务器报告的路由遥测\n      \n    \n    \n      \n        EN\n        中\n      \n      实时监听\n    \n  \n  \n    \n      \n"
+ },
+ {
+  "check": "7.synthetic-observation-pipeline",
+  "ok": true,
+  "detail": "{'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro'}"
+ },
+ {
+  "check": "8.dashboard-shows-turn",
+  "ok": true,
+  "detail": "\n\n  \n    Route InspectorCreated by @liuqi请求模型与真实响应路由\n    EN中仅保存在本机\n  \n  路由诊断台导出 JSON导出报告清空记录\n  全部记录1实时请求1会话重载0异常1\n  \n    捕获记录全部模式实时请求会话重载全部结论正常错配冲突未比较时间模式请求模型标签响应路由判定响应来源09/03 17:42:26实时请求GPT 5.6 Pro未解析GPT 5.5 mini路由错配resolved_model_slug当前筛选条件下没有记录。\n  证据字段路由错配捕获模式实时请求请求模型GPT 5.6 Pro模型标签未解析模型标签来源未捕获模"
+ },
+ {
+  "check": "9.page-hook-MAIN-world",
+  "ok": true,
+  "detail": "{'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}"
+ },
+ {
+  "check": "10.bridge-overlay-ISOLATED",
+  "ok": true,
+  "detail": "{'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}"
+ }
+]

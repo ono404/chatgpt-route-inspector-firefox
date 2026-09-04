@@ -2,10 +2,11 @@ import { copyFile, cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
+import { toFirefoxManifest } from './firefox-manifest.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const requestedTarget = process.argv[2] ?? 'extension';
-const validTargets = new Set(['extension', 'e2e']);
+const validTargets = new Set(['extension', 'e2e', 'firefox']);
 
 if (!validTargets.has(requestedTarget)) {
   throw new Error(`Unknown build target: ${requestedTarget}`);
@@ -76,7 +77,8 @@ async function buildTarget(target) {
     manifest.host_permissions.push('http://127.0.0.1/*');
     for (const contentScript of manifest.content_scripts) contentScript.matches.push('http://127.0.0.1/*');
   }
-  await writeFile(path.join(outdir, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  const outputManifest = target === 'firefox' ? toFirefoxManifest(manifest) : manifest;
+  await writeFile(path.join(outdir, 'manifest.json'), `${JSON.stringify(outputManifest, null, 2)}\n`, 'utf8');
   process.stdout.write(`Built ${target}: ${outdir}\n`);
 }
 
