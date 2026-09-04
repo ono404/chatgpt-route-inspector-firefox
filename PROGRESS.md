@@ -17,6 +17,11 @@
   合成观测→mismatch 管线、chatgpt.com 免登录页 hook+浮窗；需登录的真实对话与长时控制台观察列入 BLOCKED.md。
 - 止损/回滚：未触发（首个完整方案一次走通，无需换路线）。
 
+## 发布（2026-09-03）
+- 私人库：https://github.com/ono404/chatgpt-route-inspector-firefox.git（origin），上游保留为 upstream
+- 提交 e97db10（11 files，+454/-2），已 push，远端 HEAD 一致；分支 main 跟踪 origin/main
+- 身份用仓库级 `ono404 / noreply`，未动全局 git 配置
+
 ## 任务 0 原始计划（已执行，保留备查）
 - 目标：同一源码 + 独立 Firefox target（dist/firefox），Chromium 构建与测试不受影响。
 - 最小改法：只做 manifest 转换，业务源码零改动；最大风险 `await chrome.*` 已由实测排除。
