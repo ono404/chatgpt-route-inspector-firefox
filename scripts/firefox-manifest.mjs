@@ -25,10 +25,14 @@ export function toFirefoxManifest(base) {
 
   // Required for signing/AMO later; harmless for local `about:debugging` loads.
   // strict_min_version keeps pre-128 installs from silently misbehaving.
+  // data_collection_permissions is mandatory for new AMO submissions since
+  // 2025-11-03; ["none"] is Mozilla's standard declaration for extensions
+  // that process everything locally (this one stores only in storage.local).
   manifest.browser_specific_settings = {
     gecko: {
       id: FIREFOX_EXTENSION_ID,
-      strict_min_version: FIREFOX_MIN_VERSION
+      strict_min_version: FIREFOX_MIN_VERSION,
+      data_collection_permissions: { required: ['none'] }
     }
   };
 

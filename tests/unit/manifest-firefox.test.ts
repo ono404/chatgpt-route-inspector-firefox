@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { FIREFOX_MIN_VERSION, toFirefoxManifest } from '../../scripts/firefox-manifest.mjs';
+import { FIREFOX_EXTENSION_ID, FIREFOX_MIN_VERSION, toFirefoxManifest } from '../../scripts/firefox-manifest.mjs';
 
 function baseManifest(): Record<string, unknown> {
   return JSON.parse(readFileSync(new URL('../../manifest/manifest.json', import.meta.url), 'utf8')) as Record<string, unknown>;
@@ -26,7 +26,11 @@ describe('firefox manifest transform', () => {
     // Chromium-only key gone; Gecko block present.
     expect(firefox).not.toHaveProperty('minimum_chrome_version');
     expect(firefox.browser_specific_settings).toEqual({
-      gecko: expect.objectContaining({ strict_min_version: FIREFOX_MIN_VERSION })
+      gecko: {
+        id: FIREFOX_EXTENSION_ID,
+        strict_min_version: FIREFOX_MIN_VERSION,
+        data_collection_permissions: { required: ['none'] }
+      }
     });
 
     // No permission widening, no world changes.
