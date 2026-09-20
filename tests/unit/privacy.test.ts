@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { buildMarkdownReport, sanitizeTurn } from '../../src/core/privacy';
+import { buildMarkdownReport, sanitizeTurn, sanitizedExport } from '../../src/core/privacy';
+import { CaptureContextTracker } from '../../src/core/capture-context';
 import { createTurn } from '../../src/core/turns';
 import { DEFAULT_SETTINGS } from '../../src/core/types';
 
@@ -11,6 +12,16 @@ const turn = createTurn({
 });
 
 describe('privacy exports', () => {
+  it('removes private context identifiers and active page URLs from exports', () => {
+    const context = new CaptureContextTracker('https://chatgpt.com/c/private-context-url').snapshot();
+    const result = sanitizedExport({ turns: [{ ...turn, captureContextId: context.id }], powReadings: [],
+      settings: DEFAULT_SETTINGS, captureContexts: { 1: context },
+      parserHealth: { lastSuccessAt: null, lastFailureAt: null, consecutiveFailures: 0 } });
+    expect(JSON.stringify(result)).not.toContain(context.id);
+    expect(JSON.stringify(result)).not.toContain(context.documentId);
+    expect(JSON.stringify(result)).not.toContain('private-context-url');
+    expect(result.turns[0]?.captureContextId).toBe('[redacted]');
+  });
   it('redacts ids and removes URL query, hash, and conversation path', () => {
     const result = sanitizeTurn(turn);
     expect(result.pageUrl).toBe('https://chatgpt.com/c/[redacted]');

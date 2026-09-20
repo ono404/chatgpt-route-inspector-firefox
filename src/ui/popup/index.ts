@@ -1,4 +1,6 @@
 import { buildMarkdownReport } from '../../core/privacy';
+import { displayTabId } from '../../core/page-scope';
+import { isStaleState } from '../../core/state';
 import type { CaptureMode, InspectorState, UiLanguage } from '../../core/types';
 import {
   captureModeLabel,
@@ -30,7 +32,8 @@ const powHex = document.querySelector<HTMLElement>('#pow-hex');
 const powDecimal = document.querySelector<HTMLElement>('#pow-decimal');
 const footerMachine = document.querySelector<HTMLElement>('#footer-machine');
 const footerStatus = document.querySelector<HTMLElement>('#footer-status');
-let activeTabId: number | undefined;
+let activeTab: chrome.tabs.Tab | undefined;
+const allowedOrigins = new Set(__ROUTE_INSPECTOR_ALLOWED_ORIGINS__);
 let state: InspectorState;
 let feedbackKey: TranslationKey | null = null;
 let feedbackTimer: number | null = null;
@@ -55,18 +58,20 @@ function showFeedback(key: TranslationKey, tone = 'signal'): void {
   feedbackTimer = window.setTimeout(() => {
     feedbackKey = null;
     feedbackTimer = null;
-    const turn = latestForTab(state, activeTabId, state.settings.captureMode);
+    const turn = latestForTab(state, displayTabId(state, activeTab, allowedOrigins), state.settings.captureMode);
     const persistent = footerState(Boolean(turn));
     renderFooterStatus(persistent.key, persistent.tone);
   }, 1800);
 }
 
 function render(next: InspectorState): void {
+  if (isStaleState(state, next)) return;
   state = next;
   const language = state.settings.uiLanguage;
   const mode = state.settings.captureMode;
-  const turn = latestForTab(state, activeTabId, mode);
-  const pow = latestPowForTab(state, activeTabId);
+  const tabId = displayTabId(state, activeTab, allowedOrigins);
+  const turn = latestForTab(state, tabId, mode);
+  const pow = latestPowForTab(state, tabId);
   applyStaticTranslations(language);
   document.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach((button) => {
     button.classList.toggle('active', button.dataset.mode === mode);
@@ -107,11 +112,13 @@ function render(next: InspectorState): void {
 async function setLanguage(uiLanguage: UiLanguage): Promise<void> {
   if (state?.settings.uiLanguage === uiLanguage) return;
   const response = await send({ type: 'route:update-settings', settings: { uiLanguage } });
+  if (!response.ok) return;
   if (response.state) render(response.state);
 }
 
 async function setMode(mode: CaptureMode): Promise<void> {
   const response = await send({ type: 'route:update-settings', settings: { captureMode: mode } });
+  if (!response.ok) return;
   if (response.state) render(response.state);
   showFeedback(mode === 'live' ? 'status.switchedLive' : 'status.switchedReload');
 }
@@ -123,6 +130,7 @@ async function setOverlayEnabled(overlayEnabled: boolean): Promise<void> {
       ? { overlayEnabled: true, overlayMode: 'full', overlayMinimized: false }
       : { overlayEnabled: false }
   });
+  if (!response.ok) return;
   if (response.state) render(response.state);
   showFeedback(overlayEnabled ? 'status.overlayShown' : 'status.overlayHidden');
 }
@@ -138,7 +146,7 @@ document.querySelectorAll<HTMLButtonElement>('[data-overlay]').forEach((button) 
 document.querySelector('#dashboard')?.addEventListener('click', () => void send({ type: 'route:open-dashboard' }));
 document.querySelector('#options')?.addEventListener('click', () => void chrome.runtime.openOptionsPage());
 document.querySelector('#copy')?.addEventListener('click', async () => {
-  const turn = latestForTab(state, activeTabId, state.settings.captureMode);
+  const turn = latestForTab(state, displayTabId(state, activeTab, allowedOrigins), state.settings.captureMode);
   if (!turn) return showFeedback('status.noRecord', 'amber');
   await navigator.clipboard.writeText(buildMarkdownReport({ ...state, turns: [turn] }, state.settings.uiLanguage));
   showFeedback('status.summaryCopied');
@@ -146,7 +154,13 @@ document.querySelector('#copy')?.addEventListener('click', async () => {
 
 void (async () => {
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-  activeTabId = tabs[0]?.id;
-  render(await getState());
+  activeTab = tabs[0];
+  chrome.tabs.onUpdated.addListener((tabId, change, tab) => {
+    if (change.url === undefined && change.status === undefined) return;
+    if (tabId !== activeTab?.id) return;
+    activeTab = tab;
+    if (state) render(state);
+  });
   subscribe(render);
+  render(await getState(activeTab?.id));
 })();

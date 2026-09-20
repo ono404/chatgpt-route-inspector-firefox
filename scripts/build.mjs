@@ -12,7 +12,7 @@ if (!validTargets.has(requestedTarget)) {
   throw new Error(`Unknown build target: ${requestedTarget}`);
 }
 
-const uiEntries = ['popup', 'dashboard', 'options', 'onboarding'];
+const uiEntries = ['popup', 'dashboard', 'options', 'onboarding', 'announcement'];
 const commonBuild = {
   absWorkingDir: root,
   bundle: true,

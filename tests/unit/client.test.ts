@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import type { InspectorState, PowReading, RouteTurn } from '../../src/core/types';
 import { latestForTab, latestPowForTab } from '../../src/ui/shared/client';
+import { CaptureContextTracker } from '../../src/core/capture-context';
 
 function stateWith(turns: RouteTurn[] = [], powReadings: PowReading[] = []): InspectorState {
   return {
     turns,
+    captureContexts: { 7: { ...new CaptureContextTracker('https://chatgpt.com/c/current').snapshot(), id: 'current-context' } },
     powReadings,
     settings: {
       overlayEnabled: true,
@@ -21,7 +23,7 @@ function stateWith(turns: RouteTurn[] = [], powReadings: PowReading[] = []): Ins
 }
 
 function turn(tabId: number, captureMode: 'live' | 'reload', requestedModel: string): RouteTurn {
-  return { tabId, captureMode, requestedModel } as RouteTurn;
+  return { tabId, captureMode, requestedModel, captureContextId: 'current-context' } as RouteTurn;
 }
 
 describe('popup current-tab selectors', () => {

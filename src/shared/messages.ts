@@ -1,12 +1,14 @@
-import type { InspectorSettings, InspectorState, PowObservation, RouteObservation } from '../core/types';
+import type { CaptureContext, InspectorSettings, InspectorState, PowObservation, RouteObservation } from '../core/types';
 
 export type RuntimeRequest =
+  | { type: 'route:context'; context: CaptureContext }
   | { type: 'route:observation'; observation: RouteObservation }
   | { type: 'pow:observation'; observation: PowObservation }
   | { type: 'route:get-state'; tabId?: number }
   | { type: 'route:update-settings'; settings: Partial<InspectorSettings> }
   | { type: 'route:clear' }
-  | { type: 'route:open-dashboard' };
+  | { type: 'route:open-dashboard' }
+  | { type: 'route:open-announcement' };
 
 export interface RuntimeResponse {
   ok: boolean;

@@ -2,13 +2,17 @@ import { DEFAULT_SETTINGS, normalizeOverlayMode, type InspectorState, type PowOb
 import { browserUiLanguage, normalizeUiLanguage } from '../core/language';
 import { migrateStoredTurn } from '../core/migration';
 import { normalizePowObservation, upsertPowReading } from '../core/pow';
-import { upsertTurn } from '../core/turns';
+import { newestCaptureFirst, upsertTurn } from '../core/turns';
+import { newerContext, normalizeCaptureContext } from '../core/capture-context';
+import type { CaptureContext } from '../core/types';
 
 const STORAGE_KEY = 'chatgptRouteInspectorStateV1';
 let queue = Promise.resolve();
+let cached: Promise<InspectorState> | null = null;
 
 export function defaultState(): InspectorState {
   return {
+    revision: 0,
     turns: [],
     powReadings: [],
     settings: { ...DEFAULT_SETTINGS, uiLanguage: browserUiLanguage() },
@@ -16,7 +20,7 @@ export function defaultState(): InspectorState {
   };
 }
 
-export async function readState(): Promise<InspectorState> {
+async function loadState(): Promise<InspectorState> {
   const stored = await chrome.storage.local.get(STORAGE_KEY);
   const candidate = stored[STORAGE_KEY] as Partial<InspectorState> | undefined;
   if (!candidate) return defaultState();
@@ -32,7 +36,13 @@ export async function readState(): Promise<InspectorState> {
   const uiLanguage = normalizeUiLanguage(candidate.settings?.uiLanguage) ?? browserUiLanguage();
   const overlayMode = normalizeOverlayMode(candidate.settings?.overlayMode, candidate.settings?.overlayMinimized);
   return {
-    turns,
+    revision: Number.isSafeInteger(candidate.revision) && (candidate.revision ?? 0) >= 0 ? candidate.revision! : 0,
+    ...(candidate.clearedAt ? { clearedAt: candidate.clearedAt } : {}),
+    turns: turns.sort(newestCaptureFirst),
+    captureContexts: Object.fromEntries(Object.entries(candidate.captureContexts ?? {}).flatMap(([tab, value]) => {
+      const context = normalizeCaptureContext(value);
+      return context && /^\d+$/.test(tab) ? [[tab, context]] : [];
+    })),
     powReadings,
     settings: {
       ...DEFAULT_SETTINGS,
@@ -46,8 +56,40 @@ export async function readState(): Promise<InspectorState> {
   };
 }
 
+function currentState(): Promise<InspectorState> {
+  cached ??= loadState().catch((error: unknown) => { cached = null; throw error; });
+  return cached;
+}
+
+export async function readState(): Promise<InspectorState> {
+  await queue;
+  return currentState();
+}
+
+export function clearState(): Promise<InspectorState> {
+  return mutateState((current) => ({
+    ...defaultState(), settings: current.settings, captureContexts: current.captureContexts ?? {}, clearedAt: new Date().toISOString()
+  }));
+}
+
+export function storeCaptureContext(tabId: number, context: CaptureContext): Promise<InspectorState> {
+  return mutateState((state) => {
+    if (!newerContext(state.captureContexts?.[tabId], context)) return state;
+    return { ...state, captureContexts: { ...state.captureContexts, [tabId]: context } };
+  });
+}
+
+export function invalidateCaptureContext(tabId: number, expectedId: string | undefined): Promise<InspectorState> {
+  return mutateState((state) => {
+    const context = state.captureContexts?.[tabId];
+    if (!expectedId || !context || context.invalidated || context.id !== expectedId) return state;
+    // Retain document identity to reject delayed handshakes, including after worker restart.
+    return { ...state, captureContexts: { ...state.captureContexts, [tabId]: { ...context, invalidated: true } } };
+  });
+}
+
 export function storePowObservation(observation: PowObservation): Promise<InspectorState> {
-  return mutateState((state) => ({
+  return mutateState((state) => !state.settings.autoCaptureEnabled || isCleared(state, observation.startedAt ?? observation.observedAt) ? state : ({
     ...state,
     powReadings: upsertPowReading(state.powReadings, observation)
   }));
@@ -55,9 +97,12 @@ export function storePowObservation(observation: PowObservation): Promise<Inspec
 
 export function mutateState(mutator: (state: InspectorState) => InspectorState | Promise<InspectorState>): Promise<InspectorState> {
   const operation = queue.then(async () => {
-    const current = await readState();
-    const next = await mutator(current);
+    const current = await currentState();
+    const updated = await mutator(current);
+    if (updated === current) return current;
+    const next = { ...updated, revision: (current.revision ?? 0) + 1 };
     await chrome.storage.local.set({ [STORAGE_KEY]: next });
+    cached = Promise.resolve(next);
     return next;
   });
   queue = operation.then(() => undefined, () => undefined);
@@ -66,14 +111,27 @@ export function mutateState(mutator: (state: InspectorState) => InspectorState |
 
 export function storeObservation(observation: RouteObservation): Promise<InspectorState> {
   return mutateState((state) => {
+    if (!state.settings.autoCaptureEnabled || isCleared(state, observation.startedAt ?? observation.observedAt)) return state;
     const turns = upsertTurn(state.turns, observation).slice(0, state.settings.retentionLimit);
-    const failed = observation.phase === 'failed';
+    const previous = state.turns.find((turn) => turn.captureId === observation.captureId &&
+      turn.tabId === (observation.tabId ?? null) && turn.captureMode === observation.captureMode &&
+      turn.captureContextId === observation.captureContextId);
+    const stale = previous && Date.parse(observation.observedAt) < Date.parse(previous.observedAt);
+    const failed = observation.phase === 'failed' && previous?.phase !== 'failed';
+    const successful = observation.phase !== 'requested' && observation.phase !== 'failed' && Boolean(
+      observation.responseModelSlug || observation.resolvedModelSlug || observation.serverModelSlug || observation.domModelSlug
+    );
     return {
       ...state,
       turns,
-      parserHealth: failed
+      parserHealth: stale ? state.parserHealth : failed
         ? { lastSuccessAt: state.parserHealth.lastSuccessAt, lastFailureAt: observation.observedAt, consecutiveFailures: state.parserHealth.consecutiveFailures + 1 }
-        : { lastSuccessAt: observation.observedAt, lastFailureAt: state.parserHealth.lastFailureAt, consecutiveFailures: 0 }
+        : successful ? { lastSuccessAt: observation.observedAt, lastFailureAt: state.parserHealth.lastFailureAt, consecutiveFailures: 0 }
+        : state.parserHealth
     };
   });
+}
+
+function isCleared(state: InspectorState, startedAt: string): boolean {
+  return Boolean(state.clearedAt && Date.parse(startedAt) <= Date.parse(state.clearedAt));
 }

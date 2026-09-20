@@ -1,50 +1,137 @@
-import type { CaptureMode, InspectorState, RouteTurn, UiLanguage } from '../core/types';
+import type { CaptureContext, CaptureMode, InspectorState, RouteTurn, UiLanguage } from '../core/types';
+import { hasResponseEvidence, latestInContext, newerContext, normalizeCaptureContext } from '../core/capture-context';
 import { conversationIdFromPathname } from '../core/chatgpt-path';
+import { isStaleState } from '../core/state';
 import { isPageBridgeEnvelope, type RuntimeRequest, type RuntimeResponse } from '../shared/messages';
 import { AUTHOR_LINK, AUTHOR_TEXT } from '../ui/shared/branding';
 import { t } from '../ui/shared/i18n';
 import { overlayVerdictCopy } from '../ui/shared/overlay';
+import { bindNoticeHint, currentNoticeHint, noticeHintStyles } from '../ui/shared/notice-hint';
 
 let state: InspectorState | null = null;
 let host: HTMLElement | null = null;
 let ownTabId: number | null = null;
 let scanTimer: number | null = null;
 let scanRunning = false;
-let reloadScanEnabledForDocument = false;
-const documentStartedAtMs = Date.now();
+let captureContext: CaptureContext | null = null;
 const DOM_FALLBACK_DELAY_MS = 1200;
 const seenDomRoutes = new Set<string>();
+let domPathname = location.pathname;
+const nodeIdentities = new WeakMap<HTMLElement, {
+  pathname: string; messageId: string | null; contextId: string | null; observedAt: number; blocked: boolean;
+}>();
+const domSelector = '[data-message-author-role="assistant"][data-message-model-slug]';
+let renderedSignature = '';
+let captureGeneration = 0;
+let waitingObservations = 0;
+const MAX_STARTUP_OBSERVATIONS = 128;
 
-const stateReady = chrome.runtime.sendMessage<RuntimeRequest, RuntimeResponse>({ type: 'route:get-state' })
-  .then((response) => {
-    ownTabId = response.tabId ?? null;
-    if (response.state) {
-      state = response.state;
-      reloadScanEnabledForDocument = state.settings.captureMode === 'reload';
-      render();
-      scheduleReloadDomScan();
+function trackDomNodes(blocked = state?.settings.autoCaptureEnabled === false): HTMLElement[] {
+  if (domPathname !== location.pathname) {
+    domPathname = location.pathname;
+    seenDomRoutes.clear();
+  }
+  const nodes = [...document.querySelectorAll<HTMLElement>(domSelector)];
+  for (const node of nodes) {
+    const identity = nodeIdentities.get(node);
+    const messageId = node.getAttribute('data-message-id');
+    if (!identity || identity.contextId === null || (messageId !== null && messageId !== identity.messageId)) {
+      // SPA DOM mutations can precede delivery of the MAIN-world context message.
+      // Leave new nodes unbound until the context for their actual URL arrives.
+      const contextId = captureContext?.pageUrl === `${location.origin}${domPathname}` ? captureContext.id : null;
+      nodeIdentities.set(node, { pathname: domPathname, messageId, contextId,
+        observedAt: identity?.messageId === messageId ? identity.observedAt : Date.now(),
+        blocked: blocked || Boolean(identity?.messageId === messageId && identity.blocked) });
     }
-  })
-  .catch(() => undefined);
+    if (blocked) nodeIdentities.get(node)!.blocked = true;
+  }
+  return nodes;
+}
+
+function publishCaptureControl(): void {
+  if (!state) return;
+  window.postMessage({
+    source: 'chatgpt-route-inspector-control', version: 1,
+    revision: state.revision ?? 0,
+    autoCaptureEnabled: state.settings.autoCaptureEnabled,
+    captureMode: state.settings.captureMode,
+    clearedAt: state.clearedAt ?? null
+  }, location.origin);
+}
+
+function acceptState(next: InspectorState): boolean {
+  if (isStaleState(state, next)) return false;
+  if (!next.settings.autoCaptureEnabled) captureGeneration++;
+  // Stamp nodes while the old paused state still applies, including mutations queued at resume.
+  if (!next.settings.autoCaptureEnabled || state?.settings.autoCaptureEnabled === false) trackDomNodes(true);
+  if (state?.clearedAt !== next.clearedAt) {
+    seenDomRoutes.clear();
+    if (next.clearedAt && captureContext && Date.parse(next.clearedAt) >= (captureContext.visitStartedAt ?? captureContext.documentStartedAt)) {
+      captureContext = { ...captureContext, reloadEligible: false };
+    }
+  }
+  state = next;
+  publishCaptureControl();
+  render();
+  scheduleReloadDomScan();
+  return true;
+}
+
+let stateRetryDelay = 250;
+async function initializeState(): Promise<void> {
+  while (true) {
+    try {
+      const response = await chrome.runtime.sendMessage<RuntimeRequest, RuntimeResponse>({ type: 'route:get-state' });
+      if (response.ok && response.state && Number.isInteger(response.tabId)) {
+        ownTabId = response.tabId!;
+        acceptState(response.state);
+        render();
+        return;
+      }
+    } catch {
+      // Keep readiness pending until a retry establishes both settings and tab scope.
+    }
+    await new Promise<void>((resolve) => window.setTimeout(resolve, stateRetryDelay));
+    stateRetryDelay = Math.min(stateRetryDelay * 2, 5000);
+  }
+}
+const stateReady = initializeState();
+
+let pendingContext: CaptureContext | null = null;
+let contextSyncRunning = false;
+let contextRetryScheduled = false;
+let contextRetryDelay = 250;
+
+async function syncContext(): Promise<void> {
+  if (contextSyncRunning || !pendingContext) return;
+  contextSyncRunning = true;
+  await stateReady;
+  const next = pendingContext;
+  try {
+    const response = await chrome.runtime.sendMessage<RuntimeRequest, RuntimeResponse>({ type: 'route:context', context: next });
+    if (response.ok) {
+      if (pendingContext === next) pendingContext = null;
+      contextRetryDelay = 250;
+      if (response.state) acceptState(response.state);
+    }
+  } catch {
+    // Retain the latest context until the background worker acknowledges it.
+  } finally {
+    contextSyncRunning = false;
+    if (pendingContext && !contextRetryScheduled) {
+      contextRetryScheduled = true;
+      window.setTimeout(() => {
+        contextRetryScheduled = false;
+        void syncContext();
+      }, contextRetryDelay);
+      contextRetryDelay = Math.min(contextRetryDelay * 2, 5000);
+    }
+  }
+}
 
 function currentTurn(): RouteTurn | null {
-  if (!state) return null;
-  const mode = state.settings.captureMode;
-  const conversationId = mode === 'reload' ? conversationIdFromPath() : null;
-  if (mode === 'reload' && !conversationId) return null;
-  if (ownTabId !== null) {
-    return state.turns.find((turn) =>
-      turn.tabId === ownTabId &&
-      turn.captureMode === mode &&
-      (mode !== 'reload' || turn.conversationId === conversationId)
-    ) ?? null;
-  }
-  return state.turns.find((turn) =>
-    turn.tabId === null &&
-    turn.captureMode === mode &&
-    turn.pageUrl?.startsWith(location.origin) &&
-    (mode !== 'reload' || turn.conversationId === conversationId)
-  ) ?? null;
+  if (!state || !captureContext || ownTabId === null || captureContext.pageUrl !== `${location.origin}${location.pathname}`) return null;
+  return latestInContext({ ...state, captureContexts: { [ownTabId]: captureContext } }, ownTabId, state.settings.captureMode);
 }
 
 function currentPowReading() {
@@ -88,22 +175,31 @@ function hasCurrentDocumentConversationRecord(): boolean {
     turn.conversationId === conversationId &&
     turn.phase === 'completed' &&
     turn.sources.includes('conversation_record') &&
-    Date.parse(turn.observedAt) >= documentStartedAtMs &&
-    Boolean(turn.routeModel || turn.modelLabel || turn.modelLabelConflict)
+    turn.captureContextId === captureContext?.id &&
+    hasResponseEvidence(turn)
   );
 }
 
 async function scanReloadDom(): Promise<void> {
-  if (!reloadScanEnabledForDocument || scanRunning || state?.settings.autoCaptureEnabled === false || state?.settings.captureMode !== 'reload') return;
+  if (!captureContext?.reloadEligible || scanRunning || !state?.settings.autoCaptureEnabled ||
+    captureContext.pageUrl !== `${location.origin}${location.pathname}`) return;
   if (hasCurrentDocumentConversationRecord()) return;
+  const context = captureContext;
   scanRunning = true;
   try {
-    const nodes = [...document.querySelectorAll<HTMLElement>('[data-message-author-role="assistant"][data-message-model-slug]')];
+    const pathname = location.pathname;
+    const conversationId = conversationIdFromPath();
+    if (!conversationId) return;
+    const nodes = trackDomNodes();
     for (const [index, node] of nodes.entries()) {
+      if (location.pathname !== pathname || captureContext?.id !== context.id || !captureContext.reloadEligible || !state?.settings.autoCaptureEnabled) break;
+      const identity = nodeIdentities.get(node);
+      if (!node.isConnected || identity?.pathname !== pathname || identity.contextId !== context.id || identity.blocked ||
+        identity.observedAt <= Date.parse(state.clearedAt ?? '')) continue;
       const model = node.getAttribute('data-message-model-slug')?.trim() ?? '';
       if (!model || model.length > 256) continue;
       const messageKey = node.getAttribute('data-message-id') ?? String(index);
-      const key = `${location.pathname}\u0000${messageKey}\u0000${model}`;
+      const key = `${pathname}\u0000${messageKey}\u0000${model}`;
       if (seenDomRoutes.has(key)) continue;
 
       const observedAt = new Date().toISOString();
@@ -112,19 +208,23 @@ async function scanReloadDom(): Promise<void> {
           type: 'route:observation',
           observation: {
             captureId: crypto.randomUUID(),
+            captureContextId: context.id,
             source: 'assistant_dom',
             captureMode: 'reload',
             phase: 'completed',
             observedAt,
-            startedAt: observedAt,
+            startedAt: new Date(identity.observedAt).toISOString(),
             completedAt: observedAt,
-            pageUrl: `${location.origin}${location.pathname}`,
-            conversationId: conversationIdFromPath(),
+            pageUrl: `${location.origin}${pathname}`,
+            conversationId,
             domModelSlug: model
           }
         });
-        seenDomRoutes.add(key);
-        if (response.state) state = response.state;
+        if (response.ok) {
+          if (seenDomRoutes.size >= 1000) seenDomRoutes.delete(seenDomRoutes.values().next().value!);
+          seenDomRoutes.add(key);
+          if (response.state) acceptState(response.state);
+        }
       } catch {
         // A transient extension reload leaves the node eligible for a later scan.
       }
@@ -144,22 +244,22 @@ function scheduleReloadDomScan(): void {
 }
 
 async function updateSettings(settings: Partial<InspectorState['settings']>): Promise<void> {
-  if (settings.captureMode !== undefined) reloadScanEnabledForDocument = false;
   const response = await chrome.runtime.sendMessage<RuntimeRequest, RuntimeResponse>({
     type: 'route:update-settings',
     settings
   });
-  if (response.state) {
-    state = response.state;
-    render();
-    scheduleReloadDomScan();
+  if (!response.ok) {
+    window.alert(response.error ?? 'Unable to update extension settings.');
+    return;
   }
+  if (response.state) acceptState(response.state);
 }
 
 function render(): void {
   if (!state?.settings.overlayEnabled) {
     host?.remove();
     host = null;
+    renderedSignature = '';
     return;
   }
   if (!host?.isConnected) {
@@ -167,6 +267,7 @@ function render(): void {
     host.id = 'chatgpt-route-inspector-root';
     document.documentElement.append(host);
     host.attachShadow({ mode: 'open' });
+    renderedSignature = '';
   }
   const root = host.shadowRoot;
   if (!root) return;
@@ -175,6 +276,11 @@ function render(): void {
   const overlayMode = state.settings.overlayMode ?? (state.settings.overlayMinimized ? 'compact' : 'full');
   const turn = currentTurn();
   const pow = currentPowReading();
+  const signature = JSON.stringify([language, mode, overlayMode,
+    turn && [turn.phase, turn.verdict, turn.requestedModel, turn.routeModel, turn.modelLabel, turn.modelLabelConflict,
+      turn.routeModelSources, turn.modelLabelSources, turn.sources], pow?.rawHex, pow?.decimal]);
+  if (signature === renderedSignature) return;
+  renderedSignature = signature;
   const copy = overlayVerdictCopy(turn, mode, language);
   const routeModel = turn?.verdict === 'conflict' ? t(language, 'result.routeConflict') : turn?.routeModel ?? (turn ? t(language, 'value.unavailable') : null);
   const hint = t(language, mode === 'live' ? 'overlay.liveHint' : 'overlay.reloadHint');
@@ -186,6 +292,7 @@ function render(): void {
     : t(language, 'pow.notCaptured');
   const styles = `
     <style>
+      ${noticeHintStyles}
       :host{all:initial}*{box-sizing:border-box}.probe{position:fixed;right:18px;bottom:18px;z-index:2147483647;width:356px;color:#f3f5ec;background:#10130f;border:1px solid #404a3b;box-shadow:0 24px 64px rgba(0,0,0,.42);font-family:"Bahnschrift","Avenir Next Condensed",sans-serif}.head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 11px;border-bottom:1px solid #30372d}.brand{display:flex;align-items:center;gap:8px;min-width:0}.brand-copy{display:grid;gap:2px;min-width:0}.brand-line{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 7px}.radar{width:17px;height:17px;border:1px solid #697461;border-radius:50%;position:relative;flex:0 0 auto}.radar:after{content:"";position:absolute;inset:5px;border-radius:50%;background:#a9f04d;box-shadow:0 0 12px #a9f04d}.title{font:700 11px/1.1 "Cascadia Mono",monospace;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}.author{color:#75c5d8;font:700 8px/1.1 "Bahnschrift",sans-serif;text-decoration:none;text-underline-offset:2px;white-space:nowrap}.author:hover{text-decoration:underline}.head-tools{display:flex;align-items:center;gap:8px}.status{max-width:130px;text-align:right;font:10px/1.25 "Cascadia Mono",monospace;color:${copy.tone === 'normal' ? '#a9f04d' : copy.tone === 'danger' ? '#f07868' : '#efb55d'}}.icon-button{position:relative;display:grid;place-items:center;width:24px;height:22px;border:1px solid #404a3b;background:#171b16;color:#dfe4d8;cursor:pointer;font:700 14px/1 "Cascadia Mono",monospace}.icon-button:hover{border-color:#a9f04d;color:#a9f04d}.icon-button:after{content:attr(data-tooltip);position:absolute;top:calc(100% + 6px);right:-1px;z-index:2;width:max-content;padding:5px 7px;border:1px solid #aaa;background:#f1f1f1;box-shadow:0 2px 5px rgba(0,0,0,.22);color:#222;font:13px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transform:translateY(-2px);transition:opacity .08s ease,transform .08s ease}.icon-button:hover:after,.icon-button:focus-visible:after{opacity:1;visibility:visible;transform:translateY(0);transition-delay:.1s}.body{padding:12px}.modes{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:9px}.modes button{border:1px solid #30372d;background:#121612;color:#899382;padding:7px 6px;cursor:pointer;font:9px "Cascadia Mono",monospace}.modes button.active{border-color:#a9f04d;color:#a9f04d;background:rgba(169,240,77,.08);box-shadow:inset 3px 0 #a9f04d}.hint{margin:0 1px 9px;color:#899382;font:9px/1.4 "Cascadia Mono",monospace}.route{display:grid;grid-template-columns:1fr 24px 1fr;align-items:center;gap:6px;height:64px;padding:11px;background:#171b16;border:1px solid #30372d}.model small{display:block;color:#899382;font:8px "Cascadia Mono",monospace;text-transform:uppercase;letter-spacing:.1em}.model b{display:block;height:18px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;font-size:12px;line-height:18px;white-space:nowrap}.arrow{text-align:center;color:#697461}.meta{display:grid;grid-template-columns:70px minmax(0,1fr);gap:5px 8px;margin-top:9px;color:#899382;font:8px/1.4 "Cascadia Mono",monospace}.meta code{color:#75c5d8;overflow-wrap:anywhere}.full-pow{display:grid;grid-template-columns:70px minmax(0,1fr);gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #30372d;color:#899382;font:8px/1.4 "Cascadia Mono",monospace}.full-pow code{color:#75c5d8;overflow-wrap:anywhere}.actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}.actions button{border:1px solid #404a3b;background:#171b16;color:#dfe4d8;padding:7px;cursor:pointer;font:9px "Cascadia Mono",monospace}.actions button:hover{border-color:#a9f04d}.actions .hide{color:#efb55d;border-color:rgba(239,181,93,.55)}.danger .route{border-color:rgba(240,120,104,.65);box-shadow:inset 3px 0 #f07868}.normal .route{border-color:rgba(169,240,77,.45);box-shadow:inset 3px 0 #a9f04d}.compact{width:420px}.compact-hit{display:block;width:100%;padding:10px;border:0;background:#10130f;color:inherit;text-align:left;cursor:pointer}.compact-hit:hover{background:#141914}.compact-hit:focus-visible{outline:2px solid #a9f04d;outline-offset:-3px}.compact .route{padding:8px 10px}.compact .model b{font-size:13px}.compact-pow{display:flex;align-items:center;gap:10px;margin-top:7px;padding:8px 10px;border:1px solid #30372d;background:#121612;color:#899382;font:8px/1.2 "Cascadia Mono",monospace;text-transform:uppercase;letter-spacing:.06em}.compact-pow code{min-width:0;overflow:hidden;color:#75c5d8;font:12px/1.2 "Cascadia Mono",monospace;text-overflow:ellipsis;white-space:nowrap;text-transform:none;letter-spacing:normal}.pow-divider{color:#566151;font:12px/1 "Cascadia Mono",monospace}@media(max-width:560px){.probe{right:8px;bottom:8px;max-width:calc(100vw - 16px)}}
       /* One shared scale for the full overlay and compact strip. */
       .probe{--type-meta:10px;--type-control:12px;--type-value:14px;--type-icon:16px;font-size:var(--type-icon)}
@@ -201,6 +308,8 @@ function render(): void {
       .title,.modes button,.actions button,.full-pow code,.compact-pow code,.pow-divider{font-size:var(--type-control)}
       .full-pow>span{white-space:nowrap}
       .model b,.compact .model b{font-size:var(--type-value)}
+      .route{grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr)}
+      .model{min-width:0}
       .icon-button,.arrow{font-size:var(--type-icon)}
       /* Match the current macOS AppKit tooltip metrics while keeping a stable web fallback. */
       .icon-button:after{
@@ -254,6 +363,9 @@ function render(): void {
       .mini-icon{width:6px;height:6px;border-radius:1px}
       .mini,.mini-docked{--mini-accent:#efb55d;--mini-accent-width:5px;--mini-edge-width:11px;right:0;bottom:76px;border-right:0;border-radius:4px 0 0 4px;box-shadow:calc(-1 * var(--mini-accent-width)) 0 var(--mini-accent),0 16px 36px rgba(0,0,0,.35)}
       .mini.normal,.mini-docked.normal{--mini-accent:#a9f04d}
+      .auto .status{color:#75c5d8}
+      .auto .route{border-color:rgba(117,197,216,.5);box-shadow:inset 3px 0 #75c5d8}
+      .mini.auto,.mini-docked.auto{--mini-accent:#75c5d8}
       .mini.danger,.mini-docked.danger{--mini-accent:#f07868}
       .mini{width:148px;max-width:calc(100vw - 8px)}
       .mini-hit{display:grid;width:100%;padding:0;border:0;background:#10130f;color:inherit;text-align:center;cursor:pointer;font:inherit}
@@ -273,9 +385,10 @@ function render(): void {
   const compactOverlay = `${styles}<section class="probe compact ${copy.tone}" lang="${overlayLanguage}"><button id="expand" class="compact-hit" type="button" aria-label="${escapeHtml(t(language, 'overlay.expand'))}"><div class="route"><div class="model"><small>${escapeHtml(t(language, 'field.requested'))}</small><b>${escapeHtml(requestedModel)}</b></div><div class="arrow">→</div><div class="model"><small>${escapeHtml(t(language, 'field.responseRoute'))}</small><b>${escapeHtml(routeModel)}</b></div></div><div class="compact-pow"><span>${escapeHtml(t(language, 'pow.inline'))}</span><code>${escapeHtml(powRaw)}</code><span class="pow-divider">|</span><code>${escapeHtml(powDecimal)}</code></div></button></section>`;
   const miniOverlay = `${styles}<section class="probe mini ${copy.tone}" lang="${overlayLanguage}"><button id="mini-dock" class="mini-dock-hit" type="button" aria-label="${escapeHtml(t(language, 'overlay.dock'))}"></button><button id="expand" class="mini-hit" type="button" aria-label="${escapeHtml(t(language, 'overlay.expand'))}"><code class="mini-value">${escapeHtml(routeModel)}</code><span class="mini-divider" aria-hidden="true"></span><code class="mini-value">${escapeHtml(powDecimal)}</code></button></section>`;
   const dockedOverlay = `${styles}<section class="probe mini-docked ${copy.tone}" lang="${overlayLanguage}"><button id="mini-undock" class="mini-undock-hit" type="button" aria-label="${escapeHtml(t(language, 'overlay.undock'))}"></button></section>`;
-  const fullOverlay = `${styles}<section class="probe ${copy.tone}" lang="${overlayLanguage}"><header class="head"><div class="brand"><span class="radar"></span><div class="brand-copy"><div class="brand-line"><span class="title">Route Inspector</span><a class="author" href="${AUTHOR_LINK}" target="_blank" rel="noopener noreferrer">${AUTHOR_TEXT}</a></div></div></div><div class="head-tools"><span class="status">${escapeHtml(copy.label)}</span><button id="compact" class="icon-button" data-tooltip="${escapeHtml(t(language, 'overlay.compact'))}" aria-label="${escapeHtml(t(language, 'overlay.compact'))}"><span class="mode-icon compact-icon" aria-hidden="true"></span></button><button id="mini" class="icon-button" data-tooltip="${escapeHtml(t(language, 'overlay.mini'))}" aria-label="${escapeHtml(t(language, 'overlay.mini'))}"><span class="mode-icon mini-icon" aria-hidden="true"></span></button></div></header><div class="body"><div class="modes"><button id="mode-live" class="${mode === 'live' ? 'active' : ''}">${escapeHtml(t(language, 'mode.live'))}</button><button id="mode-reload" class="${mode === 'reload' ? 'active' : ''}">${escapeHtml(t(language, 'mode.reload'))}</button></div><p class="hint">${escapeHtml(hint)}</p><div class="route"><div class="model"><small>${escapeHtml(t(language, 'field.requested'))}</small><b>${escapeHtml(requestedModel)}</b></div><div class="arrow">→</div><div class="model"><small>${escapeHtml(t(language, 'field.responseRoute'))}</small><b>${escapeHtml(routeModel)}</b></div></div><div class="meta"><span>${escapeHtml(t(language, 'field.mode'))}</span><code>${escapeHtml(modeLabel(mode, language))}</code><span>${escapeHtml(t(language, 'field.route'))}</span><code>${escapeHtml(routeSource(turn, language))}</code><span>${escapeHtml(t(language, 'field.label'))}</span><code>${escapeHtml(labelValue(turn, language))}</code><span>${escapeHtml(t(language, 'field.labelSource'))}</span><code>${escapeHtml(labelSource(turn, language))}</code><span>${escapeHtml(t(language, 'field.adapter'))}</span><code>${escapeHtml(turn?.sources.join('+') ?? null)}</code></div><div class="full-pow"><span>${escapeHtml(t(language, 'pow.inline'))}</span><code>${escapeHtml(powInline)}</code></div><div class="actions"><button id="dashboard">${escapeHtml(t(language, 'button.dashboard'))}</button><button id="hide" class="hide">${escapeHtml(t(language, 'overlay.hide'))}</button></div></div></section>`;
+  const fullOverlay = `${styles}<section class="probe ${copy.tone}" lang="${overlayLanguage}"><header class="head"><div class="brand"><span class="radar"></span><div class="brand-copy"><div class="brand-line"><span class="title">Route Inspector</span><a class="author" href="${AUTHOR_LINK}" target="_blank" rel="noopener noreferrer">${AUTHOR_TEXT}</a></div></div></div><div class="head-tools"><span class="status">${escapeHtml(copy.label)}</span><button id="compact" class="icon-button" data-tooltip="${escapeHtml(t(language, 'overlay.compact'))}" aria-label="${escapeHtml(t(language, 'overlay.compact'))}"><span class="mode-icon compact-icon" aria-hidden="true"></span></button><button id="mini" class="icon-button" data-tooltip="${escapeHtml(t(language, 'overlay.mini'))}" aria-label="${escapeHtml(t(language, 'overlay.mini'))}"><span class="mode-icon mini-icon" aria-hidden="true"></span></button></div></header><div class="body"><div class="modes"><button id="mode-live" class="${mode === 'live' ? 'active' : ''}">${escapeHtml(t(language, 'mode.live'))}</button><button id="mode-reload" class="${mode === 'reload' ? 'active' : ''}">${escapeHtml(t(language, 'mode.reload'))}</button></div><p class="hint">${escapeHtml(hint)}</p><div class="route"><div class="model"><small>${escapeHtml(t(language, 'field.requested'))}</small><b>${escapeHtml(requestedModel)}</b></div><div class="arrow">→</div><div class="model"><small>${escapeHtml(t(language, 'field.responseRoute'))}</small><b>${escapeHtml(routeModel)}</b></div></div><div class="meta"><span>${escapeHtml(t(language, 'field.mode'))}</span><code>${escapeHtml(modeLabel(mode, language))}</code><span class="notice-source-label">${escapeHtml(t(language, 'field.route'))}${currentNoticeHint(language, mode)}</span><code>${escapeHtml(routeSource(turn, language))}</code><span>${escapeHtml(t(language, 'field.label'))}</span><code>${escapeHtml(labelValue(turn, language))}</code><span>${escapeHtml(t(language, 'field.labelSource'))}</span><code>${escapeHtml(labelSource(turn, language))}</code><span>${escapeHtml(t(language, 'field.adapter'))}</span><code>${escapeHtml(turn?.sources.join('+') ?? null)}</code></div><div class="full-pow"><span>${escapeHtml(t(language, 'pow.inline'))}</span><code>${escapeHtml(powInline)}</code></div><div class="actions"><button id="dashboard">${escapeHtml(t(language, 'button.dashboard'))}</button><button id="hide" class="hide">${escapeHtml(t(language, 'overlay.hide'))}</button></div></div></section>`;
   root.innerHTML = overlayMode === 'docked' ? dockedOverlay : overlayMode === 'mini' ? miniOverlay : overlayMode === 'compact' ? compactOverlay : fullOverlay;
   root.getElementById('mode-live')?.addEventListener('click', () => void updateSettings({ captureMode: 'live' }));
+  bindNoticeHint(root);
   root.getElementById('mode-reload')?.addEventListener('click', () => void updateSettings({ captureMode: 'reload' }));
   root.getElementById('compact')?.addEventListener('click', () => void updateSettings({ overlayMode: 'compact', overlayMinimized: true, captureMode: 'live' }));
   root.getElementById('mini')?.addEventListener('click', () => void updateSettings({ overlayMode: 'mini', overlayMinimized: true, captureMode: 'live' }));
@@ -289,31 +402,46 @@ function render(): void {
 }
 
 window.addEventListener('message', (event: MessageEvent<unknown>) => {
+  if (event.source === window && event.origin === location.origin &&
+    (event.data as { source?: string } | null)?.source === 'chatgpt-route-inspector-context') {
+    const next = normalizeCaptureContext((event.data as { context?: unknown }).context);
+    if (!next || new URL(next.pageUrl).origin !== location.origin || !newerContext(captureContext ?? undefined, next)) return;
+    if (captureContext?.id !== next.id) seenDomRoutes.clear();
+    captureContext = next;
+    trackDomNodes();
+    render();
+    scheduleReloadDomScan();
+    pendingContext = next;
+    void syncContext();
+    return;
+  }
+  if (event.source === window && event.origin === location.origin &&
+    (event.data as { source?: string } | null)?.source === 'chatgpt-route-inspector-control-request') {
+    publishCaptureControl();
+    return;
+  }
   if (event.source !== window || event.origin !== location.origin || !isPageBridgeEnvelope(event.data)) return;
+  if (state?.settings.autoCaptureEnabled === false ||
+    ownTabId === null && waitingObservations >= MAX_STARTUP_OBSERVATIONS) return;
   const envelope = event.data;
+  const generation = captureGeneration;
+  waitingObservations++;
   void stateReady.then(async () => {
-    if (state?.settings.autoCaptureEnabled === false) return;
+    if (generation !== captureGeneration || !state?.settings.autoCaptureEnabled || ownTabId === null) return;
     if ('pow' in envelope) {
       const response = await chrome.runtime.sendMessage<RuntimeRequest, RuntimeResponse>({
         type: 'pow:observation',
         observation: envelope.pow
       });
-      if (response.state) {
-        state = response.state;
-        render();
-      }
+      if (response.ok && response.state) acceptState(response.state);
       return;
     }
-    if (state?.settings.captureMode !== envelope.observation.captureMode) return;
     const response = await chrome.runtime.sendMessage<RuntimeRequest, RuntimeResponse>({
       type: 'route:observation',
       observation: envelope.observation
     });
-    if (response.state) {
-      state = response.state;
-      render();
-    }
-  });
+    if (response.ok && response.state) acceptState(response.state);
+  }).catch(() => undefined).finally(() => { waitingObservations--; });
 });
 
 chrome.runtime.onMessage.addListener((message: unknown) => {
@@ -321,23 +449,22 @@ chrome.runtime.onMessage.addListener((message: unknown) => {
   const record = message as Record<string, unknown>;
   if (record.type !== 'route:state-changed' || !record.state) return;
   const next = record.state as InspectorState;
-  if (state?.settings.captureMode !== next.settings.captureMode) reloadScanEnabledForDocument = false;
-  state = next;
-  render();
-  scheduleReloadDomScan();
+  acceptState(next);
 });
 
 const domObserver = new MutationObserver(() => {
+  if (captureContext?.reloadEligible || state?.settings.autoCaptureEnabled === false) trackDomNodes();
   if (state?.settings.overlayEnabled && !host?.isConnected) render();
   scheduleReloadDomScan();
 });
 function observeDocument(): void {
   if (!document.documentElement) return;
+  trackDomNodes();
   domObserver.observe(document.documentElement, {
     subtree: true,
     childList: true,
     attributes: true,
-    attributeFilter: ['data-message-model-slug']
+    attributeFilter: ['data-message-model-slug', 'data-message-id']
   });
   scheduleReloadDomScan();
 }
@@ -346,3 +473,4 @@ if (document.documentElement) observeDocument();
 else document.addEventListener('DOMContentLoaded', observeDocument, { once: true });
 
 void stateReady;
+window.postMessage({ source: 'chatgpt-route-inspector-context-request' }, location.origin);

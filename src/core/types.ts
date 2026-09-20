@@ -1,12 +1,12 @@
 export const ROUTE_SCHEMA = 'chatgpt-route-observation' as const;
-export const ROUTE_SCHEMA_VERSION = '1.4.0' as const;
+export const ROUTE_SCHEMA_VERSION = '1.7.0' as const;
 
 export type CaptureSource = 'page_fetch' | 'page_websocket' | 'conversation_record' | 'assistant_dom';
 export type CaptureMode = 'live' | 'reload';
 export type UiLanguage = 'zh' | 'en';
 export type OverlayMode = 'full' | 'compact' | 'mini' | 'docked';
 export type CapturePhase = 'requested' | 'responding' | 'completed' | 'failed';
-export type RouteVerdict = 'normal' | 'mismatch' | 'conflict' | 'unknown';
+export type RouteVerdict = 'normal' | 'mismatch' | 'conflict' | 'unknown' | 'auto_reasoning';
 export type ModelLabelSource =
   | 'assistant.metadata.model_slug'
   | 'assistant[data-message-model-slug]';
@@ -20,7 +20,20 @@ export function normalizeOverlayMode(value: unknown, legacyMinimized = false): O
   return legacyMinimized ? 'compact' : 'full';
 }
 
-export interface RouteFields {
+export interface UsageQuotaFields {
+  deepResearchRemaining: number | null;
+  deepResearchResetAt: string | null;
+  imageGenRemaining: number | null;
+  imageGenResetAt: string | null;
+  quotaObservedAt: string | null;
+}
+
+export const EMPTY_QUOTA_FIELDS: UsageQuotaFields = {
+  deepResearchRemaining: null, deepResearchResetAt: null,
+  imageGenRemaining: null, imageGenResetAt: null, quotaObservedAt: null
+};
+
+export interface RouteFields extends UsageQuotaFields {
   requestedModel: string | null;
   responseModelSlug: string | null;
   defaultModelSlug: string | null;
@@ -51,6 +64,7 @@ export interface RouteAssessment {
 }
 
 export interface RouteObservation extends Partial<RouteFields> {
+  captureContextId?: string;
   captureId: string;
   source: CaptureSource;
   captureMode: CaptureMode;
@@ -65,6 +79,7 @@ export interface RouteObservation extends Partial<RouteFields> {
 }
 
 export interface RouteTurn extends RouteFields, RouteAssessment {
+  captureContextId?: string;
   schema: typeof ROUTE_SCHEMA;
   schemaVersion: typeof ROUTE_SCHEMA_VERSION;
   captureId: string;
@@ -89,11 +104,13 @@ export interface InspectorSettings {
   retentionLimit: number;
   includeRequestIdsInExport: boolean;
   autoCaptureEnabled: boolean;
+  /** Display selection only; both capture channels run while automatic capture is enabled. */
   captureMode: CaptureMode;
   uiLanguage: UiLanguage;
 }
 
 export interface PowObservation {
+  startedAt?: string;
   rawHex: string;
   observedAt: string;
   tabId?: number;
@@ -106,7 +123,24 @@ export interface PowReading {
   tabId: number | null;
 }
 
+export interface CaptureContext {
+  /** Background-only tombstone: leaving a supported site retires this document. */
+  invalidated?: boolean;
+  id: string;
+  documentId: string;
+  documentStartedAt: number;
+  /** Absent only in contexts produced by earlier extension builds. */
+  visitStartedAt?: number;
+  revision: number;
+  pageUrl: string;
+  reloadEligible: boolean;
+}
+
 export interface InspectorState {
+  captureContexts?: Record<number, CaptureContext>;
+  /** Persisted monotonic snapshot version; absent only in older installations. */
+  revision?: number;
+  clearedAt?: string;
   turns: RouteTurn[];
   powReadings: PowReading[];
   settings: InspectorSettings;
@@ -118,6 +152,7 @@ export interface InspectorState {
 }
 
 export const EMPTY_ROUTE_FIELDS: RouteFields = {
+  ...EMPTY_QUOTA_FIELDS,
   requestedModel: null,
   responseModelSlug: null,
   defaultModelSlug: null,

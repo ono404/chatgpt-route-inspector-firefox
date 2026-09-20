@@ -26,6 +26,8 @@ function sanitizePageUrl(value: string | null): string | null {
 export function sanitizeTurn(turn: RouteTurn, includeRequestIds = false): RouteTurn {
   return {
     ...turn,
+    captureId: '[redacted]',
+    ...(turn.captureContextId ? { captureContextId: '[redacted]' } : {}),
     pageUrl: sanitizePageUrl(turn.pageUrl),
     conversationId: redactedId(turn.conversationId),
     requestId: includeRequestIds ? turn.requestId : redactedId(turn.requestId),
@@ -36,7 +38,10 @@ export function sanitizeTurn(turn: RouteTurn, includeRequestIds = false): RouteT
 export function sanitizedExport(state: InspectorState): InspectorState {
   return {
     ...state,
-    turns: state.turns.map((turn) => sanitizeTurn(turn, state.settings.includeRequestIdsInExport))
+    captureContexts: {},
+    turns: state.turns.map((turn, index) => ({
+      ...sanitizeTurn(turn, state.settings.includeRequestIdsInExport), captureId: `capture-${index + 1}`
+    }))
   };
 }
 

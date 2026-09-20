@@ -1,5 +1,6 @@
 import { EMPTY_ROUTE_FIELDS, type CaptureMode, type CapturePhase, type CaptureSource, type RouteFields, type RouteObservation } from './types';
 import { redactConversationPathname } from './chatgpt-path';
+import { normalizeUsageQuota } from './usage-quota';
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -45,6 +46,7 @@ function countOrNull(value: unknown): number | null {
 function routeFields(record: UnknownRecord): RouteFields {
   return {
     ...EMPTY_ROUTE_FIELDS,
+    ...normalizeUsageQuota(record),
     requestedModel: boundedString(record.requestedModel, 256),
     responseModelSlug: boundedString(record.responseModelSlug, 256),
     defaultModelSlug: boundedString(record.defaultModelSlug, 256),
@@ -85,6 +87,8 @@ export function normalizeObservation(value: unknown): RouteObservation | null {
     observedAt,
     ...routeFields(record)
   };
+  const captureContextId = boundedString(record.captureContextId, 128);
+  if (captureContextId) result.captureContextId = captureContextId;
   if (typeof record.tabId === 'number' && Number.isInteger(record.tabId) && record.tabId >= 0) result.tabId = record.tabId;
   const pageUrl = safePageUrl(record.pageUrl);
   if (pageUrl) result.pageUrl = pageUrl;

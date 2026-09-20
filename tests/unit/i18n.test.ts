@@ -15,6 +15,37 @@ const mismatch = createTurn({
 });
 
 describe('UI translations', () => {
+  it('provides complete Chinese and English copy for the upgrade announcement', () => {
+    const html = readFileSync(new URL('../../src/ui/announcement/index.html', import.meta.url), 'utf8');
+    const keys = [...html.matchAll(/data-i18n(?:-aria-label|-title)?="([^"]+)"/g)].map((match) => match[1]!);
+    expect(keys.length).toBeGreaterThan(10);
+    for (const key of keys) {
+      expect(TRANSLATION_KEYS).toContain(key);
+      const translatedKey = key as (typeof TRANSLATION_KEYS)[number];
+      expect(t('zh', translatedKey)).not.toBe(key);
+      expect(t('en', translatedKey)).not.toBe(key);
+      expect(t('en', translatedKey)).not.toMatch(/[\u4e00-\u9fff]/);
+    }
+    expect(t('zh', 'notice.invitation')).toContain('如果你愿意');
+    expect(t('en', 'notice.invitation')).toContain('If you would like to contribute');
+  });
+
+  it('renders auto reasoning as its own bilingual status and reason', () => {
+    for (const model of ['gpt-5-6-auto-thinking', 'gpt-5-5-auto-thinking']) {
+      const automatic = createTurn({
+        captureId: model, source: 'page_fetch', captureMode: 'live', phase: 'completed',
+        observedAt: '2026-09-12T00:00:00Z', requestedModel: 'gpt-5-6', resolvedModelSlug: model,
+        responseModelSlug: 'gpt-5-6-thinking'
+      });
+      expect(turnResultLabel(automatic, 'zh')).toBe('自动推理');
+      expect(turnResultLabel(automatic, 'en')).toBe('Auto reasoning');
+      expect(assessmentReasons(automatic, 'zh').join('\n')).toContain(`响应路由为 ${model}，标记为自动推理`);
+      const english = assessmentReasons(automatic, 'en').join('\n');
+      expect(english).toContain('labeled as auto reasoning');
+      expect(english).not.toContain('no matching requested model');
+      expect(english).not.toMatch(/[\u4e00-\u9fff]/);
+    }
+  });
   it('renders the same route result in Chinese and English without changing the underlying verdict', () => {
     expect(mismatch.verdict).toBe('mismatch');
     expect(turnResultLabel(mismatch, 'zh')).toBe('路由错配');
@@ -46,6 +77,7 @@ describe('UI translations', () => {
       'result.waitingReload',
       'result.capturing',
       'result.normal',
+      'result.autoReasoning',
       'result.mismatchDetected',
       'result.actualRouteConflict',
       'result.routeRead',
@@ -58,6 +90,7 @@ describe('UI translations', () => {
       'Awaiting reload',
       'Capturing',
       'Route normal',
+      'Auto reasoning',
       'Route mismatch',
       'Route conflict',
       'Route captured',
