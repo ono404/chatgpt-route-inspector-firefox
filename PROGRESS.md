@@ -46,4 +46,58 @@
 - 冲突风险：`scripts/build.mjs` 双向改动（本地 firefox target ↔ 上游 uiEntries）；其余（package.json/README/manifest）改动位置互不相邻。无计划新增依赖。
 
 ## 任务 2 合并记录（2026-09-20）
-（见下方「任务 2 执行结果」）
+- 分支 `codex/sync-upstream-v1.0.7`（main 冻结在 `182fca1`，未重写历史）。
+- 开工记录提交 `8affe8f` → `git merge --no-ff d5524a0` → 合并提交 `33f0879`（双亲：8affe8f + d5524a0）。
+- **零冲突**：`scripts/build.mjs` 自动三方合并为双侧同时保留（`uiEntries` 含 `announcement` + `validTargets` 含 `firefox` + `toFirefoxManifest` 出口）；
+  `package.json` 版本 1.0.7 与 `build:firefox` 并存。
+- 选择 merge 而非 rebase/cherry-pick 的理由：上游提交哈希可追溯（合并提交单亲即上游 SHA），后续同步只需再次 merge 上游，无重写风险。
+- 合并后 `git diff d5524a0 HEAD -- src schemas _locales icons tests` 仅剩新增的 `tests/unit/manifest-firefox.test.ts` → **业务源码与上游逐字节一致，无 Firefox 专属业务分叉**。
+- 版本/权限核实：manifest 与 package.json 均 1.0.7；`permissions:[storage]`、`host_permissions`、`content_scripts` 均未变（上游只改 version 字段）。
+- 新增 API 审计：`chrome.runtime.getManifest`（扩展页/后台，FF 长期支持）、`tabs.get/onUpdated/onRemoved`（FF 长期支持，无新权限）；
+  新增唯一 CSS 特性 `:has()`（FF 121+，低于既有下限 128）。**最低版本维持 128.0，未改动。**
+- `required:['none']` 仍真实成立：上游未新增权限、未新增扩展自身联网点；公告页外链为 `target="_blank"` 的用户主动跳转（上游单测断言 `not.toMatch(/(script|iframe|img)[^>]+(https?:)/)`）。**未虚填 AMO 声明。**
+- storage 迁移：`core/migration.ts` 未变，仍通用再归一；补齐合成旧数据验证（见任务 3）。
+
+## 任务 3 验证结果（2026-09-20）
+命令与退出码（原始输出：`docs/upgrade-2026-09-20/evidence/`）：
+
+| 命令 | 升级前基线 | 升级后 | 退出码 |
+| --- | --- | --- | --- |
+| typecheck | 0 | 0 | 0 |
+| lint | 0 | 0 | 0 |
+| test (`vitest run --coverage`) | 21 文件 / 94 passed / 0 failed / 0 skipped | 33 文件 / 301 passed / 0 failed / 0 skipped | 0 |
+| build | ✅ | ✅ | 0 |
+| build:firefox | ✅ | ✅ | 0 |
+| build:e2e | — | ✅ | 0 |
+| verify:firefox | — | ✅ | 0 |
+| test:e2e | — | **未执行（缺 Chromium）** | 1（环境错误） |
+
+- 覆盖率：All files 97.19% stmts / 91.35% branch / 100% funcs（阈值 80/80/80/70 全过）。
+- 测试数量不低于基线：94 → 301（上游新增 + 本任务新增 `tests/integration/firefox-upgrade-migration.test.ts` 5 项），未删测试、未放松断言。
+- 新增 `scripts/verify-firefox-dist.mjs`：两 target **路径集合双向比对**（非交集）+ 逐文件同源（JS 强制 30 个文件中的 8 个 JS 逐字节一致）+ manifest/HTML 本地引用存在性 + gecko 声明 + announcement 资源完整性。
+  实测：`extension=30 firefox=30 identical=true`，`OK`，退出码 0。
+- **反向验证（红→绿）**：在仓库外临时副本移除 `ui/announcement/index.js` → 4 项失败、退出码 1；还原 → `OK`、退出码 0。
+  证据：`evidence/verify-dist-red.log`、`evidence/verify-dist-green.log`。（首次误将副本放在仓库内 `.tmp/`，被 ESLint 扫描导致 lint 556 错，已移出仓库并复跑 lint=0。）
+- 合成旧数据迁移验证（新文件 `tests/integration/firefox-upgrade-migration.test.ts`，5 项全过，全部合成数据、不碰真实数据）：
+  1.0.5 形态快照（schema 1.4.0、无 `revision`/`captureContexts`/`clearedAt`）读取后：`revision=0`、无 `clearedAt`、turns 全部升到 1.7.0、
+  `auto_reasoning` 重判生效、额度字段补 null、旧字段 confidence/effectiveModel 清除、退役 source 记录丢弃、
+  设置与 parserHealth 保留、畸形 captureContext 丢弃而合法保留、**`readState()` 全程未写存储（用户数据零改写）**。
+
+## 任务 4 Firefox 真机结果（2026-09-20）
+- 产物：`dist/firefox` → XPI `chatgpt-route-inspector-firefox-1.0.7.xpi`，
+  `manifest.json sha256=c43c9104…d327d16a`、`xpi sha256=7c49d39d…4b11e1e6`；冻结后重构建的 `dist/firefox/manifest.json` 哈希与包内一致 → 测的确是本次构建。
+- 环境：Firefox **156.0**（headless，专用全新临时 profile，未触碰日常 profile，未发生真实 ChatGPT 消息发送）。
+- **结果 18/18 PASS**：`docs/upgrade-2026-09-20/ff-probe-results-v1.0.7-2026-09-20.json`（含 date/commit/XPI+manifest 哈希/Firefox 版本）。
+  覆盖：XPI 身份校验、加载零错误、`await chrome.*`(storage/tabs/runtime/i18n)、Popup/诊断台渲染、合成观测真实管线、MAIN hook、ISOLATED 浮窗、
+  **1.0.7 公告浮窗入口**、**capture context 注册**、**auto_reasoning 判定**、**公告页渲染与外链**、**route:open-announcement 链路**。
+- **关键环境发现（已写入 README）**：Firefox ≥156 对特权上下文（扩展页）拒绝 `WebDriver:ExecuteScript`
+  （`unsupported operation`），必须加 `-remote-allow-system-access` 启动才能恢复；FF154 无此限制，历史 12/12 是 FF154 结果。
+- 探针改造：`ff-marionette.py` 参数化（`--xpi/--expect-manifest-sha256/--port/--out/--label/--commit`）、新增 XPI 内 manifest 哈希前置校验（不匹配即退出码 2，杜绝误测旧包）、
+  输出改为 `{meta, results}` 并记录版本与哈希。旧 `ff-probe-results.json` 未覆盖。
+- 未测：真实 1.0.5→1.0.7 更新事件（临时加载无法产生 `reason=update`）、FF128 下限 —— 均记入 BLOCKED.md 第 5/6 项。
+
+## 任务 5 交付（2026-09-20）
+- 新增 `docs/upgrade-2026-09-20/`：`UPGRADE-REPORT.md`（交付报告）+ `evidence/`（原始命令输出、红→绿证据、探针日志）+ 探针结果 JSON。
+- 新增脚本：`scripts/verify-firefox-dist.mjs`、`scripts/package-firefox.mjs`（+ npm script `verify:firefox`、`package:firefox`）。
+- 文档：README-FIREFOX.md 重写（同步基线/新命令/探针用法/FF156 参数/限制）、AGENTS.md 事实更新、BLOCKED.md 更新未决项、本文件。
+- 回退方法：`git switch main`（main 仍为 `182fca1`，未被触碰）；或 `git revert -m 1 33f0879` 撤回本次合并。

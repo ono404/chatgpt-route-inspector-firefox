@@ -8,6 +8,8 @@
     "build": "node scripts/build.mjs",
     "build:e2e": "node scripts/build.mjs e2e",
     "build:firefox": "node scripts/build.mjs firefox",
+    "package:firefox": "node scripts/package-firefox.mjs",
+    "verify:firefox": "node scripts/verify-firefox-dist.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run --coverage",

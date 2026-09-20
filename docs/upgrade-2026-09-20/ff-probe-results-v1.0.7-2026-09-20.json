@@ -1,0 +1,111 @@
+{
+ "meta": {
+  "date": "2026-09-20",
+  "startedAt": "2026-09-20T12:06:24+0800",
+  "label": "v1.0.7-upgrade-2026-09-20",
+  "commit": "33f0879cc6022d7d3112e68b3ee7f8777338ca7d",
+  "xpi": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\route-inspector-upgrade-2026-09-20\\xpi\\chatgpt-route-inspector-firefox-1.0.7.xpi",
+  "xpiSha256": "7c49d39d9fd35601a896aee23a8e7dbbe8d941340734858b0f9c9ca24b11e1e6",
+  "manifestSha256": "c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a",
+  "manifestsMatchExpected": true,
+  "manifestVersion": "1.0.7",
+  "geckoId": "chatgpt-route-inspector-firefox@local",
+  "strictMinVersion": "128.0",
+  "firefoxVersion": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0",
+  "profile": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\route-inspector-upgrade-2026-09-20\\ff-profile",
+  "notes": [],
+  "packagedFiles": 30
+ },
+ "results": [
+  {
+   "check": "0a.xpi-identity",
+   "ok": true,
+   "detail": "version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 manifest_sha256=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a"
+  },
+  {
+   "check": "0.session",
+   "ok": true,
+   "detail": "a99d61d9-5a3a-4372-828b-90e3f564281e"
+  },
+  {
+   "check": "1.install-no-manifest-error",
+   "ok": true,
+   "detail": "chatgpt-route-inspector-firefox@local"
+  },
+  {
+   "check": "1b.addon-uuid",
+   "ok": true,
+   "detail": "handles=2 uuid=c7f69244-b91a-42f5-bf2c-5a6ddc01d9fd last_url=moz-extension://c7f69244-b91a-42f5-bf2c-5a6ddc01d9fd/ui/onboarding/index.html"
+  },
+  {
+   "check": "2.ext-namespaces",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "3.ext-chrome.storage-promise",
+   "ok": true,
+   "detail": "42"
+  },
+  {
+   "check": "4.ext-get-state-roundtrip",
+   "ok": true,
+   "detail": "{'ok': True, 'hasState': True, 'schemaVersion': None}"
+  },
+  {
+   "check": "5.ext-tabs-i18n-getURL",
+   "ok": true,
+   "detail": "{'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://c7f69244-b91a-42f5-bf2c-5a6ddc01d9fd/ui/popup/index.html', 'version': '1.0.7'}"
+  },
+  {
+   "check": "6.popup-renders",
+   "ok": true,
+   "detail": "\n  \n    \n      \n      \n        \n          Route Inspector\n          Created by @liuqi\n        \n        服务器报告的路由遥测\n      \n    \n    \n      \n        EN\n        中\n      \n      实时监听\n    \n  \n  \n    \n      \n"
+  },
+  {
+   "check": "7.synthetic-observation-pipeline",
+   "ok": true,
+   "detail": "{'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}"
+  },
+  {
+   "check": "8.dashboard-shows-turn",
+   "ok": true,
+   "detail": "\n\n  \n    Route InspectorCreated by @liuqi请求模型与真实响应路由\n    EN中仅保存在本机\n  \n  路由诊断台导出 JSON导出报告清空记录\n  全部记录1实时请求1会话重载0异常1\n  \n    捕获记录全部模式实时请求会话重载全部结论正常自动推理错配冲突未比较时间模式请求模型标签响应路由判定响应来源09/20 12:06:33实时请求GPT 5.6 Pro未解析GPT 5.5 mini路由错配resolved_model_slug当前筛选条件下没有记录。\n  证据字段路由错配捕获模式实时请求捕获状态已完成请求模型gpt-5-6-pro响应路由gp"
+  },
+  {
+   "check": "9.page-hook-MAIN-world",
+   "ok": true,
+   "detail": "{'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}"
+  },
+  {
+   "check": "10.bridge-overlay-ISOLATED",
+   "ok": true,
+   "detail": "{'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}"
+  },
+  {
+   "check": "11.notice-hint-1.0.7",
+   "ok": true,
+   "detail": "{'root': True, 'notice': True, 'star': True, 'error': True}"
+  },
+  {
+   "check": "12.capture-context-registered",
+   "ok": true,
+   "detail": "{'ok': True, 'count': 1, 'sample': {'id': '34e38720-97a2-4a7e-9b46-bf71a39beb5c', 'documentId': '41d87e5a-3649-4eed-8adb-17aa7732a64e', 'documentStartedAt': 1789877198972, 'visitStartedAt': 1789877198972, 'revision': 0, 'reloadEligible': False, 'pageUrl': 'https://chatgpt.com/'}}"
+  },
+  {
+   "check": "13.auto-reasoning-verdict",
+   "ok": true,
+   "detail": "{'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}"
+  },
+  {
+   "check": "14.announcement-page",
+   "ok": true,
+   "detail": "{'title': 'Route Inspector · 1.0.7 公告', 'text': '\\n  \\n    \\n      Route Inspector1.0.7 · 用户公告\\n      EN中\\n    \\n    \\n      样本观察与反馈邀请\\n      关于响应路由字段的一点观察\\n      \\n        目前收集到的一些案例表明，发生降级的账户在网页端进行 Chat 会话时，响应中会缺少 resolved_model_slug 字段，只能通过 server_ste_metadata.model_slug 识别路由信息；而响应中存在 resolved_model_slug 字段的账户没有发生降级。\\n      \\n      以上仅是目前有限样本中的观察，尚不足以将字段是否存在作为判断账户是否降级的通用标准。\\n      欢迎分享你的真实情况\\n      目前的样本量还比较有限，因此我发起了一次投票。如果你愿意，欢迎根据自己账户的真实使用情况参与，帮助补充样本。无论你的', 'script': True, 'href': 'https://x.com/liu_9982/status/2100132495455043829?s=20'}"
+  },
+  {
+   "check": "15.open-announcement-message",
+   "ok": true,
+   "detail": "{'before': 2, 'after': 2, 'ok': True}"
+  }
+ ]
+}
