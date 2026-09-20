@@ -1,0 +1,10 @@
+python.exe : refusing to overwrite existing results file: docs\upgrade-2026-09-
+20\evidence\r2-probe-positive.json
+所在位置 行:492 字符: 10
++   $out = & $py -B @($c.a) 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (refusing to ove...e-positive.json 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+pass --force to overwrite, or choose another --out

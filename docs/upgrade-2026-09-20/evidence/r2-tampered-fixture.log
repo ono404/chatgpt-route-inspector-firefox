@@ -1,0 +1,6 @@
+src dist     D:\LAB\火狐浏览器插件制作2\dist\firefox
+tampered src C:\Users\<user>\AppData\Local\Temp\ri-exec2\tamper\tampered-src
+tampered xpi C:\Users\<user>\AppData\Local\Temp\ri-exec2\tamper\tampered.xpi
+manifest sha256 (must equal the real build) c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a
+tampered file sha256 05f95fd36f3f22e3336b44601a521fe3993a683f83f8a23c21573f34d2b8edf5
+xpi sha256   91fa7f4407fc2e2fa307bcee6ae1b9e210efc6b198da9de830b5c646984d5f99

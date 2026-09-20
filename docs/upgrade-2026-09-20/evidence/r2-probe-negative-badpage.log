@@ -1,0 +1,58 @@
+PASS 0a.xpi-sha256 | actual=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993 expected=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993
+PASS 0b.xpi-contents | 30 files identical to XPI
+PASS 0c.dist-matches-record | 30 recorded files agree
+PASS 0d.manifest-sha256 | sha256=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a)
+launched firefox pid=37788 port=51152 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-d_q1bqxl
+PASS 0.session | e0e8fd69-c679-48ad-8472-7a10f6860a51
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-d_q1bqxl pid=37788 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-d_q1bqxl inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=1ff416e2-6c10-444d-bbac-969346caea86 last_url=moz-extension://1ff416e2-6c10-444d-bbac-969346caea86/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://1ff416e2-6c10-444d-bbac-969346caea86/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://1ff416e2-6c10-444d-bbac-969346caea86/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | 
+  
+    
+      
+      
+        
+          Route Inspector
+          Created by @liuqi
+        
+        服务器报告的路由遥测
+      
+    
+    
+      
+        EN
+        中
+      
+      实时监听
+    
+  
+  
+    
+      
+
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}
+PASS 8.dashboard-shows-turn | 
+
+  
+    Route InspectorCreated by @liuqi请求模型与真实响应路由
+    EN中仅保存在本机
+  
+  路由诊断台导出 JSON导出报告清空记录
+  全部记录1实时请求1会话重载0异常1
+  
+    捕获记录全部模式实时请求会话重载全部结论正常自动推理错配冲突未比较时间模式请求模型标签响应路由判定响应来源09/20 13:44:26实时请求GPT 5.6 Pro未解析GPT 5.5 mini路由错配resolved_model_slug当前筛选条件下没有记录。
+  证据字段路由错配捕获模式实时请求捕获状态已完成请
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.notice-hint-1.0.7 | {'root': True, 'notice': True, 'star': True, 'error': True}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': '318f1c7c-afaa-466a-ab56-075f517865e7', 'documentId': '29b89def-b026-4641-a35d-9054533a1aab', 'documentStartedAt': 1789883070562, 'visitStartedAt': 1789883070562, 'revision': 0, 'reloadEligible': False, 'pageUrl': 'https://chatgpt.com/'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}
+FAIL 14.announcement-page | {'title': '页面加载出错', 'text': '', 'script': False, 'href': None}
+PASS 15.open-announcement-message | {'before': 2, 'after': 2, 'ok': True}
+21 passed / 1 failed / 0 missing -> exit 4 (checks failed: 14.announcement-page)
+saved docs\upgrade-2026-09-20\evidence\r2-probe-negative-badpage.json

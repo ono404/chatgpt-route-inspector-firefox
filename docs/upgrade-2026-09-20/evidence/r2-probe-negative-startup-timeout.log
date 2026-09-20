@@ -1,0 +1,8 @@
+PASS 0a.xpi-sha256 | actual=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993 expected=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993
+PASS 0b.xpi-contents | 30 files identical to XPI
+PASS 0c.dist-matches-record | 30 recorded files agree
+PASS 0d.manifest-sha256 | sha256=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a)
+launched firefox pid=23468 port=62274 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qz0gnp30
+FATAL TimeoutError: Marionette port 127.0.0.1:62274 not reachable within 0.05s (last error: timed out)
+4 passed / 0 failed / 18 missing -> exit 3 (runtime anomaly: Marionette port 127.0.0.1:62274 not reachable within 0.05s (last error: timed out))
+saved docs\upgrade-2026-09-20\evidence\r2-probe-negative-startup-timeout.json

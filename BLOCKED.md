@@ -46,3 +46,15 @@ verdict/reasons 与 assessment.ts 规则逐条对应；durationMs/时间戳/pars
 ## 7. `npm run test:e2e` — **本次新增，未执行（缺环境）**
 本机无 extension-capable Chromium，报错 `No extension-capable Chromium found. Run: npx playwright install chromium`。
 按本次任务约束不做工具安装，故未执行；`npm run build:e2e` 已通过。e2e 覆盖的是 Chromium 侧行为，与 Firefox 产物无关。
+
+## 8. 额度字段（`deep_research` / `image_gen`）真机 — **新增，未专项验证**
+`src/core/usage-quota.ts`（`limits_progress` → 额度投影）有上游单元/集成测试覆盖，但**真机探针没有额度专项检查**：
+`docs/upgrade-2026-09-20/evidence/r2-probe-positive.json` 的 22 项里不含任何额度断言。
+因此**不得**把额度描述为“真机已走通”（第一轮报告中的该表述已勘误）。
+要补验需在真实账号下触发额度接口（`conversation_init` / `limits_progress`），属需要人工与真实账号的操作。
+
+## 9. 探针的清理是尽力而为 — **已知局限，非缺陷**
+探针只停止自己启动的进程并删除自己创建的临时 profile。若浏览器在启动初期被终止，它可能在删除后
+再次写出文件（实测一次残留 `%TEMP%\ff-ri-probe-profiles\ff-ri-probe-*`）。
+因此结果 JSON 记录的是**实际**结果（`summary.profileDirRemoved`），清理失败时会附 `notes`，
+不假定“已删除”成立。

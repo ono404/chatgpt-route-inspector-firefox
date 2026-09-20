@@ -1,0 +1,128 @@
+{
+ "meta": {
+  "schema": "ff-probe/2",
+  "date": "2026-09-20",
+  "startedAt": "2026-09-20T13:44:56+0800",
+  "finishedAt": "2026-09-20T13:44:56+0800",
+  "label": "r2-negative-tampered",
+  "probeFile": "D:\\LAB\\火狐浏览器插件制作2\\ff-marionette.py",
+  "probeSha256": "f46f9d36e56409cdfa6aa303ab9c8f531dae4394224d248f3220cd1bc683615c",
+  "identity": {
+   "xpi": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ri-exec2\\tamper\\tampered.xpi",
+   "distDir": "D:\\LAB\\火狐浏览器插件制作2\\dist\\firefox",
+   "buildRecordPath": "D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
+   "expectedXpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
+   "xpiSha256": "91fa7f4407fc2e2fa307bcee6ae1b9e210efc6b198da9de830b5c646984d5f99",
+   "manifestSha256": "c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a",
+   "manifestVersion": "1.0.7",
+   "geckoId": "chatgpt-route-inspector-firefox@local",
+   "strictMinVersion": "128.0",
+   "packagedFiles": 30,
+   "distFileCount": 30
+  },
+  "expectation": {
+   "source": "build-record: D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
+   "expectedXpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
+   "buildRecordSha256": "0208c1e2b7a8d1d7379992b5e93e917172243a7782ed47cbeb9f06be4e7dc1d1"
+  },
+  "git": {
+   "repoDir": "D:\\LAB\\火狐浏览器插件制作2",
+   "available": true,
+   "head": "7dd7a86ed3df12ea5f9fdc4d8551316b371041b4",
+   "dirty": true,
+   "porcelain": "M AGENTS.md\n M BLOCKED.md\n M PROGRESS.md\n M README-FIREFOX.md\n M docs/upgrade-2026-09-20/UPGRADE-REPORT.md\n M ff-marionette.py\n M package.json\n M scripts/package-firefox.mjs\n M scripts/verify-firefox-dist.mjs\n?? .workbuddy/memory/2026-09-20.md\n?? .workbuddy/memory/MEMORY.md\n?? docs/upgrade-2026-09-20/evidence/r2-probe-negative-badpage.json\n?? docs/upgrade-2026-09-20/evidence/r2-probe-positive.json\n?? scripts/run-firefox-tooling-tests.mjs\n?? tests/firefox-tooling/fake_marionette.py\n?? tests/firefox-tooling/make_tampered_copy.py\n?? tests/firefox-tooling/probe_loader.py\n?? tests/firefox-tooling/test_ff_marionette_identity.py\n?? tests/firefox-tooling/test_ff_marionette_run.py",
+   "error": null,
+   "labelCommit": ""
+  },
+  "launch": null,
+  "session": null,
+  "firefoxVersion": null,
+  "fatal": null,
+  "summary": {
+   "executed": 4,
+   "passed": 1,
+   "failed": 3,
+   "failedChecks": [
+    "0a.xpi-sha256",
+    "0b.xpi-contents",
+    "0c.dist-matches-record"
+   ],
+   "requiredChecks": [
+    "0a.xpi-sha256",
+    "0b.xpi-contents",
+    "0d.manifest-sha256",
+    "0.session",
+    "0e.session-profile",
+    "1.install-no-manifest-error",
+    "1b.addon-uuid",
+    "2.ext-namespaces",
+    "3.ext-chrome.storage-promise",
+    "4.ext-get-state-roundtrip",
+    "5.ext-tabs-i18n-getURL",
+    "6.popup-renders",
+    "7.synthetic-observation-pipeline",
+    "8.dashboard-shows-turn",
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "11.notice-hint-1.0.7",
+    "12.capture-context-registered",
+    "13.auto-reasoning-verdict",
+    "14.announcement-page",
+    "15.open-announcement-message",
+    "0c.dist-matches-record"
+   ],
+   "missingChecks": [
+    "0.session",
+    "0e.session-profile",
+    "1.install-no-manifest-error",
+    "1b.addon-uuid",
+    "2.ext-namespaces",
+    "3.ext-chrome.storage-promise",
+    "4.ext-get-state-roundtrip",
+    "5.ext-tabs-i18n-getURL",
+    "6.popup-renders",
+    "7.synthetic-observation-pipeline",
+    "8.dashboard-shows-turn",
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "11.notice-hint-1.0.7",
+    "12.capture-context-registered",
+    "13.auto-reasoning-verdict",
+    "14.announcement-page",
+    "15.open-announcement-message"
+   ],
+   "identityOk": false,
+   "profileDir": null,
+   "profileDirRemoved": true,
+   "profilesKeptByRequest": false,
+   "browserStoppedByThisRun": false
+  },
+  "exitCode": 2,
+  "exitReason": "artifact identity rejected before browser interaction",
+  "notes": [
+   "identity rejected; browser was not launched, connected, installed to or uninstalled from"
+  ]
+ },
+ "results": [
+  {
+   "check": "0a.xpi-sha256",
+   "ok": false,
+   "detail": "actual=91fa7f4407fc2e2fa307bcee6ae1b9e210efc6b198da9de830b5c646984d5f99 expected=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993"
+  },
+  {
+   "check": "0b.xpi-contents",
+   "ok": false,
+   "detail": "content differs: content/page-hook.js"
+  },
+  {
+   "check": "0c.dist-matches-record",
+   "ok": false,
+   "detail": "record xpiPath=D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.xpi but probing C:\\Users\\<user>\\AppData\\Local\\Temp\\ri-exec2\\tamper\\tampered.xpi; XPI content differs from record: content/page-hook.js"
+  },
+  {
+   "check": "0d.manifest-sha256",
+   "ok": true,
+   "detail": "sha256=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a)"
+  }
+ ]
+}

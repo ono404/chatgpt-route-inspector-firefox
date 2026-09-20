@@ -3,10 +3,17 @@
 // Checks:
 //   1. Both targets ship the exact same set of relative file paths (no
 //      intersection-only comparison: missing files on either side fail).
+//   1b. Source-anchored completeness: every UI page present under src/ui/ is
+//      shipped by BOTH targets.
 //   2. Every file is byte-identical across targets, except manifest.json.
 //      All .js files are additionally required to be byte-identical.
 //   3. Every local file referenced by either manifest.json exists.
 //   4. Every local file referenced by any shipped .html exists.
+//
+// Boundary: the pairwise comparison in (1) alone cannot detect a page that is
+// missing from BOTH targets. (1b) narrows that blind spot to the pages that
+// exist in src/ui/, but it still cannot see an entry that was never created in
+// src/ (e.g. an upstream `uiEntries` entry whose HTML/TS file does not exist).
 //
 // Usage: node scripts/verify-firefox-dist.mjs [extensionDir] [firefoxDir]
 // Exits non-zero with a report on any failure.
@@ -73,6 +80,18 @@ const ffSet = new Set(ffFiles);
 for (const file of extFiles) if (!ffSet.has(file)) fail(`missing in firefox: ${file}`);
 for (const file of ffFiles) if (!extSet.has(file)) fail(`missing in extension: ${file}`);
 notes.push(`paths: extension=${extFiles.length} firefox=${ffFiles.length} identical=${[...extSet].every((f) => ffSet.has(f))}`);
+
+// 1b. Source-anchored completeness. Without this, a page that the build drops
+// from both targets at once would still satisfy the pairwise comparison above.
+const srcUiPages = (await walk(path.join(root, 'src', 'ui')))
+  .filter((file) => file.endsWith('index.html'))
+  .map((file) => `ui/${file}`);
+for (const page of srcUiPages) {
+  if (!extSet.has(page)) fail(`extension: src UI page not shipped: ${page}`);
+  if (!ffSet.has(page)) fail(`firefox: src UI page not shipped: ${page}`);
+}
+notes.push(`src UI pages: ${srcUiPages.length} checked against both targets`);
+notes.push(`boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only`);
 
 // 2. Byte identity per file (manifest.json excluded by design).
 for (const file of extFiles) {

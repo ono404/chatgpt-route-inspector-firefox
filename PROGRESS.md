@@ -96,6 +96,30 @@
   输出改为 `{meta, results}` 并记录版本与哈希。旧 `ff-probe-results.json` 未覆盖。
 - 未测：真实 1.0.5→1.0.7 更新事件（临时加载无法产生 `reason=update`）、FF128 下限 —— 均记入 BLOCKED.md 第 5/6 项。
 
+## 任务 6 验证工具修正开工回执（2026-09-20，第二轮）
+- 起点 `HEAD=7dd7a86ed3df12ea5f9fdc4d8551316b371041b4`，分支 `codex/sync-upstream-v1.0.7`；main 仍为 `182fca1`（未动）。
+- 冻结核对：`git diff d5524a00… HEAD -- src schemas _locales icons manifest` = 空；`HEAD:scripts/build.mjs=5a508e8d`；`git status -uall` 仅 `.workbuddy/memory/*` 两条未跟踪。
+- 旧证据哈希已录（不得覆盖）：`ff-probe-results.json=4bec56b9…`、`UPGRADE-REPORT.md=881c3fda…`、`ff-probe-results-v1.0.7-2026-09-20.json=3da8fab7…`，17 个 `evidence/*.log` 逐个记录于 `docs/upgrade-2026-09-20/evidence/`。
+- 本轮范围：只修 `ff-marionette.py` / `package-firefox.mjs` / `verify-firefox-dist.mjs` / 新增验证工具回归测试 / 必要 npm script / 文档；不碰业务源码与构建脚本。
+- 已确认缺陷（管理者实测）：`ff-marionette.py` 检查失败仍退出 0；仅核对 manifest 哈希；`--out` 默认写死旧结果文件；meta 用环境变量冒充 profile；README 顺序倒置。
+- Python 解释器：裸 `python` 是 WindowsApps 别名（退出 9009），一律用 `C:\Users\gyjxjkg\.workbuddy\binaries\python\versions\3.13.12\python.exe`。
+- 方案：探针自行以全新专用临时 profile 启动 Firefox（隐藏窗口）并连接；身份改为「构建记录 → XPI 全量哈希 + 逐文件比对」；退出码按检查聚合；`--out` 缺省生成不碰撞新路径且拒绝覆盖。
+- 最大风险：`ff-marionette.py` 重构后真机行为变化 → 用真机正/反向各跑一遍，且回归测试用本地 stub Marionette 夹具固定。
+
+## 任务 6 验证工具修正结果（2026-09-20，第二轮）
+- 范围：只修 `ff-marionette.py` / `scripts/package-firefox.mjs` / `scripts/verify-firefox-dist.mjs` / 新增验证工具回归测试 / 必要 npm script / 文档。**业务路径与 main 未变**（`git diff d5524a0 HEAD -- src schemas _locales icons manifest` 为空；`main=182fca1e`）。
+- 修掉的第一轮缺陷：① 检查失败仍退出 0；② 身份只比 manifest 哈希（同 manifest 异 JS 可混过）；③ `--out` 默认覆盖旧结果；④ `meta.profile` 取自环境变量而非浏览器实测。
+- 探针改为**自启动浏览器**（全新专用临时 profile + 自选端口 + 隐藏窗口 + 只停自己启动的实例 + 删除自己建的 profile）。
+- 退出码：0 全通过 / 2 身份被拒（连接前）/ 3 运行异常 / 4 有检查失败 / 5 检查没跑全 / 6 拒绝覆盖已有输出 / 64 参数错。
+- 门禁（最终冻结代码后重跑，逐个记录退出码，原始输出 `docs/upgrade-2026-09-20/evidence/r2-*.log`）：typecheck 0 / lint 0 / test 0（33 文件 301 passed）/ build 0 / build:firefox 0 / build:e2e 0 / verify:firefox 0 / package:firefox 0 / **test:firefox-tooling 0（28 passed）**。
+- 真机正向（FF156.0，`moz:buildID=20260909172920`，会话回报 `moz:profile` == 本次启动的临时目录）：**22 项全执行 / 22 PASS / 0 FAIL / 0 缺失 → 退出码 0**；XPI `sha256=2b304414…3993`、manifest `c43c9104…d16a`、构建记录 `0208c1e2…d1d1`、`probeSha256=f46f9d36…615c`。
+- 真机反向：坏公告页 → 4（`14.announcement-page` FAIL）；同 manifest 异 JS → 2（`0a/0b/0c` FAIL 而 `0d` PASS，且未连接浏览器）；浏览器启动即退出 → 3；启动超时 → 3；`--out` 指向已有文件 → 6 且原文件哈希不变；省略 `--out` → 0 且生成新时间戳文件、历史 `ff-probe-results.json` 哈希不变。
+- 新增 `scripts/run-firefox-tooling-tests.mjs`（本机裸 `python` 是 WindowsApps 别名会退出 9009；另：本沙箱内 Node 的 `spawnSync` 一律 EBUSY，必须用异步 `spawn`）与 `tests/firefox-tooling/**` 6 文件。
+- 历史证据零改动（逐个哈希核对）：`ff-probe-results.json=4bec56b9…`、`ff-probe-results-v1.0.7-2026-09-20.json=3da8fab7…`、第一轮 17 个 `evidence/*.log` 全部原值。
+- 本轮证据已审查 + 脱敏（`gyjxjkg` → `<user>`，仅出现在绝对路径；凭据类模式扫描零命中），按精确路径 `git add -f` 纳入提交，未改 `.gitignore`、未把整个目录强制添加。
+- 仍未处理：未跟踪的 `.workbuddy/`（其存在已在报告 §9.8 与最终 Git 状态中明确列出）。
+- 本轮**只说明验证修正结果**，不声称全部升级场景已验证，也不声称已获管理者验收；额度真机等未验证项见 BLOCKED.md 第 8 项。
+
 ## 任务 5 交付（2026-09-20）
 - 新增 `docs/upgrade-2026-09-20/`：`UPGRADE-REPORT.md`（交付报告）+ `evidence/`（原始命令输出、红→绿证据、探针日志）+ 探针结果 JSON。
 - 新增脚本：`scripts/verify-firefox-dist.mjs`、`scripts/package-firefox.mjs`（+ npm script `verify:firefox`、`package:firefox`）。
