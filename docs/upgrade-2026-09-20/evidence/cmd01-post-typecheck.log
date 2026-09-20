@@ -1,0 +1,5 @@
+
+> chatgpt-route-inspector@1.0.7 typecheck
+> tsc --noEmit
+
+EXIT=0

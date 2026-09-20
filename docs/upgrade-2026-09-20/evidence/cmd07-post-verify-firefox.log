@@ -1,0 +1,8 @@
+
+> chatgpt-route-inspector@1.0.7 verify:firefox
+> node scripts/verify-firefox-dist.mjs
+
+note  paths: extension=30 firefox=30 identical=true
+note  js byte-identical: 8 files checked
+verify-firefox-dist: OK
+EXIT=0

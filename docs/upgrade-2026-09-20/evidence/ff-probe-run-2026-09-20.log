@@ -1,0 +1,57 @@
+XPI_MANIFEST_SHA=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a
+COMMIT=33f0879cc6022d7d3112e68b3ee7f8777338ca7d
+PORT_READY=yes
+PASS 0a.xpi-identity | version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 manifest_sha256=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a
+PASS 0.session | a99d61d9-5a3a-4372-828b-90e3f564281e
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=c7f69244-b91a-42f5-bf2c-5a6ddc01d9fd last_url=moz-extension://c7f69244-b91a-42f5-bf2c-5a6ddc01d9fd/ui/onboarding/index.html
+PASS 2.ext-namespaces
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://c7f69244-b91a-42f5-bf2c-5a6ddc01d9fd/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | 
+  
+    
+      
+      
+        
+          Route Inspector
+          Created by @liuqi
+        
+        服务器报告的路由遥测
+      
+    
+    
+      
+        EN
+        中
+      
+      实时监听
+    
+  
+  
+    
+      
+
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}
+PASS 8.dashboard-shows-turn | 
+
+  
+    Route InspectorCreated by @liuqi请求模型与真实响应路由
+    EN中仅保存在本机
+  
+  路由诊断台导出 JSON导出报告清空记录
+  全部记录1实时请求1会话重载0异常1
+  
+    捕获记录全部模式实时请求会话重载全部结论正常自动推理错配冲突未比较时间模式请求模型标签响应路由判定响应来源09/20 12:06:33实时请求GPT 5.6 Pro未解析GPT 5.5 mini路由错配resolved_model_slug当前筛选条件下没有记录。
+  证据字段路由错配捕获模式实时请求捕获状态已完成请
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.notice-hint-1.0.7 | {'root': True, 'notice': True, 'star': True, 'error': True}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': '34e38720-97a2-4a7e-9b46-bf71a39beb5c', 'documentId': '41d87e5a-3649-4eed-8adb-17aa7732a64e', 'documentStartedAt': 1789877198972, 'visitStartedAt': 1789877198972, 'revision': 0, 'reloadEligible': False, 'pageUrl': 'https://chatgpt.com/'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.7 公告', 'text': '\n  \n    \n      Route Inspector1.0.7 · 用户公告\n      EN中\n    \n    \n      样本观察与反馈邀请\n      关于响应路由字段的一点观察\n      \n        目前收集到的一些案例表明，发生降级的账户在网页端进行 Chat 会话时，响应中会缺少 resolved_model_slug 字段，只能通过 server_ste_metadata.model_slug 识别路由信
+PASS 15.open-announcement-message | {'before': 2, 'after': 2, 'ok': True}
+saved D:\LAB\火狐浏览器插件制作2\docs\upgrade-2026-09-20\ff-probe-results-v1.0.7-2026-09-20.json
+PROBE_EXIT=0
+FF_STOPPED

@@ -1,0 +1,8 @@
+note  paths: extension=30 firefox=29 identical=false
+note  js byte-identical: 8 files checked
+FAIL  missing in firefox: ui/announcement/index.js
+FAIL  JS missing on firefox side: ui/announcement/index.js
+FAIL  firefox: ui/announcement/index.html references missing file index.js
+FAIL  firefox: announcement asset missing ui/announcement/index.js
+verify-firefox-dist: 4 failure(s)
+EXIT=1

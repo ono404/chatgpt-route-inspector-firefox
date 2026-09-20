@@ -261,12 +261,16 @@
 - 本轮证据按“审查 → 脱敏 → 精确路径纳入版本控制”处理：脱敏规则为把本机 Windows 账户名 `gyjxjkg` 替换为 `<user>`（仅出现于绝对路径），脱敏前原件留在仓库外临时目录以备核对。脱敏后逐文件 `sha256` 见 §9.9。
 - 审查结论：对全部证据文件（含被 `.gitignore` 忽略的 `.log`）做了凭据类模式扫描（`sk-` / `Bearer` / `password=` / `api_key=` / `session_token` / `refresh_token` / `authorization:` / JWT / `@gmail|qq|163|outlook|hotmail` / 真实会话 URL），**无任何命中**；未包含真实账号会话、Cookie、令牌或导出附件。
 - **残留（需管理者决定）**：`docs/upgrade-2026-09-20/ff-probe-results-v1.0.7-2026-09-20.json` 属于第一轮冻结证据，含 2 处同一类绝对路径（账户名），按“不得修改历史证据”的要求**未做脱敏**。
-- 提交方式：`.gitignore` 的全局 `*.log` 规则不改（不扩大日志跟踪范围），改用**精确路径** `git add -f` 逐个添加已审查的本轮日志；未对目录做 `git add -f`。
+- 提交方式：`.gitignore` 的全局 `*.log` 规则不改（不扩大日志跟踪范围），改用**精确路径** `git add -f` 逐个添加已审查的日志；未对目录做 `git add -f`。
+- 第一轮遗留问题一并修正：第一轮那 17 个 `evidence/*.log` 当时**根本没有进入版本控制**（被全局 `*.log` 规则忽略，只在工作区），与本轮日志在同一个跟进提交里按精确路径补入。
 - 未跟踪的 `.workbuddy/` 未被处理、未被提交、未被删除，其存在已在 §9.8 明确列出。
+- 哈希口径：§9.9 列出的是**工作区文件**的 sha256。仓库 `core.autocrlf=true`，新克隆检出的行尾可能变为 CRLF，届时 sha256 会不同；可用 `git rev-parse HEAD:<路径>` 核对提交内容本身。
 
 ### 9.8 最终 Git 状态
 
-分支 `codex/sync-upstream-v1.0.7`，起点 `HEAD = 7dd7a86`，`main = 182fca1e`（未动）。本轮**未 push、未发布**；本轮提交的 SHA 与最终 `git status` 记录在 `PROGRESS.md` 的任务 6 小节。
+分支 `codex/sync-upstream-v1.0.7`，起点 `HEAD = 7dd7a86`，`main = 182fca1e`（未动）。本轮**未 push、未发布**。
+
+提交：本报告与工具修正为 `f55c1ed`（38 文件，+3738/−246）；其后一个跟进提交把第一轮 17 个 `evidence/*.log` 按精确路径补入版本控制。收尾时的 `git status --porcelain -uall` 只剩两条未跟踪项（`.workbuddy/memory/2026-09-20.md`、`.workbuddy/memory/MEMORY.md`）——即**已跟踪文件干净，仍有未知未跟踪文件**，不写“工作树干净”。
 
 修改（已跟踪）：`AGENTS.md`、`BLOCKED.md`、`PROGRESS.md`、`README-FIREFOX.md`、`docs/upgrade-2026-09-20/UPGRADE-REPORT.md`、`ff-marionette.py`、`package.json`、`scripts/package-firefox.mjs`、`scripts/verify-firefox-dist.mjs`。
 新增（未跟踪 → 已纳入本次提交）：`scripts/run-firefox-tooling-tests.mjs`、`tests/firefox-tooling/{probe_loader.py, fake_marionette.py, make_tampered_copy.py, test_ff_marionette_identity.py, test_ff_marionette_run.py}`、`docs/upgrade-2026-09-20/evidence/r2-*`。

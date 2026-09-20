@@ -1,0 +1,5 @@
+
+> chatgpt-route-inspector@1.0.7 lint
+> eslint .
+
+EXIT=0

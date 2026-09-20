@@ -1,0 +1,19 @@
+
+> chatgpt-route-inspector@1.0.7 build:e2e
+> node scripts/build.mjs e2e
+
+
+  dist\e2e\background\service-worker.js  38.6kb
+
+Done in 8ms
+
+  dist\e2e\content\page-hook.js   66.3kb
+  dist\e2e\content\bridge.js      65.6kb
+  dist\e2e\ui\popup\index.js      48.8kb
+  dist\e2e\ui\dashboard\index.js  48.5kb
+  dist\e2e\ui\options\index.js    33.6kb
+  ...and 2 more output files...
+
+Done in 18ms
+Built e2e: D:\LAB\火狐浏览器插件制作2\dist\e2e
+EXIT=0

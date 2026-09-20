@@ -1,0 +1,19 @@
+
+> chatgpt-route-inspector@1.0.5 build:firefox
+> node scripts/build.mjs firefox
+
+
+  dist\firefox\background\service-worker.js  23.9kb
+
+Done in 8ms
+
+  dist\firefox\content\bridge.js      46.6kb
+  dist\firefox\ui\popup\index.js      37.6kb
+  dist\firefox\ui\dashboard\index.js  37.5kb
+  dist\firefox\content\page-hook.js   33.8kb
+  dist\firefox\ui\options\index.js    25.3kb
+  ...and 1 more output file...
+
+Done in 23ms
+Built firefox: D:\LAB\火狐浏览器插件制作2\dist\firefox
+EXIT=0

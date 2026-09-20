@@ -1,0 +1,19 @@
+
+> chatgpt-route-inspector@1.0.5 build
+> node scripts/build.mjs
+
+
+  dist\extension\background\service-worker.js  23.9kb
+
+Done in 16ms
+
+  dist\extension\content\bridge.js      46.6kb
+  dist\extension\ui\popup\index.js      37.6kb
+  dist\extension\ui\dashboard\index.js  37.5kb
+  dist\extension\content\page-hook.js   33.8kb
+  dist\extension\ui\options\index.js    25.3kb
+  ...and 1 more output file...
+
+Done in 11ms
+Built extension: D:\LAB\火狐浏览器插件制作2\dist\extension
+EXIT=0

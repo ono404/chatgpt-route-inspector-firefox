@@ -1,0 +1,73 @@
+
+> chatgpt-route-inspector@1.0.7 test:e2e
+> npm run build:e2e && playwright test
+
+
+> chatgpt-route-inspector@1.0.7 build:e2e
+> node scripts/build.mjs e2e
+
+
+  dist\e2e\background\service-worker.js  38.6kb
+
+Done in 10ms
+
+  dist\e2e\content\page-hook.js   66.3kb
+  dist\e2e\content\bridge.js      65.6kb
+  dist\e2e\ui\popup\index.js      48.8kb
+  dist\e2e\ui\dashboard\index.js  48.5kb
+  dist\e2e\ui\options\index.js    33.6kb
+  ...and 2 more output files...
+
+Done in 16ms
+Built e2e: D:\LAB\火狐浏览器插件制作2\dist\e2e
+
+Running 16 tests using 1 worker
+
+  x   1 tests\e2e\extension.spec.ts:174:3 › notice regression: reload (0ms)
+  -   2 tests\e2e\extension.spec.ts:174:3 › notice regression: pointer-path
+  -   3 tests\e2e\extension.spec.ts:174:3 › notice regression: pointer-path-zh
+  -   4 tests\e2e\extension.spec.ts:174:3 › notice regression: pointer-path-narrow
+  -   5 tests\e2e\extension.spec.ts:174:3 › notice regression: english-layout
+  -   6 tests\e2e\extension.spec.ts:242:1 › opens the bilingual release notice from the hoverable response-source star
+  -   7 tests\e2e\extension.spec.ts:296:1 › keeps live and reload captures distinct and stores no chat text
+  -   8 tests\e2e\extension.spec.ts:1107:1 › restores a detached overlay host while respecting manual hide
+  -   9 tests\e2e\extension.spec.ts:1162:1 › captures delta metadata through real fetch chunks and interleaved WebSocket frames
+  -  10 tests\e2e\extension.spec.ts:1275:1 › aligns diagnostic evidence fields without adding PoW
+  -  11 tests\e2e\extension.spec.ts:1370:1 › shows only GPT-5.6 and GPT-5.5 auto reasoning in the dashboard, popup and overlay
+  -  12 tests\e2e\extension.spec.ts:1451:1 › collects both modes independently and isolates reloads, SPA visits and late responses
+  -  13 tests\e2e\extension.spec.ts:1563:1 › captures passive quota snapshots and displays four rows immediately above request ID
+  -  14 tests\e2e\extension.spec.ts:1621:1 › retires the current route and badge when the same tab leaves the supported site
+  -  15 tests\e2e\extension.spec.ts:1675:1 › keeps normal and 256-character model fields inside full and compact overlays
+  -  16 tests\e2e\extension.spec.ts:1731:1 › rejects stale UI snapshots, keeps overlay nodes stable, and blocks post-clear resurrection
+
+
+  1) tests\e2e\extension.spec.ts:174:3 › notice regression: reload ─────────────────────────────────
+
+    Error: No extension-capable Chromium found. Run: npx playwright install chromium
+
+      83 |   }
+      84 |   const match = candidates.find((candidate) => existsSync(candidate));
+    > 85 |   if (!match) throw new Error('No extension-capable Chromium found. Run: npx playwright install chromium');
+         |                     ^
+      86 |   return match;
+      87 | }
+      88 |
+        at findExtensionCapableChromium (D:\LAB\火狐浏览器插件制作2\tests\e2e\extension.spec.ts:85:21)
+        at D:\LAB\火狐浏览器插件制作2\tests\e2e\extension.spec.ts:150:22
+
+    Error Context: output\playwright\test-results\extension-notice-regression-reload\error-context.md
+
+    Error Context: output\playwright\test-results\extension-notice-regression-reload\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    output\playwright\test-results\extension-notice-regression-reload\trace.zip
+    Usage:
+
+        npx playwright show-trace output\playwright\test-results\extension-notice-regression-reload\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\extension.spec.ts:174:3 › notice regression: reload ──────────────────────────────────
+  15 did not run
+EXIT=1
