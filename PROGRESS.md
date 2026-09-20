@@ -108,6 +108,7 @@
 - 产物身份与历史证据：`ff-marionette.py=9e04541c…`（11 份结果 JSON 的 `probeSha256` 与之一致）；历史 `ff-probe-results.json=4bec56b9…`、`ff-probe-results-v1.0.7-2026-09-20.json=3da8fab7…` 未变；一/二轮证据未覆盖。本轮证据已审查（凭据类扫描零命中）+ 脱敏（`gyjxjkg`→`<user>`），按精确路径提交。**未使用 `--force`**，未清理未知文件，`.workbuddy/` 未处理。
 - 新增限制（BLOCKED 第 10 项）：真实 Firefox 会如实回报自己的 profile，“连接不可信”无法在真机自然产生，只能由脚本化对端复现。
 - 本轮只说明这两处遗漏的修复，不声称全部升级场景已验证，也不声称已获管理者验收。
+- 提交 `ee74203`（40 文件：探针 + 3 个新测试夹具/用例 + 文档 + 29 个 `r3-*` 证据；`.log` 按精确路径 `git add -f`，未改 `.gitignore`、未强制添加目录）。收尾 `git status --porcelain -uall` 只剩 `.workbuddy/memory/*` 两条未跟踪，即**已跟踪文件干净、仍有未知未跟踪文件**；`main=182fca1e`、`git diff d5524a0 HEAD -- src schemas _locales icons manifest` 为空、两份历史结果哈希未变。
 
 ## 任务 7 第三轮开工回执（2026-09-20，只修两处遗漏）
 - 起点 `HEAD=f2f53b2`（分支 `codex/sync-upstream-v1.0.7`）；`main=182fca1e` 未动；`git diff d5524a0 HEAD -- src schemas _locales icons manifest` = 空（收尾复核一次）。
