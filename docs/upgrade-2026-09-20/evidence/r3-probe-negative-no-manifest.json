@@ -1,0 +1,153 @@
+{
+ "meta": {
+  "schema": "ff-probe/2",
+  "date": "2026-09-20",
+  "startedAt": "2026-09-20T14:54:24+0800",
+  "finishedAt": "2026-09-20T14:54:24+0800",
+  "label": "r3-negative-no-manifest",
+  "probeFile": "D:\\LAB\\火狐浏览器插件制作2\\ff-marionette.py",
+  "probeSha256": "9e04541c33f52fc5b1100586c042776f0b9d7e0111cc4ce0cb2cffc7e2f243c9",
+  "stage": "identity",
+  "reachedStages": [
+   "probe-hash",
+   "git",
+   "build-record",
+   "identity"
+  ],
+  "identity": {
+   "xpi": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ri-exec3\\fixtures\\no-manifest.xpi",
+   "distDir": "D:\\LAB\\火狐浏览器插件制作2\\dist\\firefox",
+   "buildRecordPath": "D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
+   "expectedXpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
+   "xpiSha256": "fb8250e6273e7398c594d1ed76d6c0919f7b619aa495d18d5e4d73f1f5548035",
+   "manifestSha256": null,
+   "manifestVersion": null,
+   "geckoId": null,
+   "strictMinVersion": null,
+   "packagedFiles": null,
+   "distFileCount": null,
+   "parseError": "package could not be parsed (ValueError: the archive has no manifest.json at its root)"
+  },
+  "expectation": {
+   "source": "build-record: D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
+   "expectedXpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
+   "buildRecordSha256": "0208c1e2b7a8d1d7379992b5e93e917172243a7782ed47cbeb9f06be4e7dc1d1",
+   "buildRecordError": null
+  },
+  "git": {
+   "repoDir": "D:\\LAB\\火狐浏览器插件制作2",
+   "available": true,
+   "head": "f2f53b284b39d7df2b08b900d8b4893ec0bf41a4",
+   "dirty": true,
+   "porcelain": "M AGENTS.md\n M BLOCKED.md\n M PROGRESS.md\n M README-FIREFOX.md\n M docs/upgrade-2026-09-20/UPGRADE-REPORT.md\n M ff-marionette.py\n M tests/firefox-tooling/fake_marionette.py\n M tests/firefox-tooling/probe_loader.py\n?? .workbuddy/memory/2026-09-20.md\n?? .workbuddy/memory/MEMORY.md\n?? docs/upgrade-2026-09-20/evidence/r3-probe-negative-badpage.json\n?? docs/upgrade-2026-09-20/evidence/r3-probe-negative-broken-xpi.json\n?? docs/upgrade-2026-09-20/evidence/r3-probe-positive.json\n?? tests/firefox-tooling/fake_peer.py\n?? tests/firefox-tooling/test_ff_marionette_early_failure.py\n?? tests/firefox-tooling/test_ff_marionette_gate.py",
+   "error": null,
+   "labelCommit": "f2f53b2"
+  },
+  "launch": null,
+  "session": null,
+  "browserLaunched": false,
+  "browserConnected": false,
+  "connectionTrusted": null,
+  "firefoxVersion": null,
+  "fatal": null,
+  "summary": {
+   "executed": 5,
+   "passed": 1,
+   "failed": 4,
+   "failedChecks": [
+    "0b.xpi-contents",
+    "0c.dist-matches-record",
+    "0d.manifest-sha256",
+    "0a.xpi-sha256"
+   ],
+   "requiredChecks": [
+    "0a.xpi-sha256",
+    "0b.xpi-contents",
+    "0d.manifest-sha256",
+    "0.session",
+    "0e.session-profile",
+    "1.install-no-manifest-error",
+    "1b.addon-uuid",
+    "2.ext-namespaces",
+    "3.ext-chrome.storage-promise",
+    "4.ext-get-state-roundtrip",
+    "5.ext-tabs-i18n-getURL",
+    "6.popup-renders",
+    "7.synthetic-observation-pipeline",
+    "8.dashboard-shows-turn",
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "11.notice-hint-1.0.7",
+    "12.capture-context-registered",
+    "13.auto-reasoning-verdict",
+    "14.announcement-page",
+    "15.open-announcement-message",
+    "0c.dist-matches-record",
+    "0f.build-record"
+   ],
+   "missingChecks": [
+    "0.session",
+    "0e.session-profile",
+    "1.install-no-manifest-error",
+    "1b.addon-uuid",
+    "2.ext-namespaces",
+    "3.ext-chrome.storage-promise",
+    "4.ext-get-state-roundtrip",
+    "5.ext-tabs-i18n-getURL",
+    "6.popup-renders",
+    "7.synthetic-observation-pipeline",
+    "8.dashboard-shows-turn",
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "11.notice-hint-1.0.7",
+    "12.capture-context-registered",
+    "13.auto-reasoning-verdict",
+    "14.announcement-page",
+    "15.open-announcement-message"
+   ],
+   "identityOk": false,
+   "aborted": null,
+   "stage": "identity",
+   "browserLaunched": false,
+   "browserConnected": false,
+   "connectionTrusted": null,
+   "profileDir": null,
+   "profileDirRemoved": true,
+   "profilesKeptByRequest": false,
+   "browserStoppedByThisRun": false
+  },
+  "exitCode": 2,
+  "exitReason": "artifact identity rejected before browser interaction",
+  "resultsPath": "D:\\LAB\\火狐浏览器插件制作2\\docs\\upgrade-2026-09-20\\evidence\\r3-probe-negative-no-manifest.json",
+  "notes": [
+   "identity rejected; browser was not launched, connected, installed to or uninstalled from"
+  ]
+ },
+ "results": [
+  {
+   "check": "0f.build-record",
+   "ok": true,
+   "detail": "xpiSha256=2b3044146252c76e manifestSha256=c43c9104de4a6b00 files=30"
+  },
+  {
+   "check": "0b.xpi-contents",
+   "ok": false,
+   "detail": "package could not be parsed (ValueError: the archive has no manifest.json at its root)"
+  },
+  {
+   "check": "0c.dist-matches-record",
+   "ok": false,
+   "detail": "package could not be parsed (ValueError: the archive has no manifest.json at its root)"
+  },
+  {
+   "check": "0d.manifest-sha256",
+   "ok": false,
+   "detail": "package could not be parsed (ValueError: the archive has no manifest.json at its root)"
+  },
+  {
+   "check": "0a.xpi-sha256",
+   "ok": false,
+   "detail": "actual=fb8250e6273e7398c594d1ed76d6c0919f7b619aa495d18d5e4d73f1f5548035 expected=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993"
+  }
+ ]
+}

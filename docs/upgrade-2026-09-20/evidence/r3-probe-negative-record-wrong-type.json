@@ -1,0 +1,147 @@
+{
+ "meta": {
+  "schema": "ff-probe/2",
+  "date": "2026-09-20",
+  "startedAt": "2026-09-20T14:54:25+0800",
+  "finishedAt": "2026-09-20T14:54:25+0800",
+  "label": "r3-negative-record-wrong-type",
+  "probeFile": "D:\\LAB\\火狐浏览器插件制作2\\ff-marionette.py",
+  "probeSha256": "9e04541c33f52fc5b1100586c042776f0b9d7e0111cc4ce0cb2cffc7e2f243c9",
+  "stage": "identity",
+  "reachedStages": [
+   "probe-hash",
+   "git",
+   "build-record",
+   "identity"
+  ],
+  "identity": {
+   "xpi": "D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.xpi",
+   "distDir": "D:\\LAB\\火狐浏览器插件制作2\\dist\\firefox",
+   "buildRecordPath": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ri-exec3\\fixtures\\record-wrong-type.json",
+   "expectedXpiSha256": null,
+   "xpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
+   "manifestSha256": "c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a",
+   "manifestVersion": "1.0.7",
+   "geckoId": "chatgpt-route-inspector-firefox@local",
+   "strictMinVersion": "128.0",
+   "packagedFiles": 30,
+   "distFileCount": 30,
+   "parseError": null
+  },
+  "expectation": {
+   "source": "build-record: C:\\Users\\<user>\\AppData\\Local\\Temp\\ri-exec3\\fixtures\\record-wrong-type.json",
+   "expectedXpiSha256": null,
+   "buildRecordSha256": null,
+   "buildRecordError": "build record field fileHashes has type list, expected dict"
+  },
+  "git": {
+   "repoDir": "D:\\LAB\\火狐浏览器插件制作2",
+   "available": true,
+   "head": "f2f53b284b39d7df2b08b900d8b4893ec0bf41a4",
+   "dirty": true,
+   "porcelain": "M AGENTS.md\n M BLOCKED.md\n M PROGRESS.md\n M README-FIREFOX.md\n M docs/upgrade-2026-09-20/UPGRADE-REPORT.md\n M ff-marionette.py\n M tests/firefox-tooling/fake_marionette.py\n M tests/firefox-tooling/probe_loader.py\n?? .workbuddy/memory/2026-09-20.md\n?? .workbuddy/memory/MEMORY.md\n?? docs/upgrade-2026-09-20/evidence/r3-probe-negative-badpage.json\n?? docs/upgrade-2026-09-20/evidence/r3-probe-negative-broken-xpi.json\n?? docs/upgrade-2026-09-20/evidence/r3-probe-negative-manifest-not-json.json\n?? docs/upgrade-2026-09-20/evidence/r3-probe-negative-no-manifest.json\n?? docs/upgrade-2026-09-20/evidence/r3-probe-negative-record-is-list.json\n?? docs/upgrade-2026-09-20/evidence/r3-probe-negative-record-missing.json\n?? docs/upgrade-2026-09-20/evidence/r3-probe-negative-record-not-json.json\n?? docs/upgrade-2026-09-20/evidence/r3-probe-positive.json\n?? tests/firefox-tooling/fake_peer.py\n?? tests/firefox-tooling/test_ff_marionette_early_failure.py\n?? tests/firefox-tooling/test_ff_marionette_gate.py",
+   "error": null,
+   "labelCommit": "f2f53b2"
+  },
+  "launch": null,
+  "session": null,
+  "browserLaunched": false,
+  "browserConnected": false,
+  "connectionTrusted": null,
+  "firefoxVersion": null,
+  "fatal": null,
+  "summary": {
+   "executed": 4,
+   "passed": 2,
+   "failed": 2,
+   "failedChecks": [
+    "0f.build-record",
+    "0a.xpi-sha256"
+   ],
+   "requiredChecks": [
+    "0a.xpi-sha256",
+    "0b.xpi-contents",
+    "0d.manifest-sha256",
+    "0.session",
+    "0e.session-profile",
+    "1.install-no-manifest-error",
+    "1b.addon-uuid",
+    "2.ext-namespaces",
+    "3.ext-chrome.storage-promise",
+    "4.ext-get-state-roundtrip",
+    "5.ext-tabs-i18n-getURL",
+    "6.popup-renders",
+    "7.synthetic-observation-pipeline",
+    "8.dashboard-shows-turn",
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "11.notice-hint-1.0.7",
+    "12.capture-context-registered",
+    "13.auto-reasoning-verdict",
+    "14.announcement-page",
+    "15.open-announcement-message",
+    "0c.dist-matches-record",
+    "0f.build-record"
+   ],
+   "missingChecks": [
+    "0.session",
+    "0e.session-profile",
+    "1.install-no-manifest-error",
+    "1b.addon-uuid",
+    "2.ext-namespaces",
+    "3.ext-chrome.storage-promise",
+    "4.ext-get-state-roundtrip",
+    "5.ext-tabs-i18n-getURL",
+    "6.popup-renders",
+    "7.synthetic-observation-pipeline",
+    "8.dashboard-shows-turn",
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "11.notice-hint-1.0.7",
+    "12.capture-context-registered",
+    "13.auto-reasoning-verdict",
+    "14.announcement-page",
+    "15.open-announcement-message",
+    "0c.dist-matches-record"
+   ],
+   "identityOk": false,
+   "aborted": null,
+   "stage": "identity",
+   "browserLaunched": false,
+   "browserConnected": false,
+   "connectionTrusted": null,
+   "profileDir": null,
+   "profileDirRemoved": true,
+   "profilesKeptByRequest": false,
+   "browserStoppedByThisRun": false
+  },
+  "exitCode": 2,
+  "exitReason": "artifact identity rejected before browser interaction",
+  "resultsPath": "D:\\LAB\\火狐浏览器插件制作2\\docs\\upgrade-2026-09-20\\evidence\\r3-probe-negative-record-wrong-type.json",
+  "notes": [
+   "identity rejected; browser was not launched, connected, installed to or uninstalled from"
+  ]
+ },
+ "results": [
+  {
+   "check": "0f.build-record",
+   "ok": false,
+   "detail": "build record field fileHashes has type list, expected dict"
+  },
+  {
+   "check": "0a.xpi-sha256",
+   "ok": false,
+   "detail": "no expected XPI sha256 supplied (pass --expect-build-record or --expect-xpi-sha256)"
+  },
+  {
+   "check": "0b.xpi-contents",
+   "ok": true,
+   "detail": "30 files identical to XPI"
+  },
+  {
+   "check": "0d.manifest-sha256",
+   "ok": true,
+   "detail": "sha256=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (recorded only; not an identity condition)"
+  }
+ ]
+}

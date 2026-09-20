@@ -19,12 +19,23 @@ The probe then cross-checks three things that must all agree: the packaged
 archive, the ``--dist`` tree it was built from, and the build record. A
 manifest hash is still recorded, but on its own it never passes identity.
 
+Damaged input never produces a traceback: an unreadable XPI, a missing or
+malformed packaged manifest, and a missing/invalid build record are all turned
+into failed checks plus a written result file (exit code 2), because in each
+case identity simply could not be established.
+
+Once connected, the connection is treated as untrusted until the browser has
+reported a ``moz:profile`` equal to the profile this run created. Until then no
+Addon, storage, navigation or session command is sent at all, and the session
+is deliberately left undeleted - it may belong to a browser this run does not
+own.
+
 Exit codes (all non-zero codes mean "do not trust this run"):
   0   every expected check ran and passed
   2   artifact identity rejected -> aborts before any browser interaction
   3   runtime/anomaly: launch, connect, protocol or cleanup failure
-  4   one or more checks ran and failed
-  5   incomplete: a required check never ran (e.g. aborted after a failure)
+  4   one or more checks ran and failed, including a safety abort
+  5   incomplete: a required check never ran after an ordinary failure
   6   refused to overwrite an existing --out file (previous evidence is safe)
   64  bad command line
 
@@ -89,7 +100,7 @@ REQUIRED_CHECKS = [
     "15.open-announcement-message",
 ]
 # Only demanded when a build record was supplied.
-REQUIRED_WITH_RECORD = ["0c.dist-matches-record"]
+REQUIRED_WITH_RECORD = ["0c.dist-matches-record", "0f.build-record"]
 
 
 # --- small helpers ----------------------------------------------------------
@@ -127,8 +138,11 @@ def zip_entries(path):
 
 
 def read_xpi_manifest(path):
-    with zipfile.ZipFile(path) as archive:
-        raw = archive.read("manifest.json")
+    try:
+        with zipfile.ZipFile(path) as archive:
+            raw = archive.read("manifest.json")
+    except KeyError:
+        raise ValueError("the archive has no manifest.json at its root")
     return sha256_bytes(raw), json.loads(raw.decode("utf-8"))
 
 
@@ -144,12 +158,20 @@ def default_out_path(script_dir, label, stamp=None):
     return candidate
 
 
-def decide_exit_code(identity_ok, fatal, failed_checks, missing_checks):
-    """Pure aggregation: only a complete, fully green run may exit 0."""
+def decide_exit_code(identity_ok, fatal, failed_checks, missing_checks, aborted=None):
+    """Pure aggregation: only a complete, fully green run may exit 0.
+
+    `aborted` carries a reason string when the run deliberately stopped early
+    for safety (e.g. the connected browser was not the instance this run
+    launched). That is a failed precondition, so it is reported as "checks
+    failed" even though the remaining checks were never attempted.
+    """
     if not identity_ok:
         return EXIT_IDENTITY
     if fatal is not None:
         return EXIT_FATAL
+    if aborted:
+        return EXIT_CHECKS_FAILED
     if missing_checks:
         return EXIT_INCOMPLETE
     if failed_checks:
@@ -157,13 +179,16 @@ def decide_exit_code(identity_ok, fatal, failed_checks, missing_checks):
     return EXIT_OK
 
 
-def exit_reason(code, identity_ok, fatal, failed_checks, missing_checks):
+def exit_reason(code, identity_ok, fatal, failed_checks, missing_checks, aborted=None):
     if code == EXIT_OK:
         return "all expected checks ran and passed"
     if code == EXIT_IDENTITY:
         return "artifact identity rejected before browser interaction"
     if code == EXIT_FATAL:
         return "runtime anomaly: %s" % (fatal,)
+    if code == EXIT_CHECKS_FAILED and aborted:
+        return "aborted for safety (%s); failed checks: %s" % (
+            aborted, ", ".join(failed_checks) or "none recorded")
     if code == EXIT_INCOMPLETE:
         return "required checks did not run: %s" % ", ".join(missing_checks)
     if code == EXIT_CHECKS_FAILED:
@@ -173,7 +198,12 @@ def exit_reason(code, identity_ok, fatal, failed_checks, missing_checks):
 
 # --- artifact identity ------------------------------------------------------
 def verify_identity(xpi_path, dist_dir, expected_xpi_sha256, record, record_path):
-    """Return (checks, meta). Runs entirely offline, before any browser work."""
+    """Return (checks, meta). Runs entirely offline, before any browser work.
+
+    Never raises: a package that cannot be read produces failed checks and a
+    `parseError` in meta, so the caller can still write a usable result file.
+    Fields that could not be read stay None instead of being guessed.
+    """
     checks = []
     meta = {
         "xpi": xpi_path,
@@ -187,6 +217,7 @@ def verify_identity(xpi_path, dist_dir, expected_xpi_sha256, record, record_path
         "strictMinVersion": None,
         "packagedFiles": None,
         "distFileCount": None,
+        "parseError": None,
     }
 
     def add(name, ok, detail):
@@ -197,25 +228,47 @@ def verify_identity(xpi_path, dist_dir, expected_xpi_sha256, record, record_path
         add("0a.xpi-sha256", False, "XPI not found: %s" % xpi_path)
         add("0b.xpi-contents", False, "XPI not found")
         add("0d.manifest-sha256", False, "XPI not found")
+        meta["parseError"] = "XPI not found: %s" % xpi_path
         return checks, meta
 
-    meta["xpiSha256"] = sha256_file(xpi_path)
-    manifest_sha, manifest = read_xpi_manifest(xpi_path)
-    meta["manifestSha256"] = manifest_sha
-    meta["manifestVersion"] = manifest.get("version")
-    gecko = (manifest.get("browser_specific_settings") or {}).get("gecko") or {}
-    meta["geckoId"] = gecko.get("id")
-    meta["strictMinVersion"] = gecko.get("strict_min_version")
-    entries = zip_entries(xpi_path)
-    meta["packagedFiles"] = len(entries)
+    try:
+        meta["xpiSha256"] = sha256_file(xpi_path)
+    except Exception as error:
+        meta["parseError"] = "XPI could not be hashed (%s: %s)" % (type(error).__name__, error)
+
+    manifest = None
+    entries = None
+    try:
+        manifest_sha, manifest = read_xpi_manifest(xpi_path)
+        meta["manifestSha256"] = manifest_sha
+        meta["manifestVersion"] = manifest.get("version")
+        gecko = (manifest.get("browser_specific_settings") or {}).get("gecko") or {}
+        meta["geckoId"] = gecko.get("id")
+        meta["strictMinVersion"] = gecko.get("strict_min_version")
+        entries = zip_entries(xpi_path)
+        meta["packagedFiles"] = len(entries)
+    except Exception as error:
+        reason = "package could not be parsed (%s: %s)" % (type(error).__name__, error)
+        meta["parseError"] = reason
+        add("0b.xpi-contents", False, reason)
+        if record is not None:
+            add("0c.dist-matches-record", False, reason)
+        add("0d.manifest-sha256", False, reason)
 
     # 0a: the whole archive must equal the expectation this build produced.
-    if not expected_xpi_sha256:
+    #     This only needs the file bytes, so it is evaluated even when the
+    #     archive cannot be parsed as a zip.
+    if meta["xpiSha256"] is None:
+        pass  # already reported as a parse error
+    elif not expected_xpi_sha256:
         add("0a.xpi-sha256", False,
             "no expected XPI sha256 supplied (pass --expect-build-record or --expect-xpi-sha256)")
     else:
         add("0a.xpi-sha256", meta["xpiSha256"] == expected_xpi_sha256,
             "actual=%s expected=%s" % (meta["xpiSha256"], expected_xpi_sha256))
+
+    if entries is None:
+        return checks, meta
 
     # 0b: package contents must equal the --dist tree, both paths and bytes.
     if not os.path.isdir(dist_dir):
@@ -430,7 +483,16 @@ class Marionette:
 
 # --- the checks themselves --------------------------------------------------
 def run_browser_checks(m, meta, args, results):
-    """Run every browser-side check. Records failures, never exits early."""
+    """Run every browser-side check.
+
+    Individual checks record their own failures and never abort the run - with
+    one exception: the connected browser must be the instance this run created.
+    Until that is verified nothing else is sent, because every remaining check
+    would act on a browser of unknown provenance.
+
+    Returns {"trusted": bool, "aborted": reason_or_None}. `aborted` is set when
+    the run stops early for safety rather than because checks merely failed.
+    """
     EXT = None
     shell = None
 
@@ -470,17 +532,36 @@ def run_browser_checks(m, meta, args, results):
     add("0.session", bool(session.get("sessionId")), session.get("sessionId"))
 
     # --- the connected browser must be the instance this run launched ---
+    # This is a precondition, not a report line: while it is unresolved the
+    # connection is untrusted, so no Addon / storage / navigation / session
+    # command may be sent. Only the socket is closed afterwards.
+    profile_trusted = False
     try:
         reported = caps.get("moz:profile") or ""
         launched = meta["launch"]["profileDir"]
         same = bool(reported) and os.path.normcase(os.path.realpath(reported)) == os.path.normcase(os.path.realpath(launched))
         temp_root = os.path.realpath(tempfile.gettempdir())
         inside_temp = os.path.realpath(launched).startswith(temp_root + os.sep)
-        add("0e.session-profile", same and inside_temp,
+        profile_trusted = same and inside_temp
+        add("0e.session-profile", profile_trusted,
             "browser says moz:profile=%s pid=%s launched=%s inside_temp=%s" % (
                 reported, meta["launch"]["pid"], launched, inside_temp))
     except Exception as error:
-        add("0e.session-profile", False, error)
+        add("0e.session-profile", False, "profile check raised (%s: %s)" % (type(error).__name__, error))
+
+    if not profile_trusted:
+        detail = ("connection identity not verified; no Addon, storage, navigation or "
+                  "session command was sent, and the session was left untouched")
+        add("0f.untrusted-connection", False, detail)
+        meta["connectionTrusted"] = False
+        return {"trusted": False,
+                "aborted": "connected browser is not the profile this run created"}
+
+    # Only now may the connection be used.
+    try:
+        meta["firefoxVersion"] = exe("return navigator.userAgent")
+    except Exception as error:
+        meta["firefoxVersion"] = "unavailable: %s" % (error,)
 
     # --- install ---
     installed = False
@@ -517,7 +598,8 @@ def run_browser_checks(m, meta, args, results):
             add("1b.addon-uuid", False, error)
     if not uuid:
         add("1b.addon-registered", False, "uuid not found; browser checks aborted")
-        return
+        meta["connectionTrusted"] = True
+        return {"trusted": True, "aborted": None}
     EXT = "moz-extension://" + uuid
     shell = handle
 
@@ -642,6 +724,9 @@ def run_browser_checks(m, meta, args, results):
     except Exception as error:
         add("15.open-announcement-message", False, error)
 
+    meta["connectionTrusted"] = True
+    return {"trusted": True, "aborted": None}
+
 
 # --- argument parsing -------------------------------------------------------
 class Parser(argparse.ArgumentParser):
@@ -697,6 +782,53 @@ def git_state(repo_dir, fallback_commit):
     return info
 
 
+def load_build_record(path):
+    """Return (record, error). Never raises; never invents an expectation."""
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            record = json.load(handle)
+    except FileNotFoundError:
+        return None, "build record not found: %s" % path
+    except Exception as error:
+        return None, "build record is not readable JSON (%s: %s)" % (type(error).__name__, error)
+    if not isinstance(record, dict):
+        return None, "build record is a JSON %s, expected an object" % type(record).__name__
+    if not isinstance(record.get("xpiSha256"), str) or not record.get("xpiSha256"):
+        return None, "build record has no usable string field xpiSha256"
+    for key, expected_type in (("manifestSha256", str), ("fileHashes", dict),
+                               ("distDir", str), ("xpiPath", str)):
+        value = record.get(key)
+        if value is not None and not isinstance(value, expected_type):
+            return None, "build record field %s has type %s, expected %s" % (
+                key, type(value).__name__, expected_type.__name__)
+    if not isinstance(record.get("fileHashes"), dict) or not record["fileHashes"]:
+        return None, "build record has no usable fileHashes map"
+    return record, None
+
+
+def ensure_output_writable(out_path):
+    """Fail fast when the results file could never be written.
+
+    Deliberately creates nothing. An earlier version wrote a zero-byte probe
+    file into the destination directory and deleted it again to prove
+    writability; that left `.ff-probe-write-probe-*` artefacts next to the
+    evidence. Only the target and its parent are inspected here, and the real
+    write happens once, at the very end.
+    """
+    parent = os.path.dirname(out_path) or "."
+    try:
+        os.makedirs(parent, exist_ok=True)
+    except Exception as error:
+        return "output directory cannot be created (%s: %s)" % (type(error).__name__, error)
+    if not os.path.isdir(parent):
+        return "output directory is not a directory: %s" % parent
+    if os.path.isdir(out_path):
+        return "output path is an existing directory: %s" % out_path
+    if not os.access(parent, os.W_OK):
+        return "output directory is not writable: %s" % parent
+    return None
+
+
 # --- main -------------------------------------------------------------------
 def main(argv=None):
     args = parse_args(sys.argv[1:] if argv is None else argv)
@@ -709,29 +841,23 @@ def main(argv=None):
     args.dist = os.path.abspath(args.dist)
 
     # Output protection happens first: never touch an existing evidence file and
-    # never start a browser just to discover the output path is unusable.
+    # never start a browser just to discover that the results cannot be saved.
     out_path = args.out or default_out_path(SCRIPT_DIR, args.label)
     if os.path.exists(out_path) and not args.force:
-        sys.stderr.write("refusing to overwrite existing results file: %s\n" % out_path)
+        if os.path.isdir(out_path):
+            sys.stderr.write("refusing to use an existing directory as the results file: %s\n" % out_path)
+        else:
+            sys.stderr.write("refusing to overwrite existing results file: %s\n" % out_path)
         sys.stderr.write("pass --force to overwrite, or choose another --out\n")
         return EXIT_OUTPUT_EXISTS
+    output_error = ensure_output_writable(out_path)
+    if output_error:
+        sys.stderr.write("cannot write results to %s: %s\n" % (out_path, output_error))
+        sys.stderr.write("choose a writable --out; no file was created or changed\n")
+        return EXIT_FATAL
 
-    record = None
-    if args.expect_build_record:
-        try:
-            with open(args.expect_build_record, "r", encoding="utf-8") as handle:
-                record = json.load(handle)
-        except Exception as error:
-            sys.stderr.write("cannot read build record %s: %s\n" % (args.expect_build_record, error))
-            return EXIT_IDENTITY
-    expected_sha = args.expect_xpi_sha256 or (record or {}).get("xpiSha256")
-
-    results = []
-    identity_checks, identity_meta = verify_identity(
-        args.xpi, args.dist, expected_sha, record, args.expect_build_record or "")
-    results.extend(identity_checks)
-    identity_ok = all(c["ok"] for c in identity_checks)
-
+    # From here on every failure must still leave a usable result file, so the
+    # whole run is covered by one handler that records how far it got.
     meta = {
         "schema": "ff-probe/2",
         "date": time.strftime("%Y-%m-%d"),
@@ -739,38 +865,97 @@ def main(argv=None):
         "finishedAt": None,
         "label": args.label,
         "probeFile": os.path.abspath(__file__),
-        "probeSha256": sha256_file(os.path.abspath(__file__)),
-        "identity": identity_meta,
+        "probeSha256": None,
+        "stage": "start",
+        "reachedStages": [],
+        "identity": None,
         "expectation": {
             "source": ("build-record: %s" % args.expect_build_record) if args.expect_build_record
                       else ("--expect-xpi-sha256" if args.expect_xpi_sha256 else "none"),
-            "expectedXpiSha256": expected_sha,
-            "buildRecordSha256": sha256_file(args.expect_build_record) if args.expect_build_record and os.path.isfile(args.expect_build_record) else None,
+            "expectedXpiSha256": args.expect_xpi_sha256,
+            "buildRecordSha256": None,
+            "buildRecordError": None,
         },
-        "git": git_state(SCRIPT_DIR, args.commit),
+        "git": None,
         "launch": None,
         "session": None,
+        "browserLaunched": False,
+        "browserConnected": False,
+        "connectionTrusted": None,
         "firefoxVersion": None,
         "fatal": None,
         "summary": None,
         "exitCode": None,
         "exitReason": None,
+        "resultsPath": os.path.abspath(out_path),
         "notes": [],
     }
 
+    results = []
+    record = None
+    record_error = None
+    identity_ok = False
+    fatal = None
+    aborted = None
     proc = None
     connection = None
     profile_dir = None
     profile_removed = None
-    fatal = None
+
+    def stage(name):
+        meta["stage"] = name
+        meta["reachedStages"].append(name)
+
     try:
+        stage("probe-hash")
+        try:
+            meta["probeSha256"] = sha256_file(os.path.abspath(__file__))
+        except Exception as error:
+            meta["notes"].append("probe sha256 unavailable: %s" % (error,))
+        stage("git")
+        meta["git"] = git_state(SCRIPT_DIR, args.commit)
+
+        if args.expect_build_record:
+            stage("build-record")
+            record, record_error = load_build_record(args.expect_build_record)
+            if record_error:
+                results.append({"check": "0f.build-record", "ok": False, "detail": record_error})
+                print("FAIL 0f.build-record | %s" % record_error, flush=True)
+                meta["expectation"]["buildRecordError"] = record_error
+            else:
+                results.append({"check": "0f.build-record", "ok": True,
+                                "detail": "xpiSha256=%s manifestSha256=%s files=%d" % (
+                                    record["xpiSha256"][:16],
+                                    str(record.get("manifestSha256"))[:16],
+                                    len(record["fileHashes"]))})
+                print("PASS 0f.build-record | xpi=%s files=%d" % (
+                    record["xpiSha256"][:16], len(record["fileHashes"])), flush=True)
+                try:
+                    meta["expectation"]["buildRecordSha256"] = sha256_file(args.expect_build_record)
+                except Exception as error:
+                    meta["notes"].append("build record sha256 unavailable: %s" % (error,))
+
+        stage("identity")
+        expected_sha = args.expect_xpi_sha256 or (record or {}).get("xpiSha256")
+        meta["expectation"]["expectedXpiSha256"] = expected_sha
+        identity_checks, identity_meta = verify_identity(
+            args.xpi, args.dist, expected_sha, record, args.expect_build_record or "")
+        results.extend(identity_checks)
+        meta["identity"] = identity_meta
+        identity_ok = all(check["ok"] for check in identity_checks)
+        if record_error:
+            # An unusable expectation source means identity was not established,
+            # however the remaining checks turned out.
+            identity_ok = False
+
         if identity_ok:
-            instance = identity_meta["manifestVersion"]
+            stage("browser")
             port = args.port or free_port()
             profile_root = os.path.join(tempfile.gettempdir(), "ff-ri-probe-profiles")
             os.makedirs(profile_root, exist_ok=True)
             profile_dir = make_profile(profile_root)
             proc, argv_launch = launch_firefox(args.firefox, profile_dir, port)
+            meta["browserLaunched"] = True
             meta["launch"] = {
                 "firefoxExe": args.firefox,
                 "pid": proc.pid,
@@ -779,11 +964,13 @@ def main(argv=None):
                 "profileDir": profile_dir,
                 "cmdline": argv_launch,
                 "launchedAt": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
-                "expectedManifestVersion": instance,
+                "expectedManifestVersion": identity_meta["manifestVersion"],
             }
             print("launched firefox pid=%s port=%s profile=%s" % (proc.pid, port, profile_dir), flush=True)
             wait_for_port(args.host, port, args.startup_timeout, proc)
+            stage("connect")
             connection = Marionette(args.host, port)
+            meta["browserConnected"] = True
             session = connection.cmd("WebDriver:NewSession", {"capabilities": {
                 "moz:firefoxOptions": {"prefs": {"xpinstall.signatures.required": False}}
             }})
@@ -795,13 +982,11 @@ def main(argv=None):
                                   "moz:profile", "moz:buildID", "moz:headless",
                                   "moz:geckodriverVersion")},
             }
-            try:
-                meta["firefoxVersion"] = connection.cmd(
-                    "WebDriver:ExecuteScript",
-                    {"script": "return navigator.userAgent", "args": []})["value"]
-            except Exception as error:
-                meta["firefoxVersion"] = "unavailable: %s" % (error,)
-            run_browser_checks(connection, meta, args, results)
+            stage("checks")
+            # Nothing beyond WebDriver:NewSession is sent until the checks have
+            # verified that this connection is the browser this run created.
+            verdict = run_browser_checks(connection, meta, args, results)
+            aborted = verdict["aborted"]
         else:
             meta["notes"].append("identity rejected; browser was not launched, connected, installed to or uninstalled from")
     except BaseException as error:  # includes TimeoutError, ConnectionError, RuntimeError
@@ -809,15 +994,22 @@ def main(argv=None):
             fatal = RuntimeError("interrupted: %s" % (error,))
         else:
             fatal = error
-        print("FATAL %s: %s" % (type(error).__name__, error), flush=True)
+        print("FATAL [%s] %s: %s" % (meta["stage"], type(error).__name__, error), flush=True)
     finally:
-        # Cleanup must never swallow the failure we already recorded.
+        # Cleanup must never swallow the failure we already recorded, and must
+        # never send a state-changing command to a connection whose identity was
+        # not verified - including the session teardown, which would act on
+        # whatever browser happens to be on the other end of the socket.
         try:
             if connection is not None:
-                try:
-                    connection.cmd("WebDriver:DeleteSession", {})
-                except Exception:
-                    pass
+                if meta.get("connectionTrusted"):
+                    try:
+                        connection.cmd("WebDriver:DeleteSession", {})
+                    except Exception:
+                        pass
+                else:
+                    meta["notes"].append(
+                        "session was not deleted: this connection was never verified as the browser this run created")
                 connection.close()
         except Exception:
             pass
@@ -833,11 +1025,11 @@ def main(argv=None):
 
     executed = {c["check"] for c in results}
     required = list(REQUIRED_CHECKS)
-    if record is not None:
+    if args.expect_build_record:
         required += REQUIRED_WITH_RECORD
     failed_checks = [c["check"] for c in results if not c["ok"]]
     missing_checks = [name for name in required if name not in executed]
-    code = decide_exit_code(identity_ok, fatal, failed_checks, missing_checks)
+    code = decide_exit_code(identity_ok, fatal, failed_checks, missing_checks, aborted)
     meta["finishedAt"] = time.strftime("%Y-%m-%dT%H:%M:%S%z")
     meta["summary"] = {
         "executed": len(results),
@@ -847,6 +1039,11 @@ def main(argv=None):
         "requiredChecks": required,
         "missingChecks": missing_checks,
         "identityOk": identity_ok,
+        "aborted": aborted,
+        "stage": meta["stage"],
+        "browserLaunched": meta["browserLaunched"],
+        "browserConnected": meta["browserConnected"],
+        "connectionTrusted": meta.get("connectionTrusted"),
         "profileDir": profile_dir,
         "profileDirRemoved": profile_removed,
         "profilesKeptByRequest": bool(args.keep_profile),
@@ -855,7 +1052,7 @@ def main(argv=None):
     if profile_removed is False and profile_dir:
         meta["notes"].append("temporary profile could not be fully removed: %s" % profile_dir)
     meta["exitCode"] = code
-    meta["exitReason"] = exit_reason(code, identity_ok, fatal, failed_checks, missing_checks)
+    meta["exitReason"] = exit_reason(code, identity_ok, fatal, failed_checks, missing_checks, aborted)
 
     try:
         os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)

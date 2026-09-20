@@ -1,0 +1,10 @@
+python.exe : cannot write results to C:\Users\<user>\AppData\Local\Temp\ri-exec3\fixtures\blocker.txt\child.json: outp
+ut directory cannot be created (FileExistsError: [WinError 183] 当文件已存在时，无法创建该文件。: 'C:\\Users\\<user>\\AppData\\Local\\
+Temp\\ri-exec3\\fixtures\\blocker.txt')
+所在位置 行:501 字符: 8
++   $o = & $py -B 'ff-marionette.py' @($cc.a) 2>&1 | Out-String
++        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (cannot write re...\\blocker.txt'):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+choose a writable --out; no file was created or changed

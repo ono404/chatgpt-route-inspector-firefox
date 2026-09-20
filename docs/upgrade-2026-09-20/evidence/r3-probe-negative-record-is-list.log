@@ -1,0 +1,6 @@
+FAIL 0f.build-record | build record is a JSON list, expected an object
+FAIL 0a.xpi-sha256 | no expected XPI sha256 supplied (pass --expect-build-record or --expect-xpi-sha256)
+PASS 0b.xpi-contents | 30 files identical to XPI
+PASS 0d.manifest-sha256 | sha256=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (recorded only; not an identity condition)
+2 passed / 2 failed / 19 missing -> exit 2 (artifact identity rejected before browser interaction)
+saved docs\upgrade-2026-09-20\evidence\r3-probe-negative-record-is-list.json

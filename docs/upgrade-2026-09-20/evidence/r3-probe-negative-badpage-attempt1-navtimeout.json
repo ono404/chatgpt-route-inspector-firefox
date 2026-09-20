@@ -1,0 +1,251 @@
+{
+ "meta": {
+  "schema": "ff-probe/2",
+  "date": "2026-09-20",
+  "startedAt": "2026-09-20T14:52:06+0800",
+  "finishedAt": "2026-09-20T14:54:23+0800",
+  "label": "r3-negative-badpage",
+  "probeFile": "D:\\LAB\\火狐浏览器插件制作2\\ff-marionette.py",
+  "probeSha256": "9e04541c33f52fc5b1100586c042776f0b9d7e0111cc4ce0cb2cffc7e2f243c9",
+  "stage": "checks",
+  "reachedStages": [
+   "probe-hash",
+   "git",
+   "build-record",
+   "identity",
+   "browser",
+   "connect",
+   "checks"
+  ],
+  "identity": {
+   "xpi": "D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.xpi",
+   "distDir": "D:\\LAB\\火狐浏览器插件制作2\\dist\\firefox",
+   "buildRecordPath": "D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
+   "expectedXpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
+   "xpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
+   "manifestSha256": "c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a",
+   "manifestVersion": "1.0.7",
+   "geckoId": "chatgpt-route-inspector-firefox@local",
+   "strictMinVersion": "128.0",
+   "packagedFiles": 30,
+   "distFileCount": 30,
+   "parseError": null
+  },
+  "expectation": {
+   "source": "build-record: D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
+   "expectedXpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
+   "buildRecordSha256": "0208c1e2b7a8d1d7379992b5e93e917172243a7782ed47cbeb9f06be4e7dc1d1",
+   "buildRecordError": null
+  },
+  "git": {
+   "repoDir": "D:\\LAB\\火狐浏览器插件制作2",
+   "available": true,
+   "head": "f2f53b284b39d7df2b08b900d8b4893ec0bf41a4",
+   "dirty": true,
+   "porcelain": "M AGENTS.md\n M BLOCKED.md\n M PROGRESS.md\n M README-FIREFOX.md\n M docs/upgrade-2026-09-20/UPGRADE-REPORT.md\n M ff-marionette.py\n M tests/firefox-tooling/fake_marionette.py\n M tests/firefox-tooling/probe_loader.py\n?? .workbuddy/memory/2026-09-20.md\n?? .workbuddy/memory/MEMORY.md\n?? docs/upgrade-2026-09-20/evidence/r3-probe-positive.json\n?? tests/firefox-tooling/fake_peer.py\n?? tests/firefox-tooling/test_ff_marionette_early_failure.py\n?? tests/firefox-tooling/test_ff_marionette_gate.py",
+   "error": null,
+   "labelCommit": "f2f53b2"
+  },
+  "launch": {
+   "firefoxExe": "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+   "pid": 30952,
+   "host": "127.0.0.1",
+   "port": 49671,
+   "profileDir": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-573oajow",
+   "cmdline": [
+    "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+    "-headless",
+    "-no-remote",
+    "-marionette",
+    "-remote-allow-system-access",
+    "-profile",
+    "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-573oajow",
+    "about:blank"
+   ],
+   "launchedAt": "2026-09-20T14:52:06+0800",
+   "expectedManifestVersion": "1.0.7"
+  },
+  "session": {
+   "sessionId": "4a9f0aac-fb2c-45fc-88bf-ee0dfa12ffd3",
+   "capabilities": {
+    "browserName": "firefox",
+    "browserVersion": "156.0",
+    "platformName": "windows",
+    "moz:profile": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-573oajow",
+    "moz:buildID": "20260909172920",
+    "moz:headless": true,
+    "moz:geckodriverVersion": null
+   }
+  },
+  "browserLaunched": true,
+  "browserConnected": true,
+  "connectionTrusted": true,
+  "firefoxVersion": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0",
+  "fatal": null,
+  "summary": {
+   "executed": 22,
+   "passed": 18,
+   "failed": 4,
+   "failedChecks": [
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "12.capture-context-registered",
+    "14.announcement-page"
+   ],
+   "requiredChecks": [
+    "0a.xpi-sha256",
+    "0b.xpi-contents",
+    "0d.manifest-sha256",
+    "0.session",
+    "0e.session-profile",
+    "1.install-no-manifest-error",
+    "1b.addon-uuid",
+    "2.ext-namespaces",
+    "3.ext-chrome.storage-promise",
+    "4.ext-get-state-roundtrip",
+    "5.ext-tabs-i18n-getURL",
+    "6.popup-renders",
+    "7.synthetic-observation-pipeline",
+    "8.dashboard-shows-turn",
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "11.notice-hint-1.0.7",
+    "12.capture-context-registered",
+    "13.auto-reasoning-verdict",
+    "14.announcement-page",
+    "15.open-announcement-message",
+    "0c.dist-matches-record",
+    "0f.build-record"
+   ],
+   "missingChecks": [
+    "11.notice-hint-1.0.7"
+   ],
+   "identityOk": true,
+   "aborted": null,
+   "stage": "checks",
+   "browserLaunched": true,
+   "browserConnected": true,
+   "connectionTrusted": true,
+   "profileDir": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-573oajow",
+   "profileDirRemoved": true,
+   "profilesKeptByRequest": false,
+   "browserStoppedByThisRun": true
+  },
+  "exitCode": 5,
+  "exitReason": "required checks did not run: 11.notice-hint-1.0.7",
+  "resultsPath": "D:\\LAB\\火狐浏览器插件制作2\\docs\\upgrade-2026-09-20\\evidence\\r3-probe-negative-badpage.json",
+  "notes": []
+ },
+ "results": [
+  {
+   "check": "0f.build-record",
+   "ok": true,
+   "detail": "xpiSha256=2b3044146252c76e manifestSha256=c43c9104de4a6b00 files=30"
+  },
+  {
+   "check": "0a.xpi-sha256",
+   "ok": true,
+   "detail": "actual=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993 expected=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993"
+  },
+  {
+   "check": "0b.xpi-contents",
+   "ok": true,
+   "detail": "30 files identical to XPI"
+  },
+  {
+   "check": "0c.dist-matches-record",
+   "ok": true,
+   "detail": "30 recorded files agree"
+  },
+  {
+   "check": "0d.manifest-sha256",
+   "ok": true,
+   "detail": "sha256=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a)"
+  },
+  {
+   "check": "0.session",
+   "ok": true,
+   "detail": "4a9f0aac-fb2c-45fc-88bf-ee0dfa12ffd3"
+  },
+  {
+   "check": "0e.session-profile",
+   "ok": true,
+   "detail": "browser says moz:profile=C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-573oajow pid=30952 launched=C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-573oajow inside_temp=True"
+  },
+  {
+   "check": "1.install-no-manifest-error",
+   "ok": true,
+   "detail": "chatgpt-route-inspector-firefox@local"
+  },
+  {
+   "check": "1b.addon-uuid",
+   "ok": true,
+   "detail": "handles=2 uuid=48f45e3a-9d0b-4a84-881a-656448987d31 last_url=moz-extension://48f45e3a-9d0b-4a84-881a-656448987d31/ui/onboarding/index.html"
+  },
+  {
+   "check": "2.ext-namespaces",
+   "ok": true,
+   "detail": "{'c': 'object', 'b': 'object', 'url': 'moz-extension://48f45e3a-9d0b-4a84-881a-656448987d31/ui/onboarding/index.html'}"
+  },
+  {
+   "check": "3.ext-chrome.storage-promise",
+   "ok": true,
+   "detail": "42"
+  },
+  {
+   "check": "4.ext-get-state-roundtrip",
+   "ok": true,
+   "detail": "{'ok': True, 'hasState': True, 'schemaVersion': None}"
+  },
+  {
+   "check": "5.ext-tabs-i18n-getURL",
+   "ok": true,
+   "detail": "{'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://48f45e3a-9d0b-4a84-881a-656448987d31/ui/popup/index.html', 'version': '1.0.7'}"
+  },
+  {
+   "check": "6.popup-renders",
+   "ok": true,
+   "detail": "\n  \n    \n      \n      \n        \n          Route Inspector\n          Created by @liuqi\n        \n        服务器报告的路由遥测\n      \n    \n    \n      \n        EN\n        中\n      \n      实时监听\n    \n  \n  \n    \n      \n"
+  },
+  {
+   "check": "7.synthetic-observation-pipeline",
+   "ok": true,
+   "detail": "{'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}"
+  },
+  {
+   "check": "8.dashboard-shows-turn",
+   "ok": true,
+   "detail": "\n\n  \n    Route InspectorCreated by @liuqi请求模型与真实响应路由\n    EN中仅保存在本机\n  \n  路由诊断台导出 JSON导出报告清空记录\n  全部记录1实时请求1会话重载0异常1\n  \n    捕获记录全部模式实时请求会话重载全部结论正常自动推理错配冲突未比较时间模式请求模型标签响应路由判定响应来源09/20 14:52:15实时请求GPT 5.6 Pro未解析GPT 5.5 mini路由错配resolved_model_slug当前筛选条件下没有记录。\n  证据字段路由错配捕获模式实时请求捕获状态已完成请求模型gpt-5-6-pro响应路由gp"
+  },
+  {
+   "check": "9.page-hook-MAIN-world",
+   "ok": false,
+   "detail": "timed out"
+  },
+  {
+   "check": "10.bridge-overlay-ISOLATED",
+   "ok": false,
+   "detail": "timed out"
+  },
+  {
+   "check": "12.capture-context-registered",
+   "ok": false,
+   "detail": "{'ok': True, 'count': 0, 'sample': None}"
+  },
+  {
+   "check": "13.auto-reasoning-verdict",
+   "ok": true,
+   "detail": "{'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}"
+  },
+  {
+   "check": "14.announcement-page",
+   "ok": false,
+   "detail": "{'title': '页面加载出错', 'text': '', 'script': False, 'href': None}"
+  },
+  {
+   "check": "15.open-announcement-message",
+   "ok": true,
+   "detail": "{'before': 2, 'after': 2, 'ok': True}"
+  }
+ ]
+}

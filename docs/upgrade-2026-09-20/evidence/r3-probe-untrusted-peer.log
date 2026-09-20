@@ -1,0 +1,19 @@
+PASS 0f.build-record | xpi=2b3044146252c76e files=30
+PASS 0a.xpi-sha256 | actual=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993 expected=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993
+PASS 0b.xpi-contents | 30 files identical to XPI
+PASS 0c.dist-matches-record | 30 recorded files agree
+PASS 0d.manifest-sha256 | sha256=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a)
+launched firefox pid=4448 port=63811 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-40q8o2dm
+PASS 0.session | peer-session
+FAIL 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-NOT-THIS-RUN pid=4448 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-40q8o2dm inside_temp=True
+FAIL 0f.untrusted-connection | connection identity not verified; no Addon, storage, navigation or session command was sent, and the session was left untouched
+6 passed / 2 failed / 16 missing -> exit 4 (aborted for safety (connected browser is not the profile this run created); failed checks: 0e.session-profile, 0f.untrusted-connection)
+saved docs\upgrade-2026-09-20\evidence\r3-probe-untrusted-peer.json
+probe exit code: 4
+peer listener port: 63811, connections accepted: 2
+peer lie: moz:profile = C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-NOT-THIS-RUN
+commands the peer received: ["WebDriver:NewSession"]
+saved exitCode=4 exitReason=aborted for safety (connected browser is not the profile this run created); failed checks: 0e.session-profile, 0f.untrusted-connection
+browserLaunched=True browserConnected=True connectionTrusted=False
+resultsPath=D:\LAB\火狐浏览器插件制作2\docs\upgrade-2026-09-20\evidence\r3-probe-untrusted-peer.json
+notes=["session was not deleted: this connection was never verified as the browser this run created"]

@@ -65,24 +65,49 @@ python ff-marionette.py `
 
 1. XPI 整体 sha256 == 构建记录（或 `--expect-xpi-sha256`）给出的预期值；
 2. XPI 内路径集合与逐文件内容 == `--dist`（默认 `dist/firefox`）当前内容；
-3. 当前 `--dist` 的逐文件哈希 == 构建记录（链条：当前构建 → 记录 → XPI）。
+3. 当前 `--dist` 的逐文件哈希 == 构建记录（链条：当前构建 → 记录 → XPI）；
+4. 构建记录本身可读且字段类型正确（检查 `0f.build-record`）。
 
 预期值只能来自本次构建记录，探针不会现读待测包给自己生成预期。**manifest 哈希仍然记录并与记录比对，但不是身份通过条件**：同一 `manifest.json` 配不同 JS 的包会被拒绝。
+
+### 连接信任（在发任何状态修改命令之前）
+
+只有 `WebDriver:NewSession` 在核验之前发出，因为身份信息由它返回。核验项（检查 `0e.session-profile`）：浏览器**确实回报**了 `moz:profile`、该目录与本次创建并启动的目录一致、以及路径比较本身没有异常。
+
+任一项不成立时：记录 `0e.session-profile` 与 `0f.untrusted-connection` 失败，**立即停止**后续浏览器检查，并且
+
+- 不发送 `Addon:Install` / `Addon:Uninstall`、不写存储、不导航、不创建扩展页面、不注入合成观测；
+- 也**不发送 `WebDriver:DeleteSession`** —— 那可能关掉对端并不属于本任务的浏览器；只关闭自己这个 socket；
+- 仍然停止本次启动的进程、删除本次创建的临时目录，并按码 4 退出且写出结果。
+
+### 输入损坏也能留下结果
+
+对合法命令行且输出可写的**新**文件，损坏输入不会抛 traceback，而是写出结果并在浏览器启动前失败：
+
+| 情况 | 行为 |
+| --- | --- |
+| XPI 不是 ZIP / 已损坏 | `0b/0c/0d` 记失败并附解析错误，`0a` 仍按文件哈希判定；退出码 2 |
+| ZIP 内缺 `manifest.json` | 同上，错误说明“archive has no manifest.json at its root” |
+| 包内 `manifest.json` 不是合法 JSON | 同上，错误含 `JSONDecodeError` |
+| 构建记录不存在 / JSON 非法 / 结构类型错误 | `0f.build-record` 记失败，身份不成立；退出码 2 |
+
+结果 `meta` 含 `stage`、`reachedStages`、`fatal` 或失败检查的 detail、已执行检查、`exitCode`/`exitReason`、`startedAt`/`finishedAt` 与 `summary`（含 `browserLaunched` / `browserConnected` / `connectionTrusted`）。读不到的字段保持 `null` 并附 `identity.parseError`，不伪造完整身份。
 
 ### 输出保护
 
 - 省略 `--out`：生成 `ff-probe-results-<label>-<时间戳>.json`，不会碰撞，**永远不会写旧的 `ff-probe-results.json`**。
-- 指定的 `--out` 已存在：默认拒绝覆盖，退出码 6，原文件字节不变；需要覆盖时显式加 `--force`。
+- 指定的 `--out` 已存在（含“已存在的目录”）：默认拒绝覆盖，退出码 6，原文件字节不变；需要覆盖时显式加 `--force`。
+- 输出目录不可创建/不可写：**在启动浏览器之前**就报错到 stderr 并以码 3 退出，不创建也不改动任何文件。
 
 ### 退出码
 
 | 码 | 含义 |
 | --- | --- |
 | 0 | 所有预期检查都执行且全部通过 |
-| 2 | 产物身份被拒（在连接浏览器之前） |
-| 3 | 运行异常：启动失败、端口不可达、协议异常或清理异常 |
-| 4 | 有检查执行后失败 |
-| 5 | 结果不完整：有必需检查根本没执行 |
+| 2 | 产物身份被拒（在连接浏览器之前），含损坏 XPI / 不可用构建记录 |
+| 3 | 运行异常：启动失败、端口不可达、协议异常、清理异常，或输出路径不可写 |
+| 4 | 有检查执行后失败；**连接不可信时的安全中止也归此类**（是“前置条件失败”而非“没跑”） |
+| 5 | 结果不完整：有必需检查根本没执行（普通检查失败后未继续） |
 | 6 | 拒绝覆盖已存在的 `--out` |
 | 64 | 命令行参数错误 |
 
@@ -102,15 +127,19 @@ profile 以浏览器回报的 `moz:profile` 为准并校验其等于本次启动
 
 ## 已验证
 
-- 2026-09-20，Firefox **156.0**（headless，探针自启的专用临时 profile），v1.0.7 构建 **22/22 通过、退出码 0**：
-  `docs/upgrade-2026-09-20/evidence/r2-probe-positive.json`
-  （产物四项身份检查、加载零 manifest 错误、后台命名空间与 `await chrome.*`、Popup/诊断台/公告页渲染、
-  合成观测经真实管线判定、chatgpt.com 上 MAIN hook 与 ISOLATED 浮窗、1.0.7 公告浮窗入口、
-  capture context 注册、`auto_reasoning` 判定、会话 profile 与本次启动一致）。
-- 反向（同一轮实测，见同目录 `r2-probe-negative-*.log` / `.json`）：不存在的公告页 → 退出码 4；
-  篡改一个 JS 保持 manifest 不变 → 退出码 2 且未连接浏览器；浏览器启动异常 → 退出码 3；
-  `--out` 指向已有文件 → 退出码 6 且原文件哈希不变。
-- 验证工具回归测试：`npm run test:firefox-tooling`（28 项，合成夹具，不依赖真实浏览器）。
+- 2026-09-20，Firefox **156.0**（headless，探针自启的专用临时 profile），v1.0.7 构建 **23/23 通过、退出码 0**：
+  `docs/upgrade-2026-09-20/evidence/r3-probe-positive.json`
+  （构建记录、产物四项身份检查、会话 profile 与本次启动一致、加载零 manifest 错误、后台命名空间与 `await chrome.*`、
+  Popup/诊断台/公告页渲染、合成观测经真实管线判定、chatgpt.com 上 MAIN hook 与 ISOLATED 浮窗、
+  1.0.7 公告浮窗入口、capture context 注册、`auto_reasoning` 判定）。
+- 反向（同轮实测，见同目录 `r3-*.log` / `.json`）：不存在的公告页 → 退出码 4；
+  损坏 XPI / 包内缺 manifest / manifest JSON 非法 → 退出码 2 且写出结果、未启动浏览器；
+  构建记录缺失 / 非法 JSON / 结构类型错误 → 退出码 2 且写出结果；
+  **连接对端谎报 `moz:profile` → 退出码 4，对端收到的命令只有 `WebDriver:NewSession`（无任何 Addon/存储/导航/会话清理命令）**；
+  输出目录不可写 → 退出码 3；`--out` 指向已有文件 → 退出码 6 且原文件哈希不变。
+- 已知抖动（非缺陷）：`chatgpt.com` 响应慢时，探针可能报 `9/10.page-hook` 超时并退出 5。探针不重试、不静默通过，实测样本见
+  `evidence/r3-probe-negative-badpage-attempt1-navtimeout.*`（同一条命令第二次即恢复为预期的退出码 4）。
+- 验证工具回归测试：`npm run test:firefox-tooling`（49 项，合成夹具与脚本化 peer；不需要真实浏览器即可跑，只有“真实进程/真实浏览器”两项会按环境跳过）。
 - `npm run typecheck / lint / test（301/301）/ build / build:firefox / build:e2e / verify:firefox / package:firefox` 全绿（2026-09-20）。
 
 ## 上游更新后

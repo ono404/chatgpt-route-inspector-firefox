@@ -58,3 +58,16 @@ verdict/reasons 与 assessment.ts 规则逐条对应；durationMs/时间戳/pars
 再次写出文件（实测一次残留 `%TEMP%\ff-ri-probe-profiles\ff-ri-probe-*`）。
 因此结果 JSON 记录的是**实际**结果（`summary.profileDirRemoved`），清理失败时会附 `notes`，
 不假定“已删除”成立。
+
+## 10. “连接不可信”只能靠脚本化对端复现 — **新增，方法学限制**
+真实 Firefox 会如实回报自己的 `moz:profile`，因此**真机上无法自然产生**“对端谎报 profile”的情形。
+该路径的验证由 `tests/firefox-tooling/fake_peer.py`（脚本化 TCP peer，占用探针端口并谎报 `moz:profile`）
+与同目录的进程内假连接覆盖；本轮同时用**真实探针进程**对 peer 跑过一次，实测对端只收到 `WebDriver:NewSession`。
+若要人工复现：让探针 `--port` 指向该 peer 的监听端口即可，命令见 `docs/upgrade-2026-09-20/UPGRADE-REPORT.md` §10。
+
+## 11. 真机探针受 `chatgpt.com` 响应速度影响 — **新增，已知抖动（非缺陷）**
+`9.page-hook-MAIN-world` / `10.bridge-overlay-ISOLATED` 需要在导航后执行脚本；站点响应慢时会 `timed out`，
+连带 `11.notice-hint-1.0.7` 未执行，探针报 FAIL 并退出 5（不重试、不静默通过）。本轮实测遇到一次，
+同一条命令第二次即恢复正常（退出码 4）。
+证据：`docs/upgrade-2026-09-20/evidence/r3-probe-negative-badpage-attempt1-navtimeout.*`。
+**不打算通过加重试来掩盖** —— 重试会把“站点慢”与“产物坏”混在一起；判定时应以完整正向运行（`r3-probe-positive`）为准。

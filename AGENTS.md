@@ -8,11 +8,12 @@ Chromium 上游同源码 + 独立 Firefox 构建 target 的自用移植。读 PR
 - `npm ci` → `npm run typecheck` / `npm run lint` / `npm test`（301 passed）/ `npm run build`
 - Firefox 版：`npm run build:firefox` → `dist/firefox/`；本地加载见 README-FIREFOX.md
 - Firefox 产物校验 / 打包：`npm run verify:firefox` / `npm run package:firefox`
-- 验证工具回归测试：`npm run test:firefox-tooling`（Python，合成夹具，不需要真实浏览器）
+- 验证工具回归测试：`npm run test:firefox-tooling`（Python，49 项；合成夹具 + 脚本化 Marionette peer；仅“真实进程/真实浏览器”两项按环境跳过）
 - 真机验证探针（**自己启动浏览器**，专用临时 profile）：
   `python ff-marionette.py --xpi <打包产物> --expect-build-record <release/*.build.json> --out <新结果路径>`
   （FF156+ 必须 `-remote-allow-system-access`，探针启动命令已内置；结果进按日期命名的 `ff-probe-results-*.json`，省略 `--out` 时自动生成、绝不覆盖旧文件）
-- 探针退出码：0 全通过 / 2 产物身份被拒 / 3 运行异常 / 4 有检查失败 / 5 检查没跑全 / 6 拒绝覆盖已有输出。
+- 探针退出码：0 全通过 / 2 产物身份被拒（含损坏 XPI、不可用构建记录）/ 3 运行异常（含输出路径不可写）/ 4 有检查失败（含**连接不可信时的安全中止**）/ 5 检查没跑全 / 6 拒绝覆盖已有输出 / 64 参数错。
+- 探针在核验连接身份（`moz:profile` 必须等于本次创建并启动的 profile）之前只发 `WebDriver:NewSession`；核验不过就停手，且**不发送 `DeleteSession`**，只关自己的 socket。
 
 ## 技术栈
 
@@ -30,7 +31,8 @@ TypeScript + esbuild（background=esm，content/UI=iife），vitest，零新增�
 
 ## 当前状态和下一步
 
-- 已闭环：v1.0.5→v1.0.7 同步（merge `d5524a0`）、门禁全绿（301 tests + 28 项工具回归）、FF156.0 真机 22/22（退出码 0）、产物四级身份核对、四类反向验证（坏页面/篡改 JS/启动异常/拒绝覆盖）+ 输出保护。
+- 已闭环：v1.0.5→v1.0.7 同步（merge `d5524a0`）、门禁全绿（301 业务测试 + 49 项工具回归）、FF156.0 真机 23/23（退出码 0）、产物四级身份核对、连接信任前置门禁、损坏输入留证、反向验证 + 输出保护。
 - 未验证项：真实登录对话捕获、真实更新事件（临时加载无法产生 `onInstalled.reason=update`）、FF128 下限实测、`test:e2e`（本机无 extension-capable Chromium）、**额度字段无真机专项检查**。详见 BLOCKED.md。
+- 已知非缺陷抖动：`chatgpt.com` 慢时探针报 `9/10` 超时并退出 5（不重试、不静默通过）；“连接不可信”只能靠脚本化 peer 复现。见 BLOCKED.md 第 10/11 项。
 - 唯一已知项：live 记录偶发 `phase=failed/stream_parse_failed`（详见 BLOCKED.md，上游未定点修复，仍为未确认）。
 - 推私人仓库前确认：`dist/` `coverage/` `node_modules/` `release/` 均被 `.gitignore` 排除；用户真实导出附件在 profile 目录内，永不进仓库。

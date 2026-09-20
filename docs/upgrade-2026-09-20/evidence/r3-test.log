@@ -1,0 +1,73 @@
+
+> chatgpt-route-inspector@1.0.7 test
+> vitest run --coverage
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/LAB/火狐浏览器插件制作2[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/unit/websocket-parser.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/unit/response-parser.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/integration/upgrade-notice.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 100[2mms[22m[39m
+ [32m✓[39m tests/unit/usage-quota.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/unit/i18n.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/integration/firefox-upgrade-migration.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 247[2mms[22m[39m
+ [32m✓[39m tests/integration/audit-regressions.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 186[2mms[22m[39m
+ [32m✓[39m tests/integration/bridge-lifecycle.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 476[2mms[22m[39m
+ [32m✓[39m tests/unit/sse-decoder.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 478[2mms[22m[39m
+   [33m[2m✓[22m[39m SSE delta v1 decoding[2m > [22mretains event names and context across every possible network split [33m 418[2mms[22m[39m
+ [32m✓[39m tests/unit/manifest.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m tests/unit/capture-context.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/unit/observation.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tests/integration/capture-pipeline.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/unit/migration.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/assessment.test.ts [2m([22m[2m26 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/unit/notice-hint.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/privacy.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/turns.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/schema.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/pow.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/request-parser.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/endpoints.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/overlay.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/manifest-firefox.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/state.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/page-scope.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/integration/tab-lifecycle.test.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 1660[2mms[22m[39m
+ [32m✓[39m tests/unit/chatgpt-path.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/unit/client.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/unit/language.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/unit/types.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/unit/branding.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m tests/integration/page-hook-audit.test.ts [2m([22m[2m66 tests[22m[2m)[22m[33m 7478[2mms[22m[39m
+   [33m[2m✓[22m[39m N1: stages ambiguous GET until creation identity proves new [33m 335[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m33 passed[39m[22m[90m (33)[39m
+[2m      Tests [22m [1m[32m301 passed[39m[22m[90m (301)[39m
+[2m   Start at [22m 14:51:14
+[2m   Duration [22m 8.60s[2m (transform 2.09s, setup 0ms, collect 4.13s, tests 10.91s, environment 11ms, prepare 6.31s)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   97.19 |    91.35 |     100 |   97.19 |                   
+ assessment.ts     |     100 |      100 |     100 |     100 |                   
+ ...ure-context.ts |   97.41 |    93.39 |     100 |   97.41 | 61-63             
+ chatgpt-path.ts   |     100 |    92.85 |     100 |     100 | 12                
+ endpoints.ts      |     100 |    94.73 |     100 |     100 | 29                
+ language.ts       |    82.6 |     87.5 |     100 |    82.6 | 22-23,26-27       
+ migration.ts      |     100 |      100 |     100 |     100 |                   
+ observation.ts    |   97.84 |    94.91 |     100 |   97.84 | 34-35             
+ page-scope.ts     |     100 |      100 |     100 |     100 |                   
+ pow.ts            |   94.11 |    79.31 |     100 |   94.11 | 29-30,55          
+ privacy.ts        |   97.29 |       80 |     100 |   97.29 | 22-23             
+ request-parser.ts |     100 |    97.14 |     100 |     100 | 58                
+ ...onse-parser.ts |   96.87 |    86.61 |     100 |   96.87 | 168-169,231-235   
+ sse-decoder.ts    |   95.31 |    83.56 |     100 |   95.31 | ...06-208,212-213 
+ state.ts          |     100 |      100 |     100 |     100 |                   
+ turns.ts          |     100 |    98.52 |     100 |     100 | 138               
+ types.ts          |     100 |      100 |     100 |     100 |                   
+ usage-quota.ts    |     100 |      100 |     100 |     100 |                   
+ ...cket-parser.ts |   93.83 |     88.7 |     100 |   93.83 | 55-60,112-114     
+-------------------|---------|----------|---------|---------|-------------------

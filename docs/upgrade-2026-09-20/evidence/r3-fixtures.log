@@ -1,0 +1,9 @@
+broken.xpi               2e9a9f907a7726c0e49c736c235646ba16aa03aa53e37da3bfc11db35d819413
+no-manifest.xpi          fb8250e6273e7398c594d1ed76d6c0919f7b619aa495d18d5e4d73f1f5548035
+manifest-not-json.xpi    d2b3bce5a6515ed63daf9d30dc36475760fd857fff836d353c9d7d549221ebb9
+record-not-json.json     2bf127649fcea8588649a808c0fbadbac90fd35db2cfe86140d26f17edabd57e
+record-is-list.json      67358ed8fd6cd4d8aac33acaa376b58237beb891c3e984e505d3e57e43f7d320
+record-no-hash.json      7fa653f65c31d49047773f536ce472fd4bb61303a4966ad0ac7c17bbd425f106
+record-wrong-type.json   84401dc340c039e6fef8239feba0e754f9d5a300d3babf1963154e86a5101e2a
+blocker.txt              6f2effeca86b8249b166d3e5a642b37949561da19f98e4bb75fb95bd6659496e
+missing-record           C:\Users\<user>\AppData\Local\Temp\ri-exec3\fixtures\does-not-exist.build.json

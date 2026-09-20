@@ -96,6 +96,29 @@
   输出改为 `{meta, results}` 并记录版本与哈希。旧 `ff-probe-results.json` 未覆盖。
 - 未测：真实 1.0.5→1.0.7 更新事件（临时加载无法产生 `reason=update`）、FF128 下限 —— 均记入 BLOCKED.md 第 5/6 项。
 
+## 任务 7 第三轮结果（2026-09-20，只修两处遗漏）
+- 修 D1（**连接信任成为操作前置条件**）：核验 `moz:profile`（存在 + 等于本次创建并启动的目录 + 路径比较无异常）之前**只发 `WebDriver:NewSession`**；不过则记 `0e.session-profile` + `0f.untrusted-connection` 失败、立即停手、只关自己的 socket、**不发 `DeleteSession`**、仍停止本次进程并删本次 profile，**退出码 4**（沿用现有体系：这是“前置条件失败”而非“没跑”）。用户代理串读取也移到门禁之后。
+- 修 D2（**早期异常也留证**）：`verify_identity` 永不抛出（解析失败 → `0b/0c/0d` 记失败 + `identity.parseError`，`0a` 仍按文件哈希判定）；`main` 把「读记录 → 解析 XPI → 身份 → 启动 → 连接 → 检查」全部纳入统一收口，任何异常落到 `meta.stage`/`meta.fatal` 并写出结果；构建记录显式校验（存在 / JSON / 字段类型），失败即身份不成立（**码 2**）。新增输出可写性前置检查（不可写 → **码 3**，且发生在启动浏览器之前）。
+- 门禁（冻结后重跑，逐个退出码，原始输出 `docs/upgrade-2026-09-20/evidence/r3-*.log`）：typecheck 0 / lint 0 / test 0（33 文件 301 passed）/ **test:firefox-tooling 0（49 passed，28→49）**。业务与构建路径无变动，未重复跑三种构建与缺环境 E2E。
+- 真机/命令行（FF156.0）：正向 **23/23 退出码 0**；坏公告页 4；XPI 非 ZIP / 包内缺 manifest / manifest 非 JSON / 构建记录缺失|非 JSON|数组|字段类型错误 全部 **2** 且写出结果、未启动浏览器；输出目录不可写 **3**；已有 `--out` **6** 且原文件不变。
+- **D3（执行者自查发现，非管理者指出）**：本轮新增的“输出可写性检查”最初实现为在目标目录写零字节探针文件再删除，实践中有 11 个 `.ff-probe-write-probe-*` 残留（`git status` 发现）。根因未完全定位，故**不调那个探针、直接删除**：现在只做只读判断（父目录可建/是目录/可写 + 目标不是已存在目录），运行期间不在输出目录创建任何额外文件；并新增断言“输出目录除结果文件外没有别的条目”（含真实浏览器路径）。已删除那 11 个自产残留文件。
+- D1 关键证据：真实探针进程 + 脚本化 peer（`tests/firefox-tooling/fake_peer.py`）谎报 `moz:profile` → 探针退出 **4**，**对端收到的命令只有 `["WebDriver:NewSession"]`**，`connectionTrusted=false`，`notes` 记录“session 未被删除”。进程内假连接侧另断言危险调用为零。
+- 已知抖动（非缺陷，BLOCKED 第 11 项）：`chatgpt.com` 慢时 `9/10` 超时、`11` 未执行 → 退出 5（不重试、不静默通过）。本轮实测遇到一次并保留证据 `r3-probe-negative-badpage-attempt1-navtimeout.*`，同命令第二次恢复为 4。
+- 新增 `fake_peer.py` / `test_ff_marionette_gate.py` / `test_ff_marionette_early_failure.py`，扩展 `fake_marionette.py`（`profile_mode`）与 `probe_loader.py`（真实进程助手）。**未删改任何既有测试**（原 28 项全保留）。
+- 产物身份与历史证据：`ff-marionette.py=9e04541c…`（11 份结果 JSON 的 `probeSha256` 与之一致）；历史 `ff-probe-results.json=4bec56b9…`、`ff-probe-results-v1.0.7-2026-09-20.json=3da8fab7…` 未变；一/二轮证据未覆盖。本轮证据已审查（凭据类扫描零命中）+ 脱敏（`gyjxjkg`→`<user>`），按精确路径提交。**未使用 `--force`**，未清理未知文件，`.workbuddy/` 未处理。
+- 新增限制（BLOCKED 第 10 项）：真实 Firefox 会如实回报自己的 profile，“连接不可信”无法在真机自然产生，只能由脚本化对端复现。
+- 本轮只说明这两处遗漏的修复，不声称全部升级场景已验证，也不声称已获管理者验收。
+
+## 任务 7 第三轮开工回执（2026-09-20，只修两处遗漏）
+- 起点 `HEAD=f2f53b2`（分支 `codex/sync-upstream-v1.0.7`）；`main=182fca1e` 未动；`git diff d5524a0 HEAD -- src schemas _locales icons manifest` = 空（收尾复核一次）。
+- 历史哈希核对未变：`ff-probe-results.json=4bec56b9…`、`ff-probe-results-v1.0.7-2026-09-20.json=3da8fab7…`。
+- 目标：① `0e.session-profile` 失败时**不得**再发任何 Addon/写存储/导航/会话清理命令，且非零退出并留证；② 损坏 XPI、缺失/非法构建记录等早期异常必须写出失败结果而非抛 traceback。
+- 顺序：先读管理者证据复现 → 改 `ff-marionette.py`（profile 作为前置门禁 + 全流程统一收口）→ 新增回归测试（含真实进程）→ 真机正反向复跑 → 文档 → 提交。
+- 改动范围：仅 `ff-marionette.py`、`tests/firefox-tooling/**`、4 个文档、`docs/upgrade-2026-09-20/evidence/` 新增证据。不碰业务源码/manifest/构建与打包脚本/依赖/版本/package scripts/既有业务测试阈值。
+- 退出码沿用现有体系：安全中止归入 4（有检查失败），输入损坏归入 2（身份未建立），运行异常仍为 3。
+- Python：`C:\Users\gyjxjkg\.workbuddy\binaries\python\versions\3.13.12\python.exe`（裸 python 是 WindowsApps 别名，退出 9009）。
+- 最大风险：把 profile 门禁做过头会误伤真实浏览器 → 用真机正向复跑证明不退化。
+
 ## 任务 6 验证工具修正开工回执（2026-09-20，第二轮）
 - 起点 `HEAD=7dd7a86ed3df12ea5f9fdc4d8551316b371041b4`，分支 `codex/sync-upstream-v1.0.7`；main 仍为 `182fca1`（未动）。
 - 冻结核对：`git diff d5524a00… HEAD -- src schemas _locales icons manifest` = 空；`HEAD:scripts/build.mjs=5a508e8d`；`git status -uall` 仅 `.workbuddy/memory/*` 两条未跟踪。

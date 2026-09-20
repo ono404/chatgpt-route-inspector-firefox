@@ -5,6 +5,7 @@ seam the real client exposes, so the probe's own control flow, assertions and
 exit-code aggregation are the code under test. Responses are scriptable so a
 test can make a specific check fail on purpose.
 """
+import os
 import sys
 
 sys.dont_write_bytecode = True
@@ -57,7 +58,8 @@ ROUTES = [
 
 class FakeMarionette:
     def __init__(self, profile_dir, answers=None, discover_uuid=True,
-                 fail_install=False, fail_new_session=False, fail_new_window=False):
+                 fail_install=False, fail_new_session=False, fail_new_window=False,
+                 profile_mode="match"):
         self.profile_dir = profile_dir
         self.answers = dict(DEFAULT_ANSWERS)
         self.answers.update(answers or {})
@@ -65,6 +67,8 @@ class FakeMarionette:
         self.fail_install = fail_install
         self.fail_new_session = fail_new_session
         self.fail_new_window = fail_new_window
+        # "match" | "mismatch" | "missing" | "raise" - how moz:profile comes back
+        self.profile_mode = profile_mode
         self.handles = [("w0", "about:blank")]
         if discover_uuid:
             self.handles.append(("w1", BASE_URL + "/ui/onboarding/index.html"))
@@ -88,11 +92,21 @@ class FakeMarionette:
     def _on_WebDriver_NewSession(self, params):
         if self.fail_new_session:
             raise RuntimeError("stub refuses WebDriver:NewSession")
+        if self.profile_mode == "mismatch":
+            profile = os.path.join(os.path.dirname(self.profile_dir) or self.profile_dir,
+                                   "ff-ri-probe-NOT-THIS-RUN")
+        elif self.profile_mode == "missing":
+            profile = None
+        elif self.profile_mode == "raise":
+            # A peer that answers with a value the probe cannot treat as a path.
+            profile = 12345
+        else:
+            profile = self.profile_dir
         return {"sessionId": "fake-session", "capabilities": {
             "browserName": "firefox",
             "browserVersion": "156.0",
             "platformName": "windows",
-            "moz:profile": self.profile_dir,
+            "moz:profile": profile,
             "moz:buildID": "synthetic",
             "moz:headless": True,
         }}

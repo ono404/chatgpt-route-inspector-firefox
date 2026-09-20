@@ -6,6 +6,7 @@ evidence files.
 """
 import importlib.util
 import os
+import subprocess
 import sys
 import zipfile
 
@@ -25,6 +26,19 @@ def load_probe(path=None):
     sys.modules["ff_marionette_probe"] = module
     spec.loader.exec_module(module)
     return module
+
+
+def run_probe_process(argv, timeout=300, cwd=None):
+    """Run the probe as a real process and return (exit_code, stdout, stderr).
+
+    Some failure modes (a damaged XPI, an unreadable build record) must be
+    proven on the real command line, not only by calling into the module.
+    """
+    result = subprocess.run(
+        [sys.executable, "-B", PROBE_PATH, *argv],
+        capture_output=True, text=True, timeout=timeout, cwd=cwd,
+        env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"})
+    return result.returncode, result.stdout, result.stderr
 
 
 # --- synthetic artifacts ----------------------------------------------------

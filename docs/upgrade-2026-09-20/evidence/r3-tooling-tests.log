@@ -1,0 +1,429 @@
+
+> chatgpt-route-inspector@1.0.7 test:firefox-tooling
+> node scripts/run-firefox-tooling-tests.mjs
+
+interpreter: C:\Users\<user>\.workbuddy\binaries\python\versions\3.13.12\python.exe
+node.exe : test_missing_record_file (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_missing_record_file) 
+... ok
+所在位置 行:1 字符: 1
++ & "C:\Users\<user>\.workbuddy\binaries\node\versions\22.22.2-3/node. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_missing_re...rd_file) ... ok:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+test_record_missing_the_xpi_hash (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_record_missing_the_xpi_h
+ash) ... ok
+test_record_that_is_not_an_object (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_record_that_is_not_an_o
+bject) ... ok
+test_record_with_empty_file_hashes (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_record_with_empty_file
+_hashes) ... ok
+test_record_with_invalid_json (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_record_with_invalid_json) .
+.. ok
+test_record_with_wrongly_typed_fields (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_record_with_wrongly
+_typed_fields) ... ok
+test_not_a_zip_exits_2_and_writes_a_result (test_ff_marionette_early_failure.TestDamagedPackage.test_not_a_zip_exits_2_
+and_writes_a_result) ... ok
+test_packaged_manifest_with_invalid_json_exits_2_and_writes_a_result (test_ff_marionette_early_failure.TestDamagedPacka
+ge.test_packaged_manifest_with_invalid_json_exits_2_and_writes_a_result) ... ok
+test_zip_without_manifest_json_exits_2_and_writes_a_result (test_ff_marionette_early_failure.TestDamagedPackage.test_zi
+p_without_manifest_json_exits_2_and_writes_a_result) ... ok
+test_bad_command_line_is_rejected_before_anything_else (test_ff_marionette_early_failure.TestOutputPathFailures.test_ba
+d_command_line_is_rejected_before_anything_else) ... ok
+test_existing_directory_as_output_is_refused (test_ff_marionette_early_failure.TestOutputPathFailures.test_existing_dir
+ectory_as_output_is_refused) ... ok
+test_existing_output_is_refused_and_never_rewritten (test_ff_marionette_early_failure.TestOutputPathFailures.test_exist
+ing_output_is_refused_and_never_rewritten) ... D:\LAB\火狐浏览器插件制作2\tests\firefox-tooling\test_ff_marionette_early_failure
+.py:179: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-ea
+rly-cbthawyy\\results.json'>
+  before = open(self.out, "rb").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\LAB\火狐浏览器插件制作2\tests\firefox-tooling\test_ff_marionette_early_failure.py:184: ResourceWarning: unclosed file <_io.Bu
+fferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-cbthawyy\\results.json'>
+  self.assertEqual(open(self.out, "rb").read(), before)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_no_extra_file_is_created_next_to_the_results (test_ff_marionette_early_failure.TestOutputPathFailures.test_no_extr
+a_file_is_created_next_to_the_results) ... ok
+test_real_run_also_leaves_nothing_else_next_to_the_results (test_ff_marionette_early_failure.TestOutputPathFailures.tes
+t_real_run_also_leaves_nothing_else_next_to_the_results) ... ok
+test_unwritable_output_parent_fails_early_without_touching_files (test_ff_marionette_early_failure.TestOutputPathFailur
+es.test_unwritable_output_parent_fails_early_without_touching_files) ... D:\LAB\火狐浏览器插件制作2\tests\firefox-tooling\test_f
+f_marionette_early_failure.py:162: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData
+\\Local\\Temp\\ff-probe-early-xkko1st6\\blocker'>
+  before = open(blocker, "rb").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\LAB\火狐浏览器插件制作2\tests\firefox-tooling\test_ff_marionette_early_failure.py:171: ResourceWarning: unclosed file <_io.Bu
+fferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-xkko1st6\\blocker'>
+  self.assertEqual(open(blocker, "rb").read(), before)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+FAIL 0b.xpi-contents | package could not be parsed (BadZipFile: File is not a zip file)
+FAIL 0d.manifest-sha256 | package could not be parsed (BadZipFile: File is not a zip file)
+FAIL 0a.xpi-sha256 | actual=a3989126344744ef800dbc88bf7e744853f3f2eac75c9ab3301f4e845ef22078 expected=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+test_identity_reports_instead_of_raising (test_ff_marionette_early_failure.TestVerifyIdentityNeverRaises.test_identity_
+reports_instead_of_raising) ... ok
+PASS 0f.build-record | xpi=86812def1cf16d9f files=6
+PASS 0a.xpi-sha256 | actual=86812def1cf16d9ffdd0015bc64d80d53835e5a66bbbd361c2cb76f5ea8efdd6 expected=86812def1cf16d9ffdd0015bc64d80d53835e5a66bbbd361c2cb76f5ea8efdd6
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54313 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-1uvis0yv
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-1uvis0yv pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-1uvis0yv inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.notice-hint-1.0.7 | {'root': True, 'notice': True, 'star': True, 'error': True}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.7 公告', 'text': '1.0.7 · 用户公告 样本观察与反馈邀请', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-message | {'before': 2, 'after': 2, 'ok': True}
+test_matching_profile_still_continues (test_ff_marionette_gate.TestUntrustedConnectionHarness.test_matching_profile_sti
+ll_continues) ... ok
+23 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-q_ytlnxi\results.json
+PASS 0f.build-record | xpi=86812def1cf16d9f files=6
+PASS 0a.xpi-sha256 | actual=86812def1cf16d9ffdd0015bc64d80d53835e5a66bbbd361c2cb76f5ea8efdd6 expected=86812def1cf16d9ffdd0015bc64d80d53835e5a66bbbd361c2cb76f5ea8efdd6
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54314 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qxtmxdfy
+PASS 0.session | fake-session
+FAIL 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-NOT-THIS-RUN pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qxtmxdfy inside_temp=True
+FAIL 0f.untrusted-connection | connection identity not verified; no Addon, storage, navigation or session command was sent, and the session was left untouched
+test_mismatched_profile_blocks_every_later_command (test_ff_marionette_gate.TestUntrustedConnectionHarness.test_mismatc
+hed_profile_blocks_every_later_command) ... ok
+6 passed / 2 failed / 16 missing -> exit 4 (aborted for safety (connected browser is not the profile this run created); failed checks: 0e.session-profile, 0f.untrusted-connection)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-zqsstm0x\results.json
+PASS 0f.build-record | xpi=86812def1cf16d9f files=6
+PASS 0a.xpi-sha256 | actual=86812def1cf16d9ffdd0015bc64d80d53835e5a66bbbd361c2cb76f5ea8efdd6 expected=86812def1cf16d9ffdd0015bc64d80d53835e5a66bbbd361c2cb76f5ea8efdd6
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54315 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-aj9i9xuf
+PASS 0.session | fake-session
+FAIL 0e.session-profile | browser says moz:profile= pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-aj9i9xuf inside_temp=True
+FAIL 0f.untrusted-connection | connection identity not verified; no Addon, storage, navigation or session command was sent, and the session was left untouched
+test_missing_profile_blocks_every_later_command (test_ff_marionette_gate.TestUntrustedConnectionHarness.test_missing_pr
+ofile_blocks_every_later_command) ... ok
+6 passed / 2 failed / 16 missing -> exit 4 (aborted for safety (connected browser is not the profile this run created); failed checks: 0e.session-profile, 0f.untrusted-connection)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-hnmcvk18\results.json
+PASS 0f.build-record | xpi=86812def1cf16d9f files=6
+PASS 0a.xpi-sha256 | actual=86812def1cf16d9ffdd0015bc64d80d53835e5a66bbbd361c2cb76f5ea8efdd6 expected=86812def1cf16d9ffdd0015bc64d80d53835e5a66bbbd361c2cb76f5ea8efdd6
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54316 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-kkmfbu1u
+PASS 0.session | fake-session
+FAIL 0e.session-profile | profile check raised (TypeError: _path_normpath: path should be string, bytes or os.PathLike, not int)
+FAIL 0f.untrusted-connection | connection identity not verified; no Addon, storage, navigation or session command was sent, and the session was left untouched
+test_profile_check_that_raises_blocks_every_later_command (test_ff_marionette_gate.TestUntrustedConnectionHarness.test_
+profile_check_that_raises_blocks_every_later_command) ... ok
+test_real_probe_process_sends_nothing_state_changing_to_an_untrusted_peer (test_ff_marionette_gate.TestUntrustedPeerRea
+lProcess.test_real_probe_process_sends_nothing_state_changing_to_an_untrusted_peer) ... ok
+test_every_non_green_combination_is_non_zero (test_ff_marionette_identity.TestExitCodeAggregation.test_every_non_green_
+combination_is_non_zero) ... ok
+test_identity_failure_wins_over_everything (test_ff_marionette_identity.TestExitCodeAggregation.test_identity_failure_w
+ins_over_everything) ... ok
+test_runtime_anomaly_is_non_zero (test_ff_marionette_identity.TestExitCodeAggregation.test_runtime_anomaly_is_non_zero)
+ ... ok
+test_single_failed_check_is_non_zero (test_ff_marionette_identity.TestExitCodeAggregation.test_single_failed_check_is_n
+on_zero) ... ok
+test_unexecuted_required_check_is_non_zero (test_ff_marionette_identity.TestExitCodeAggregation.test_unexecuted_require
+d_check_is_non_zero) ... ok
+test_zero_requires_complete_and_green (test_ff_marionette_identity.TestExitCodeAggregation.test_zero_requires_complete_
+and_green) ... ok
+test_default_out_is_dated_and_never_the_historical_file (test_ff_marionette_identity.TestOutputProtection.test_default_
+out_is_dated_and_never_the_historical_file) ... ok
+test_default_out_never_collides (test_ff_marionette_identity.TestOutputProtection.test_default_out_never_collides) ... 
+ok
+test_existing_out_is_refused_and_left_untouched (test_ff_marionette_identity.TestOutputProtection.test_existing_out_is_
+refused_and_left_untouched) ... refusing to overwrite existing results file: C:\Users\<user>\AppData\Local\Temp\ff-pro
+be-test-yimney98\existing.json
+pass --force to overwrite, or choose another --out
+ok
+6 passed / 2 failed / 16 missing -> exit 4 (aborted for safety (connected browser is not the profile this run created); failed checks: 0e.session-profile, 0f.untrusted-connection)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-x0sy99_x\results.json
+FAIL 0a.xpi-sha256 | XPI not found: C:\Users\<user>\AppData\Local\Temp\ff-probe-test-v1ffsrtj\does-not-exist.xpi
+FAIL 0b.xpi-contents | XPI not found
+FAIL 0d.manifest-sha256 | XPI not found
+test_force_allows_overwrite (test_ff_marionette_identity.TestOutputProtection.test_force_allows_overwrite) ... ok
+test_historical_evidence_file_is_never_the_default_target (test_ff_marionette_identity.TestOutputProtection.test_histor
+ical_evidence_file_is_never_the_default_target) ... ok
+0 passed / 3 failed / 18 missing -> exit 2 (artifact identity rejected before browser interaction)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-test-v1ffsrtj\existing.json
+FAIL 0a.xpi-sha256 | actual=f2caec36853c5ce65e0b0c189725679063f6d0776065ab9420e546c6a4e36d9b expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+FAIL 0b.xpi-contents | not in dist: ui/announcement/evil.js
+FAIL 0c.dist-matches-record | record xpiPath=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-briwtx_y\good.xpi but probing C:\Users\<user>\AppData\Local\Temp\ff-probe-test-briwtx_y\extra.xpi
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+test_extra_file_inside_xpi_is_rejected (test_ff_marionette_identity.TestTamperedPackageRejected.test_extra_file_inside_
+xpi_is_rejected) ... ok
+FAIL 0a.xpi-sha256 | actual=432821e8ca9cedc70300aabff0a4d4324bcc5af6439c1e757bc1d26f97ba1072 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+FAIL 0b.xpi-contents | missing from XPI: ui/announcement/index.html
+FAIL 0c.dist-matches-record | record xpiPath=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-qz3jx6zn\good.xpi but probing C:\Users\<user>\AppData\Local\Temp\ff-probe-test-qz3jx6zn\missing.xpi; recorded file absent from XPI: ui/announcement/index.html
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+test_file_missing_from_xpi_is_rejected (test_ff_marionette_identity.TestTamperedPackageRejected.test_file_missing_from_
+xpi_is_rejected) ... ok
+FAIL 0a.xpi-sha256 | no expected XPI sha256 supplied (pass --expect-build-record or --expect-xpi-sha256)
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+test_missing_expectation_is_rejected (test_ff_marionette_identity.TestTamperedPackageRejected.test_missing_expectation_
+is_rejected) ... ok
+FAIL 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=1e47356c1e10a56f0dce9d46754149245c1537fec8b39441b634601475610e63
+PASS 0b.xpi-contents | 6 files identical to XPI
+FAIL 0c.dist-matches-record | record xpiPath=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-wmbqgu6z\other.xpi but probing C:\Users\<user>\AppData\Local\Temp\ff-probe-test-wmbqgu6z\good.xpi; record distDir=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-wmbqgu6z\other-dist but checking C:\Users\<user>\
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+test_record_describing_another_dist_is_rejected (test_ff_marionette_identity.TestTamperedPackageRejected.test_record_de
+scribing_another_dist_is_rejected) ... ok
+FAIL 0a.xpi-sha256 | actual=b05e1f6cd61d5d9c4460822b469d39f3c1602cffefa338513c6bea3bd5cd94cd expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+FAIL 0b.xpi-contents | content differs: content/page-hook.js
+FAIL 0c.dist-matches-record | record xpiPath=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-u810vfsc\good.xpi but probing C:\Users\<user>\AppData\Local\Temp\ff-probe-test-u810vfsc\tampered.xpi; XPI content differs from record: content/page-hook.js
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+test_same_manifest_different_js_is_rejected (test_ff_marionette_identity.TestTamperedPackageRejected.test_same_manifest
+_different_js_is_rejected) ... ok
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+FAIL 0a.xpi-sha256 | actual=b05e1f6cd61d5d9c4460822b469d39f3c1602cffefa338513c6bea3bd5cd94cd expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+FAIL 0b.xpi-contents | content differs: content/page-hook.js
+FAIL 0c.dist-matches-record | record xpiPath=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-874bw01a\good.xpi but probing C:\Users\<user>\AppData\Local\Temp\ff-probe-test-874bw01a\tampered-before-connect.xpi; XPI content differs from record: content/page-hook.js
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+test_tampered_package_is_rejected_before_any_browser_interaction (test_ff_marionette_identity.TestTamperedPackageReject
+ed.test_tampered_package_is_rejected_before_any_browser_interaction) ... ok
+2 passed / 3 failed / 18 missing -> exit 2 (artifact identity rejected before browser interaction)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-test-874bw01a\out.json
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+test_matching_build_passes_every_identity_check (test_ff_marionette_identity.TestTruePositive.test_matching_build_passe
+s_every_identity_check) ... ok
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54320 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-r46ofx7t
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-r46ofx7t pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-r46ofx7t inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+FAIL 9.page-hook-MAIN-world | WebDriver:NewWindow -> synthetic protocol failure
+FAIL 10.bridge-overlay-ISOLATED | WebDriver:NewWindow -> synthetic protocol failure
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.7 公告', 'text': '1.0.7 · 用户公告 样本观察与反馈邀请', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-message | {'before': 2, 'after': 2, 'ok': True}
+test_check_level_exception_is_recorded_and_does_not_abort_the_run (test_ff_marionette_run.TestFailingRuns.test_check_le
+vel_exception_is_recorded_and_does_not_abort_the_run) ... ok
+20 passed / 2 failed / 1 missing -> exit 5 (required checks did not run: 11.notice-hint-1.0.7)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-zps05vxt\results.json
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54321 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-10yuu5c7
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-10yuu5c7 pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-10yuu5c7 inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+FAIL 6.popup-renders |    
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.notice-hint-1.0.7 | {'root': True, 'notice': True, 'star': True, 'error': True}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.7 公告', 'text': '1.0.7 · 用户公告 样本观察与反馈邀请', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-message | {'before': 2, 'after': 2, 'ok': True}
+test_failed_check_exits_nonzero_and_names_the_check (test_ff_marionette_run.TestFailingRuns.test_failed_check_exits_non
+zero_and_names_the_check) ... ok
+22 passed / 1 failed / 0 missing -> exit 4 (checks failed: 6.popup-renders)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-5a2fuccd\results.json
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54323 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-l073h4ye
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-l073h4ye pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-l073h4ye inside_temp=True
+FAIL 1.install-no-manifest-error | Addon:Install -> synthetic install failure
+FAIL 1b.addon-registered | uuid not found; browser checks aborted
+test_install_failure_leaves_an_incomplete_run (test_ff_marionette_run.TestFailingRuns.test_install_failure_leaves_an_in
+complete_run) ... ok
+7 passed / 2 failed / 15 missing -> exit 5 (required checks did not run: 1b.addon-uuid, 2.ext-namespaces, 3.ext-chrome.storage-promise, 4.ext-get-state-roundtrip, 5.ext-tabs-i18n-getURL, 6.popup-renders, 7.synthetic-observation-pipeline, 8.dashboard-shows-turn, 9.page-hook-MAIN-world, 10.bridge-overlay-ISOLATED, 11.notice-hint-1.0.7, 12.capture-context-registered, 13.auto-reasoning-verdict, 14.announcement-page, 15.open-announcement-message)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-4na40qwg\results.json
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54324 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-a5wsl5kk
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-a5wsl5kk pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-a5wsl5kk inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.notice-hint-1.0.7 | {'root': True, 'notice': True, 'star': True, 'error': True}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}
+FAIL 14.announcement-page | {'title': '页面加载出错', 'text': '', 'script': False, 'href': None}
+PASS 15.open-announcement-message | {'before': 2, 'after': 2, 'ok': True}
+test_missing_announcement_page_exits_nonzero (test_ff_marionette_run.TestFailingRuns.test_missing_announcement_page_exi
+ts_nonzero) ... ok
+22 passed / 1 failed / 0 missing -> exit 4 (checks failed: 14.announcement-page)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-4cfo1rgi\results.json
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54325 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-v0kc4ksv
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-v0kc4ksv pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-v0kc4ksv inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+FAIL 1b.addon-uuid | handles=1 uuid=None last_url=about:blank
+FAIL 1b.addon-registered | uuid not found; browser checks aborted
+test_missing_extension_uuid_leaves_an_incomplete_run (test_ff_marionette_run.TestFailingRuns.test_missing_extension_uui
+d_leaves_an_incomplete_run) ... ok
+8 passed / 2 failed / 14 missing -> exit 5 (required checks did not run: 2.ext-namespaces, 3.ext-chrome.storage-promise, 4.ext-get-state-roundtrip, 5.ext-tabs-i18n-getURL, 6.popup-renders, 7.synthetic-observation-pipeline, 8.dashboard-shows-turn, 9.page-hook-MAIN-world, 10.bridge-overlay-ISOLATED, 11.notice-hint-1.0.7, 12.capture-context-registered, 13.auto-reasoning-verdict, 14.announcement-page, 15.open-announcement-message)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-p9susl2d\results.json
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54326 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-8uiz6_gs
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-8uiz6_gs pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-8uiz6_gs inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.notice-hint-1.0.7 | {'root': True, 'notice': True, 'star': True, 'error': True}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.7 公告', 'text': '1.0.7 · 用户公告 样本观察与反馈邀请', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-message | {'before': 2, 'after': 2, 'ok': True}
+test_browser_identity_is_recorded_from_the_session_not_the_environment (test_ff_marionette_run.TestGreenRun.test_browse
+r_identity_is_recorded_from_the_session_not_the_environment) ... ok
+23 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-hjonmh9y\results.json
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54327 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-wfyh_upt
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-wfyh_upt pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-wfyh_upt inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.notice-hint-1.0.7 | {'root': True, 'notice': True, 'star': True, 'error': True}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.7 公告', 'text': '1.0.7 · 用户公告 样本观察与反馈邀请', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-message | {'before': 2, 'after': 2, 'ok': True}
+test_complete_green_run_exits_zero (test_ff_marionette_run.TestGreenRun.test_complete_green_run_exits_zero) ... ok
+23 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-09i3oh_q\results.json
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54328 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gexwmni6
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gexwmni6 pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gexwmni6 inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.7.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.notice-hint-1.0.7 | {'root': True, 'notice': True, 'star': True, 'error': True}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.7 公告', 'text': '1.0.7 · 用户公告 样本观察与反馈邀请', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-message | {'before': 2, 'after': 2, 'ok': True}
+test_omitting_out_creates_a_new_file_and_never_touches_history (test_ff_marionette_run.TestOutputDefaults.test_omitting
+_out_creates_a_new_file_and_never_touches_history) ... ok
+23 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-wzwqbltx\ff-probe-results-regression-20260920-145137.json
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54329 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-619fejde
+FATAL [browser] ConnectionRefusedError: synthetic: nothing is listening
+test_connection_refused_is_non_zero_and_saves_evidence (test_ff_marionette_run.TestRuntimeAnomalyEvidence.test_connecti
+on_refused_is_non_zero_and_saves_evidence) ... ok
+5 passed / 0 failed / 18 missing -> exit 3 (runtime anomaly: synthetic: nothing is listening)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-csqlvt2y\results.json
+PASS 0f.build-record | xpi=220ae932773863c1 files=6
+PASS 0a.xpi-sha256 | actual=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514 expected=220ae932773863c1455642050ebfd875d7894552012ede54417910f47eb13514
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=54330 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-35kbu2xe
+FATAL [browser] TimeoutError: Marionette port never opened (synthetic)
+test_launch_timeout_is_non_zero_and_saves_evidence (test_ff_marionette_run.TestRuntimeAnomalyEvidence.test_launch_timeo
+ut_is_non_zero_and_saves_evidence) ... ok
+
+----------------------------------------------------------------------
+Ran 49 tests in 12.799s
+
+OK
+5 passed / 0 failed / 18 missing -> exit 3 (runtime anomaly: Marionette port never opened (synthetic))
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-zwlgy3ym\results.json

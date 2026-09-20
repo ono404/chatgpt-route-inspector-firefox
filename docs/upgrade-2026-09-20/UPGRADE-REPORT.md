@@ -1,7 +1,7 @@
 # 升级交付报告：Firefox Route Inspector v1.0.5 → v1.0.7
 
 - 执行者：Agent（本次升级）；独立验收：管理者
-- 日期：2026-09-20（**2026-09-20 第二轮修订**：验证工具与交付证据修正，见 §9）
+- 日期：2026-09-20（**第二轮修订**：验证工具与交付证据修正，见 §9；**第三轮修订**：连接信任前置门禁与早期失败留证，见 §10）
 - 工作目录：`D:\LAB\火狐浏览器插件制作2`
 - 状态：**本地完成，未 push、未发 PR、未发布 Release、未提交 AMO、未替换日常 Firefox 扩展**（按交付范围约定）
 
@@ -177,6 +177,22 @@
 
 > 本报告是**执行者交付**，不代替管理者的独立验收。
 
+### 第三轮（本轮新增，已脱敏）
+
+| 路径 | 内容 |
+| --- | --- |
+| `evidence/r3-typecheck.log` / `r3-lint.log` / `r3-test.log` / `r3-tooling-tests.log` | 门禁逐个输出（业务 301 passed；工具 **48 passed**） |
+| `evidence/r3-fixtures.log` | 损坏输入夹具的生成记录与各自 sha256 |
+| `evidence/r3-probe-positive.{log,json}` | 真机正向：23/23、退出码 0（含会话 profile == 本次启动目录） |
+| `evidence/r3-probe-untrusted-peer.{log,json}` | 真实进程 + 脚本化 peer 谎报 `moz:profile`：退出码 4，对端只收到 `WebDriver:NewSession` |
+| `evidence/r3-probe-negative-badpage.{log,json}` | 反向：坏公告页 → 退出码 4 |
+| `evidence/r3-probe-negative-broken-xpi.{log,json}` | 反向：XPI 非 ZIP → 退出码 2，留证 |
+| `evidence/r3-probe-negative-no-manifest.{log,json}` | 反向：包内缺 `manifest.json` → 退出码 2，留证 |
+| `evidence/r3-probe-negative-manifest-not-json.{log,json}` | 反向：包内 manifest 非法 JSON → 退出码 2，留证 |
+| `evidence/r3-probe-negative-record-{missing,not-json,is-list,wrong-type}.{log,json}` | 反向：构建记录缺失 / 非法 JSON / 结构类型错误 → 退出码 2，留证 |
+| `evidence/r3-probe-negative-unwritable-out.log` | 反向：输出目录不可写 → 退出码 3，未启动浏览器 |
+| `evidence/r3-probe-negative-existing-out.log` | 反向：`--out` 指向已有文件 → 退出码 6，原文件不变 |
+
 ## 9. 第二轮修订：验证工具与交付证据修正（2026-09-20）
 
 范围：**只修验证工具与交付证据**。未改 `src/`、`schemas/`、`_locales/`、`icons/`、`manifest/`、`scripts/build.mjs`、Firefox manifest 转换、`package-lock.json`、既有业务测试与覆盖率阈值。
@@ -308,3 +324,120 @@
 
 - 本轮结论：验证工具的第一轮缺陷已修正，四类失败条件与输出保护均有实测失败证据与非零退出；文档与实测一致。
 - **本轮不声称全部升级场景已验证**，也不声称已获管理者验收；额度真机、真实登录对话、真实更新事件、Firefox 128 下限、`test:e2e` 仍为未验证项（BLOCKED 第 1/2/4/5/6/7/8 项）。
+
+## 10. 第三轮修订：连接信任前置门禁与早期失败留证（2026-09-20）
+
+范围：**只修管理者第二轮指出的两处遗漏**。未改业务源码、`manifest/`、构建与打包脚本、依赖、版本、`package.json` 脚本、既有业务测试与覆盖率阈值。
+冻结核对（开工与收尾各一次）：`git diff d5524a0 HEAD -- src schemas _locales icons manifest` 为空；`HEAD:src=cd7a4860`、`HEAD:scripts/build.mjs=5a508e8d`；`main=182fca1e`（未动）；`ff-marionette.py` 在本轮所有证据生成前后均为 `9e04541c33f52fc5b1100586c042776f0b9d7e0111cc4ce0cb2cffc7e2f243c9`（每份结果 JSON 的 `meta.probeSha256` 与之一致）。
+
+### 10.1 两处遗漏与修法
+
+| # | 第二轮实测遗漏 | 修法 |
+| --- | --- | --- |
+| D1 | 给探针一个模拟连接、其回报的 `moz:profile` 与本次创建目录不符时，`0e.session-profile=False` 但仍继续调用 `Addon:Uninstall` + `Addon:Install`（含全部后续检查） | 把该检查升级为**操作前置条件**：核验通过前只发 `WebDriver:NewSession`（身份由它返回），核验不过则记 `0e.session-profile`+`0f.untrusted-connection` 失败、**立即停止**、只关自己的 socket、**不发 `DeleteSession`**、仍停止本次进程并删本次 profile，按码 4 退出。用户代理串的读取也从 `main` 移到门禁之后 |
+| D2 | 内容为 “broken zip” 的 XPI 让 `verify_identity` 抛 `zipfile.BadZipFile`：退出 1、无 traceback 之外的记录、指定结果 JSON 未生成 | `verify_identity` 改为**永不抛出**（解析失败 → `0b/0c/0d` 记失败 + `identity.parseError`，`0a` 仍按文件哈希判定）；`main` 把“读构建记录 → 解析 XPI → 身份 → 启动 → 连接 → 检查”全部纳入统一收口，任何异常都落到 `meta.fatal` / `meta.stage` 并写出结果；构建记录改为显式校验（存在性 / JSON / 字段类型），失败即身份不成立（码 2） |
+
+附带：新增输出可写性前置检查（输出目录不可创建/不可写时**在启动浏览器之前**报错并以码 3 退出，不创建也不改动任何文件）；`--out` 指向已存在目录时给出明确 stderr 并同样拒绝（码 6）。
+
+**本轮自发现并修掉的第三个问题（D3，由执行者自查，非管理者指出）**：可写性检查最初实现为“在目标目录写一个零字节探针文件再删掉”，实践中有 11 个 `.ff-probe-write-probe-<pid>` 零字节文件残留在证据目录里（`git status` 发现）。根因未完全定位（同一代码在单次运行与单测中均能正确删除，疑似与并发/杀软有关），因此**没有去调那个探针，而是把它整个删除**：现在的检查只做「父目录可建/是目录/可写 + 目标不是已存在目录」的只读判断，运行期间不会在输出目录创建任何额外文件。新增两项回归测试断言“运行结束后输出目录里除结果文件外没有别的条目”（含真实浏览器路径），已通过。
+
+### 10.2 改动文件
+
+`ff-marionette.py`（门禁 + 统一收口 + 记录校验 + 只读的输出可写前置检查 + `stage`/`reachedStages`/`browserLaunched`/`browserConnected`/`connectionTrusted`/`aborted` 记录）；
+`tests/firefox-tooling/`：新增 `fake_peer.py`、`test_ff_marionette_gate.py`、`test_ff_marionette_early_failure.py`，扩展 `fake_marionette.py`（`profile_mode` 支持 match/mismatch/missing/raise）、`probe_loader.py`（真实进程运行助手）；
+`README-FIREFOX.md`、`AGENTS.md`、`PROGRESS.md`、`BLOCKED.md`、本报告；`docs/upgrade-2026-09-20/evidence/r3-*`。
+
+### 10.3 回归测试（先红后绿）
+
+新增 21 项，工具测试总数 **28 → 49**，全部通过（`evidence/r3-tooling-tests.log`，`Ran 49 tests` / `OK`；仅“真实进程对脚本化 peer”“真实浏览器”两项会在缺 Firefox 时跳过，本机未跳过）：
+
+- **门禁（进程内假连接，断言的是探针真实发出的调用列表）**：`moz:profile` 不一致 / 缺失 / 检查抛异常三种情形下，`fake.calls` 只含 `WebDriver:NewSession`，且 `Addon:*`、`WebDriver:ExecuteScript`、`WebDriver:Navigate`、`WebDriver:NewWindow`、`WebDriver:DeleteSession` 全部为零；退出码 4；`connectionTrusted=false`；结果里 `1.install-no-manifest-error` 属于 `missingChecks`；进程被停止、临时 profile 被删除。另有 `match` 情形反向确认门禁不会误伤（仍会 `Addon:Install` 与 `DeleteSession`）。
+- **门禁（真实进程 + 真实 socket）**：`fake_peer.py` 占用探针端口并谎报 `moz:profile`，用真实 `ff-marionette.py` 进程跑一次，断言对端收到的命令**只有** `WebDriver:NewSession`。
+- **早期失败（真实进程）**：非 ZIP、包内缺 `manifest.json`、包内 manifest 非法 JSON、构建记录缺失 / 非法 JSON / 是 JSON 数组 / 字段类型错误 → 均退出码 2、结果 JSON 存在且可解析、`browserLaunched=false`、`launch=null`，且 stderr 不含 traceback。
+- **输出路径**：父路径是文件 → 退出码 3 + stderr，不创建/不改动任何文件；输出指向已存在目录 → 码 6 且目录保持为空；参数错误 → 码 64；已有 `--out` → 码 6 且原字节不变；运行结束后输出目录里除结果文件外没有别的条目（含真实浏览器路径）。
+- 原有的 28 项（身份拒绝、输出保护、退出码聚合、运行异常留证等）全部保留，未删减、未跳过、未放松。
+
+### 10.4 真机与命令行实测（本次核验过的产物）
+
+被测产物：`release/chatgpt-route-inspector-firefox-1.0.7.xpi`
+`xpi sha256=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993`、
+manifest `c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a`、构建记录 `0208c1e2…d1d1`。
+环境：Firefox **156.0**，`moz:buildID=20260909172920`，headless；探针自建专用临时 profile，结束后无残留 profile、无残留进程。
+
+| 场景 | 期望 | 实测退出码 | 结果文件 | 证据 |
+| --- | --- | --- | --- | --- |
+| 正向完整通过 | 0 | **0** | 23/23 全通过，`moz:profile` == 本次启动目录 | `r3-probe-positive.{log,json}` |
+| 坏公告页 | 非零、有结果 | **4** | 22 passed / `14.announcement-page` failed | `r3-probe-negative-badpage.*` |
+| 坏公告页（同命令第一次，站点慢） | 非零、有结果 | 5 | `9/10` timed out、`11` 未执行 → 探针如实报 FAIL，未静默通过 | `r3-probe-negative-badpage-attempt1-navtimeout.*` |
+| XPI 非 ZIP | 非零、有结果 | **2** | stage=identity，`parseError=BadZipFile`，未启动浏览器 | `r3-probe-negative-broken-xpi.*` |
+| 包内缺 manifest | 非零、有结果 | **2** | 同上，`parseError` 含 `no manifest.json` | `r3-probe-negative-no-manifest.*` |
+| 包内 manifest 非法 JSON | 非零、有结果 | **2** | 同上，`parseError` 含 `JSONDecodeError` | `r3-probe-negative-manifest-not-json.*` |
+| 构建记录缺失 | 非零、有结果 | **2** | `0f.build-record` failed，未启动浏览器 | `r3-probe-negative-record-missing.*` |
+| 构建记录非法 JSON | 非零、有结果 | **2** | 同上 | `r3-probe-negative-record-not-json.*` |
+| 构建记录是 JSON 数组 | 非零、有结果 | **2** | `expected an object` | `r3-probe-negative-record-is-list.*` |
+| 构建记录字段类型错误 | 非零、有结果 | **2** | `field fileHashes has type list, expected dict` | `r3-probe-negative-record-wrong-type.*` |
+| 对端谎报 `moz:profile`（真实进程 + 脚本化 peer） | 非零、留证、**危险调用为零** | **4** | 对端收到的命令 = `["WebDriver:NewSession"]`，`connectionTrusted=false`，`notes` 记录“session 未被删除” | `r3-probe-untrusted-peer.{log,json}` |
+| 输出目录不可写 | 非零、明确 stderr | **3** | 启动浏览器之前退出，`blocker.txt` 哈希与内容不变 | `r3-probe-negative-unwritable-out.log` |
+| `--out` 指向已有文件 | 6、原文件不变 | **6** | `r3-probe-positive.json` 未被改动 | `r3-probe-negative-existing-out.log` |
+
+> 站点慢导致的 `5` 已单独记为 BLOCKED 第 11 项已知抖动：探针**不重试、不静默通过**，判定以完整正向运行（`r3-probe-positive`）为准。
+
+**对端收到的命令列表（D1 的关键证据，取自 `r3-probe-untrusted-peer.log`）**
+`peer lie: moz:profile = C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-NOT-THIS-RUN`
+`commands the peer received: ["WebDriver:NewSession"]`
+`browserLaunched=True browserConnected=True connectionTrusted=False`
+`notes=["session was not deleted: this connection was never verified as the browser this run created"]`
+该用例里 `0e.session-profile` / `0f.untrusted-connection` 记失败，`1.install-no-manifest-error` 等 16 项未执行（`missingChecks`），退出码 4。
+
+### 10.5 门禁复跑（逐个退出码）
+
+`typecheck 0` / `lint 0` / `npm test 0`（33 文件 **301 passed**，覆盖率 97.19% stmts / 91.34% branch / 100% funcs，阈值未动）/ `test:firefox-tooling 0`（**49 passed**）。业务与构建路径冻结且无相关变动，故本轮未重复跑三种构建与缺环境的 E2E（沿用第二轮的构建结论），`build:e2e` 环境限制仍记于 BLOCKED 第 7 项。
+
+### 10.6 历史证据与未知文件
+
+- 历史证据未变：`ff-probe-results.json=4bec56b9…`、`ff-probe-results-v1.0.7-2026-09-20.json=3da8fab7…`，第一、二轮 `evidence/*.log|json` 未被覆盖（本轮只新增 `r3-*`）。
+- 本轮证据同样做了凭据类模式扫描（无命中）与脱敏（本机账户名 → `<user>`），按精确路径提交，未改 `.gitignore`。
+- D3 相关：本轮由执行者自己发现并删除了 **11 个零字节 `.ff-probe-write-probe-<pid>` 文件**——它们是本轮新增的可写性探针在证据目录里留下的**自产痕迹**（不是用户的未知文件，也不是历史证据）；修复后同一测试与全部重跑均不再产生此类文件，并有回归测试守住。
+- 本轮**未使用 `--force`** 绕过历史保护，也未清理任何未知文件；`.workbuddy/` 未处理、未提交、未删除。
+- 限制（新增 BLOCKED 第 10、11 项）：真实 Firefox 会如实回报自己的 profile，**“连接不可信”无法在真机自然产生**，只能由脚本化对端复现；真机探针受 `chatgpt.com` 响应速度影响，站点慢时 `9/10` 会超时并退出 5（不重试、不静默通过）。
+
+### 10.7 本轮证据哈希（脱敏后）
+
+| 文件 | 字节 | sha256 |
+| --- | --- | --- |
+| `evidence/r3-typecheck.log` | 63 | `22c70c07ca223b374d93d40d32c4a490417c641dd2b473fac761fcd89a4a0e9c` |
+| `evidence/r3-lint.log` | 54 | `f90f3abc0a909d5686824cbc267002d41d6ed375f34fe259ed3d4f2972f67e94` |
+| `evidence/r3-test.log` | 6331 | `d527e80e4555058321603ccbbf8d298c691be308b9c6d67b628ae84b25ea58c1` |
+| `evidence/r3-tooling-tests.log` | 44819 | `8593ca0959320e979c33b9d50079fdb70a2051827b9fa0a03df28648d10c56e4` |
+| `evidence/r3-fixtures.log` | 833 | `28e82e7d59b6c7edc00c4187ab8bf0308bdceead5a39fcc43766ffde8b8b1388` |
+| `evidence/r3-probe-positive.log` | 4180 | `68c61ab171f662161bf796605eb1d6d4ce687454070c1449a71e6f96510dbc28` |
+| `evidence/r3-probe-positive.json` | 10750 | `d5fd0c7b9b1bb4d6bf53942bb5c7c92a0219891301c7791a759b40efb81a0eb3` |
+| `evidence/r3-probe-untrusted-peer.log` | 2013 | `11caf0a8e2d2c76dba2ade9d0d5b29245eb1f2bdf54402949b96ac2a098c68f9` |
+| `evidence/r3-probe-untrusted-peer.json` | 7852 | `b36bba62f11fbb905cdc0db4edf62fdc1066d689370950579e72541db8613dec` |
+| `evidence/r3-probe-negative-badpage.log` | 3827 | `d29ee7faf0b17b8847e8cd180b37e72877abd301d059b03a9325f9f564ab2c11` |
+| `evidence/r3-probe-negative-badpage.json` | 10637 | `bc43e746a09bd8d30cc58c798984368ab8e9025bc206fc54c8d30d124d37e4a2` |
+| `evidence/r3-probe-negative-badpage-attempt1-navtimeout.log` | 3362 | `343d5a6870437275c135b37db4671e08bfcc7f1a382489c047aef10862ce6f4d` |
+| `evidence/r3-probe-negative-badpage-attempt1-navtimeout.json` | 9582 | `e84b5ba3672f1e7c5ce3a9b48203bcf003c641a913faf705ecec745e5fb7ffca` |
+| `evidence/r3-probe-negative-broken-xpi.log` | 673 | `a991abd0899c7de72843267b5af3a593b38e9b4db4eed105c39a99d682d32552` |
+| `evidence/r3-probe-negative-broken-xpi.json` | 5509 | `65bf729c6909d2cf5ed53d9cfcfaa1c4d4d5de2d48cde7b9facd4b332c1ab23d` |
+| `evidence/r3-probe-negative-no-manifest.log` | 740 | `645e288e28f842fabfd3c74c5773f32c3cb1dfbafad7e3e2c4748ce91d1d4ead` |
+| `evidence/r3-probe-negative-no-manifest.json` | 5675 | `e426588c7f030f4ad085e83e69f1cbefaf617b7f2c447026d443e469d438611d` |
+| `evidence/r3-probe-negative-manifest-not-json.log` | 854 | `d574d01b5c83c75d88c659a0d528b6478e43581deae2e909e53dd0ded47f0b50` |
+| `evidence/r3-probe-negative-manifest-not-json.json` | 5909 | `a8c03a59d13b0b061a00160bfc9d42cf09962b53d1ba73eca5deccee56ab9698` |
+| `evidence/r3-probe-negative-record-missing.log` | 671 | `c8543625f065ef2b6118149ad87ee2ae202313cd0812fd0e4ab955a32d2e3419` |
+| `evidence/r3-probe-negative-record-missing.json` | 5579 | `c4975191b49af968a0566a6fcb6991bfa511fecde05b8de6424febfee4eed096` |
+| `evidence/r3-probe-negative-record-not-json.log` | 698 | `cdea5e65dbc5c2722a48103c70951eb472c8867c4f6b202c17848fa1be9f7292` |
+| `evidence/r3-probe-negative-record-not-json.json` | 5682 | `b0d5ff0eada74e1c29b45569bd4daa67048fa77a34d0323138138158564668e3` |
+| `evidence/r3-probe-negative-record-is-list.log` | 616 | `406d54c51c26300833637a2db52787d934aa535e01a4a340458db4580e4e5721` |
+| `evidence/r3-probe-negative-record-is-list.json` | 5592 | `06ef16017f840b0ab2e542c0c3e596468d8844df00ff060ba9d4bffef6cac747` |
+| `evidence/r3-probe-negative-record-wrong-type.log` | 630 | `4a1d982cad8899b38df5a8fb5d12036cb5dfeef70c6528fe7ccb58482453e017` |
+| `evidence/r3-probe-negative-record-wrong-type.json` | 5701 | `8dcd203ab3f161ec162926ea2ebba6c475fd01a9707d5be98e93700d6470c9a9` |
+| `evidence/r3-probe-negative-unwritable-out.log` | 680 | `ecdbab0362d3f2d39353a83d6e8f08b61325ca6a9ef32de48678e327a2fcc91b` |
+| `evidence/r3-probe-negative-existing-out.log` | 477 | `5c20a06a9dd3abc977ae55c3aaefc5a708c6574e6f57ecd1c1302609deb7ea70` |
+
+> 哈希口径同 §9.7：工作区文件哈希；`core.autocrlf=true`，核对提交内容用 `git rev-parse HEAD:<路径>`。
+
+### 10.8 本轮结束时的实际观测（不代表管理者验收）
+
+- 连接不可信时**状态修改协议调用为零**已有两类证据（进程内调用列表 + 真实进程对脚本化 peer 的 wire 记录）；损坏输入全部在启动浏览器前以码 2 失败并留下有效 JSON；正常真机与既有反向验证未退化。
+- 本轮**只说明这两处遗漏的修复**；额度真机、真实登录对话、真实更新事件、FF128 下限、`test:e2e` 仍未验证，也不声称已获管理者验收。

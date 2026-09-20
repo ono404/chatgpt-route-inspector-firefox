@@ -1,0 +1,7 @@
+PASS 0f.build-record | xpi=2b3044146252c76e files=30
+FAIL 0b.xpi-contents | package could not be parsed (BadZipFile: File is not a zip file)
+FAIL 0c.dist-matches-record | package could not be parsed (BadZipFile: File is not a zip file)
+FAIL 0d.manifest-sha256 | package could not be parsed (BadZipFile: File is not a zip file)
+FAIL 0a.xpi-sha256 | actual=2e9a9f907a7726c0e49c736c235646ba16aa03aa53e37da3bfc11db35d819413 expected=2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993
+1 passed / 4 failed / 18 missing -> exit 2 (artifact identity rejected before browser interaction)
+saved docs\upgrade-2026-09-20\evidence\r3-probe-negative-broken-xpi.json
