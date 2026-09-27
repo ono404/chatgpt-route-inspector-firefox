@@ -9,6 +9,49 @@ const request = {
 };
 
 describe('route turn correlation', () => {
+  it('marks completed -wm Work responses as unverifiable in live and reload without changing route fields', () => {
+    const live = createTurn({ ...request, phase: 'completed', requestedModel: 'gpt-6-astra-wm',
+      serverModelSlug: 'gpt-6-astra-wm' });
+    expect(live).toMatchObject({ verdict: 'work_unverifiable', routeModel: 'gpt-6-astra-wm' });
+    const reload = createTurn({ ...request, source: 'conversation_record', captureMode: 'reload',
+      phase: 'completed', requestedModel: null, responseModelSlug: 'GPT-6-ASTRA-WM' });
+    expect(reload).toMatchObject({ verdict: 'work_unverifiable', routeModel: 'gpt-6-astra-wm',
+      routeModelSources: ['assistant.metadata.model_slug'] });
+    expect(createTurn({ ...request, source: 'conversation_record', captureMode: 'reload',
+      phase: 'completed', requestedModel: null, responseModelSlug: 'gpt-6-astra-wm-preview',
+      resolvedModelSlug: 'gpt-6-astra-wm-preview' }).verdict).toBe('unknown');
+    expect(createTurn({ ...request, phase: 'responding', requestedModel: 'gpt-6-astra-wm',
+      serverModelSlug: 'gpt-6-astra-wm' }).verdict).toBe('normal');
+  });
+
+  it('marks completed live and reload network responses without resolved_model_slug as suspected', () => {
+    const evidence = { ...request, phase: 'completed' as const, serverModelSlug: 'gpt-5-6-pro' };
+    expect(createTurn(evidence).verdict).toBe('suspected_downgrade');
+    expect(createTurn({ ...evidence, phase: 'responding' }).verdict).toBe('normal');
+    expect(createTurn({ ...evidence, phase: 'failed' }).verdict).toBe('normal');
+    expect(createTurn({ ...evidence, resolvedModelSlug: 'gpt-5-6-pro' }).verdict).toBe('normal');
+    expect(createTurn({ ...evidence, source: 'conversation_record', captureMode: 'reload' }).verdict).toBe('suspected_downgrade');
+    expect(createTurn({ ...evidence, source: 'conversation_record', captureMode: 'reload', requestedModel: null }).verdict).toBe('suspected_downgrade');
+    expect(createTurn({ ...evidence, source: 'conversation_record', captureMode: 'reload', requestedModel: null, resolvedModelSlug: 'gpt-5-6-pro' }).verdict).toBe('unknown');
+    expect(createTurn({ ...evidence, source: 'conversation_record', captureMode: 'reload', requestedModel: null, serverModelSlug: null, responseModelSlug: 'gpt-5-6-pro' }).verdict).toBe('suspected_downgrade');
+    expect(createTurn({ ...evidence, source: 'conversation_record', captureMode: 'reload', requestedModel: null, serverModelSlug: null }).verdict).toBe('unknown');
+    expect(createTurn({ ...evidence, source: 'assistant_dom' }).verdict).toBe('normal');
+    expect(createTurn({ ...evidence, requestedModel: null }).verdict).toBe('suspected_downgrade');
+    expect(createTurn({ ...request, phase: 'completed' }).verdict).toBe('unknown');
+  });
+
+  it('preserves stronger route verdicts and corrects the suspicion if later evidence arrives', () => {
+    const evidence = { ...request, phase: 'completed' as const, serverModelSlug: 'gpt-5-6-pro' };
+    expect(createTurn({ ...evidence, serverModelSlug: 'gpt-5-5-mini' }).verdict).toBe('mismatch');
+    expect(createTurn({ ...evidence, responseModelSlug: 'gpt-5-5-mini' }).verdict).toBe('conflict');
+    expect(createTurn({ ...evidence, serverModelSlug: 'gpt-5-6-auto-thinking' }).verdict).toBe('auto_reasoning');
+    const suspected = createTurn(evidence);
+    expect(mergeTurn(suspected, {
+      captureId: request.captureId, source: 'page_websocket', captureMode: 'live', phase: 'completed',
+      observedAt: '2026-08-11T01:00:02.000Z', resolvedModelSlug: 'gpt-5-6-pro'
+    }).verdict).toBe('normal');
+  });
+
   it('creates a pending unknown turn and calculates duration when completed', () => {
     const initial = createTurn(request);
     expect(initial).toMatchObject({ verdict: 'unknown', phase: 'requested', durationMs: null, captureMode: 'live' });

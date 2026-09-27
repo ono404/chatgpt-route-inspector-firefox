@@ -7,7 +7,7 @@ import { normalizeObservation } from '../core/observation';
 import type { InspectorState, PowObservation, RouteObservation } from '../core/types';
 import type { RuntimeRequest, RuntimeResponse } from '../shared/messages';
 import { handleInstallation } from './upgrade-notice';
-import { UPGRADE_NOTICE_PAGE, UPGRADE_NOTICE_VERSION } from '../shared/upgrade-notice';
+import { UPGRADE_NOTICE_URL } from '../shared/upgrade-notice';
 
 const allowedOrigins = new Set(__ROUTE_INSPECTOR_ALLOWED_ORIGINS__);
 const badgeTexts = new Map<number, string>();
@@ -36,10 +36,15 @@ async function updateBadge(tabId: number | undefined, state: InspectorState): Pr
       ? 'OK'
       : latest?.verdict === 'auto_reasoning'
         ? 'AUTO'
+      : latest?.verdict === 'suspected_downgrade'
+        ? 'SUS'
+      : latest?.verdict === 'work_unverifiable'
+        ? 'WM'
       : latest?.phase === 'requested' || latest?.phase === 'responding'
         ? '…'
         : '?';
-  const color = text === '!' ? '#d95343' : text === 'OK' ? '#6fa92e' : text === 'AUTO' ? '#367c8c' : '#b47d2d';
+  const color = text === '!' ? '#d95343' : text === 'OK' ? '#6fa92e' : text === 'AUTO' ? '#367c8c'
+    : text === 'SUS' ? '#aa9929' : text === 'WM' ? '#545e52' : '#b47d2d';
   if (badgeTexts.get(tabId) === text) return;
   await chrome.action.setBadgeBackgroundColor({ tabId, color });
   await chrome.action.setBadgeText({ tabId, text });
@@ -181,10 +186,7 @@ chrome.runtime.onMessage.addListener((raw: unknown, sender, sendResponse: (respo
       return { ok: true };
     }
     if (request.type === 'route:open-announcement') {
-      if (chrome.runtime.getManifest().version !== UPGRADE_NOTICE_VERSION) {
-        return { ok: false, error: 'This version notice is no longer available.' };
-      }
-      await chrome.tabs.create({ url: chrome.runtime.getURL(UPGRADE_NOTICE_PAGE) });
+      await chrome.tabs.create({ url: UPGRADE_NOTICE_URL });
       return { ok: true };
     }
     return { ok: false, error: '未知请求。' };

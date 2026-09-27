@@ -26,8 +26,20 @@ describe('UI translations', () => {
       expect(t('en', translatedKey)).not.toBe(key);
       expect(t('en', translatedKey)).not.toMatch(/[\u4e00-\u9fff]/);
     }
-    expect(t('zh', 'notice.invitation')).toContain('如果你愿意');
-    expect(t('en', 'notice.invitation')).toContain('If you would like to contribute');
+    expect(t('zh', 'notice.badge')).toBe('版本公告');
+    expect(t('zh', 'notice.pollBefore')).toBe('根据此前');
+    expect(t('zh', 'notice.subtitle')).toBe('1.0.9 · 版本公告');
+    expect(t('zh', 'notice.release109')).toContain('新建会话');
+    expect(t('zh', 'notice.pollLink')).toBe('投票');
+    expect(t('zh', 'notice.pollResult')).toContain('约 80% 未降级');
+    expect(t('zh', 'notice.pollResult')).toContain('约 80% 发生了降级');
+    expect(t('en', 'notice.pollResult')).toContain('about 80% reported no downgrade');
+    expect(t('zh', 'notice.suspectAfter')).toContain('疑似降级');
+    expect(t('zh', 'notice.suspectEnding')).toBe('提醒。');
+    expect(t('zh', 'notice.imageLead')).toBe('单纯');
+    expect(t('zh', 'notice.imageAfter')).toContain('请自行辨别');
+    expect(t('zh', 'notice.release108')).toBe('新增“疑似降级”标记。');
+    expect(t('zh', 'notice.scopeCopy')).toContain('Codex');
   });
 
   it('renders auto reasoning as its own bilingual status and reason', () => {
@@ -54,6 +66,28 @@ describe('UI translations', () => {
     expect(captureModeLabel('reload', 'en')).toBe('Reload session');
   });
 
+  it('renders the limited-sample warning in both languages', () => {
+    const suspected = createTurn({
+      captureId: 'suspected', source: 'page_fetch', captureMode: 'live', phase: 'completed',
+      observedAt: '2026-09-25T00:00:00.000Z', requestedModel: 'gpt-5-6-pro',
+      serverModelSlug: 'gpt-5-6-pro'
+    });
+    expect(suspected.verdict).toBe('suspected_downgrade');
+    expect(turnResultLabel(suspected, 'zh')).toBe('疑似降级');
+    expect(turnResultLabel(suspected, 'en')).toBe('Possible downgrade');
+    expect(assessmentReasons(suspected, 'zh').join('\n')).toContain('单纯图片生成例外');
+    expect(assessmentReasons(suspected, 'en').join('\n')).toContain('image-only generation is an exception');
+  });
+
+  it('renders the Work-mode inconclusive status and reason in both languages', () => {
+    const work = createTurn({ captureId: 'work', source: 'conversation_record', captureMode: 'reload',
+      phase: 'completed', observedAt: '2026-09-25T00:00:00Z', responseModelSlug: 'gpt-6-astra-wm' });
+    expect(turnResultLabel(work, 'zh')).toBe('无法判断');
+    expect(turnResultLabel(work, 'en')).toBe('Cannot determine');
+    expect(assessmentReasons(work, 'zh').join('\n')).toContain('Codex');
+    expect(assessmentReasons(work, 'en').join('\n')).toContain('Codex');
+  });
+
   it('localizes reconstructed evidence reasons while preserving exact model fields', () => {
     const chinese = assessmentReasons(mismatch, 'zh').join('\n');
     const english = assessmentReasons(mismatch, 'en').join('\n');
@@ -78,6 +112,7 @@ describe('UI translations', () => {
       'result.capturing',
       'result.normal',
       'result.autoReasoning',
+      'result.suspectedDowngrade',
       'result.mismatchDetected',
       'result.actualRouteConflict',
       'result.routeRead',
@@ -91,13 +126,14 @@ describe('UI translations', () => {
       'Capturing',
       'Route normal',
       'Auto reasoning',
+      'Possible downgrade',
       'Route mismatch',
       'Route conflict',
       'Route captured',
       'Label only',
       'Route missing'
     ]);
-    expect(Math.max(...labels.map((label) => label.length))).toBeLessThanOrEqual(15);
+    expect(Math.max(...labels.map((label) => label.length))).toBeLessThanOrEqual(18);
     expect(t('en', 'overlay.liveHint')).toBe('Send a message to capture its route.');
     expect(t('en', 'overlay.reloadHint')).toBe('Reload to read the response route.');
     expect(t('en', 'pow.inline')).toBe('POW');
@@ -111,8 +147,15 @@ describe('UI translations', () => {
         .flatMap((match) => match[1] ? [match[1]] : []);
       expect(keys.length).toBeGreaterThan(0);
       expect(keys.filter((key) => !known.has(key))).toEqual([]);
-      expect(html).toContain('Created by @liuqi');
-      expect(html).toContain('https://blog.liu-qi.cn/tools/');
+      if (page === 'dashboard') {
+        expect(html).toContain('id="dashboard-version"');
+        expect(html).toContain('href="https://rinotice.liu-qi.cn/"');
+        expect(html).toContain('https://github.com/Liu-Bot24/chatgpt-route-inspector');
+        expect(html).not.toContain('Created by @liuqi');
+      } else {
+        expect(html).toContain('Created by @liuqi');
+        expect(html).toContain('https://blog.liu-qi.cn/tools/');
+      }
     }
   });
 });

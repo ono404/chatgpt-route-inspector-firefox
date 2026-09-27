@@ -22,6 +22,10 @@ describe('overlay verdict copy', () => {
   it('maps definitive route verdicts before evidence fallbacks', () => {
     expect(overlayVerdictCopy(turn({ verdict: 'auto_reasoning' }), 'live', 'zh')).toEqual({ label: '自动推理', tone: 'auto' });
     expect(overlayVerdictCopy(turn({ verdict: 'auto_reasoning' }), 'reload', 'en')).toEqual({ label: 'Auto reasoning', tone: 'auto' });
+    expect(overlayVerdictCopy(turn({ verdict: 'suspected_downgrade' }), 'live', 'zh')).toEqual({ label: '疑似降级', tone: 'suspect' });
+    expect(overlayVerdictCopy(turn({ verdict: 'suspected_downgrade' }), 'reload', 'zh')).toEqual({ label: '疑似降级', tone: 'suspect' });
+    expect(overlayVerdictCopy(turn({ verdict: 'work_unverifiable' }), 'reload', 'zh')).toEqual({ label: '无法判断', tone: 'neutral' });
+    expect(overlayVerdictCopy(turn({ verdict: 'work_unverifiable' }), 'live', 'en')).toEqual({ label: 'Cannot determine', tone: 'neutral' });
     expect(overlayVerdictCopy(turn({ verdict: 'normal' }), 'live', 'zh')).toEqual({ label: '路由正常', tone: 'normal' });
     expect(overlayVerdictCopy(turn({ verdict: 'mismatch' }), 'live', 'en')).toEqual({ label: 'Route mismatch', tone: 'danger' });
     expect(overlayVerdictCopy(turn({ verdict: 'conflict' }), 'live', 'zh')).toEqual({ label: '路由字段冲突', tone: 'danger' });

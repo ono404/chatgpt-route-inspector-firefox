@@ -158,6 +158,19 @@ test.beforeAll(async () => {
   });
   worker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker');
   extensionId = new URL(worker.url()).host;
+  // Verify external navigation against the built site, without depending on production.
+  await context.route('https://rinotice.liu-qi.cn/**', async (route) => {
+    const pathname = new URL(route.request().url()).pathname;
+    const files: Record<string, { file: string; contentType: string }> = {
+      '/': { file: 'index.html', contentType: 'text/html; charset=utf-8' },
+      '/notice.js': { file: 'notice.js', contentType: 'application/javascript' },
+      '/ui/shared/styles.css': { file: 'ui/shared/styles.css', contentType: 'text/css' },
+      '/icons/icon-48.png': { file: 'icons/icon-48.png', contentType: 'image/png' }
+    };
+    const asset = files[pathname];
+    if (!asset) { await route.fulfill({ status: 404, body: '' }); return; }
+    await route.fulfill({ path: path.join(root, 'dist/notice', asset.file), contentType: asset.contentType });
+  });
 });
 
 test.afterAll(async () => {
@@ -170,126 +183,243 @@ test.afterAll(async () => {
   }
 });
 
-for (const scenario of ['reload', 'pointer-path', 'pointer-path-zh', 'pointer-path-narrow', 'english-layout']) {
-  test(`notice regression: ${scenario}`, async () => {
-    const settings = await context.newPage();
-    await settings.goto(`chrome-extension://${extensionId}/ui/options/index.html`);
-    await settings.evaluate(async ({ captureMode, uiLanguage }) => chrome.runtime.sendMessage({ type: 'route:update-settings', settings: {
-      uiLanguage, overlayEnabled: true, overlayMode: 'full', captureMode
-    } }), { captureMode: scenario === 'reload' ? 'reload' : 'live', uiLanguage: scenario.endsWith('-zh') ? 'zh' : 'en' });
-    const page = await context.newPage();
-    if (scenario.endsWith('-narrow')) await page.setViewportSize({ width: 375, height: 800 });
-    await page.goto('http://127.0.0.1:43996/c/notice-regression');
-    const overlay = page.locator('#chatgpt-route-inspector-root');
-    await expect(overlay.locator('.probe')).toBeVisible();
-    try {
-      if (scenario === 'reload') {
-        await expect(overlay.locator('#notice-star')).toHaveCount(0);
-        return;
-      }
-      const star = overlay.locator('#notice-star');
-      const link = overlay.locator('#notice-link');
-      if (scenario === 'english-layout') {
-        const label = overlay.locator('.notice-source-label');
-        const metrics = await label.evaluate((element) => {
-          const range = document.createRange();
-          range.selectNodeContents(element.firstChild!);
-          const textRects = [...range.getClientRects()].map((r) => ({ x: r.x, y: r.y, width: r.width, height: r.height }));
-          const labelRect = element.getBoundingClientRect();
-          const valueRect = element.nextElementSibling!.getBoundingClientRect();
-          return { textRects, overlap: labelRect.right > valueRect.left,
-            centerDelta: Math.abs(labelRect.y + labelRect.height / 2 - valueRect.y - valueRect.height / 2) };
-        });
-        expect(metrics.textRects).toHaveLength(1);
-        expect(metrics.overlap).toBe(false);
-        expect(metrics.centerDelta).toBeLessThan(1);
-        return;
-      }
-      await star.hover();
-      await expect(link).toBeVisible();
-      const start = (await star.boundingBox())!;
-      const end = (await link.locator('strong').boundingBox())!;
-      const from = { x: start.x + start.width / 2, y: start.y + start.height / 2 };
-      const to = { x: end.x + end.width / 2, y: end.y + end.height / 2 };
-      for (let step = 1; step <= 30; step++) {
-        await page.mouse.move(from.x + (to.x - from.x) * step / 30, from.y + (to.y - from.y) * step / 30);
-        expect(await link.isVisible(), `popover must stay open at pointer step ${step}`).toBe(true);
-      }
-      for (let step = 1; step <= 30; step++) {
-        await page.mouse.move(to.x + (from.x - to.x) * step / 30, to.y + (from.y - to.y) * step / 30);
-        expect(await link.isVisible(), `popover must stay open on return step ${step}`).toBe(true);
-      }
-      await page.mouse.move(0, 0);
-      await expect(link).not.toBeVisible();
-      await star.hover();
-      for (let step = 1; step <= 30; step++) {
-        await page.mouse.move(from.x + (to.x - from.x) * step / 30, from.y + (to.y - from.y) * step / 30);
-        expect(await link.isVisible()).toBe(true);
-      }
-      const opened = context.waitForEvent('page');
-      await page.mouse.click(to.x, to.y);
-      const notice = await opened;
-      await notice.waitForURL(`chrome-extension://${extensionId}/ui/announcement/index.html`);
-      await notice.close();
-      await star.press('Escape');
-      await expect(link).not.toBeVisible();
-    } finally {
-      await Promise.all([settings.close(), page.close()]);
-    }
-  });
-}
+test('links the dashboard version to its notice and keeps GitHub separate', async () => {
+  const dashboard = await context.newPage();
+  await dashboard.goto(`chrome-extension://${extensionId}/ui/dashboard/index.html`);
+  const version = await dashboard.evaluate(() => chrome.runtime.getManifest().version);
+  await expect(dashboard.locator('#dashboard-version')).toHaveText(`v${version}`);
+  await expect(dashboard.locator('#dashboard-version')).toHaveAttribute('href', 'https://rinotice.liu-qi.cn/');
+  await expect(dashboard.locator('#dashboard-version')).toHaveAttribute('target', '_blank');
+  const github = dashboard.locator('.masthead .brand-github');
+  await expect(github).toHaveText('GitHub');
+  await expect(github).toHaveAttribute('href', 'https://github.com/Liu-Bot24/chatgpt-route-inspector');
+  await expect(github).toHaveAttribute('target', '_blank');
+  await expect(dashboard.locator('.masthead .author-link')).toHaveCount(0);
+  const titleBox = await dashboard.locator('.masthead h1').boundingBox();
+  const versionBox = await dashboard.locator('#dashboard-version').boundingBox();
+  const githubBox = await github.boundingBox();
+  expect(titleBox && versionBox && githubBox).toBeTruthy();
+  expect(versionBox!.x).toBeGreaterThan(titleBox!.x + titleBox!.width);
+  expect(githubBox!.y).toBeGreaterThan(versionBox!.y + versionBox!.height);
+  await dashboard.evaluate(async () => chrome.runtime.sendMessage({ type: 'route:update-settings', settings: { uiLanguage: 'zh' } }));
+  await expect(dashboard.locator('html')).toHaveAttribute('lang', 'zh-CN');
+  await dashboard.locator('.masthead').screenshot({ path: path.join(root, 'output', 'playwright', 'dashboard-version-github-zh.png') });
+  const noticeOpened = context.waitForEvent('page');
+  await dashboard.locator('#dashboard-version').click();
+  const notice = await noticeOpened;
+  await notice.waitForURL('https://rinotice.liu-qi.cn/');
+  await notice.getByRole('button', { name: '中', exact: true }).click();
+  await expect(notice.locator('[data-i18n="notice.badge"]')).toHaveText('版本公告');
+  await notice.close();
+  await dashboard.evaluate(async () => chrome.runtime.sendMessage({ type: 'route:update-settings', settings: { uiLanguage: 'en' } }));
+  await expect(dashboard.locator('html')).toHaveAttribute('lang', 'en');
+  await dashboard.setViewportSize({ width: 375, height: 700 });
+  await expect.poll(() => dashboard.evaluate(() => {
+    const brand = document.querySelector<HTMLElement>('.masthead .brand')?.getBoundingClientRect();
+    const controls = document.querySelector<HTMLElement>('.masthead-controls')?.getBoundingClientRect();
+    return {
+      headerOverlap: Boolean(brand && controls && brand.right > controls.left),
+      horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth
+    };
+  })).toEqual({ headerOverlap: false, horizontalOverflow: false });
+  await dashboard.locator('.masthead').screenshot({ path: path.join(root, 'output', 'playwright', 'dashboard-version-github-narrow-en.png') });
+  await dashboard.close();
+});
 
-test('opens the bilingual release notice from the hoverable response-source star', async () => {
+test('anchors the yellow suspected-downgrade hint to the status in live and reload modes', async () => {
   const settings = await context.newPage();
   await settings.goto(`chrome-extension://${extensionId}/ui/options/index.html`);
   await settings.evaluate(async () => {
     await chrome.runtime.sendMessage({ type: 'route:update-settings', settings: {
       uiLanguage: 'zh', overlayEnabled: true, overlayMode: 'full', captureMode: 'live'
     } });
+    await chrome.runtime.sendMessage({ type: 'route:clear' });
   });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:43996/c/notice-preview');
+  await page.route('**/backend-api/f/conversation?hint=live', (route) => route.fulfill({
+    contentType: 'text/event-stream',
+    body: 'data: {"message":{"author":{"role":"assistant"},"metadata":{"model_slug":"gpt-5-6-pro"}}}\n\n' +
+      'data: {"type":"server_ste_metadata","metadata":{"model_slug":"gpt-5-6-pro","request_id":"req-suspect-live"}}\n\n' +
+      'data: [DONE]\n\n'
+  }));
+  await page.route('**/backend-api/conversations/e2e-conversation?include_has_versions=true&num_turns=100', (route) => route.fulfill({
+    contentType: 'application/json',
+    body: JSON.stringify({ current_node: 'assistant-suspect', mapping: {
+      'user-suspect': { parent: null, message: { id: 'user-suspect', author: { role: 'user' }, metadata: {} } },
+      'assistant-suspect': { parent: 'user-suspect', message: { id: 'assistant-suspect', author: { role: 'assistant' },
+        metadata: { model_slug: 'gpt-5-6-pro', server_ste_metadata: { model_slug: 'gpt-5-6-pro' } } } }
+    } })
+  }));
+  await page.goto('http://127.0.0.1:43996/c/e2e-conversation');
   const overlay = page.locator('#chatgpt-route-inspector-root');
-  const star = overlay.locator('#notice-star');
-  const link = overlay.locator('#notice-link');
-  await expect(star).toBeVisible();
-  await expect(star).toHaveText('*');
-  await expect(star).toHaveCSS('font-family', 'Arial, sans-serif');
-  await expect(star).toHaveCSS('color', 'rgb(169, 240, 77)');
+  const trigger = overlay.locator('#suspect-trigger');
+  const link = overlay.locator('#suspect-link');
+  await expect(overlay.locator('#notice-star')).toHaveCount(0);
+  await expect(overlay.locator('.notice-source-label')).toHaveCount(0);
+  await expect(trigger).toHaveCount(0);
+  await page.evaluate(async () => {
+    await window.fetch('/backend-api/f/conversation?hint=live', {
+      method: 'POST', body: JSON.stringify({ model: 'gpt-5-6-pro', conversation_id: 'e2e-conversation' })
+    }).then((response) => response.text());
+  });
+  await expect.poll(() => worker.evaluate(async (key) => {
+    const state = (await chrome.storage.local.get(key))[key] as { turns: Array<{ captureMode: string; verdict: string }> };
+    return state.turns.find((turn) => turn.captureMode === 'live')?.verdict;
+  }, storageKey)).toBe('suspected_downgrade');
+  await expect(trigger).toHaveText('疑似降级');
+  await expect(trigger).toHaveCSS('color', 'rgb(244, 228, 94)');
+  const tabId = await worker.evaluate(async () => (await chrome.tabs.query({}))
+    .find((tab) => tab.url?.endsWith('/c/e2e-conversation'))!.id!);
+  await expect.poll(() => worker.evaluate((id) => chrome.action.getBadgeText({ tabId: id }), tabId)).toBe('SUS');
+  const dashboard = await context.newPage();
+  await dashboard.goto(`chrome-extension://${extensionId}/ui/dashboard/index.html`);
+  await expect(dashboard.locator('#rows .tag.suspect')).toHaveText('疑似降级');
+  await expect(dashboard.locator('#rows .tag.suspect')).toHaveCSS('color', 'rgb(244, 228, 94)');
+  await dashboard.close();
+  const popup = await context.newPage();
+  await popup.goto(`chrome-extension://${extensionId}/ui/popup/index.html`);
+  await page.bringToFront();
+  await popup.reload();
+  await expect(popup.locator('.verdict-line b')).toHaveText('疑似降级');
+  await expect(popup.locator('.verdict-line b')).toHaveCSS('color', 'rgb(244, 228, 94)');
+  await popup.close();
+  await page.bringToFront();
   await expect(link).not.toBeVisible();
-  await star.hover();
+  await trigger.hover();
   await expect(link).toBeVisible();
-  await expect(link).toContainText('有限样本显示响应来源字段缺失 resolved_model_slug，则可能发生降级。 查看详情');
-  await link.hover();
-  await expect(link).toBeVisible();
-  await overlay.locator('.probe').screenshot({ path: path.join(root, 'output/playwright/notice-hint-107-zh.png') });
+  await expect(link).toContainText('响应来源字段缺失 resolved_model_slug，根据调研统计，约 80% 可能发生降级（生图例外）。 查看详情');
+  const start = (await trigger.boundingBox())!;
+  const end = (await link.locator('strong').boundingBox())!;
+  const from = { x: start.x + start.width / 2, y: start.y + start.height / 2 };
+  const to = { x: end.x + end.width / 2, y: end.y + end.height / 2 };
+  for (let step = 1; step <= 30; step++) {
+    await page.mouse.move(from.x + (to.x - from.x) * step / 30, from.y + (to.y - from.y) * step / 30);
+    expect(await link.isVisible(), `popover must stay open at pointer step ${step}`).toBe(true);
+  }
+  await overlay.locator('.probe').screenshot({ path: path.join(root, 'output/playwright/suspected-downgrade-108-live-zh.png') });
   const opened = context.waitForEvent('page');
   await link.click();
   const notice = await opened;
-  await notice.waitForURL(`chrome-extension://${extensionId}/ui/announcement/index.html`);
-  await expect(notice.locator('html')).toHaveAttribute('lang', 'zh-CN');
-  await notice.getByRole('button', { name: 'EN', exact: true }).click();
-  await expect(notice.locator('#notice-title')).toHaveText('An observation about response routing fields');
+  await notice.waitForURL('https://rinotice.liu-qi.cn/');
   await notice.getByRole('button', { name: '中', exact: true }).click();
-  await expect(notice.locator('#notice-title')).toHaveText('关于响应路由字段的一点观察');
-  expect(await notice.evaluate(async () => (await chrome.runtime.sendMessage({ type: 'route:get-state' })).state.settings.uiLanguage)).toBe('zh');
-  const closed = notice.waitForEvent('close');
-  await notice.locator('#notice-close').click();
-  await closed;
-  await star.focus();
+  await expect(notice.locator('#notice-title')).toHaveCount(0);
+  await expect(notice.locator('.announcement-body > .tag')).toHaveText('版本公告');
+  await expect(notice.locator('.announcement-points > li')).toHaveCount(2);
+  await expect(notice.locator('.announcement-points > li').first()).toContainText('约 80% 未降级');
+  await expect(notice.locator('#notice-poll')).toHaveText('投票');
+  await expect(notice.locator('#notice-poll')).toHaveAttribute('href', 'https://x.com/liu_9982/status/2100132495455043829?s=20');
+  await expect(notice.locator('.announcement-points sup')).toHaveText('*');
+  await notice.setViewportSize({ width: 1100, height: 800 });
+  await expect(notice.locator('.announcement-points .announcement-note-anchor')).toHaveCSS('white-space', 'nowrap');
+  await expect(notice.locator('.announcement-points .announcement-note-anchor')).toHaveText('提醒。*');
+  await expect(notice.locator('.announcement-footnote')).toContainText('单纯图片生成任务响应结果中不带 resolved_model_slug 字段属正常现象，请自行辨别。');
+  await expect(notice.locator('.announcement-releases li').first()).toContainText('修复新建会话');
+  await expect(notice.locator('.announcement-releases li').nth(1)).toContainText('新增“疑似降级”标记。');
+  await expect(notice.locator('#notice-history-title')).toHaveCSS('color', 'rgb(178, 244, 91)');
+  await notice.screenshot({ path: path.join(root, 'output/playwright/announcement-108-zh.png'), fullPage: true });
+  await notice.getByRole('button', { name: 'EN', exact: true }).click();
+  await expect(notice.locator('.announcement-body > .tag')).toHaveText('Version notice');
+  await expect(notice.locator('.announcement-points > li').first()).toContainText('about 80% reported no downgrade');
+  await expect(notice.locator('#notice-poll')).toHaveText('poll');
+  await expect(notice.locator('.announcement-footnote')).toContainText('For image-only generation tasks');
+  await expect(notice.locator('.announcement-releases li')).toHaveCount(9);
+  await expect(notice.locator('.announcement-points > li').nth(1)).toContainText('Work mode');
+  await notice.screenshot({ path: path.join(root, 'output/playwright/announcement-108-en.png'), fullPage: true });
+  await notice.setViewportSize({ width: 375, height: 800 });
+  await expect(notice.locator('.announcement-points .announcement-note-anchor')).toHaveCSS('white-space', 'nowrap');
+  await expect(notice.locator('.announcement-points .announcement-note-anchor')).toHaveText('added.*');
+  expect(await notice.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await notice.close();
+  await trigger.focus();
   await expect(link).toBeVisible();
-  await star.press('Escape');
+  await trigger.press('Escape');
   await expect(link).not.toBeVisible();
   await settings.evaluate(async () => chrome.runtime.sendMessage({ type: 'route:update-settings', settings: { uiLanguage: 'en' } }));
-  await star.hover();
-  await expect(link).toContainText('Limited samples suggest that a missing resolved_model_slug response field may indicate a model downgrade. View details');
-  await overlay.locator('.probe').screenshot({ path: path.join(root, 'output/playwright/notice-hint-107-en.png') });
+  await expect(trigger).toHaveText('Possible downgrade');
+  await trigger.hover();
+  await expect(link).toContainText('When the response lacks resolved_model_slug, the survey suggests an approximately 80% chance of downgrade (image generation excepted). View details');
   await page.setViewportSize({ width: 375, height: 800 });
-  await star.hover();
+  await trigger.hover();
   await expect(link).toBeVisible();
   const bounds = await link.boundingBox();
   expect(bounds!.x).toBeGreaterThanOrEqual(0);
   expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(375);
+  await page.evaluate(() => localStorage.setItem('route-fixture-reload', '1'));
+  await page.reload();
+  await expect.poll(() => worker.evaluate(async (key) => {
+    const state = (await chrome.storage.local.get(key))[key] as { turns: Array<{ captureMode: string; verdict: string }> };
+    return state.turns.find((turn) => turn.captureMode === 'reload')?.verdict;
+  }, storageKey)).toBe('suspected_downgrade');
+  await overlay.locator('#mode-reload').click();
+  await expect(overlay.locator('#suspect-trigger')).toHaveText('Possible downgrade');
+  await expect(overlay.locator('#suspect-trigger')).toHaveCSS('color', 'rgb(244, 228, 94)');
+  await expect(overlay.locator('#notice-star')).toHaveCount(0);
+  await overlay.locator('#suspect-trigger').hover();
+  await expect(overlay.locator('#suspect-link')).toBeVisible();
+  await overlay.locator('.probe').screenshot({ path: path.join(root, 'output/playwright/suspected-downgrade-108-reload-en.png') });
+  await Promise.all([settings.close(), page.close()]);
+});
+
+test('marks -wm Work responses white and inconclusive in reload and live without mixing them', async () => {
+  const settings = await context.newPage();
+  await settings.goto(`chrome-extension://${extensionId}/ui/options/index.html`);
+  await settings.evaluate(async () => {
+    await chrome.runtime.sendMessage({ type: 'route:update-settings', settings: {
+      uiLanguage: 'zh', overlayEnabled: true, overlayMode: 'full', captureMode: 'reload'
+    } });
+    await chrome.runtime.sendMessage({ type: 'route:clear' });
+  });
+  const page = await context.newPage();
+  await page.route('**/backend-api/conversations/e2e-conversation?include_has_versions=true&num_turns=100', (route) => route.fulfill({
+    contentType: 'application/json',
+    body: JSON.stringify({ current_node: 'assistant-work', mapping: {
+      'user-work': { parent: null, message: { id: 'user-work', author: { role: 'user' }, metadata: {} } },
+      'assistant-work': { parent: 'user-work', message: { id: 'assistant-work', author: { role: 'assistant' },
+        metadata: { model_slug: 'gpt-6-astra-wm' } } }
+    } })
+  }));
+  await page.route('**/backend-api/f/conversation?work=live', (route) => route.fulfill({
+    contentType: 'text/event-stream',
+    body: 'data: {"type":"server_ste_metadata","metadata":{"model_slug":"gpt-6-astra-wm"}}\n\n' +
+      'data: [DONE]\n\n'
+  }));
+  await page.goto('http://127.0.0.1:43996/c/e2e-conversation');
+  await page.evaluate(() => localStorage.setItem('route-fixture-reload', '1'));
+  await page.reload();
+  await expect.poll(() => worker.evaluate(async (key) => {
+    const state = (await chrome.storage.local.get(key))[key] as { turns: Array<{ captureMode: string; verdict: string }> };
+    return state.turns.find((turn) => turn.captureMode === 'reload')?.verdict;
+  }, storageKey)).toBe('work_unverifiable');
+  const overlay = page.locator('#chatgpt-route-inspector-root');
+  const trigger = overlay.locator('.work-trigger');
+  await expect(trigger).toHaveText('无法判断');
+  await expect(trigger).toHaveCSS('color', 'rgb(243, 245, 236)');
+  await expect(overlay.locator('#suspect-trigger')).toHaveCount(0);
+  await trigger.hover();
+  await expect(overlay.locator('.work-popover')).toContainText('网页版 Work 模式响应路由仅有单一字段，实际降级情况与 Codex 一致，请按照 Codex 排查。');
+  await overlay.locator('.probe').screenshot({ path: path.join(root, 'output/playwright/work-mode-108-reload-zh.png') });
+  const tabId = await worker.evaluate(async () => (await chrome.tabs.query({}))
+    .find((tab) => tab.url?.endsWith('/c/e2e-conversation'))!.id!);
+  await expect.poll(() => worker.evaluate((id) => chrome.action.getBadgeText({ tabId: id }), tabId)).toBe('WM');
+  const dashboard = await context.newPage();
+  await dashboard.goto(`chrome-extension://${extensionId}/ui/dashboard/index.html`);
+  await expect(dashboard.locator('#rows .tag.neutral')).toHaveText('无法判断');
+  await dashboard.close();
+  await settings.evaluate(async () => chrome.runtime.sendMessage({ type: 'route:update-settings', settings: { captureMode: 'live' } }));
+  await page.evaluate(async () => {
+    await window.fetch('/backend-api/f/conversation?work=live', {
+      method: 'POST', body: JSON.stringify({ model: 'gpt-6-astra-wm', conversation_id: 'e2e-conversation' })
+    }).then((response) => response.text());
+  });
+  await expect.poll(() => worker.evaluate(async (key) => {
+    const state = (await chrome.storage.local.get(key))[key] as { turns: Array<{ captureMode: string; verdict: string }> };
+    return state.turns.find((turn) => turn.captureMode === 'live')?.verdict;
+  }, storageKey)).toBe('work_unverifiable');
+  await expect(overlay.locator('.work-trigger')).toHaveText('无法判断');
+  await expect.poll(() => worker.evaluate(async (key) => {
+    const state = (await chrome.storage.local.get(key))[key] as { turns: Array<{ captureMode: string; verdict: string }> };
+    return state.turns.find((turn) => turn.captureMode === 'reload')?.verdict;
+  }, storageKey)).toBe('work_unverifiable');
   await Promise.all([settings.close(), page.close()]);
 });
 
@@ -297,6 +427,8 @@ test('keeps live and reload captures distinct and stores no chat text', async ()
   const languageSetup = await context.newPage();
   await languageSetup.goto(`chrome-extension://${extensionId}/ui/popup/index.html`);
   await languageSetup.locator('[data-language="zh"]').click();
+  await languageSetup.locator('#mode-live').click();
+  await languageSetup.evaluate(async () => chrome.runtime.sendMessage({ type: 'route:clear' }));
   await expect(languageSetup.locator('html')).toHaveAttribute('lang', 'zh-CN');
   await expect(languageSetup.locator('.author-link')).toHaveAttribute('href', 'https://blog.liu-qi.cn/tools/');
   const popupFontSizes = await languageSetup.locator('body').evaluate((body) => Array.from(body.querySelectorAll<HTMLElement>('*'))
@@ -1191,8 +1323,14 @@ test('captures delta metadata through real fetch chunks and interleaved WebSocke
     }, { key: storageKey, variant })).toEqual({
       phase: 'completed', label: 'gpt-6-pro', server: 'gpt-6-pro',
       resolved: variant === 'missing-resolved' ? null : variant === 'conflict' ? 'gpt-5-5-mini' : 'gpt-6-pro',
-      verdict: variant === 'conflict' ? 'conflict' : 'normal'
+      verdict: variant === 'conflict' ? 'conflict' : variant === 'missing-resolved' ? 'suspected_downgrade' : 'normal'
     });
+    if (variant === 'missing-resolved') {
+      const status = page.locator('#chatgpt-route-inspector-root').locator('.status');
+      await expect(status).toHaveText('Possible downgrade');
+      await expect(status).toHaveCSS('color', 'rgb(244, 228, 94)');
+      await expect(page.locator('#chatgpt-route-inspector-root').locator('#notice-star')).toHaveCount(0);
+    }
   }
   await expect(page.locator('#chatgpt-route-inspector-root')).toContainText('gpt-6-pro');
   await expect(page.locator('#chatgpt-route-inspector-root')).toContainText('assistant.metadata.model_slug');
@@ -1409,7 +1547,7 @@ test('shows only GPT-5.6 and GPT-5.5 auto reasoning in the dashboard, popup and 
     }, { key: storageKey, id: sample.id })).toBe(sample.verdict);
   }
   await expect(overlay.locator('.status')).toHaveText('自动推理');
-  expect(await overlay.locator('.status').evaluate((item) => getComputedStyle(item).color)).toBe('rgb(117, 197, 216)');
+  await expect(overlay.locator('.status')).toHaveCSS('color', 'rgb(117, 197, 216)');
   await overlay.locator('.probe').screenshot({ path: path.join(root, 'output', 'playwright', 'auto-reasoning-overlay-zh.png') });
   const tabId = await worker.evaluate(async () => (await chrome.tabs.query({})).find((tab) => tab.url?.endsWith('/delta-fixture'))!.id!);
   await expect.poll(() => worker.evaluate((tabId) => chrome.action.getBadgeText({ tabId }), tabId)).toBe('AUTO');

@@ -4,6 +4,8 @@ import {
   EMPTY_ROUTE_FIELDS,
   ROUTE_SCHEMA,
   ROUTE_SCHEMA_VERSION,
+  type RouteAssessment,
+  type RouteFields,
   type RouteObservation,
   type RouteTurn
 } from './types';
@@ -38,6 +40,41 @@ function fieldsFromObservation(observation: RouteObservation) {
   };
 }
 
+function assessTurn(
+  fields: RouteFields,
+  captureMode: RouteObservation['captureMode'],
+  phase: RouteObservation['phase'],
+  sources: RouteObservation['source'][]
+): RouteAssessment {
+  const assessment = assessRoute(fields);
+  // No verified Work-specific conversation_mode.kind is available in captures yet.
+  // The model slug's -wm suffix is the explicit Work signal; it also covers reload
+  // records, where the assistant metadata label can be the only available field.
+  const workModel = [fields.requestedModel, fields.resolvedModelSlug, fields.serverModelSlug,
+    fields.responseModelSlug, fields.domModelSlug].some((model) => /-wm$/i.test(model?.trim() ?? ''));
+  if (phase === 'completed' && workModel) {
+    return {
+      ...assessment,
+      verdict: 'work_unverifiable',
+      reasons: ['检测到 -wm Work 模型；网页版 Work 模式的响应字段不足以判断降级，请按 Codex 排查']
+    };
+  }
+  // This is a limited-sample signal about completed network responses, not a route mismatch.
+  // Preserve explicit conflicts, mismatches and auto-reasoning over the weaker signal.
+  const hasNetworkResponse = captureMode === 'live'
+    ? sources.some((source) => source === 'page_fetch' || source === 'page_websocket')
+    : sources.includes('conversation_record');
+  const hasResponseModelEvidence = Boolean(fields.serverModelSlug?.trim() || fields.responseModelSlug?.trim());
+  if (phase !== 'completed' || !hasNetworkResponse || !hasResponseModelEvidence ||
+      fields.resolvedModelSlug?.trim() ||
+      (assessment.verdict !== 'normal' && assessment.verdict !== 'unknown')) return assessment;
+  return {
+    ...assessment,
+    verdict: 'suspected_downgrade',
+    reasons: [...assessment.reasons, '已完成的响应缺少 resolved_model_slug；有限样本提示可能发生降级']
+  };
+}
+
 export function createTurn(observation: RouteObservation): RouteTurn {
   const fields = fieldsFromObservation(observation);
   const completedAt = observation.completedAt ?? null;
@@ -59,7 +96,7 @@ export function createTurn(observation: RouteObservation): RouteTurn {
     durationMs: duration(startedAt, completedAt),
     errorCode: observation.errorCode ?? null,
     ...fields,
-    ...assessRoute(fields)
+    ...assessTurn(fields, observation.captureMode, observation.phase, [observation.source])
   };
 }
 
@@ -104,13 +141,15 @@ export function mergeTurn(turn: RouteTurn, observation: RouteObservation): Route
     fastConvo: pick(turn.fastConvo, incoming.fastConvo)
   };
   const completedAt = pick(turn.completedAt, observation.completedAt ?? null);
+  const phase = stale ? turn.phase : monotonicPhase(turn.phase, observation.phase);
+  const sources = [...new Set([...turn.sources, observation.source])];
   return {
     ...turn,
     ...fields,
-    ...assessRoute(fields),
-    sources: [...new Set([...turn.sources, observation.source])],
+    ...assessTurn(fields, observation.captureMode, phase, sources),
+    sources,
     captureMode: observation.captureMode,
-    phase: stale ? turn.phase : monotonicPhase(turn.phase, observation.phase),
+    phase,
     tabId: observation.tabId ?? turn.tabId,
     pageUrl: pick(turn.pageUrl, observation.pageUrl ?? null),
     networkRequestId: pick(turn.networkRequestId, observation.networkRequestId ?? null),

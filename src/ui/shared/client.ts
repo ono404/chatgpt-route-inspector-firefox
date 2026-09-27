@@ -56,12 +56,16 @@ export function verdictLabel(verdict: RouteVerdict, language: UiLanguage): strin
     mismatch: t(language, 'result.mismatch'),
     conflict: t(language, 'result.routeConflict'),
     auto_reasoning: t(language, 'result.autoReasoning'),
+    suspected_downgrade: t(language, 'result.suspectedDowngrade'),
+    work_unverifiable: t(language, 'result.workUnverifiable'),
     unknown: t(language, 'result.unknown')
   }[verdict];
 }
 
 export function verdictTone(verdict: RouteVerdict): string {
   if (verdict === 'auto_reasoning') return 'auto';
+  if (verdict === 'suspected_downgrade') return 'suspect';
+  if (verdict === 'work_unverifiable') return 'neutral';
   if (verdict === 'normal') return 'signal';
   if (verdict === 'mismatch' || verdict === 'conflict') return 'danger';
   return 'amber';
@@ -127,6 +131,14 @@ export function assessmentReasons(turn: RouteTurn, language: UiLanguage): string
   if (turn.modelLabelConflict) reasons.push(t(language, 'reason.labelConflict'));
   if (turn.verdict === 'auto_reasoning') {
     reasons.push(t(language, 'reason.autoReasoning', { model: turn.routeModel ?? '' }));
+    return reasons;
+  }
+  if (turn.verdict === 'suspected_downgrade') {
+    reasons.push(t(language, 'reason.suspectedDowngrade'));
+    return reasons;
+  }
+  if (turn.verdict === 'work_unverifiable') {
+    reasons.push(t(language, 'reason.workUnverifiable'));
     return reasons;
   }
   if (turn.routeModel && turn.modelLabel && turn.routeModel !== turn.modelLabel) {

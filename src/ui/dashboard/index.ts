@@ -34,6 +34,12 @@ const evidenceFieldHints: Partial<Record<TranslationKey, string>> = {
   'detail.imageGenResetAt': 'limits_progress[feature_name=image_gen].reset_after'
 };
 
+const versionLabel = document.querySelector<HTMLElement>('#dashboard-version');
+if (versionLabel) {
+  const version = chrome.runtime.getManifest().version;
+  versionLabel.textContent = `v${version}`;
+}
+
 function quotaTime(value: string | null | undefined, language: UiLanguage): string {
   if (!value || !Number.isFinite(Date.parse(value))) return t(language, 'quota.notCaptured');
   const formatted = new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-GB', {
@@ -125,7 +131,7 @@ function render(next: InspectorState): void {
   const anomaly = state.turns.filter((turn) => turn.verdict === 'mismatch' || turn.verdict === 'conflict').length;
   document.querySelector<HTMLElement>('#summary')!.innerHTML = `<div class="readout"><small>${escapeHtml(t(language, 'summary.total'))}</small><b>${total}</b></div><div class="readout"><small>${escapeHtml(t(language, 'summary.live'))}</small><b class="signal-text">${live}</b></div><div class="readout"><small>${escapeHtml(t(language, 'summary.reload'))}</small><b class="amber-text">${reload}</b></div><div class="readout"><small>${escapeHtml(t(language, 'summary.anomalies'))}</small><b class="danger-text">${anomaly}</b></div>`;
 
-  const verdictFilters: Array<[RouteVerdict | 'all', TranslationKey]> = [['all', 'filter.allVerdicts'], ['normal', 'filter.normal'], ['auto_reasoning', 'filter.autoReasoning'], ['mismatch', 'filter.mismatch'], ['conflict', 'filter.conflict'], ['unknown', 'filter.unknown']];
+  const verdictFilters: Array<[RouteVerdict | 'all', TranslationKey]> = [['all', 'filter.allVerdicts'], ['normal', 'filter.normal'], ['auto_reasoning', 'filter.autoReasoning'], ['suspected_downgrade', 'filter.suspectedDowngrade'], ['work_unverifiable', 'filter.workUnverifiable'], ['mismatch', 'filter.mismatch'], ['conflict', 'filter.conflict'], ['unknown', 'filter.unknown']];
   const modeFilters: Array<[CaptureMode | 'all', TranslationKey]> = [['all', 'filter.allModes'], ['live', 'mode.live'], ['reload', 'mode.reload']];
   document.querySelector<HTMLElement>('#filters')!.innerHTML = verdictFilters.map(([value, label]) => `<button class="filter-button ${filter === value ? 'active' : ''}" data-filter="${value}">${escapeHtml(t(language, label))}</button>`).join('');
   document.querySelector<HTMLElement>('#mode-filters')!.innerHTML = modeFilters.map(([value, label]) => `<button class="filter-button ${modeFilter === value ? 'active' : ''}" data-mode-filter="${value}">${escapeHtml(t(language, label))}</button>`).join('');

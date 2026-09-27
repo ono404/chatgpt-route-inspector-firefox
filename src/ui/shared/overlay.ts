@@ -3,7 +3,7 @@ import { t } from './i18n';
 
 export interface OverlayVerdictCopy {
   label: string;
-  tone: 'idle' | 'normal' | 'danger' | 'warn' | 'auto';
+  tone: 'idle' | 'normal' | 'danger' | 'warn' | 'auto' | 'suspect' | 'neutral';
 }
 
 export function overlayVerdictCopy(
@@ -13,6 +13,8 @@ export function overlayVerdictCopy(
 ): OverlayVerdictCopy {
   if (!turn) return { label: t(language, mode === 'live' ? 'result.waitingNext' : 'result.waitingReload'), tone: 'idle' };
   if (turn.verdict === 'auto_reasoning') return { label: t(language, 'result.autoReasoning'), tone: 'auto' };
+  if (turn.verdict === 'suspected_downgrade') return { label: t(language, 'result.suspectedDowngrade'), tone: 'suspect' };
+  if (turn.verdict === 'work_unverifiable') return { label: t(language, 'result.workUnverifiable'), tone: 'neutral' };
   if (turn.verdict === 'normal') return { label: t(language, 'result.normal'), tone: 'normal' };
   if (turn.verdict === 'mismatch') return { label: t(language, 'result.mismatchDetected'), tone: 'danger' };
   if (turn.verdict === 'conflict') return { label: t(language, 'result.actualRouteConflict'), tone: 'danger' };

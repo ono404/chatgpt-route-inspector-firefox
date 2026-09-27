@@ -1,12 +1,12 @@
 export const ROUTE_SCHEMA = 'chatgpt-route-observation' as const;
-export const ROUTE_SCHEMA_VERSION = '1.7.0' as const;
+export const ROUTE_SCHEMA_VERSION = '1.8.0' as const;
 
 export type CaptureSource = 'page_fetch' | 'page_websocket' | 'conversation_record' | 'assistant_dom';
 export type CaptureMode = 'live' | 'reload';
 export type UiLanguage = 'zh' | 'en';
 export type OverlayMode = 'full' | 'compact' | 'mini' | 'docked';
 export type CapturePhase = 'requested' | 'responding' | 'completed' | 'failed';
-export type RouteVerdict = 'normal' | 'mismatch' | 'conflict' | 'unknown' | 'auto_reasoning';
+export type RouteVerdict = 'normal' | 'mismatch' | 'conflict' | 'unknown' | 'auto_reasoning' | 'suspected_downgrade' | 'work_unverifiable';
 export type ModelLabelSource =
   | 'assistant.metadata.model_slug'
   | 'assistant[data-message-model-slug]';

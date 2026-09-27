@@ -15,7 +15,7 @@
   ],
   "properties": {
     "schema": { "const": "chatgpt-route-observation" },
-    "schemaVersion": { "const": "1.7.0" },
+    "schemaVersion": { "const": "1.8.0" },
     "captureContextId": { "type": "string", "maxLength": 128 },
     "deepResearchRemaining": { "type": ["integer", "null"], "minimum": 0 },
     "deepResearchResetAt": { "type": ["string", "null"], "format": "date-time" },
@@ -43,7 +43,7 @@
     "isSearch": { "type": ["boolean", "null"] },
     "hadImage": { "type": ["boolean", "null"] },
     "fastConvo": { "type": ["boolean", "null"] },
-    "verdict": { "enum": ["normal", "mismatch", "conflict", "unknown", "auto_reasoning"] },
+    "verdict": { "enum": ["normal", "mismatch", "conflict", "unknown", "auto_reasoning", "suspected_downgrade", "work_unverifiable"] },
     "routeModel": { "type": ["string", "null"] },
     "routeModelSources": { "type": "array", "uniqueItems": true, "items": { "enum": ["resolved_model_slug", "server_ste_metadata.model_slug", "assistant.metadata.model_slug", "assistant[data-message-model-slug]"] } },
     "modelLabel": { "type": ["string", "null"] },

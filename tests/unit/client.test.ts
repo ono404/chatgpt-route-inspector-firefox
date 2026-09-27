@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { InspectorState, PowReading, RouteTurn } from '../../src/core/types';
-import { latestForTab, latestPowForTab } from '../../src/ui/shared/client';
+import { latestForTab, latestPowForTab, verdictTone } from '../../src/ui/shared/client';
 import { CaptureContextTracker } from '../../src/core/capture-context';
 
 function stateWith(turns: RouteTurn[] = [], powReadings: PowReading[] = []): InspectorState {
@@ -27,6 +27,12 @@ function turn(tabId: number, captureMode: 'live' | 'reload', requestedModel: str
 }
 
 describe('popup current-tab selectors', () => {
+  it('keeps the yellow suspected marker distinct from the orange unknown marker', () => {
+    expect(verdictTone('suspected_downgrade')).toBe('suspect');
+    expect(verdictTone('work_unverifiable')).toBe('neutral');
+    expect(verdictTone('unknown')).toBe('amber');
+  });
+
   it('selects the latest matching mode from the active tab', () => {
     const current = turn(7, 'live', 'gpt-5-6-thinking');
     const otherTab = turn(9, 'live', 'gpt-5-6-pro');

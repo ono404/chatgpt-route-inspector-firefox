@@ -4,29 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="no-referrer">
-  <title data-i18n="notice.documentTitle">Route Inspector · 1.0.7 公告</title>
+  <title data-i18n="notice.documentTitle">Route Inspector · 1.0.9 版本公告</title>
   <link rel="stylesheet" href="../shared/styles.css">
 </head>
 <body>
   <main class="announcement">
     <header class="masthead announcement-masthead">
-      <div class="brand"><span class="brand-mark" aria-hidden="true"></span><div class="brand-copy"><div class="brand-title-line"><h1>Route Inspector</h1></div><p data-i18n="notice.subtitle">1.0.7 · 用户公告</p></div></div>
+      <div class="brand"><span class="brand-mark" aria-hidden="true"></span><div class="brand-copy"><div class="brand-title-line"><h1>Route Inspector</h1></div><p data-i18n="notice.subtitle">1.0.9 · 版本公告</p></div></div>
       <div class="language-switch" role="group" aria-label="切换语言" data-i18n-aria-label="language.label"><button type="button" data-language="en" aria-pressed="false">EN</button><button type="button" data-language="zh" aria-pressed="true">中</button></div>
     </header>
-    <article class="announcement-body" aria-labelledby="notice-title">
-      <span class="tag auto" data-i18n="notice.badge">样本观察与反馈邀请</span>
-      <h2 id="notice-title" data-i18n="notice.title">关于响应路由字段的一点观察</h2>
-      <div class="announcement-observation">
-        <p><span data-i18n="notice.observationBefore">目前收集到的一些案例表明，发生降级的账户在网页端进行 Chat 会话时，响应中会缺少 </span><code>resolved_model_slug</code><span data-i18n="notice.observationBetween"> 字段，只能通过 </span><code>server_ste_metadata.model_slug</code><span data-i18n="notice.observationAfter"> 识别路由信息；而响应中存在 </span><code>resolved_model_slug</code><span data-i18n="notice.observationEnd"> 字段的账户没有发生降级。</span></p>
-      </div>
-      <p class="announcement-caveat" data-i18n="notice.caveat">以上仅是目前有限样本中的观察，尚不足以将字段是否存在作为判断账户是否降级的通用标准。</p>
-      <h3 data-i18n="notice.inviteTitle">欢迎分享你的真实情况</h3>
-      <p data-i18n="notice.invitation">目前的样本量还比较有限，因此我发起了一次投票。如果你愿意，欢迎根据自己账户的真实使用情况参与，帮助补充样本。无论你的账户是否出现过降级，你的反馈都很有价值。感谢你的时间与支持。</p>
+    <article class="announcement-body" aria-label="版本公告" data-i18n-aria-label="notice.badge">
+      <span class="tag auto" data-i18n="notice.badge">版本公告</span>
+      <ol class="announcement-points">
+        <li>
+          <p><span data-i18n="notice.pollBefore">根据此前</span><a id="notice-poll" href="https://x.com/liu_9982/status/2100132495455043829?s=20" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-i18n="notice.pollLink">投票</a><span data-i18n="notice.pollAfter">反馈，响应结果中存在 </span><code>resolved_model_slug</code><span data-i18n="notice.pollResult"> 字段的用户约 80% 未降级；没有该字段的用户约 80% 发生了降级。</span></p>
+          <p><span data-i18n="notice.suspectBefore">故针对响应结果中 </span><code>resolved_model_slug</code><span data-i18n="notice.suspectAfter"> 字段缺失的情况，新增“疑似降级”标记</span><span class="announcement-note-anchor"><span data-i18n="notice.suspectEnding">提醒。</span><sup class="announcement-note-ref">*</sup></span></p>
+        </li>
+        <li><p data-i18n="notice.scopeCopy">本扩展的正确应用范围是网页版 Chat 模式。网页版 Work 模式的降级情况与 Codex 一致，请按照 Codex 排查。</p></li>
+      </ol>
+      <p class="announcement-footnote"><span class="announcement-note-anchor"><span class="announcement-note-ref">*</span>&nbsp;<span data-i18n="notice.imageLead">单纯</span></span><span data-i18n="notice.imageBefore">图片生成任务响应结果中不带 </span><code>resolved_model_slug</code><span data-i18n="notice.imageAfter"> 字段属正常现象，请自行辨别。</span></p>
       <div class="announcement-actions">
-        <a id="notice-poll" class="button primary" href="https://x.com/liu_9982/status/2100132495455043829?s=20" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-i18n="notice.vote">前往 X 查看投票</a>
         <button id="notice-close" class="button" type="button" data-i18n="notice.close">关闭公告</button>
       </div>
-      <p class="announcement-footnote" data-i18n="notice.optional">参与完全自愿，不影响插件的任何功能。投票将在 X 新标签页中打开。</p>
+      <section class="announcement-history" aria-labelledby="notice-history-title">
+        <h3 id="notice-history-title" data-i18n="notice.historyTitle">历代更新日志</h3>
+        <ol class="announcement-releases">
+          <li><span class="release-version">v1.0.9</span><p data-i18n="notice.release109">修复新建会话时实时请求模型与响应路由无法显示的问题；扩展连接失效时提示刷新页面，避免浮窗按钮无响应。</p></li>
+          <li><span class="release-version">v1.0.8</span><p data-i18n="notice.release108">新增“疑似降级”标记。</p></li>
+          <li><a class="release-version" href="https://github.com/Liu-Bot24/chatgpt-route-inspector/releases/tag/v1.0.7" target="_blank" rel="noopener noreferrer">v1.0.7</a><p data-i18n="notice.release107">实时请求与会话重载同时独立采集，切换标签即可查看；优化浮窗排版。</p></li>
+          <li><a class="release-version" href="https://github.com/Liu-Bot24/chatgpt-route-inspector/releases/tag/v1.0.6" target="_blank" rel="noopener noreferrer">v1.0.6</a><p data-i18n="notice.release106">适配增量流、多行 SSE 与 WebSocket；修复请求配对与记录隔离；新增额度快照和 5.6/5.5 自动推理状态。</p></li>
+          <li><a class="release-version" href="https://github.com/Liu-Bot24/chatgpt-route-inspector/releases/tag/v1.0.5" target="_blank" rel="noopener noreferrer">v1.0.5</a><p data-i18n="notice.release105">修复 ChatGPT 页面重建后浮窗消失的问题，并保留手动隐藏设置。</p></li>
+          <li><a class="release-version" href="https://github.com/Liu-Bot24/chatgpt-route-inspector/releases/tag/v1.0.4" target="_blank" rel="noopener noreferrer">v1.0.4</a><p data-i18n="notice.release104">适配 ChatGPT 官方后端会话接口的路径与响应结构调整。</p></li>
+          <li><a class="release-version" href="https://github.com/Liu-Bot24/chatgpt-route-inspector/releases/tag/v1.0.3" target="_blank" rel="noopener noreferrer">v1.0.3</a><p data-i18n="notice.release103">新增迷你浮窗与边缘停靠，优化英文文案和窄屏排版。</p></li>
+          <li><a class="release-version" href="https://github.com/Liu-Bot24/chatgpt-route-inspector/releases/tag/v1.0.2" target="_blank" rel="noopener noreferrer">v1.0.2</a><p data-i18n="notice.release102">支持项目内会话的重载路由识别，并加强导出脱敏与隐私测试。</p></li>
+          <li><a class="release-version" href="https://github.com/Liu-Bot24/chatgpt-route-inspector/releases/tag/v1.0.1" target="_blank" rel="noopener noreferrer">v1.0.1</a><p data-i18n="notice.release101">首次公开发布：实时请求、会话重载、Popup、浮窗、诊断台、PoW 难度及中英文界面。</p></li>
+        </ol>
+      </section>
     </article>
   </main>
   <script src="index.js"></script>
