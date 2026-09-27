@@ -38,6 +38,10 @@
 **"从 postMessage 注入合成观测，验证 bridge→background→浮窗渲染；不覆盖 page-hook 捕获解析。"**
 （原文"真实 page-hook → bridge → background"越过了实际验证范围——注入的是已解析 observation 信封，跳过 page-hook 的 fetch/WebSocket 捕获与解析。）
 
+## 3b. round2 勘误（2026-09-27）
+
+本报告 §2/§3 描述的第 19 项形态存在管理者复审发现的两处假绿灯（未证实导航真正发生；无关阶段浮窗检查落在扩展 shell 页）。已在本轮重写并验收，见 `../review-fix-round2/REVIEW-FIX-ROUND2-REPORT.md`；本节以下原文按当时状态保留。
+
 ## 4. 冻结验证（逐条实际退出码）
 
 | 命令/检查 | 结果 |

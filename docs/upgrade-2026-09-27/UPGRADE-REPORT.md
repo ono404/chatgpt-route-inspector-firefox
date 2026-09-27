@@ -100,6 +100,6 @@ v1.0.9 上游新增"扩展连接失效 → 刷新页面"卡片。其逻辑由**�
 
 管理者独立验收（`review-fix/REVIEW.md`）发现两处验证证据问题，本轮已修正（只改验证工具与文档，业务源码与交付包未动）：
 
-1. **第 19 项替换**：原检查预填 captureId/captureContextId 直发 `route:observation`，只测后台合并，无法发现新会话导航修复失效（故障包实测原探针 27/27）。替换后的 `19.new-chat-navigation-association` 经被测 XPI 真实 page-hook 生成捕获 ID、真实 history 导航、真实 tracker 关联与浮窗渲染；同一冻结探针下正式包 27/27 退出 0、旧 tracker 故障包身份合法通过后于第 19 项失败退出 4。覆盖边界（合成输入、响应为真实未认证拒绝、流式身份路径未覆盖）详见 `review-fix/REVIEW-FIX-REPORT.md`。
+1. **第 19 项替换**：原检查预填 captureId/captureContextId 直发 `route:observation`，只测后台合并，无法发现新会话导航修复失效（故障包实测原探针 27/27）。替换后的 `19.new-chat-navigation-association` 经被测 XPI 真实 page-hook 生成捕获 ID、真实 history 导航、真实 tracker 关联与浮窗渲染；同一冻结探针下正式包 27/27 退出 0、旧 tracker 故障包身份合法通过后于第 19 项失败退出 4。覆盖边界（合成输入、响应为真实未认证拒绝、流式身份路径未覆盖）详见 `review-fix/REVIEW-FIX-REPORT.md`。（**2026-09-27 round2 修正**：复审发现该版未证实导航真正发生、浮窗检查可落在错误标签页——已重写为每阶段必须证实浏览器实际到达目标路径、后台 context.pageUrl 同步且 revision 更新，浮窗读取锁定句柄并核实地址；详见 `review-fix-round2/REVIEW-FIX-ROUND2-REPORT.md`。）
 2. **第 11 项表述**：修正为"bridge→background→浮窗渲染，不覆盖 page-hook 捕获解析"（见 §5）。
 3. 冻结验证：工具回归 53 项（新增 4 项导航失败传播回归）、lint 0、业务同源对 `4ae924d` 与 `99f982d` 均为空、正式交付包哈希未变。

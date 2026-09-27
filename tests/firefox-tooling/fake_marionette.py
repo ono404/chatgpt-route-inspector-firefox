@@ -27,19 +27,24 @@ DEFAULT_ANSWERS = {
     "announcementMsg": {"ok": True, "newId": 999, "before": 2},
     "suspectLive": {"ok": True, "verdict": "suspected_downgrade", "tabId": 4242,
                     "turnTabId": 4242, "turnCtx": "ctx-1"},
-    "navCtx": {"tabId": 4242, "ctx": "ctx-1"},
+    "navCtx": {"tabId": 4242, "pageUrl": "https://chatgpt.com/", "revision": 5, "id": "ctx-1"},
     "navFetch": {"started": True},
     "navRequested": {"captureId": "synthetic-navcheck-capture", "ctx": "ctx-1", "phase": "requested"},
-    "navPush": {"pushed": True},
-    "navTempCtx": {"ctxId": "ctx-1", "turnCtx": "ctx-1",
-                   "pageUrl": "https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft"},
+    "navPush": {"pushed": True, "pathname": "/c/local-chatgpt%3Anavcheck-draft"},
+    "navPushFormal": {"pushed": True, "pathname": "/c/navcheck-conv"},
+    "navPushUnrelated": {"pushed": True, "pathname": "/c/navcheck-unrelated"},
+    "navTempCtx": {"pageUrl": "https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft",
+                   "revision": 6, "id": "ctx-1", "oursCurrent": False},
     "navIdentity": {"captureId": "synthetic-navcheck-capture-2", "ctx": "ctx-1", "phase": "requested"},
     "navResponse": {"phase": "failed", "errorCode": "http_403", "ctx": "ctx-1"},
-    "navFormalCtx": {"ctxId": "ctx-1", "turnCtx": "ctx-1"},
-    "navOverlay": {"overlay": True,
+    "navFormalCtx": {"pageUrl": "https://chatgpt.com/c/navcheck-conv",
+                     "revision": 7, "id": "ctx-1", "oursCurrent": False},
+    "navOverlay": {"overlay": True, "pathname": "/c/navcheck-conv",
                    "text": "Route Inspector gpt-5-6-pro-navcheck gpt-5-5-mini-navcheck"},
-    "navOverlayGone": {"overlay": True, "text": "waiting for the next message"},
-    "navUnrelated": {"ctxId": "ctx-2", "oursCurrent": False},
+    "navOverlayGone": {"overlay": True, "pathname": "/c/navcheck-unrelated",
+                       "text": "waiting for the next message"},
+    "navUnrelated": {"pageUrl": "https://chatgpt.com/c/navcheck-unrelated",
+                     "revision": 8, "id": "ctx-2", "oursCurrent": False},
     "tabCtx": {"tabId": 4242, "ctx": "ctx-1"},
     "postSuspect": {"posted": True},
     "suspectVerdicts": {"completed": "suspected_downgrade", "responding": "normal",
@@ -75,10 +80,10 @@ ROUTES = [
     ("navcheck-e-temp-ctx", "navTempCtx"),
     ("navcheck-f-identity", "navIdentity"),
     ("navcheck-f-response", "navResponse"),
-    ("navcheck-g-formal-push", "navPush"),
+    ("navcheck-g-formal-push", "navPushFormal"),
     ("navcheck-h-formal-ctx", "navFormalCtx"),
     ("navcheck-j-overlay", "navOverlay"),
-    ("navcheck-k-unrelated-push", "navPush"),
+    ("navcheck-k-unrelated-push", "navPushUnrelated"),
     ("navcheck-l-unrelated", "navUnrelated"),
     ("navcheck-m-overlay-gone", "navOverlayGone"),
     ("beforeIds", "announcementMsg"),
@@ -224,6 +229,14 @@ class FakeMarionette:
             if tag == "tabsi18n":
                 return {"tabs": len(self.handles), "lang": "zh-CN",
                         "url": BASE_URL + "/ui/popup/index.html", "version": "1.0.7"}
+            if tag in ("navPush", "navPushFormal", "navPushUnrelated"):
+                # history.pushState really changes the tab URL, so the fake
+                # must move the current handle for later GetCurrentURL probes.
+                value = self.answers[tag]
+                self.handles = [(handle, "https://chatgpt.com" + value["pathname"]
+                                 if handle == self.current else known)
+                                for handle, known in self.handles]
+                return value
             if tag == "announcementMsg":
                 # Check 15: the handler opened the notice site in a new tab, so
                 # the fake must register a handle the probe can switch to.

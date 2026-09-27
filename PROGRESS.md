@@ -203,3 +203,17 @@
 - 红→绿（同一冻结探针 6690f89c…）：正式包 27/27 退出 0；旧 tracker 故障包身份合法通过后第 19 项失败退出 4。12 次迭代全留证（review-fix/attempt*）。
 - 工具回归 53 项（原 49 保留 + 新增 4 项导航失败传播）；lint 0；对 4ae924d 与 99f982d 业务同源均为空；正式 XPI/源码 ZIP/build.json 哈希未变。
 - 未覆盖仍登记：流式响应内的会话身份路径、真实账号流量；其余 BLOCKED 项不变。本轮理由记录：BLOCKED.md 与 README-FIREFOX.md 无涉及第 11/19 项的表述，故未改（导航验证已真机覆盖，无需新增阻塞项）。
+
+## 假绿灯修正开工回执（2026-09-27，round2）
+- 起点：HEAD `f1f198e`、工作区干净、探针 `6690f89c…`、正式 XPI/ZIP/build.json 哈希复核未变；管理者反例（probe-no-navigation.py 禁两次目标导航仍 27/27）已核实。
+- 目标：第 19 项每阶段先确认"浏览器地址到达目标 + 后台 context.pageUrl 对应 + revision 更新"，再断言 ID 保持/切换；浮窗检查每次切回锁定句柄并核实地址，gone 阶段必须见到真实浮窗且旧记录（含 correlatedCaptureId）退出当前展示；oursCurrent 纳入断言。
+- 方案：后台查询锁定单一 tabId 不再每次 query；页面操作前以完整目标 URL find_handle + location 核实；pushState 返回 pathname 必查；第 19 项 detail 走 JSON 不截断。
+- 基线：lint 0、53 项工具回归通过、正式包 27/27 退 0（均为管理者实测，本轮冻结后复跑）。
+- 风险：gone 阶段浮窗若真不重挂会导致正式包红灯——上次"root 不存在"实为在扩展 shell 页读取所致，正确页面上 MutationObserver 会重挂；若真机仍无浮窗则按实际行为记录。
+
+## 假绿灯修正结果（2026-09-27，round2）
+- 管理者复审两处假绿灯已修：①三阶段（临时/正式/无关）都必须证明 pushState 返回的实际 pathname、后台 context.pageUrl 到达目标、revision 严格更新，然后才断言 ID 保持/切换；②浮窗读取前以目标路径切回锁定句柄并核实 chatgpt.com origin，无关阶段必须见到真实浮窗且正式阶段实际展示的两个 captureId 都退出当前展示（oursCurrent 纳入断言），浮窗缺失不再当"已消失"。
+- 真机（冻结探针 a204ae0a…）：正式包 27/27 退出 0（temp rev 0→2 / formal rev 2→4 / unrelated rev 4→5，pageUrl 逐一到达，浮窗 formal 显示 navcheck、unrelated 显示等待）；旧 tracker 故障包身份通过后第 19 项 FAIL 退出 4；禁两次目标导航的探针副本（probe-no-navigation.py）身份通过后 FAIL 退出 4——round1 假绿灯（同条件 27/27）已消除。
+- 工具回归 56 项（原 49 保留 + 导航回归扩到 7 项）；lint 0；对 f1f198e 与 99f982d 业务同源为空；正式 XPI/ZIP/build.json 未变。
+- 覆盖边界不变：合成请求 + 未认证拒绝响应，不验证成功流式响应的会话身份与模型路由；真实账号流量未覆盖。
+- 迭代 5 次全留证（review-fix-round2/attempt*）：根因是探针自身 JS 传参缺失与 pushState 在错误窗口执行，非业务缺陷。

@@ -37,6 +37,6 @@ TypeScript + esbuild（background=esm，content/UI=iife），vitest，零新增�
 - 已知非缺陷抖动：`chatgpt.com` 慢时探针报 `9/10` 超时并退出 5（不重试、不静默通过）；“连接不可信”只能靠脚本化 peer 复现。见 BLOCKED.md 第 10/11 项。
 - 已知项：34 条 live `stream_parse_failed` 根因未确认（v1.0.9 未改 page-hook/sse-decoder）；按用户决定暂不改业务代码。
 - v1.0.9 断线提示卡片的真机触发在 FF156 不可复现（Gecko 不留孤儿内容脚本），逻辑层以上游 mock 集成测试为准，见 BLOCKED 第 12 项。
-- 探针第 11 项只覆盖 bridge→background→浮窗渲染；page-hook 捕获解析的导航链路由第 19 项真实导航检查覆盖（合成输入 + 真实未认证拒绝），流式响应身份路径仍未覆盖。
+- 探针第 11 项只覆盖 bridge→background→浮窗渲染；第 19 项真实导航检查要求每阶段证实浏览器实际到达目标路径、后台 context.pageUrl 同步且 revision 更新后，才断言 ID 保持/切换，浮窗读取锁定句柄并核实地址（合成输入 + 真实未认证拒绝，见 docs/upgrade-2026-09-27/review-fix-round2/REVIEW-FIX-ROUND2-REPORT.md）；流式响应身份路径仍未覆盖。
 - AMO 源码包、签名与安装状态统一见 README-FIREFOX.md；本地可复现不等于已签名或日常安装完成。
 - 推私人仓库前确认：`dist/` `coverage/` `node_modules/` `release/` 均被 `.gitignore` 排除；用户真实导出附件在 profile 目录内，永不进仓库。

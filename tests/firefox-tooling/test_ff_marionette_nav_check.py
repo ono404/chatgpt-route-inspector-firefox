@@ -108,6 +108,10 @@ class TestNavCheckPropagation(NavCheckHarness):
         payload = self.saved()
         check = self.nav_check(payload)
         self.assertTrue(check["ok"], check)
+        evidence = json.loads(check["detail"])
+        self.assertEqual(evidence["tempStage"]["reached"], True)
+        self.assertEqual(evidence["formalStage"]["reached"], True)
+        self.assertEqual(evidence["unrelatedStage"]["reached"], True)
         self.assertEqual(payload["meta"]["summary"]["failed"], 0)
         self.assertEqual(payload["meta"]["summary"]["missingChecks"], [])
         self.assertTrue(self.process.terminated)
@@ -115,9 +119,9 @@ class TestNavCheckPropagation(NavCheckHarness):
     def test_temporary_navigation_context_change_fails_into_results(self):
         # The v1.0.9 fix semantic: navigating to the local-chatgpt: draft URL
         # must keep the creation context id. Simulate a tracker that changes it.
-        code = self.run_probe(answers={"navTempCtx": {"ctxId": "ctx-CHANGED",
-                                                      "turnCtx": "ctx-1",
-                                                      "pageUrl": "changed"}})
+        code = self.run_probe(answers={"navTempCtx": {
+            "pageUrl": "https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft",
+            "revision": 6, "id": "ctx-CHANGED", "oursCurrent": False}})
         self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
         payload = self.saved()
         check = self.nav_check(payload)
@@ -126,20 +130,62 @@ class TestNavCheckPropagation(NavCheckHarness):
         self.assertIn(NAV_CHECK, payload["meta"]["summary"]["failedChecks"])
         self.assertTrue(self.process.terminated)
 
-    def test_lost_promotion_at_the_formal_url_fails_into_results(self):
-        # After the server identity is correlated, navigating to the formal
-        # conversation URL must promote the same context id.
-        code = self.run_probe(answers={"navFormalCtx": {"ctxId": "ctx-OTHER",
-                                                        "turnCtx": "ctx-1"}})
+    def test_stale_temp_state_without_navigation_fails(self):
+        # If the page never navigates (pushState disabled) the background
+        # context stays on the homepage with the old revision: the stage must
+        # not count as reached and the check must fail.
+        code = self.run_probe(answers={"navTempCtx": {
+            "pageUrl": "https://chatgpt.com/", "revision": 5,
+            "id": "ctx-1", "oursCurrent": False},
+            "navPush": {"pushed": True, "pathname": "/"}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        payload = self.saved()
+        check = self.nav_check(payload)
+        self.assertFalse(check["ok"], check)
+        self.assertIn('"reached": false', check["detail"])
+        self.assertIn(NAV_CHECK, payload["meta"]["summary"]["failedChecks"])
+
+    def test_push_returned_pathname_mismatch_fails(self):
+        # The pushState call must report the real pathname; a stale one is a
+        # navigation that did not happen.
+        code = self.run_probe(answers={"navPush": {"pushed": True, "pathname": "/"}})
         self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
         payload = self.saved()
         check = self.nav_check(payload)
         self.assertFalse(check["ok"], check)
         self.assertIn(NAV_CHECK, payload["meta"]["summary"]["failedChecks"])
 
-    def test_unrelated_conversation_must_retire_the_record(self):
-        # Switching to an unrelated conversation must not keep the record current.
-        code = self.run_probe(answers={"navUnrelated": {"ctxId": "ctx-1", "oursCurrent": True}})
+    def test_formal_context_change_fails_into_results(self):
+        # After the server identity is correlated, navigating to the formal
+        # conversation URL must promote the same context id.
+        code = self.run_probe(answers={"navFormalCtx": {
+            "pageUrl": "https://chatgpt.com/c/navcheck-conv",
+            "revision": 7, "id": "ctx-OTHER", "oursCurrent": False}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        payload = self.saved()
+        check = self.nav_check(payload)
+        self.assertFalse(check["ok"], check)
+        self.assertIn("ctx-OTHER", check["detail"])
+        self.assertIn(NAV_CHECK, payload["meta"]["summary"]["failedChecks"])
+
+    def test_unrelated_record_still_current_fails(self):
+        # Switching to an unrelated conversation must retire the record that
+        # was displayed at the formal stage (both capture ids).
+        code = self.run_probe(answers={"navUnrelated": {
+            "pageUrl": "https://chatgpt.com/c/navcheck-unrelated",
+            "revision": 8, "id": "ctx-2", "oursCurrent": True}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        payload = self.saved()
+        check = self.nav_check(payload)
+        self.assertFalse(check["ok"], check)
+        self.assertIn(NAV_CHECK, payload["meta"]["summary"]["failedChecks"])
+
+    def test_missing_overlay_after_switch_fails(self):
+        # A missing overlay on the unrelated page is NOT evidence that the old
+        # record is gone; the overlay must be present and show the old record
+        # is no longer current.
+        code = self.run_probe(answers={"navOverlayGone": {
+            "overlay": False, "pathname": "/c/navcheck-unrelated", "text": ""}})
         self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
         payload = self.saved()
         check = self.nav_check(payload)
