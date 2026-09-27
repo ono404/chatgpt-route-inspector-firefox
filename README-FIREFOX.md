@@ -34,7 +34,20 @@ npm run package:firefox   # 打包 dist/firefox -> release/*.xpi，并写出构�
 
 `package:firefox` 写出 `release/chatgpt-route-inspector-firefox-<版本>.build.json`：包含 XPI 整体 sha256、manifest sha256、逐文件 sha256、`distDir` 与打包时间。打包后脚本会**回读刚写出的压缩包**，与 `dist/firefox` 逐文件比对，不一致就不写记录（非零退出）。该记录是探针的“预期值”来源。
 
-> zip 会记录每个文件的 mtime，因此**每次重新打包 XPI 哈希都会变**。记录必须与 XPI 同一次生成；不要把跨次重打包的哈希差异当成源码变化。
+> ZIP 会记录文件 mtime 等元数据，重新打包的 XPI 哈希可能变化。记录必须与 XPI 同一次生成；不要把跨次重打包的哈希差异直接当成源码变化。
+
+## AMO 升级提交与源码包（2026-09-20）
+
+在已有扩展条目上提交新版本，保持 ID `chatgpt-route-inspector-firefox@local` 不变：
+
+- 扩展文件：`release/chatgpt-route-inspector-firefox-1.0.7.xpi`（本地未签名包）。
+- 源代码步骤：上传 `release/chatgpt-route-inspector-firefox-1.0.7-source.zip`（165000 字节）；包内 README 写明 Windows 11 x64、Node 24.16.0、npm 12.0.1，以及 `npm ci` → `npm run build:firefox`。
+- 源码包包含原始源码、资源、锁文件与构建脚本，不包含用户导出、profile、历史验证日志或依赖目录。它是 commit `909941e` 的提交用源码快照；后续文档收尾不改这个已核验包。
+- 已从源码包在独立临时目录安装依赖并构建，30 个输出文件与上述未签名 XPI 的路径和内容完全相同。源码 ZIP SHA-256：`d0e6fa7f2ce46e232fbb7f3d40ec3b1a52a7d637577e1f3d87b5c19e18809ddc`。
+- 当前只确认用户已进入 AMO 源码提交步骤；1.0.7 的上传完成、签名下载、日常 Firefox 覆盖安装及真实更新事件均未确认。旧版签名包在 `release/signed/`，不能代替新版签名凭证。
+- 获得 Mozilla 签名的 1.0.7 XPI 后，在 `about:addons` 的齿轮菜单选择“从文件安装附加组件”，覆盖升级；先导出备份，不卸载旧版。检查版本、历史记录与新增捕获，验证更新公告行为。
+
+本轮干净安装依赖时 npm 报告 4 项依赖漏洞（3 moderate、1 high）及 esbuild 安装脚本被阻止的警告；构建仍成功。未做漏洞可达性分析，也未执行 `npm audit fix`，不能据此宣称依赖安全已验收。
 
 ## Firefox 本地加载
 
@@ -164,7 +177,7 @@ npm run test:firefox-tooling
 
 - `strict_min_version = 128.0`（`content_scripts.world: MAIN` 的 Firefox 支持版本，MDN BCD）。
   **本机只装了 Firefox 156，128 下限未在 128 上实测过**。
-- 扩展 ID 为自用 ID（`chatgpt-route-inspector-firefox@local`），未做 AMO 签名。
-- 需登录账号的真实对话捕获、真实 1.0.5→1.0.7 更新事件（`onInstalled.reason=update`）尚未验证，见 `BLOCKED.md`。
-- **额度（`deep_research` / `image_gen`）未做真机专项验证**：现有探针项目里没有额度专项检查，仅有上游单元/集成测试结论。
+- 扩展 ID 为自用 ID（`chatgpt-route-inspector-firefox@local`）；旧版 1.0.5 已有签名包，新版状态见上方 AMO 提交说明。
+- 用户真实导出已提供捕获与路由判定证据，但新样本 34 条 live 均报 `stream_parse_failed`；真实更新事件仍未验证。上游存在相同失败路径，尚不能证明同一流量在 Chromium 中也失败，详见 `BLOCKED.md`。
+- **额度（`deep_research` / `image_gen`）未做真机专项验证**：真实导出有额度字段，但未与账号界面/重置行为对照，探针也没有专项断言。
 - 上游仓库无 LICENSE 文件；作者署名保留在扩展 UI 内（未改动）。

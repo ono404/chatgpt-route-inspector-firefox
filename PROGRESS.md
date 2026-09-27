@@ -1,5 +1,26 @@
 # PROGRESS — Firefox 移植（自用）
 
+## 现役交接（2026-09-20，neat-freak 收尾）
+
+以下为当前状态；后续各任务章节是历史记录，测试数量、环境与结论按各自轮次解读。
+
+| 事实面 | 状态 | 当前结论 |
+| --- | --- | --- |
+| 代码 | verified-current | 分支 `codex/sync-upstream-v1.0.7`，HEAD `909941e`；main 仍为 `182fca1`。`src schemas _locales icons manifest` 对上游 `d5524a0` 无差异。本轮不改代码。 |
+| 本地交付 | verified-current | 1.0.7 源码 ZIP 已独立解压、`npm ci` 与 Firefox build 成功；30 个文件与提交用未签名 XPI 完全一致。路径、哈希和用法统一见 README-FIREFOX.md。 |
+| 日常运行 / 发布 | pending | 用户真实导出证明部分链路工作，仍有流式失败；用户已到 AMO 源码提交页，尚无新版签名与日常覆盖安装完成凭证。远端分支状态本轮未重新查询，不宣称已 push/merged。 |
+| 文档 / 规则 | changed-and-verified | 更新 README-FIREFOX.md、BLOCKED.md、AGENTS.md 与本节；纠正未签名泛称、真实捕获未验证泛称，以及 ZIP 重打包哈希必变的绝对表述。历史报告与原始证据不改。 |
+| 记忆 | out-of-scope | Codex 生成记忆与未知 `.workbuddy/memory/` 均只读，不写入或整理。当前事实以项目文档为准。 |
+| 工作区 | pending | 收尾前已跟踪文件干净，另有两条 `.workbuddy/memory/*` 未跟踪。收尾后有上述 4 个文档的未提交修改；未提交、未推送、未删除。只有一个 Git worktree。 |
+
+复核：源码包 SHA-256 与上一轮交付一致；保留的临时构建目录再次与 XPI 逐文件比较，30/30 一致。文档修改用 `git diff --check`、变更路径白名单与本地引用检查验收，不重复执行业务测试，不将历史 301/49 项测试声称为本轮重跑。
+
+未消除警告：源码包独立安装时 npm 报 4 项依赖漏洞（3 moderate、1 high）及 esbuild 安装脚本阻止警告，构建成功；未做可达性分析或依赖升级。真实更新、FF128、Chromium E2E、额度专项与长时观察继续按 BLOCKED.md 跟踪。
+
+清场预览（均保留）：`release/source-review-location.txt` 指向的仓库外源码复建目录及其定位文件可在完成复核后清理；`.tmp/upgrade-2026-09-20/` 含旧日志与诊断脚本，尚未逐一确认有无唯一证据，暂不推荐删除。源码 ZIP、XPI、构建记录、旧签名包、历史证据及未合并分支继续保留。未知 `.workbuddy/` 不列删除候选。
+
+规则入口为项目 AGENTS.md，无项目内其他 AGENTS/CLAUDE 或符号链接；上级作用域未发现额外规则文件。已机械盘点 274 个文件（跳过依赖、Git 内部、dist、coverage），Markdown 共 11 个；上游 README 与历史报告不改，避免制造业务文档分叉或改写证据。复核现场仍保留，清场需在完整汇报后由用户另行确认。
+
 ## 基线（任务 0，2026-09-03）
 - 上游：https://github.com/Liu-Bot24/chatgpt-route-inspector，commit 4f98a66，branch main，工作树干净
 - Node v24.16.0 / npm 12.0.1；上游无 LICENSE 文件（署名保留在 UI branding 中）
@@ -150,3 +171,11 @@
 - 新增脚本：`scripts/verify-firefox-dist.mjs`、`scripts/package-firefox.mjs`（+ npm script `verify:firefox`、`package:firefox`）。
 - 文档：README-FIREFOX.md 重写（同步基线/新命令/探针用法/FF156 参数/限制）、AGENTS.md 事实更新、BLOCKED.md 更新未决项、本文件。
 - 回退方法：`git switch main`（main 仍为 `182fca1`，未被触碰）；或 `git revert -m 1 33f0879` 撤回本次合并。
+
+## 升级开工回执（2026-09-27，v1.0.7 → v1.0.9）
+- 起点：`HEAD=909941e`（分支 `codex/sync-upstream-v1.0.9`，隔离 worktree `D:\LAB\sync-v109-isolated`，从 v1.0.7 分支 HEAD 建立；原工作区四文档未提交修改已复制快照并哈希核对一致）。
+- 目标：`99f982dd089b020afa85b897b07edfb340cc58dd`（upstream v1.0.9，3 提交 40 文件 +1056/-357）；顺序：merge → 最小适配（探针 schema 1.8.0/公告）→ 完整门禁 → 真机正反向 → 交付。
+- 升级前基线（本机 Node v24.16.0 / npm 12.0.1，npm ci 按锁文件）：typecheck 0 / lint 0 / vitest 33 文件 301 passed 0 failed（覆盖率 97.19/91.37/100）/ test:firefox-tooling 49 passed 退出码 0。
+- 环境：Firefox 156.0.1（C:\Program Files\Mozilla Firefox）；`python` 为 WindowsApps 占位符不可用，用 `py` 启动器（Python 3.14.6，工具回归实测可用）。
+- 上游变化预核：schema 1.7.0→1.8.0、新会话 local-chatgpt: 临时地址、suspected_downgrade/work_unverifiable、公告改在线站点；无新增依赖与权限。
+- 最大风险：探针与本地测试硬编码旧 schema 1.7.0 与旧公告入口/文案，升级后大面积红灯；只允许按上游新行为最小更新，不得弱化既有保护。

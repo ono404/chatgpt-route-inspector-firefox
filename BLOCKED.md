@@ -2,7 +2,10 @@
 
 保留历史条目；状态按 2026-09-20 升级后实测更新。
 
-## 1. 真实登录对话的捕获链路（任务 4 第 3–7 项）— 仍待人工验证
+## 1. 真实登录对话的捕获链路（任务 4 第 3–7 项）— 部分验证，流式完成未通过
+2026-09-20 用户提供真实导出，按其指定的本地时间 15:54 分界，100 条保留记录中有 63 条新样本：34 条 live（29 条 normal、5 条 unknown）与 29 条 reload（completed/unknown）。34 条 live 全部为 `failed/stream_parse_failed`，所以捕获及部分路由判定有实证，不能宣布完整生命周期通过。分界是用户提供的版本归属线索，导出本身不能证明所装 XPI 哈希。原始用户数据留在仓库外，不纳入源码包或 Git。
+
+后续人工复核步骤：
 步骤：
 1. Firefox 打开 `about:debugging` → “此 Firefox” → “载入临时附加组件” → 选择 `dist/firefox/manifest.json`（或打包后的任意文件）。
 2. 打开 `https://chatgpt.com/` 并登录，进入一个已有会话或新建会话。
@@ -20,7 +23,10 @@
 响应侧 `server_ste_metadata.model_slug`+`resolved_model_slug` 与上游 fixtures 真实流量同形；PoW 十六进制→十进制换算复算正确；
 verdict/reasons 与 assessment.ts 规则逐条对应；durationMs/时间戳/parserHealth/requestId 脱敏/captureId 格式全部自洽。
 
-## 4. `phase=failed / errorCode=stream_parse_failed`（历史遗留，非移植引入）— **本次复核后仍为未确认**
+## 4. `phase=failed / errorCode=stream_parse_failed`（历史遗留，尚无 Firefox 特有证据）— 根因未确认，真实新样本仍出现
+2026-09-20 后续复核：新样本 34/34 live 出现该错误，不能继续描述为本次样本“偶发”。本地业务源码与上游 `d5524a0` 一致；上游 `tests/e2e/extension.spec.ts` 包含不支持的 delta 编码导致 `stream_parse_failed` 的用例，解码器与 catch 映射也保留此路径。这证明上游能产生同类错误，不证明用户这批流量就是该原因，也不等于已做同流量 Chromium/Firefox 对照。用户决策：以移植为主，暂无必要证据时不修改业务代码。
+
+以下保留此前源码分析：
 历史推断（1.0.5 时代）：两轮 live 记录失败前数据已收全故 verdict 正确，判为“尾部流问题”，三选一（body 缺失 / 单 SSE 事件超 1MB / 流中途被页面侧 abort），
 上游 catch 吞掉原始 `error.name`，无法从导出区分；Chromium 对照二分默认关闭。
 
@@ -35,7 +41,7 @@ verdict/reasons 与 assessment.ts 规则逐条对应；durationMs/时间戳/pars
 ## 5. 真实更新事件（1.0.5 → 1.0.7）— **本次新增，未验证**
 `src/background/upgrade-notice.ts` 只在 `onInstalled.reason === 'update'` 且 `previousVersion < 1.0.7` 时打开公告页。
 临时加载（`Addon:Install {temporary:true}`）在 Firefox 中始终以 `reason=install` 触发，**无法产生真实更新事件**，因此：
-- 已用真实流量替代验证的部分：公告页本体渲染、浮窗公告入口存在与文案、`route:open-announcement` 消息链路、`isNoticeUpgrade` 的纯逻辑单测（上游 `tests/integration/upgrade-notice.test.ts`）。
+- 已分别通过探针和单测验证的部分：公告页本体渲染、浮窗公告入口存在与文案、`route:open-announcement` 消息链路、`isNoticeUpgrade` 的纯逻辑单测（上游 `tests/integration/upgrade-notice.test.ts`）；这些不等于真实更新事件。
 - **未验证**：从已安装 1.0.5 的真实升级路径（需签名安装或 AMO/自签名分发）。
 - 若需人工验证：用签名 XPI 安装 1.0.5 → 覆盖安装 1.0.7，确认仅开一次公告页且 `routeInspectorNotice107Shown` 被写入。
 
@@ -51,7 +57,7 @@ verdict/reasons 与 assessment.ts 规则逐条对应；durationMs/时间戳/pars
 `src/core/usage-quota.ts`（`limits_progress` → 额度投影）有上游单元/集成测试覆盖，但**真机探针没有额度专项检查**：
 `docs/upgrade-2026-09-20/evidence/r2-probe-positive.json` 的 22 项里不含任何额度断言。
 因此**不得**把额度描述为“真机已走通”（第一轮报告中的该表述已勘误）。
-要补验需在真实账号下触发额度接口（`conversation_init` / `limits_progress`），属需要人工与真实账号的操作。
+2026-09-20 用户真实导出的 63 条新样本中，33 条含非空剩余额度字段，已有实际采集证据；仍未与账号界面数值、重置时间和变化过程对照，因此专项验证状态不变。
 
 ## 9. 探针的清理是尽力而为 — **已知局限，非缺陷**
 探针只停止自己启动的进程并删除自己创建的临时 profile。若浏览器在启动初期被终止，它可能在删除后
