@@ -194,7 +194,7 @@ class TestFailingRuns(RunHarness):
         self.assertIn("9.page-hook-MAIN-world", failed)
         self.assertIn("10.bridge-overlay-ISOLATED", failed)
         executed = [c["check"] for c in payload["results"]]
-        self.assertIn("15.open-announcement-message", executed)
+        self.assertIn("15.open-announcement-target", executed)
         self.assertIn("12.capture-context-registered", executed)
         self.assertTrue(self.process.terminated)
 

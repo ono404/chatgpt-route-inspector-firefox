@@ -20,24 +20,55 @@ DEFAULT_ANSWERS = {
     "storage": 42,
     "tabsi18n": "dynamic",
     "turn": {"ok": True, "turns": 1, "verdict": "mismatch", "route": "gpt-5-5-mini",
-             "req": "gpt-5-6-pro", "schemaVersion": "1.7.0"},
+             "req": "gpt-5-6-pro", "schemaVersion": "1.8.0"},
     "auto": {"ok": True, "verdict": "auto_reasoning", "route": "gpt-5-6-auto-thinking",
-             "schemaVersion": "1.7.0"},
+             "schemaVersion": "1.8.0"},
     "contexts": {"ok": True, "count": 1, "sample": {"id": "ctx-1"}},
-    "announcementMsg": {"before": 2, "after": 2, "ok": True},
+    "announcementMsg": {"ok": True, "newId": 999, "before": 2},
+    "suspectLive": {"ok": True, "verdict": "suspected_downgrade", "tabId": 4242,
+                    "turnTabId": 4242, "turnCtx": "ctx-1"},
+    "tabCtx": {"tabId": 4242, "ctx": "ctx-1"},
+    "postSuspect": {"posted": True},
+    "suspectVerdicts": {"completed": "suspected_downgrade", "responding": "normal",
+                        "failed": "normal", "resolved": "normal"},
+    "workVerdicts": {"completed": "work_unverifiable", "responding": "normal"},
+    "failedTurn": {"phase": "failed", "errorCode": "stream_parse_failed",
+                   "completedAt": None, "verdict": "normal"},
+    "tempMerge": {"req": "gpt-5-6-pro", "route": "gpt-5-5-mini", "phase": "completed",
+                  "ctxTurns": 1, "unrelated": 1},
     "state": {"ok": True, "hasState": True, "schemaVersion": None},
     "popup": "Route Inspector Created by @liuqi 实时监听",
-    "announcementPage": {"title": "Route Inspector · 1.0.7 公告",
-                         "text": "1.0.7 · 用户公告 样本观察与反馈邀请",
+    "announcementPage": {"title": "Route Inspector · 1.0.9 版本公告",
+                         "text": "1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9",
                          "script": True, "href": "https://x.com/liuqi"},
-    "hint": {"root": True, "notice": True, "star": True, "error": True},
+    "hint": {"root": True, "suspect": True, "legacy": False,
+             "href": "https://rinotice.liu-qi.cn/"},
+    "noticeSite": {"finalUrl": "https://rinotice.liu-qi.cn/",
+                   "title": "Route Inspector 公告", "text": "版本公告"},
+    "cleanup": {"after": 2},
     "page": {"fetchName": "routeInspectorFetch", "overlay": True,
              "url": "https://chatgpt.com/"},
     "dashboard": "路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...",
+    "clickMode": {"root": True, "btn": True},
+    "disconnectedCard": {"root": True, "present": True, "refresh": True,
+                         "text": "扩展连接已失效，请刷新页面后继续使用。 刷新页面"},
 }
 
 # First match wins, so the more specific fragments come first.
 ROUTES = [
+    ("beforeIds", "announcementMsg"),
+    ("no capture context", "tabCtx"),
+    ("'chatgpt-route-inspector',", "postSuspect"),
+    ("after: after", "cleanup"),
+    ("ff-probe-suspect-live", "suspectLive"),
+    ("ff-probe-sus-", "suspectVerdicts"),
+    ("ff-probe-wm-", "workVerdicts"),
+    ("ff-probe-failed", "failedTurn"),
+    ("ff-probe-temp-merge", "tempMerge"),
+    ("chrome.tabs.remove", "cleanup"),
+    ("finalUrl", "noticeSite"),
+    (".disconnected", "disconnectedCard"),
+    ("mode-live", "clickMode"),
     ("chrome.tabs.create", "tabsCreate"),
     ("navigator.userAgent", "useragent"),
     ("typeof chrome", "namespaces"),
@@ -50,7 +81,7 @@ ROUTES = [
     ("route:get-state", "state"),
     ("slice(0, 200)", "popup"),
     ("slice(0, 400)", "announcementPage"),
-    ("notice-star", "hint"),
+    ("suspect-trigger", "hint"),
     ("fetchName", "page"),
     ("document.body.textContent", "dashboard"),
 ]
@@ -131,7 +162,15 @@ class FakeMarionette:
         return {"value": {"handle": "w-new"}}
 
     def _on_WebDriver_Navigate(self, params):
+        url = str(params.get("url") or "")
+        self.handles = [(handle, url if handle == self.current else known)
+                        for handle, known in self.handles]
         return {"value": None}
+
+    def _on_WebDriver_CloseWindow(self, params):
+        self.handles = [(handle, known) for handle, known in self.handles if handle != self.current]
+        self.current = self.handles[-1][0]
+        return {"value": [handle for handle, _known in self.handles]}
 
     def _on_Addon_Install(self, params):
         if self.fail_install:
@@ -139,7 +178,8 @@ class FakeMarionette:
         return {"value": "chatgpt-route-inspector-firefox@local"}
 
     def _on_Addon_Uninstall(self, params):
-        raise RuntimeError("Addon:Uninstall -> not installed")
+        # v1.0.9 probe check 20 uninstalls the addon for real; the fake allows it.
+        return {"value": None}
 
     def _on_WebDriver_DeleteSession(self, params):
         return {"value": None}
@@ -160,6 +200,14 @@ class FakeMarionette:
             if tag == "tabsi18n":
                 return {"tabs": len(self.handles), "lang": "zh-CN",
                         "url": BASE_URL + "/ui/popup/index.html", "version": "1.0.7"}
+            if tag == "announcementMsg":
+                # Check 15: the handler opened the notice site in a new tab, so
+                # the fake must register a handle the probe can switch to.
+                if "beforeIds" in script and not any("rinotice" in known for _h, known in self.handles):
+                    self.handles.append(("w-notice", "https://rinotice.liu-qi.cn/"))
+                return self.answers[tag]
+            if tag == "chatgptTabQuery":
+                return self.answers[tag]
             if tag == "announcementPage":
                 # Mirror Firefox: a URL that does not resolve inside the
                 # extension renders an error page, so the page probe sees an

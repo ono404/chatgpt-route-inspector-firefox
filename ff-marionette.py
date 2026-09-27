@@ -93,11 +93,15 @@ REQUIRED_CHECKS = [
     "8.dashboard-shows-turn",
     "9.page-hook-MAIN-world",
     "10.bridge-overlay-ISOLATED",
-    "11.notice-hint-1.0.7",
+    "11.overlay-suspect-hint",
     "12.capture-context-registered",
     "13.auto-reasoning-verdict",
     "14.announcement-page",
-    "15.open-announcement-message",
+    "15.open-announcement-target",
+    "16.suspected-downgrade-verdict",
+    "17.work-unverifiable-verdict",
+    "18.failed-phase-not-completed",
+    "19.temporary-conversation-association",
 ]
 # Only demanded when a build record was supplied.
 REQUIRED_WITH_RECORD = ["0c.dist-matches-record", "0f.build-record"]
@@ -644,7 +648,7 @@ def run_browser_checks(m, meta, args, results):
         v = shexe("return (async (o) => { const r = await chrome.runtime.sendMessage({type:'route:observation', observation:o}); const t0 = (r.state.turns||[])[0]||{}; return {ok:r.ok, turns:(r.state.turns||[]).length, verdict:t0.verdict, route:t0.routeModel, req:t0.requestedModel, schemaVersion:t0.schemaVersion}; })(arguments[0])", [obs])
         add("7.synthetic-observation-pipeline",
             v.get("ok") and v.get("turns") == 1 and v.get("req") == "gpt-5-6-pro"
-            and v.get("schemaVersion") == "1.7.0", v)
+            and v.get("schemaVersion") == "1.8.0", v)
     except Exception as error:
         add("7.synthetic-observation-pipeline", False, error)
     try:
@@ -672,12 +676,63 @@ def run_browser_checks(m, meta, args, results):
         v = exe("return {fetchName: (window.fetch && window.fetch.name) || null, overlay: !!document.getElementById('chatgpt-route-inspector-root'), url: location.href}")
         add("9.page-hook-MAIN-world", v.get("fetchName") == "routeInspectorFetch", v)
         add("10.bridge-overlay-ISOLATED", v.get("overlay") is True, v)
-        # v1.0.7: the announcement hint is gated on the running version (1.0.7).
+        # v1.0.9: the 1.0.7 upgrade-notice overlay entry was removed upstream.
+        # A completed live response without resolved_model_slug must surface the
+        # "suspected downgrade" hint in the overlay, linking the fixed notice URL.
+        # Synthetic observation delivered through the real page-hook -> bridge ->
+        # background pipeline (window.postMessage envelope, so sender.tab is the
+        # chatgpt.com tab itself); the overlay renders via the real broadcast.
         try:
-            hint = exe("return (() => { const root = document.getElementById('chatgpt-route-inspector-root'); if (!root || !root.shadowRoot) return {root: !!root}; const sr = root.shadowRoot; const star = sr.getElementById('notice-star'); return {root: true, notice: !!sr.getElementById('route-notice'), star: !!star, error: !!sr.getElementById('notice-error')}; })()")
-            add("11.notice-hint-1.0.7", hint.get("notice") is True and hint.get("star") is True, hint)
+            tab_ctx = shexe("return (async () => { const tabs = await chrome.tabs.query({url: 'https://chatgpt.com/*'});"
+                            " if (!tabs.length) return {error: 'no chatgpt tab'};"
+                            " const tabId = tabs[0].id;"
+                            " const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
+                            " const ctx = st && st.captureContexts ? st.captureContexts[tabId] : null;"
+                            " if (!ctx) return {error: 'no capture context for tab', tabId: tabId};"
+                            " return {tabId: tabId, ctx: ctx.id}; })()")
+            if not (isinstance(tab_ctx, dict) and tab_ctx.get("ctx")):
+                raise RuntimeError("context lookup failed: %r" % (tab_ctx,))
+            now = time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())
+            obs = {"captureId": "ff-probe-suspect-live", "captureContextId": tab_ctx["ctx"],
+                   "source": "page_fetch", "captureMode": "live", "phase": "completed",
+                   "observedAt": now, "startedAt": now, "completedAt": now,
+                   "pageUrl": "https://chatgpt.com/", "requestedModel": "gpt-5-6-pro",
+                   "serverModelSlug": "gpt-5-6-pro"}
+            if not find_handle("https://chatgpt.com"):
+                raise RuntimeError("chatgpt.com tab handle not found")
+            posted = exe("return (() => { window.postMessage({source: 'chatgpt-route-inspector', version: 1,"
+                         " observation: arguments[0]}, location.origin); return {posted: true}; })()", [obs])
+            if not (isinstance(posted, dict) and posted.get("posted")):
+                raise RuntimeError("postMessage dispatch failed: %r" % (posted,))
+            sent = shexe("return (async (o, tabId) => { const r = await chrome.runtime.sendMessage({type:'route:get-state'});"
+                         " const t = (r.state.turns||[]).find(x => x.captureId === 'ff-probe-suspect-live') || {};"
+                         " return {ok: r.ok, verdict: t.verdict, tabId: tabId,"
+                         " turnTabId: t.tabId === undefined ? null : t.tabId,"
+                         " turnCtx: t.captureContextId || null}; })(arguments[0], arguments[1])",
+                        [obs, tab_ctx["tabId"]])
+            if not (isinstance(sent, dict) and sent.get("ok") and sent.get("verdict") == "suspected_downgrade"
+                    and sent.get("turnTabId") == tab_ctx.get("tabId") and sent.get("turnCtx") == tab_ctx.get("ctx")):
+                add("11.overlay-suspect-hint", False, {"stage": "observation", "sent": sent, "tabCtx": tab_ctx})
+            else:
+                if not find_handle("https://chatgpt.com"):
+                    raise RuntimeError("chatgpt.com tab handle not found")
+                hint = None
+                for _ in range(20):
+                    time.sleep(0.5)
+                    hint = exe("return (() => { const root = document.getElementById('chatgpt-route-inspector-root');"
+                               " if (!root || !root.shadowRoot) return {root: !!root}; const sr = root.shadowRoot;"
+                               " const link = sr.getElementById('suspect-link');"
+                               " return {root: true, suspect: !!sr.getElementById('suspect-trigger'),"
+                               " legacy: !!sr.getElementById('notice-star'),"
+                               " href: link ? link.getAttribute('href') : null}; })()")
+                    if isinstance(hint, dict) and hint.get("suspect"):
+                        break
+                add("11.overlay-suspect-hint",
+                    isinstance(hint, dict) and hint.get("suspect") is True and hint.get("legacy") is False
+                    and str(hint.get("href", "")).startswith("https://rinotice.liu-qi.cn/"),
+                    {"hint": hint, "sent": sent})
         except Exception as error:
-            add("11.notice-hint-1.0.7", False, error)
+            add("11.overlay-suspect-hint", False, error)
     except Exception as error:
         add("9.page-hook-MAIN-world", False, error)
         add("10.bridge-overlay-ISOLATED", False, error)
@@ -702,7 +757,7 @@ def run_browser_checks(m, meta, args, results):
     except Exception as error:
         add("13.auto-reasoning-verdict", False, error)
 
-    # v1.0.7: the announcement page must be shipped, local, and render its body.
+    # v1.0.9: the packaged announcement page must still ship and render its body.
     try:
         page = open_extension_page("%s/%s" % (EXT, args.announcement_ui))
         if page:
@@ -711,18 +766,154 @@ def run_browser_checks(m, meta, args, results):
             v = exe("return {title: document.title, text: document.body ? document.body.textContent.slice(0, 400) : null, script: !!document.querySelector('script[src=\"index.js\"]'), href: document.getElementById('notice-poll') ? document.getElementById('notice-poll').getAttribute('href') : null}")
             text = v.get("text") or ""
             add("14.announcement-page",
-                ("1.0.7" in text) and v.get("script") is True and str(v.get("href", "")).startswith("https://x.com/"), v)
+                ("1.0.9" in text) and v.get("script") is True and str(v.get("href", "")).startswith("https://x.com/"), v)
         else:
             add("14.announcement-page", False, "no announcement handle")
     except Exception as error:
         add("14.announcement-page", False, error)
 
-    # v1.0.7: closing the notice must not disturb route history.
+    # v1.0.9: opening the announcement goes to the fixed public HTTPS notice site
+    # (UPGRADE_NOTICE_URL) in a new tab; route history must not change. The tab's
+    # real URL is verified browser-side via WebDriver (the extension has no tabs
+    # permission, so chrome.tabs.query hides third-party URLs). Real navigation;
+    # only the browser's ordinary request is recorded, no inspection data attached.
     try:
-        v = shexe("return (async () => { const before = await chrome.runtime.sendMessage({type:'route:get-state'}); const r = await chrome.runtime.sendMessage({type:'route:open-announcement'}); const after = await chrome.runtime.sendMessage({type:'route:get-state'}); return {before: (before.state.turns||[]).length, after: (after.state.turns||[]).length, ok: r.ok}; })()")
-        add("15.open-announcement-message", v.get("ok") is True and v.get("before") == v.get("after"), v)
+        v = shexe("return (async () => { const beforeIds = (await chrome.tabs.query({})).map(t => t.id);"
+                  " const before = ((await chrome.runtime.sendMessage({type:'route:get-state'})).state.turns||[]).length;"
+                  " const r = await chrome.runtime.sendMessage({type:'route:open-announcement'});"
+                  " let newId = null; for (let i = 0; i < 20 && newId === null; i++) {"
+                  "  await new Promise(res => setTimeout(res, 500));"
+                  "  const tabs = await chrome.tabs.query({});"
+                  "  const fresh = tabs.filter(t => !beforeIds.includes(t.id));"
+                  "  if (fresh.length) newId = fresh[fresh.length - 1].id; }"
+                  " return {ok: r.ok, newId: newId, before: before}; })()")
+        if not (isinstance(v, dict) and v.get("ok") and isinstance(v.get("newId"), int)):
+            add("15.open-announcement-target", False, {"stage": "open", "result": v})
+        else:
+            notice_handle = find_handle("rinotice.liu-qi.cn")
+            real_url = str(m.cmd("WebDriver:GetCurrentURL")["value"]) if notice_handle else None
+            if notice_handle is None or not real_url.startswith("https://rinotice.liu-qi.cn"):
+                add("15.open-announcement-target", False, {"stage": "verify", "result": v, "realUrl": real_url})
+            else:
+                time.sleep(2)
+                page = exe("return {finalUrl: location.href, title: document.title,"
+                           " text: document.body ? document.body.textContent.trim().slice(0, 120) : null}")
+                # Close the notice tab browser-side; chrome.tabs.remove rejects
+                # ids from a context without the tabs permission in Firefox.
+                m.cmd("WebDriver:CloseWindow")
+                cleanup = shexe("return (async () => { const after = ((await chrome.runtime.sendMessage("
+                                "{type:'route:get-state'})).state.turns||[]).length; return {after: after}; })()")
+                add("15.open-announcement-target",
+                    isinstance(page, dict) and bool(page.get("finalUrl"))
+                    and isinstance(cleanup, dict) and cleanup.get("after") == v.get("before"),
+                    {"openedTab": {"id": v["newId"], "url": real_url}, "page": page,
+                     "history": {"before": v.get("before"), "after": (cleanup or {}).get("after")}})
     except Exception as error:
-        add("15.open-announcement-message", False, error)
+        add("15.open-announcement-target", False, error)
+
+    # v1.0.9: suspected_downgrade conditions must mirror upstream
+    # (tests/unit/turns.test.ts): only a completed live/reload network response
+    # without resolved_model_slug; responding/failed/resolved-present stay normal.
+    # Synthetic observations in the extension context, no browser navigation.
+    try:
+        v = shexe("return (async () => { const mk = (over) => { const now = new Date().toISOString();"
+                  " return Object.assign({captureId: 'ff-probe-sus', source: 'page_fetch', captureMode: 'live',"
+                  " observedAt: now, startedAt: now, completedAt: now, pageUrl: 'https://chatgpt.com/c/ffprobe',"
+                  " requestedModel: 'gpt-5-6-pro', serverModelSlug: 'gpt-5-6-pro'}, over,"
+                  " {captureId: 'ff-probe-sus-' + over.phase + (over.resolvedModelSlug ? '-res' : '')}); };"
+                  " const rd = async (o) => { const r = await chrome.runtime.sendMessage({type:'route:observation', observation:o});"
+                  " const t = (r.state.turns||[]).find(x => x.captureId === o.captureId) || {}; return t.verdict; };"
+                  " return {completed: await rd(mk({phase: 'completed'})),"
+                  " responding: await rd(mk({phase: 'responding'})),"
+                  " failed: await rd(mk({phase: 'failed', completedAt: null})),"
+                  " resolved: await rd(mk({phase: 'completed', resolvedModelSlug: 'gpt-5-6-pro'}))}; })()")
+        add("16.suspected-downgrade-verdict",
+            isinstance(v, dict) and v.get("completed") == "suspected_downgrade"
+            and v.get("responding") == "normal" and v.get("failed") == "normal"
+            and v.get("resolved") == "normal", v)
+    except Exception as error:
+        add("16.suspected-downgrade-verdict", False, error)
+
+    # v1.0.9: a completed -wm Work response is work_unverifiable; a responding
+    # one is not (mirrors tests/unit/turns.test.ts). Synthetic, extension context.
+    try:
+        v = shexe("return (async () => { const mk = (phase) => { const now = new Date().toISOString();"
+                  " return {captureId: 'ff-probe-wm-' + phase, source: 'page_fetch', captureMode: 'live',"
+                  " phase: phase, observedAt: now, startedAt: now, completedAt: phase === 'completed' ? now : null,"
+                  " pageUrl: 'https://chatgpt.com/c/ffprobe', requestedModel: 'gpt-6-astra-wm',"
+                  " serverModelSlug: 'gpt-6-astra-wm'}; };"
+                  " const rd = async (o) => { const r = await chrome.runtime.sendMessage({type:'route:observation', observation:o});"
+                  " const t = (r.state.turns||[]).find(x => x.captureId === o.captureId) || {}; return t.verdict; };"
+                  " return {completed: await rd(mk('completed')), responding: await rd(mk('responding'))}; })()")
+        add("17.work-unverifiable-verdict",
+            isinstance(v, dict) and v.get("completed") == "work_unverifiable"
+            and v.get("responding") == "normal", v)
+    except Exception as error:
+        add("17.work-unverifiable-verdict", False, error)
+
+    # v1.0.9: a failed record must keep phase=failed with its error code; it may
+    # not be reported as completed or borrow the downgrade suspicion.
+    try:
+        v = shexe("return (async () => { const now = new Date().toISOString();"
+                  " const r = await chrome.runtime.sendMessage({type:'route:observation', observation:"
+                  " {captureId: 'ff-probe-failed', source: 'page_fetch', captureMode: 'live', phase: 'failed',"
+                  " errorCode: 'stream_parse_failed', observedAt: now, startedAt: now, completedAt: null,"
+                  " pageUrl: 'https://chatgpt.com/c/ffprobe', requestedModel: 'gpt-5-6-pro'}});"
+                  " const t = (r.state.turns||[]).find(x => x.captureId === 'ff-probe-failed') || {};"
+                  " return {phase: t.phase, errorCode: t.errorCode, completedAt: t.completedAt, verdict: t.verdict}; })()")
+        add("18.failed-phase-not-completed",
+            isinstance(v, dict) and v.get("phase") == "failed"
+            and v.get("errorCode") == "stream_parse_failed" and v.get("completedAt") is None
+            and v.get("verdict") != "suspected_downgrade" and v.get("verdict") != "work_unverifiable", v)
+    except Exception as error:
+        add("18.failed-phase-not-completed", False, error)
+
+    # v1.0.9: a new-chat draft (local-chatgpt: temporary path) keeps its capture
+    # context when ChatGPT replaces it with the server identity, so request and
+    # route stay in one record; an unrelated conversation must not join it.
+    # Synthetic: the same captureContextId/captureId pairing the background sees.
+    try:
+        pair = [{
+            "req": {"captureId": "ff-probe-temp-merge", "captureContextId": "ff-probe-ctx-temp",
+                    "source": "page_fetch", "captureMode": "live", "phase": "requested",
+                    "observedAt": "2026-09-27T00:00:01.000Z", "startedAt": "2026-09-27T00:00:01.000Z",
+                    "pageUrl": "https://chatgpt.com/c/local-chatgpt:probe-draft-1",
+                    "requestedModel": "gpt-5-6-pro"},
+            "done": {"captureId": "ff-probe-temp-merge", "captureContextId": "ff-probe-ctx-temp",
+                     "source": "page_fetch", "captureMode": "live", "phase": "completed",
+                     "observedAt": "2026-09-27T00:00:02.000Z", "startedAt": "2026-09-27T00:00:01.000Z",
+                     "completedAt": "2026-09-27T00:00:02.000Z",
+                     "pageUrl": "https://chatgpt.com/c/probe-real-conv", "conversationId": "probe-real-conv",
+                     "requestedModel": "gpt-5-6-pro", "resolvedModelSlug": "gpt-5-5-mini"},
+            "other": {"captureId": "ff-probe-unrelated", "captureContextId": "ff-probe-ctx-other",
+                      "source": "page_fetch", "captureMode": "live", "phase": "completed",
+                      "observedAt": "2026-09-27T00:00:03.000Z", "startedAt": "2026-09-27T00:00:03.000Z",
+                      "completedAt": "2026-09-27T00:00:03.000Z",
+                      "pageUrl": "https://chatgpt.com/c/probe-other-conv", "conversationId": "probe-other-conv",
+                      "requestedModel": "gpt-5-6", "resolvedModelSlug": "gpt-5-6"}}]
+        v = shexe("return (async (p) => {"
+                  " await chrome.runtime.sendMessage({type:'route:observation', observation:p.req});"
+                  " await chrome.runtime.sendMessage({type:'route:observation', observation:p.done});"
+                  " await chrome.runtime.sendMessage({type:'route:observation', observation:p.other});"
+                  " const turns = ((await chrome.runtime.sendMessage({type:'route:get-state'})).state.turns||[]);"
+                  " const merged = turns.find(t => t.captureId === 'ff-probe-temp-merge') || {};"
+                  " return {req: merged.requestedModel, route: merged.routeModel, phase: merged.phase,"
+                  " ctxTurns: turns.filter(t => t.captureContextId === 'ff-probe-ctx-temp').length,"
+                  " unrelated: turns.filter(t => t.captureId === 'ff-probe-unrelated').length}; })(arguments[0])", pair)
+        add("19.temporary-conversation-association",
+            isinstance(v, dict) and v.get("req") == "gpt-5-6-pro" and v.get("route") == "gpt-5-5-mini"
+            and v.get("phase") == "completed" and v.get("ctxTurns") == 1 and v.get("unrelated") == 1, v)
+    except Exception as error:
+        add("19.temporary-conversation-association", False, error)
+
+    # Note (v1.0.9): the upstream "extension disconnected -> refresh page"
+    # overlay card is covered by upstream tests with a mocked context failure
+    # (tests/integration/bridge-lifecycle.test.ts). A real-browser trigger is
+    # not reproducible on Firefox 156: after Addon:Install (update) and
+    # Addon:Uninstall the page's content script does not survive as an orphan,
+    # so its overlay buttons can no longer call anything. Three probe runs
+    # (results kept in docs/upgrade-2026-09-27/) recorded the finding; the
+    # scenario was therefore not kept as a required browser check.
 
     meta["connectionTrusted"] = True
     return {"trusted": True, "aborted": None}
