@@ -1,0 +1,41 @@
+{
+  "sourceDirectory": "%LOCALAPPDATA%/Temp/route-round2-final-audit-f08fb4fe62ed46c797bf9a330a1e7d5e",
+  "transformation": "Username replaced with <user>; CRLF normalized to LF and trailing horizontal whitespace removed. ACCEPTANCE.md also has an archive explanation. Raw originals retained; archive bytes protected by local .gitattributes.",
+  "entries": [
+    {
+      "file": "ACCEPTANCE.md",
+      "originalSha256": "820cb738701dcfca0aaf7d3bef3c11f66f58263cf4d0632949ecedcc5288e966",
+      "archivedSha256": "b7fb7f23ffb1b3c3731df888129ee54fe84fe6b6e2ebb56184524dae91f7fb39"
+    },
+    {
+      "file": "no-navigation.json",
+      "originalSha256": "1bc0b8588ea9adf6853c0ee3c616be825c648c9453984de5bf9606cf9ea57848",
+      "archivedSha256": "6a2dd1b04b1d562a69b403cc6846bc60d4e5f57b7217a7c36166304c6d6359b1"
+    },
+    {
+      "file": "no-navigation.log",
+      "originalSha256": "b812df2d76271bb342c87dd274f5204f6643391703a5a8898af74a6ed0d21617",
+      "archivedSha256": "5b0270b36668e108c6eee11a14a696f3eaef1bfa37a40cdb7edea5305dfb08de"
+    },
+    {
+      "file": "official.json",
+      "originalSha256": "b58ff01dc5c44d7c7f3d8dd8b7d62ac0a437ee5ac7fae6fdd188b8ec0821641a",
+      "archivedSha256": "438a87c9133d032406686db845bda7d9fdfdc5c916d745f5f2ae19f9a27678c3"
+    },
+    {
+      "file": "official.log",
+      "originalSha256": "16a6318ebe3dae60a50597bfdefdfc7a4ffe13e1b4b8e7108fbb51abf087817a",
+      "archivedSha256": "294db0a5731d90d1d0704a81c7974b871a4fe32212cb53428dc49e1478dbff19"
+    },
+    {
+      "file": "old-tracker.json",
+      "originalSha256": "cb764865ad62afe248276ed4be9ff2bba4d4a1ba939805d34b1ba9661eebe6f5",
+      "archivedSha256": "add1113e06680bd7b8bcef2daa3a3416153d8d996fe1b94978cecda07ae31892"
+    },
+    {
+      "file": "old-tracker.log",
+      "originalSha256": "6ea1696a7b29c78a633ace83254f2dd18fa88810cb90c27369d710c7099556fc",
+      "archivedSha256": "b60f398917165fea8bf021d6ada77c35796a922fa0b392a0384060ce81802f51"
+    }
+  ]
+}

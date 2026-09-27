@@ -1,6 +1,6 @@
 # BLOCKED（需人工验证项）
 
-保留历史条目；状态按 2026-09-20 升级后实测更新。
+状态更新至 2026-09-27 v1.0.9 / round2 独立验收；历史用户样本保留原日期，不能当作新版真实流量证据。
 
 ## 1. 真实登录对话的捕获链路（任务 4 第 3–7 项）— 部分验证，流式完成未通过
 2026-09-20 用户提供真实导出，按其指定的本地时间 15:54 分界，100 条保留记录中有 63 条新样本：34 条 live（29 条 normal、5 条 unknown）与 29 条 reload（completed/unknown）。34 条 live 全部为 `failed/stream_parse_failed`，所以捕获及部分路由判定有实证，不能宣布完整生命周期通过。分界是用户提供的版本归属线索，导出本身不能证明所装 XPI 哈希。原始用户数据留在仓库外，不纳入源码包或 Git。
@@ -40,18 +40,18 @@ verdict/reasons 与 assessment.ts 规则逐条对应；durationMs/时间戳/pars
 
 ## 5. 真实更新事件（1.0.5 → 1.0.7 → 1.0.9）— **仍未验证**
 `src/background/upgrade-notice.ts` 只在 `onInstalled.reason === 'update'` 且 `previousVersion < 1.0.9` 时打开公告页（v1.0.9 起打开外部地址 `https://rinotice.liu-qi.cn/`，存储键 `routeInspectorNotice109Shown`）。
-临时加载（`Addon:Install {temporary:true}`）在 Firefox 中始终以 `reason=install` 触发，**无法产生真实更新事件**，因此：
-- 已分别通过探针和单测验证的部分：公告页本体渲染、浮窗公告入口存在与文案、`route:open-announcement` 消息链路、`isNoticeUpgrade` 的纯逻辑单测（上游 `tests/integration/upgrade-notice.test.ts`）；这些不等于真实更新事件。
-- **未验证**：从已安装 1.0.5 的真实升级路径（需签名安装或 AMO/自签名分发）。
-- 若需人工验证：用签名 XPI 安装 1.0.5 → 覆盖安装 1.0.7，确认仅开一次公告页且 `routeInspectorNotice107Shown` 被写入。
+本轮临时加载（`Addon:Install {temporary:true}`）观察到 `reason=install`，**没有取得真实更新事件证据**，因此：
+- 已分别通过探针和单测验证的部分：v1.0.9 外部公告导航、浮窗疑似降级提示入口与文案、`route:open-announcement` 消息链路、`isNoticeUpgrade` 的纯逻辑单测（上游 `tests/integration/upgrade-notice.test.ts`）；这些不等于真实更新事件。
+- **未验证**：已安装旧版到 1.0.9 的真实升级路径（需兼容的已签名交付物）。
+- 若需人工验证：保留实际已安装旧版与数据，备份后覆盖安装同 ID 的已签名 1.0.9，确认 `reason=update`、合法 `previousVersion < 1.0.9`、仅开一次外部公告且 `routeInspectorNotice109Shown` 被写入。
 
 ## 6. Firefox 128 下限 — **本次新增，未验证**
 `strict_min_version = 128.0` 来自 MDN BCD（`content_scripts.world: MAIN` 自 128 起支持），本次未改动。
-本机仅安装 Firefox 156.0，**128 未实测**，不得据此宣称已在 128 上验证通过。
+本轮使用 Firefox 156.0.1，**128 未实测**，不得据此宣称已在 128 上验证通过。
 
-## 7. `npm run test:e2e` — **仍未执行（缺环境，2026-09-27 复测）**
+## 7. `npm run test:e2e` — **已尝试但未完成（缺环境，2026-09-27 复测）**
 2026-09-27 复测：本机仍无 extension-capable Chromium，报错 `No extension-capable Chromium found. Run: npx playwright install chromium`（1 failed / 12 did not run，失败原因即该环境错误）。
-证据：`docs/upgrade-2026-09-27/evidence/test-e2e-env.log`。按任务约束不安装浏览器；`build:e2e` 退出码 0。e2e 覆盖的是 Chromium 侧行为，与 Firefox 产物无关。
+证据：`docs/upgrade-2026-09-27/evidence/test-e2e-env.log`。按任务约束不安装浏览器；`build:e2e` 退出码 0。e2e 覆盖 Chromium 上运行的共享业务行为，不能代替 Firefox 真机验收。
 
 ## 8. 额度字段（`deep_research` / `image_gen`）真机 — **新增，未专项验证**
 `src/core/usage-quota.ts`（`limits_progress` → 额度投影）有上游单元/集成测试覆盖，但**真机探针没有额度专项检查**：
@@ -73,17 +73,21 @@ verdict/reasons 与 assessment.ts 规则逐条对应；durationMs/时间戳/pars
 
 ## 11. 真机探针受 `chatgpt.com` 响应速度影响 — **新增，已知抖动（非缺陷）**
 `9.page-hook-MAIN-world` / `10.bridge-overlay-ISOLATED` 需要在导航后执行脚本；站点响应慢时会 `timed out`，
-连带 `11.notice-hint-1.0.7` 未执行，探针报 FAIL 并退出 5（不重试、不静默通过）。本轮实测遇到一次，
+2026-09-20 的历史运行连带 `11.notice-hint-1.0.7` 未执行，退出 5。当时遇到一次，
 同一条命令第二次即恢复正常（退出码 4）。
 证据：`docs/upgrade-2026-09-20/evidence/r3-probe-negative-badpage-attempt1-navtimeout.*`。
-**不打算通过加重试来掩盖** —— 重试会把“站点慢”与“产物坏”混在一起；判定时应以完整正向运行（`r3-probe-positive`）为准。
+当前探针对异步状态做有限轮询，超时仍失败，不自动重跑整轮或把缺失检查当作通过；当前完整正向证据见独立验收 official.json。
 
-## 12. 断线提示卡片（v1.0.9）真机不可复现 — **新增，方法学限制**
+## 12. 断线提示卡片（v1.0.9）本轮真机未复现 — **新增，方法学限制**
 v1.0.9 上游新增"扩展连接失效 → 提示刷新"浮窗卡片。其逻辑由上游自带集成测试以 mock 拒绝覆盖（`tests/integration/bridge-lifecycle.test.ts`，本轮 327 项中包含）。
 真机触发尝试（2026-09-27，FF156.0.1，探针 run1–run3 证据保留于 `docs/upgrade-2026-09-27/ff-probe-results-v1.0.9-2026-09-27*.json`）：
-- Addon:Install 重装（update 型失效）与 Addon:Uninstall 两种方式，均未出现断线卡片——FF156 在 addon 卸载/重装时**不会**把已打开页面里的内容脚本留成孤儿，点击事件无从触发发送失败。
+- Addon:Install 重装（update 型失效）与 Addon:Uninstall 两种方式，均未出现断线卡片。本轮未观察到孤儿内容脚本触发的发送失败，不能据此推断所有 Firefox 版本或失效场景都不可复现。
 - 按止损规则停止该项：探针不把它列为必需检查（探针内留有说明注释），不伪造通过、不删除上游用例。
-- 若要人工复核：需能产生真实"上下文失效"的场景（如扩展更新瞬间），Marionette 无法编排。
+- 若要人工复核：需能产生真实“上下文失效”的场景；本轮 Marionette 方案未成功触发，其他方案尚未验证。
 
 ## 13. 公告站点为上游外部依赖 — **新增，说明**
 v1.0.9 起公告打开上游固定地址 `https://rinotice.liu-qi.cn/`（扩展不发请求，是普通浏览器导航）。2026-09-27 真机实测该地址可达且返回公告内容（探针检查 15，真实导航一次，不附带任何扩展数据）。站点内容、可用性与长期存在由上游维护者决定，本移植不做承诺。
+
+## 14. 新会话导航的成功流式响应路径 — **未覆盖**
+
+round2 第 19 项已验证真实 tracker 导航、临时地址提升与浮窗归属；合成请求取得的是真实未认证拒绝响应。请求体 correlation 路径不等于成功 SSE 的 conversation_id/模型路由路径，后者及真实账号新会话仍待验证。详见 [独立验收](docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md)。

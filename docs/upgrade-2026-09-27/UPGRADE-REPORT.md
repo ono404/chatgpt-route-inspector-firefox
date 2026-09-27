@@ -1,5 +1,7 @@
 # 升级报告：v1.0.7 → v1.0.9（2026-09-27）
 
+> 历史升级过程记录。当前 round2 结论及覆盖边界以 [独立验收](independent-acceptance/ACCEPTANCE.md) 为准；现役交付状态见 [PROGRESS](../../PROGRESS.md)。
+
 ## 1. 结论概要
 
 - 上游 `v1.0.9`（`99f982dd089b020afa85b897b07edfb340cc58dd`，3 提交 40 文件 +1056/-357）已按 merge 纳入分支 `codex/sync-upstream-v1.0.9`，业务同源检查为空。

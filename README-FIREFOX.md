@@ -4,7 +4,9 @@
 
 当前同步基线：上游 `Liu-Bot24/chatgpt-route-inspector` **v1.0.9**（`99f982d`）。上游业务源码与本仓库 `src/` 逐字节一致，差异只在构建与验证脚本。
 
-v1.0.9 行为提示：升级公告改开上游固定站点 `https://rinotice.liu-qi.cn/`（`route:open-announcement` 与真实更新事件各开一次，存储键 `routeInspectorNotice109Shown`）；浮窗新增“疑似降级 / 无法判断”判定与提示；扩展连接失效时浮窗会提示刷新页面。隐私描述见上游 `PRIVACY.md`（2026-09-27 生效版）。
+v1.0.9 行为提示：升级公告改开上游固定站点 `https://rinotice.liu-qi.cn/`（手动入口通过 `route:open-announcement` 打开；符合版本条件的真实更新事件按 `routeInspectorNotice109Shown` 去重）；浮窗新增“疑似降级 / 无法判断”判定与提示；扩展连接失效时浮窗会提示刷新页面。隐私描述见上游 `PRIVACY.md`（2026-09-27 生效版）。
+
+当前交付工作区：`D:\LAB\sync-v109-isolated`，分支 `codex/sync-upstream-v1.0.9`。原工作区仍为 v1.0.7。当前验收、工作区和待办见 [PROGRESS](PROGRESS.md)。
 
 ## 安装依赖 / 构建
 
@@ -44,10 +46,10 @@ npm run package:firefox   # 打包 dist/firefox -> release/*.xpi，并写出构�
 
 - 扩展文件：`release/chatgpt-route-inspector-firefox-1.0.9.xpi`（本地未签名包，XPI SHA-256 `34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523`）。
 - 源代码步骤：上传 `release/chatgpt-route-inspector-firefox-1.0.9-source.zip`（170835 字节，SHA-256 `0cc2412fef597d0ea2d6a3b5ac2986c7f178f7a9c13a1c83e9f7a49cd16a73d0`）；包内 BUILD-README 写明 Windows 11 x64、Node 24.16.0、npm 12.0.1，以及 `npm ci` → `npm run build:firefox`。
-- 源码包包含原始源码、资源、`tsconfig.json`（必须！esbuild 自动读取，缺了产出的 JS 少 `"use strict";`、哈希全变）、锁文件与构建脚本，不含用户导出、profile、验证日志或依赖目录。它是 commit `6f932e0` 的提交用源码快照。
+- 源码包包含原始源码、资源、`tsconfig.json`（必须！esbuild 自动读取，缺了产出的 JS 少 `"use strict";`、本次 7 个 JS 哈希变化）、锁文件与构建脚本，不含用户导出、profile、验证日志或依赖目录。它是 commit `6f932e0` 的提交用源码快照。
 - 已从源码包在独立临时目录安装依赖并构建，30 个输出文件与上述未签名 XPI 的路径和内容完全相同（REBUILD_MATCH，2026-09-27）。
 - 1.0.7 的 AMO 上传完成、签名下载与日常覆盖安装均未确认；旧版签名包在原工作区 `release/signed/`，不能代替新版签名凭证。1.0.9 尚未提交 AMO。
-- 获得签名后在 `about:addons` 齿轮菜单“从文件安装附加组件”覆盖升级；先导出备份，不卸载旧版。覆盖安装会触发一次 `https://rinotice.liu-qi.cn/` 公告页打开（真实更新事件，本轮仍未验证，见 BLOCKED 第 5 项）。
+- 获得签名后在 `about:addons` 齿轮菜单“从文件安装附加组件”覆盖升级；先导出备份，不卸载旧版。符合版本条件且未记录已展示的覆盖安装按代码设计会触发一次 `https://rinotice.liu-qi.cn/` 公告页打开（真实更新事件，本轮仍未验证，见 BLOCKED 第 5 项）。
 
 本轮干净安装依赖时 npm 报告 4 项依赖漏洞（3 moderate、1 high）及 esbuild 安装脚本被阻止的警告；构建仍成功。未做漏洞可达性分析，也未执行 `npm audit fix`，不能据此宣称依赖安全已验收。
 
@@ -64,13 +66,12 @@ npm run package:firefox   # 打包 dist/firefox -> release/*.xpi，并写出构�
 探针**自己启动浏览器**：创建全新专用临时 profile、自行挑选一个空闲端口、以隐藏窗口启动 Firefox、连接、跑完检查、只停掉自己启动的那个实例，随后删除自己创建的 profile（`--keep-profile` / `--keep-browser` 可保留）。它不会附着到、也不会停止任何它没有启动的浏览器，也不碰日常 profile。
 
 ```powershell
-npm run build:firefox
-npm run package:firefox
-
+Set-Location D:\LAB\sync-v109-isolated
+# 复验使用冻结 XPI、同次 build.json 和匹配 dist，不要重新打包。
 python ff-marionette.py `
-  --xpi "release\chatgpt-route-inspector-firefox-1.0.7.xpi" `
-  --expect-build-record "release\chatgpt-route-inspector-firefox-1.0.7.build.json" `
-  --out "docs\upgrade-2026-09-20\evidence\probe-<场景>.json" `
+  --xpi "release\chatgpt-route-inspector-firefox-1.0.9.xpi" `
+  --expect-build-record "release\chatgpt-route-inspector-firefox-1.0.9.build.json" `
+  --out "docs\upgrade-2026-09-27\evidence\probe-<新场景>.json" `
   --label <标签> --commit <commit>
 ```
 
@@ -140,22 +141,13 @@ profile 以浏览器回报的 `moz:profile` 为准并校验其等于本次启动
   `ExecuteScript and ExecuteAsyncScript are not supported for privileged browsing contexts`。
   该限制只影响探针工具，不影响扩展自身运行；FF154 无此限制，历史 12/12 是 FF154 结果。
 
-## 已验证
+## 已验证（2026-09-27）
 
-- 2026-09-20，Firefox **156.0**（headless，探针自启的专用临时 profile），v1.0.7 构建 **23/23 通过、退出码 0**：
-  `docs/upgrade-2026-09-20/evidence/r3-probe-positive.json`
-  （构建记录、产物四项身份检查、会话 profile 与本次启动一致、加载零 manifest 错误、后台命名空间与 `await chrome.*`、
-  Popup/诊断台/公告页渲染、合成观测经真实管线判定、chatgpt.com 上 MAIN hook 与 ISOLATED 浮窗、
-  1.0.7 公告浮窗入口、capture context 注册、`auto_reasoning` 判定）。
-- 反向（同轮实测，见同目录 `r3-*.log` / `.json`）：不存在的公告页 → 退出码 4；
-  损坏 XPI / 包内缺 manifest / manifest JSON 非法 → 退出码 2 且写出结果、未启动浏览器；
-  构建记录缺失 / 非法 JSON / 结构类型错误 → 退出码 2 且写出结果；
-  **连接对端谎报 `moz:profile` → 退出码 4，对端收到的命令只有 `WebDriver:NewSession`（无任何 Addon/存储/导航/会话清理命令）**；
-  输出目录不可写 → 退出码 3；`--out` 指向已有文件 → 退出码 6 且原文件哈希不变。
-- 已知抖动（非缺陷）：`chatgpt.com` 响应慢时，探针可能报 `9/10.page-hook` 超时并退出 5。探针不重试、不静默通过，实测样本见
-  `evidence/r3-probe-negative-badpage-attempt1-navtimeout.*`（同一条命令第二次即恢复为预期的退出码 4）。
-- 验证工具回归测试：`npm run test:firefox-tooling`（49 项，合成夹具与脚本化 peer；不需要真实浏览器即可跑，只有“真实进程/真实浏览器”两项会按环境跳过）。
-- `npm run typecheck / lint / test（301/301）/ build / build:firefox / build:e2e / verify:firefox / package:firefox` 全绿（2026-09-20）。
+- v1.0.9 同步门禁：327 项业务测试、typecheck、lint、build、build:firefox、build:notice、build:e2e、verify:firefox、package:firefox 通过；源码 ZIP 仓库外复建与 XPI 30/30 文件一致。初始记录见 [升级报告](docs/upgrade-2026-09-27/UPGRADE-REPORT.md)。
+- 修复至 `8d01fd5` 后独立重跑：lint 通过、工具回归 **56 项通过**；Firefox **156.0.1** 专用临时 profile 中正式包 **27/27，退出 0**，旧 tracker 故障包与禁导航反例均身份通过后在第 19 项失败、退出 4。详见 [独立验收及结果脱敏副本](docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md)。
+- 第 11 项从 postMessage 注入合成观测，只覆盖 bridge→background→浮窗；第 19 项经真实 page-hook、history 导航、tracker 与浮窗，但输入为合成请求，响应为真实未认证拒绝。**不覆盖成功 SSE 内的会话身份、模型路由或真实账号完整流量。**
+- 篡改 XPI 身份拒绝退出 2、输出保护退出 6；更早的损坏输入及连接信任证据保留在 [v1.0.7 历史报告](docs/upgrade-2026-09-20/UPGRADE-REPORT.md)，其 301/49/23 项结果不代表当前版本计数。
+- `test:e2e` 本轮已尝试但退出 1：缺 extension-capable Chromium，1 failed / 12 did not run。构建 E2E 通过不等于 E2E 执行通过。其余边界见 [BLOCKED](BLOCKED.md)。
 
 ## 上游更新后
 

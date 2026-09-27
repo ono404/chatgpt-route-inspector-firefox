@@ -1,25 +1,26 @@
 # PROGRESS — Firefox 移植（自用）
 
-## 现役交接（2026-09-20，neat-freak 收尾）
+## 现役交接（2026-09-27，neat-freak 收尾）
 
-以下为当前状态；后续各任务章节是历史记录，测试数量、环境与结论按各自轮次解读。
+以下为当前答案；后续任务章节是历史记录，测试数量和结论按各轮次解读。
 
 | 事实面 | 状态 | 当前结论 |
 | --- | --- | --- |
-| 代码 | verified-current | 分支 `codex/sync-upstream-v1.0.7`，HEAD `909941e`；main 仍为 `182fca1`。`src schemas _locales icons manifest` 对上游 `d5524a0` 无差异。本轮不改代码。 |
-| 本地交付 | verified-current | 1.0.7 源码 ZIP 已独立解压、`npm ci` 与 Firefox build 成功；30 个文件与提交用未签名 XPI 完全一致。路径、哈希和用法统一见 README-FIREFOX.md。 |
-| 日常运行 / 发布 | pending | 用户真实导出证明部分链路工作，仍有流式失败；用户已到 AMO 源码提交页，尚无新版签名与日常覆盖安装完成凭证。远端分支状态本轮未重新查询，不宣称已 push/merged。 |
-| 文档 / 规则 | changed-and-verified | 更新 README-FIREFOX.md、BLOCKED.md、AGENTS.md 与本节；纠正未签名泛称、真实捕获未验证泛称，以及 ZIP 重打包哈希必变的绝对表述。历史报告与原始证据不改。 |
-| 记忆 | out-of-scope | Codex 生成记忆与未知 `.workbuddy/memory/` 均只读，不写入或整理。当前事实以项目文档为准。 |
-| 工作区 | pending | 收尾前已跟踪文件干净，另有两条 `.workbuddy/memory/*` 未跟踪。收尾后有上述 4 个文档的未提交修改；未提交、未推送、未删除。只有一个 Git worktree。 |
+| 代码 | verified-current | 当前交付在 `D:\LAB\sync-v109-isolated`、`codex/sync-upstream-v1.0.9`，代码验收提交 `8d01fd5`；业务目录与上游 `99f982d` 无差异。原工作区仍为 v1.0.7 / `909941e`。 |
+| 本地运行与交付 | verified-current | v1.0.9 未签名 XPI / 同次 build.json / 源码 ZIP 冻结，30/30 文件复建一致；FF156.0.1 正式探针 27/27，两个语义反例退出 4。只代表受控临时 profile 场景。 |
+| 发布与真实流量 | pending | 新版未上传 AMO、未签名、未日常覆盖安装；成功 SSE、真实更新事件、FF128、断线提示、Chromium E2E 等见 BLOCKED.md。未查询远端，不宣称已 push/merged。 |
+| 文档 | changed-and-verified | README-FIREFOX 为交付与用法入口，BLOCKED 为未完成项；独立验收证据已归档，历史报告保留。 |
+| 规则 | changed-and-verified | AGENTS 修正 327/56 项计数及覆盖边界；原工作区仅补新版位置指针。业务源码、探针和测试未修改。 |
+| 记忆 | out-of-scope | Codex 生成记忆只读；旧记忆中的 v1.0.7 是历史快照，当前项目状态以此处为准。未知 .workbuddy/ 不写入。 |
+| 工作区 | pending | 两个 worktree 均保留；仅在 v1.0.9 分支提交本次文档/证据。原工作区既有四文档修改与 .workbuddy/ 保留，本轮新增两个入口提示也留作未提交修改。未合并、推送或清场。 |
 
-复核：源码包 SHA-256 与上一轮交付一致；保留的临时构建目录再次与 XPI 逐文件比较，30/30 一致。文档修改用 `git diff --check`、变更路径白名单与本地引用检查验收，不重复执行业务测试，不将历史 301/49 项测试声称为本轮重跑。
+独立验收原始结果的脱敏副本与哈希清单见 [ACCEPTANCE](docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md)。本次知识收尾只验证文档差异、链接、证据结构和产物哈希，不把此前运行的 327/56/27 项测试写成本次重新执行。
 
-未消除警告：源码包独立安装时 npm 报 4 项依赖漏洞（3 moderate、1 high）及 esbuild 安装脚本阻止警告，构建成功；未做可达性分析或依赖升级。真实更新、FF128、Chromium E2E、额度专项与长时观察继续按 BLOCKED.md 跟踪。
+未消除警告：本轮同步安装时 npm 报 4 项依赖漏洞（3 moderate、1 high）及 esbuild 安装脚本阻止警告，构建成功；未做可达性分析或依赖升级。签名、实际安装与真实流量验收是后续任务。
 
-清场预览（均保留）：`release/source-review-location.txt` 指向的仓库外源码复建目录及其定位文件可在完成复核后清理；`.tmp/upgrade-2026-09-20/` 含旧日志与诊断脚本，尚未逐一确认有无唯一证据，暂不推荐删除。源码 ZIP、XPI、构建记录、旧签名包、历史证据及未合并分支继续保留。未知 `.workbuddy/` 不列删除候选。
+清场预览：两个 worktree、release 交付物、历史证据和 .workbuddy/ 均保留。最终独立验收临时目录的 7 份文件已归档，可在用户复核后清理原临时副本；更早的 audit/rereview 临时目录含故障夹具和构建记录路径依赖，未判定可删。复核现场仍保留，等待汇报后的明确确认再清场。
 
-规则入口为项目 AGENTS.md，无项目内其他 AGENTS/CLAUDE 或符号链接；上级作用域未发现额外规则文件。已机械盘点 274 个文件（跳过依赖、Git 内部、dist、coverage），Markdown 共 11 个；上游 README 与历史报告不改，避免制造业务文档分叉或改写证据。复核现场仍保留，清场需在完整汇报后由用户另行确认。
+规则入口为各工作区 AGENTS.md；本轮对项目文件机械枚举并核对受影响文档，未发现额外项目规则入口。上游 README/PRIVACY 与历史原始证据保留，不制造业务文档分叉。
 
 ## 基线（任务 0，2026-09-03）
 - 上游：https://github.com/Liu-Bot24/chatgpt-route-inspector，commit 4f98a66，branch main，工作树干净

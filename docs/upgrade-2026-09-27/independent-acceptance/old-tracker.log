@@ -1,0 +1,63 @@
+PASS 0f.build-record | xpi=2d9b8b789d232f2e files=30
+PASS 0a.xpi-sha256 | actual=2d9b8b789d232f2ef16536a436c16ca7296ec2a5b3737aa7a6d288486e5eb67e expected=2d9b8b789d232f2ef16536a436c16ca7296ec2a5b3737aa7a6d288486e5eb67e
+PASS 0b.xpi-contents | 30 files identical to XPI
+PASS 0c.dist-matches-record | 30 recorded files agree
+PASS 0d.manifest-sha256 | sha256=b8957ae63a39dc392d693081e31e80e201eee4a093b168f78a3eacdd075e07a9 version=1.0.9 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=b8957ae63a39dc392d693081e31e80e201eee4a093b168f78a3eacdd075e07a9)
+launched firefox pid=39164 port=62805 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-b62u0k6i
+PASS 0.session | c47d492c-7047-4f21-aa5c-1e6138af3981
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-b62u0k6i pid=39164 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-b62u0k6i inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=d37f202d-154d-4e0a-b587-2095a4c697c4 last_url=moz-extension://d37f202d-154d-4e0a-b587-2095a4c697c4/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://d37f202d-154d-4e0a-b587-2095a4c697c4/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://d37f202d-154d-4e0a-b587-2095a4c697c4/ui/popup/index.html', 'version': '1.0.9'}
+PASS 6.popup-renders |
+
+
+
+
+
+          Route Inspector
+          Created by @liuqi
+
+        服务器报告的路由遥测
+
+
+
+
+        EN
+        中
+
+      实时监听
+
+
+
+
+
+
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn |
+
+
+    Route Inspectorv1.0.9请求模型与真实响应路由GitHub
+    EN中仅保存在本机
+
+  路由诊断台导出 JSON导出报告清空记录
+  全部记录1实时请求1会话重载0异常1
+
+    捕获记录全部模式实时请求会话重载全部结论正常自动推理疑似降级无法判断错配冲突未比较时间模式请求模型标签响应路由判定响应来源09/27 21:08:37实时请求GPT 5.6 Pro未解析GPT 5.5 mini路由错配resolved_model_slug当前筛选条件下没有记录。
+  证据字段路由错配捕获模式实时请求捕获状态已
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 5, 'turnTabId': 5, 'turnCtx': '6a35b735-47cb-4834-9848-1c71399f5426'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': '6a35b735-47cb-4834-9848-1c71399f5426', 'documentId': '3c03a756-02b6-45ce-9628-87328a4edeef', 'documentStartedAt': 1790514521665, 'visitStartedAt': 1790514521665, 'revision': 0, 'reloadEligible': False, 'pageUrl': 'https://chatgpt.com/'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '\n  \n    \n      Route Inspector1.0.9 · 版本公告\n      EN中\n    \n    \n      版本公告\n      \n        \n          根据此前投票反馈，响应结果中存在 resolved_model_slug 字段的用户约 80% 未降级；没有该字段的用户约 80% 发生了降级。\n          故针对响应结果中 resolved_model_slug 字段缺失的情
+PASS 15.open-announcement-target | {'openedTab': {'id': 7, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector · 1.0.9 版本公告', 'text': 'Route Inspector1.0.9 · 版本公告\n      EN中\n    \n    \n      版本公告\n      \n        \n          根据此前投票反馈，响应结果中存在 resolv
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'unknown'}
+FAIL 19.new-chat-navigation-association | correlated request was not associated: {'captureId': 'edfef1a2-0905-4a50-b418-209015d384aa', 'ctx': '2ea0d5bd-a213-48bc-af71-3eff96b64517', 'phase': 'requested', 'errorCode': None}
+26 passed / 1 failed / 0 missing -> exit 4 (checks failed: 19.new-chat-navigation-association)
+saved C:\Users\<user>\AppData\Local\Temp\route-round2-final-audit-f08fb4fe62ed46c797bf9a330a1e7d5e\old-tracker.json
