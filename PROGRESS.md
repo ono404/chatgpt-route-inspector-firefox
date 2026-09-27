@@ -179,3 +179,13 @@
 - 环境：Firefox 156.0.1（C:\Program Files\Mozilla Firefox）；`python` 为 WindowsApps 占位符不可用，用 `py` 启动器（Python 3.14.6，工具回归实测可用）。
 - 上游变化预核：schema 1.7.0→1.8.0、新会话 local-chatgpt: 临时地址、suspected_downgrade/work_unverifiable、公告改在线站点；无新增依赖与权限。
 - 最大风险：探针与本地测试硬编码旧 schema 1.7.0 与旧公告入口/文案，升级后大面积红灯；只允许按上游新行为最小更新，不得弱化既有保护。
+
+## v1.0.9 同步结果（2026-09-27）
+
+- 提交链：`b1f06aa`（快照）→ `55d3ccf`（merge 上游 `99f982d`）→ `6f932e0`（探针/夹具适配）。分支 `codex/sync-upstream-v1.0.9`，隔离 worktree `D:\LAB\sync-v109-isolated`；原工作区未动。
+- 同源：`git diff --exit-code 99f982d -- src schemas _locales icons manifest` 工作区与最终提交均为空；verify-firefox-dist 30/30、8 JS 逐字节一致。
+- 门禁：typecheck/lint/test/test:firefox-tooling/build/build:firefox/build:notice/build:e2e/verify:firefox/package:firefox 全部退出码 0；vitest 34 文件 327 passed（上游净增 26），覆盖率 97.29/91.82/100；工具回归 49 passed 未变。
+- 真机（FF156.0.1，临时 profile）：探针正向 27/27 退出码 0（新增检查：suspect 浮窗提示走真实 page-hook 管线、公告真实打开 `https://rinotice.liu-qi.cn/` 且历史不变、suspected_downgrade/work_unverifiable/failed 判定、local-chatgpt 会话关联）；篡改反向退出码 2（浏览器前拒绝）；输出保护退出码 6。迭代 run1–run3 红灯证据全保留。
+- 止损项：断线提示卡片真机不可复现（FF156 不留孤儿内容脚本，3 轮实测），逻辑层以上游 mock 集成测试为准，详见 BLOCKED 第 12 项。
+- 交付：未签名 XPI `34ca9440…da523`、同次 build.json、源码 ZIP `0cc2412f…3d0`；仓库外复建与 XPI 30/30 逐文件一致（发现并修正源码包必须含 tsconfig.json，否则 esbuild 输出缺 "use strict"）。未上传、未签名、未安装。
+- e2e：仍无 extension-capable Chromium（本轮实测留证），沿用 BLOCKED 第 7 项。

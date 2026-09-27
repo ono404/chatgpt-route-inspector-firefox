@@ -2,7 +2,9 @@
 
 与 Chromium 共用同一份源码，仅构建产物不同。业务代码零改动。
 
-当前同步基线：上游 `Liu-Bot24/chatgpt-route-inspector` **v1.0.7**（`d5524a0`）。上游业务源码与本仓库 `src/` 逐字节一致，差异只在构建与验证脚本。
+当前同步基线：上游 `Liu-Bot24/chatgpt-route-inspector` **v1.0.9**（`99f982d`）。上游业务源码与本仓库 `src/` 逐字节一致，差异只在构建与验证脚本。
+
+v1.0.9 行为提示：升级公告改开上游固定站点 `https://rinotice.liu-qi.cn/`（`route:open-announcement` 与真实更新事件各开一次，存储键 `routeInspectorNotice109Shown`）；浮窗新增“疑似降级 / 无法判断”判定与提示；扩展连接失效时浮窗会提示刷新页面。隐私描述见上游 `PRIVACY.md`（2026-09-27 生效版）。
 
 ## 安装依赖 / 构建
 
@@ -36,16 +38,16 @@ npm run package:firefox   # 打包 dist/firefox -> release/*.xpi，并写出构�
 
 > ZIP 会记录文件 mtime 等元数据，重新打包的 XPI 哈希可能变化。记录必须与 XPI 同一次生成；不要把跨次重打包的哈希差异直接当成源码变化。
 
-## AMO 升级提交与源码包（2026-09-20）
+## AMO 升级提交与源码包（2026-09-27，v1.0.9）
 
 在已有扩展条目上提交新版本，保持 ID `chatgpt-route-inspector-firefox@local` 不变：
 
-- 扩展文件：`release/chatgpt-route-inspector-firefox-1.0.7.xpi`（本地未签名包）。
-- 源代码步骤：上传 `release/chatgpt-route-inspector-firefox-1.0.7-source.zip`（165000 字节）；包内 README 写明 Windows 11 x64、Node 24.16.0、npm 12.0.1，以及 `npm ci` → `npm run build:firefox`。
-- 源码包包含原始源码、资源、锁文件与构建脚本，不包含用户导出、profile、历史验证日志或依赖目录。它是 commit `909941e` 的提交用源码快照；后续文档收尾不改这个已核验包。
-- 已从源码包在独立临时目录安装依赖并构建，30 个输出文件与上述未签名 XPI 的路径和内容完全相同。源码 ZIP SHA-256：`d0e6fa7f2ce46e232fbb7f3d40ec3b1a52a7d637577e1f3d87b5c19e18809ddc`。
-- 当前只确认用户已进入 AMO 源码提交步骤；1.0.7 的上传完成、签名下载、日常 Firefox 覆盖安装及真实更新事件均未确认。旧版签名包在 `release/signed/`，不能代替新版签名凭证。
-- 获得 Mozilla 签名的 1.0.7 XPI 后，在 `about:addons` 的齿轮菜单选择“从文件安装附加组件”，覆盖升级；先导出备份，不卸载旧版。检查版本、历史记录与新增捕获，验证更新公告行为。
+- 扩展文件：`release/chatgpt-route-inspector-firefox-1.0.9.xpi`（本地未签名包，XPI SHA-256 `34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523`）。
+- 源代码步骤：上传 `release/chatgpt-route-inspector-firefox-1.0.9-source.zip`（170835 字节，SHA-256 `0cc2412fef597d0ea2d6a3b5ac2986c7f178f7a9c13a1c83e9f7a49cd16a73d0`）；包内 BUILD-README 写明 Windows 11 x64、Node 24.16.0、npm 12.0.1，以及 `npm ci` → `npm run build:firefox`。
+- 源码包包含原始源码、资源、`tsconfig.json`（必须！esbuild 自动读取，缺了产出的 JS 少 `"use strict";`、哈希全变）、锁文件与构建脚本，不含用户导出、profile、验证日志或依赖目录。它是 commit `6f932e0` 的提交用源码快照。
+- 已从源码包在独立临时目录安装依赖并构建，30 个输出文件与上述未签名 XPI 的路径和内容完全相同（REBUILD_MATCH，2026-09-27）。
+- 1.0.7 的 AMO 上传完成、签名下载与日常覆盖安装均未确认；旧版签名包在原工作区 `release/signed/`，不能代替新版签名凭证。1.0.9 尚未提交 AMO。
+- 获得签名后在 `about:addons` 齿轮菜单“从文件安装附加组件”覆盖升级；先导出备份，不卸载旧版。覆盖安装会触发一次 `https://rinotice.liu-qi.cn/` 公告页打开（真实更新事件，本轮仍未验证，见 BLOCKED 第 5 项）。
 
 本轮干净安装依赖时 npm 报告 4 项依赖漏洞（3 moderate、1 high）及 esbuild 安装脚本被阻止的警告；构建仍成功。未做漏洞可达性分析，也未执行 `npm audit fix`，不能据此宣称依赖安全已验收。
 

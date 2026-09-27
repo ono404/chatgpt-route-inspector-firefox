@@ -1,0 +1,3 @@
+npm notice run chatgpt-route-inspector@1.0.9 lint
+npm notice run eslint .
+lint exit=0

@@ -38,8 +38,8 @@ verdict/reasons 与 assessment.ts 规则逐条对应；durationMs/时间戳/pars
 - 另注：v1.0.7 起 `errorCode` 会区分 `record_too_large` / `http_*` / `unexpected_content_type` / `response_clone_failed`，
   下一次真实出现时导出的错误码将比 1.0.5 更能定位原因。
 
-## 5. 真实更新事件（1.0.5 → 1.0.7）— **本次新增，未验证**
-`src/background/upgrade-notice.ts` 只在 `onInstalled.reason === 'update'` 且 `previousVersion < 1.0.7` 时打开公告页。
+## 5. 真实更新事件（1.0.5 → 1.0.7 → 1.0.9）— **仍未验证**
+`src/background/upgrade-notice.ts` 只在 `onInstalled.reason === 'update'` 且 `previousVersion < 1.0.9` 时打开公告页（v1.0.9 起打开外部地址 `https://rinotice.liu-qi.cn/`，存储键 `routeInspectorNotice109Shown`）。
 临时加载（`Addon:Install {temporary:true}`）在 Firefox 中始终以 `reason=install` 触发，**无法产生真实更新事件**，因此：
 - 已分别通过探针和单测验证的部分：公告页本体渲染、浮窗公告入口存在与文案、`route:open-announcement` 消息链路、`isNoticeUpgrade` 的纯逻辑单测（上游 `tests/integration/upgrade-notice.test.ts`）；这些不等于真实更新事件。
 - **未验证**：从已安装 1.0.5 的真实升级路径（需签名安装或 AMO/自签名分发）。
@@ -49,9 +49,9 @@ verdict/reasons 与 assessment.ts 规则逐条对应；durationMs/时间戳/pars
 `strict_min_version = 128.0` 来自 MDN BCD（`content_scripts.world: MAIN` 自 128 起支持），本次未改动。
 本机仅安装 Firefox 156.0，**128 未实测**，不得据此宣称已在 128 上验证通过。
 
-## 7. `npm run test:e2e` — **本次新增，未执行（缺环境）**
-本机无 extension-capable Chromium，报错 `No extension-capable Chromium found. Run: npx playwright install chromium`。
-按本次任务约束不做工具安装，故未执行；`npm run build:e2e` 已通过。e2e 覆盖的是 Chromium 侧行为，与 Firefox 产物无关。
+## 7. `npm run test:e2e` — **仍未执行（缺环境，2026-09-27 复测）**
+2026-09-27 复测：本机仍无 extension-capable Chromium，报错 `No extension-capable Chromium found. Run: npx playwright install chromium`（1 failed / 12 did not run，失败原因即该环境错误）。
+证据：`docs/upgrade-2026-09-27/evidence/test-e2e-env.log`。按任务约束不安装浏览器；`build:e2e` 退出码 0。e2e 覆盖的是 Chromium 侧行为，与 Firefox 产物无关。
 
 ## 8. 额度字段（`deep_research` / `image_gen`）真机 — **新增，未专项验证**
 `src/core/usage-quota.ts`（`limits_progress` → 额度投影）有上游单元/集成测试覆盖，但**真机探针没有额度专项检查**：
@@ -77,3 +77,13 @@ verdict/reasons 与 assessment.ts 规则逐条对应；durationMs/时间戳/pars
 同一条命令第二次即恢复正常（退出码 4）。
 证据：`docs/upgrade-2026-09-20/evidence/r3-probe-negative-badpage-attempt1-navtimeout.*`。
 **不打算通过加重试来掩盖** —— 重试会把“站点慢”与“产物坏”混在一起；判定时应以完整正向运行（`r3-probe-positive`）为准。
+
+## 12. 断线提示卡片（v1.0.9）真机不可复现 — **新增，方法学限制**
+v1.0.9 上游新增"扩展连接失效 → 提示刷新"浮窗卡片。其逻辑由上游自带集成测试以 mock 拒绝覆盖（`tests/integration/bridge-lifecycle.test.ts`，本轮 327 项中包含）。
+真机触发尝试（2026-09-27，FF156.0.1，探针 run1–run3 证据保留于 `docs/upgrade-2026-09-27/ff-probe-results-v1.0.9-2026-09-27*.json`）：
+- Addon:Install 重装（update 型失效）与 Addon:Uninstall 两种方式，均未出现断线卡片——FF156 在 addon 卸载/重装时**不会**把已打开页面里的内容脚本留成孤儿，点击事件无从触发发送失败。
+- 按止损规则停止该项：探针不把它列为必需检查（探针内留有说明注释），不伪造通过、不删除上游用例。
+- 若要人工复核：需能产生真实"上下文失效"的场景（如扩展更新瞬间），Marionette 无法编排。
+
+## 13. 公告站点为上游外部依赖 — **新增，说明**
+v1.0.9 起公告打开上游固定地址 `https://rinotice.liu-qi.cn/`（扩展不发请求，是普通浏览器导航）。2026-09-27 真机实测该地址可达且返回公告内容（探针检查 15，真实导航一次，不附带任何扩展数据）。站点内容、可用性与长期存在由上游维护者决定，本移植不做承诺。

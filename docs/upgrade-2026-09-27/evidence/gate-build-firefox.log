@@ -1,0 +1,17 @@
+npm notice run chatgpt-route-inspector@1.0.9 build:firefox
+npm notice run node scripts/build.mjs firefox
+
+  dist\firefox\background\service-worker.js  40.3kb
+
+Done in 10ms
+
+  dist\firefox\content\bridge.js      74.5kb
+  dist\firefox\content\page-hook.js   67.2kb
+  dist\firefox\ui\popup\index.js      53.7kb
+  dist\firefox\ui\dashboard\index.js  53.5kb
+  dist\firefox\ui\options\index.js    38.1kb
+  ...and 2 more output files...
+
+Done in 24ms
+Built firefox: D:\LAB\sync-v109-isolated\dist\firefox
+build:firefox exit=0
