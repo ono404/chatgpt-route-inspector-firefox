@@ -4,7 +4,7 @@
 
 - 上游 `v1.0.9`（`99f982dd089b020afa85b897b07edfb340cc58dd`，3 提交 40 文件 +1056/-357）已按 merge 纳入分支 `codex/sync-upstream-v1.0.9`，业务同源检查为空。
 - 本轮全部门禁（typecheck / lint / test / test:firefox-tooling / build / build:firefox / build:notice / build:e2e / verify:firefox / package:firefox）退出码 0。
-- FF156.0.1 真机探针正向 **27/27 通过、退出码 0**（含 5 个 v1.0.9 新检查）；篡改反向验证在启动浏览器前拒绝、退出码 2；输出覆盖保护实测退出码 6。
+- FF156.0.1 真机探针正向 **27/27 通过、退出码 0**（含 v1.0.9 新检查；其中"local-chatgpt 会话关联"一项的原始形态只测后台合并，已于 2026-09-27 复审替换为真实导航检查，见 `review-fix/REVIEW-FIX-REPORT.md`）；篡改反向验证在启动浏览器前拒绝、退出码 2；输出覆盖保护实测退出码 6。
 - 源码 ZIP 在仓库外独立解压、`npm ci`、`build:firefox` 后与交付 XPI **30/30 逐文件一致**。
 - 交付物全部**未签名、未上传、未安装**到日常浏览器。签名与覆盖安装仍待人工处理。
 
@@ -58,7 +58,7 @@
 | run4（`…-run4.json`） | **27/27，退出 0** | 全部通过 |
 | final（`ff-probe-positive-final-v1.0.9-2026-09-27.json` + `evidence/probe-positive-final.log`） | **27/27，退出 0** | 冻结代码最终正向 |
 
-检查 11（suspect 提示）最终形态：合成观测经**真实 page-hook → bridge → background 管线**（`window.postMessage` 信封，sender.tab 即 chatgpt.com 标签页），浮窗经真实广播渲染出 `suspect-trigger`，链接指向 `https://rinotice.liu-qi.cn/`。数据是合成的，管线和渲染是真实的——验证层级已在检查注释中标明。
+检查 11（suspect 提示）：从 postMessage 注入合成观测，验证 **bridge→background→浮窗渲染**；不覆盖 page-hook 捕获解析（2026-09-27 复审修正了此处原文"真实 page-hook→bridge→background"的越界表述，见 `review-fix/REVIEW-FIX-REPORT.md` §3）。
 
 检查 15（公告目标）：`route:open-announcement` 实际打开新标签页，URL 由浏览器侧 `WebDriver:GetCurrentURL` 核实为 `https://rinotice.liu-qi.cn/`（扩展无 tabs 权限，`tabs.query` 读不到第三方 URL，这是 Firefox 权限模型的正确行为）；页面加载成功（标题 "Route Inspector · 1.0.9 版本公告"），路由历史不变。**注意：真机探针运行会对该公开公告站点发起一次普通浏览器导航（不附带任何扩展数据）。**
 
@@ -95,3 +95,11 @@ v1.0.9 上游新增"扩展连接失效 → 刷新页面"卡片。其逻辑由**�
 5. **新增**：断线提示卡片的真机复现在 FF156 不可行（Gecko 不留孤儿内容脚本），逻辑层以上游 mock 集成测试为准。
 6. 公告站点 `https://rinotice.liu-qi.cn/` 为上游固定地址，本轮仅记录"真实可达、返回公告内容"，不对其内容与可用性作长期承诺。
 7. 签名与日常覆盖安装：未签名、未上传 AMO、未安装（管理者既定范围）。
+
+## 10. 复审修正（2026-09-27，review-fix）
+
+管理者独立验收（`review-fix/REVIEW.md`）发现两处验证证据问题，本轮已修正（只改验证工具与文档，业务源码与交付包未动）：
+
+1. **第 19 项替换**：原检查预填 captureId/captureContextId 直发 `route:observation`，只测后台合并，无法发现新会话导航修复失效（故障包实测原探针 27/27）。替换后的 `19.new-chat-navigation-association` 经被测 XPI 真实 page-hook 生成捕获 ID、真实 history 导航、真实 tracker 关联与浮窗渲染；同一冻结探针下正式包 27/27 退出 0、旧 tracker 故障包身份合法通过后于第 19 项失败退出 4。覆盖边界（合成输入、响应为真实未认证拒绝、流式身份路径未覆盖）详见 `review-fix/REVIEW-FIX-REPORT.md`。
+2. **第 11 项表述**：修正为"bridge→background→浮窗渲染，不覆盖 page-hook 捕获解析"（见 §5）。
+3. 冻结验证：工具回归 53 项（新增 4 项导航失败传播回归）、lint 0、业务同源对 `4ae924d` 与 `99f982d` 均为空、正式交付包哈希未变。

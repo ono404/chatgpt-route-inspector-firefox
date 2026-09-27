@@ -101,7 +101,7 @@ REQUIRED_CHECKS = [
     "16.suspected-downgrade-verdict",
     "17.work-unverifiable-verdict",
     "18.failed-phase-not-completed",
-    "19.temporary-conversation-association",
+    "19.new-chat-navigation-association",
 ]
 # Only demanded when a build record was supplied.
 REQUIRED_WITH_RECORD = ["0c.dist-matches-record", "0f.build-record"]
@@ -679,9 +679,10 @@ def run_browser_checks(m, meta, args, results):
         # v1.0.9: the 1.0.7 upgrade-notice overlay entry was removed upstream.
         # A completed live response without resolved_model_slug must surface the
         # "suspected downgrade" hint in the overlay, linking the fixed notice URL.
-        # Synthetic observation delivered through the real page-hook -> bridge ->
-        # background pipeline (window.postMessage envelope, so sender.tab is the
-        # chatgpt.com tab itself); the overlay renders via the real broadcast.
+        # Synthetic observation injected via window.postMessage: this verifies
+        # bridge -> background -> overlay rendering only; it does NOT exercise
+        # page-hook capture parsing (the real navigation chain is covered by
+        # check 19).
         try:
             tab_ctx = shexe("return (async () => { const tabs = await chrome.tabs.query({url: 'https://chatgpt.com/*'});"
                             " if (!tabs.length) return {error: 'no chatgpt tab'};"
@@ -790,7 +791,14 @@ def run_browser_checks(m, meta, args, results):
         if not (isinstance(v, dict) and v.get("ok") and isinstance(v.get("newId"), int)):
             add("15.open-announcement-target", False, {"stage": "open", "result": v})
         else:
-            notice_handle = find_handle("rinotice.liu-qi.cn")
+            # The tab is listed in chrome.tabs immediately, but the Marionette
+            # handle list can lag; retry instead of failing on enumeration jitter.
+            notice_handle = None
+            for _ in range(30):
+                notice_handle = find_handle("rinotice.liu-qi.cn")
+                if notice_handle is not None:
+                    break
+                time.sleep(0.5)
             real_url = str(m.cmd("WebDriver:GetCurrentURL")["value"]) if notice_handle else None
             if notice_handle is None or not real_url.startswith("https://rinotice.liu-qi.cn"):
                 add("15.open-announcement-target", False, {"stage": "verify", "result": v, "realUrl": real_url})
@@ -868,43 +876,200 @@ def run_browser_checks(m, meta, args, results):
     except Exception as error:
         add("18.failed-phase-not-completed", False, error)
 
-    # v1.0.9: a new-chat draft (local-chatgpt: temporary path) keeps its capture
-    # context when ChatGPT replaces it with the server identity, so request and
-    # route stay in one record; an unrelated conversation must not join it.
-    # Synthetic: the same captureContextId/captureId pairing the background sees.
+    # v1.0.9 (revised 2026-09-27 review-fix): the new-chat navigation fix is
+    # verified through the code under test only. The real page-hook from the
+    # XPI under test parses the controlled creation request and generates the
+    # capture id itself; its wrapped history.pushState drives the tracker
+    # navigation. page-hook only inspects same-origin requests
+    # (isAllowedRequest), so a controlled SSE response from another origin can
+    # never enter the inspection path; the responses here are chatgpt.com's
+    # real unauthenticated rejections, and the "server identity" is correlated
+    # through the request body the way the request parser reads it. Synthetic
+    # traffic through real capture code - not real account traffic. Nothing
+    # prefills captureId/captureContextId, and no route:observation or
+    # synthetic postMessage envelope is sent in this check.
     try:
-        pair = [{
-            "req": {"captureId": "ff-probe-temp-merge", "captureContextId": "ff-probe-ctx-temp",
-                    "source": "page_fetch", "captureMode": "live", "phase": "requested",
-                    "observedAt": "2026-09-27T00:00:01.000Z", "startedAt": "2026-09-27T00:00:01.000Z",
-                    "pageUrl": "https://chatgpt.com/c/local-chatgpt:probe-draft-1",
-                    "requestedModel": "gpt-5-6-pro"},
-            "done": {"captureId": "ff-probe-temp-merge", "captureContextId": "ff-probe-ctx-temp",
-                     "source": "page_fetch", "captureMode": "live", "phase": "completed",
-                     "observedAt": "2026-09-27T00:00:02.000Z", "startedAt": "2026-09-27T00:00:01.000Z",
-                     "completedAt": "2026-09-27T00:00:02.000Z",
-                     "pageUrl": "https://chatgpt.com/c/probe-real-conv", "conversationId": "probe-real-conv",
-                     "requestedModel": "gpt-5-6-pro", "resolvedModelSlug": "gpt-5-5-mini"},
-            "other": {"captureId": "ff-probe-unrelated", "captureContextId": "ff-probe-ctx-other",
-                      "source": "page_fetch", "captureMode": "live", "phase": "completed",
-                      "observedAt": "2026-09-27T00:00:03.000Z", "startedAt": "2026-09-27T00:00:03.000Z",
-                      "completedAt": "2026-09-27T00:00:03.000Z",
-                      "pageUrl": "https://chatgpt.com/c/probe-other-conv", "conversationId": "probe-other-conv",
-                      "requestedModel": "gpt-5-6", "resolvedModelSlug": "gpt-5-6"}}]
-        v = shexe("return (async (p) => {"
-                  " await chrome.runtime.sendMessage({type:'route:observation', observation:p.req});"
-                  " await chrome.runtime.sendMessage({type:'route:observation', observation:p.done});"
-                  " await chrome.runtime.sendMessage({type:'route:observation', observation:p.other});"
-                  " const turns = ((await chrome.runtime.sendMessage({type:'route:get-state'})).state.turns||[]);"
-                  " const merged = turns.find(t => t.captureId === 'ff-probe-temp-merge') || {};"
-                  " return {req: merged.requestedModel, route: merged.routeModel, phase: merged.phase,"
-                  " ctxTurns: turns.filter(t => t.captureContextId === 'ff-probe-ctx-temp').length,"
-                  " unrelated: turns.filter(t => t.captureId === 'ff-probe-unrelated').length}; })(arguments[0])", pair)
-        add("19.temporary-conversation-association",
-            isinstance(v, dict) and v.get("req") == "gpt-5-6-pro" and v.get("route") == "gpt-5-5-mini"
-            and v.get("phase") == "completed" and v.get("ctxTurns") == 1 and v.get("unrelated") == 1, v)
+        marker_model = "gpt-5-6-pro-navcheck"
+        temp_path = "/c/local-chatgpt%3Anavcheck-draft"
+        formal_path = "/c/navcheck-conv"
+        unrelated_path = "/c/navcheck-unrelated"
+
+        def nav_poll(script, args=None, want=None, tries=24):
+            value = None
+            for _ in range(tries):
+                value = shexe(script, args or [])
+                if want is not None and want(value):
+                    return value
+                time.sleep(0.5)
+            return value
+
+        # 1) locate the chatgpt.com tab and its current capture context
+        tab_ctx = nav_poll(
+            "return (async () => { /* navcheck-a-ctx */"
+            " const tabs = await chrome.tabs.query({url: 'https://chatgpt.com/*'});"
+            " if (!tabs.length) return {error: 'no chatgpt tab'};"
+            " const tabId = tabs[0].id;"
+            " const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
+            " const ctx = st && st.captureContexts ? st.captureContexts[tabId] : null;"
+            " if (!ctx) return {error: 'no capture context for tab', tabId: tabId};"
+            " return {tabId: tabId, ctx: ctx.id}; })()",
+            want=lambda v: isinstance(v, dict) and v.get("ctx"))
+        if not isinstance(tab_ctx, dict) or not tab_ctx.get("ctx"):
+            raise RuntimeError("tab/context lookup failed: %r" % (tab_ctx,))
+        creation_ctx = tab_ctx["ctx"]
+
+        def go_page():
+            if not find_handle("https://chatgpt.com"):
+                raise RuntimeError("chatgpt.com tab handle not found")
+
+        def start_request(conversation_id, marker):
+            go_page()
+            # "" means a brand-new chat (body conversation_id null); Marionette
+            # turns Python None into undefined, so "" is the sentinel here.
+            # Fire-and-forget: the creation request must still be in flight
+            # while the page navigates, like the real new-chat flow.
+            return exe("return (function (conversationId) { /* " + marker + " */"
+                       " const cid = conversationId === '' ? null : conversationId;"
+                       " const detail = {fetchName: (window.fetch && window.fetch.name) || null,"
+                       "  location: location.href};"
+                       " try { window.fetch('/backend-api/f/conversation',"
+                       "  {method: 'POST', body: JSON.stringify({model: '" + marker_model + "',"
+                       "   conversation_id: cid, messages: [{id: 'navcheck-input'}]}) })"
+                       "  .catch(function () {}); } catch (e) { detail.err = String((e && e.message) || e); }"
+                       " detail.started = true;"
+                       " return detail; })(arguments[0])", [conversation_id])
+
+        def requested_poll(marker):
+            return (
+                "return (async (conversationId) => { /* " + marker + " */"
+                " const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
+                " const t = (st.turns||[]).find(x => x.requestedModel === '" + marker_model + "'"
+                "  && (!conversationId || x.conversationId === conversationId)) || {};"
+                " return {captureId: t.captureId || null, ctx: t.captureContextId || null,"
+                "  phase: t.phase || null, errorCode: t.errorCode || null}; })()")
+
+        # 2) the page starts the creation request (conversation_id null) and
+        #    navigates to the temporary draft URL while the request is in
+        #    flight, in one script execution, exactly like the real new-chat
+        #    order; the page-hook under test generates the capture id and its
+        #    wrapped pushState drives the tracker navigation
+        kick = start_request("", "navcheck-b-fetch")
+        exe("return (function () { /* navcheck-d-temp-push */"
+            " history.pushState({}, '', '" + temp_path + "');"
+            " return {pushed: true, url: location.pathname}; })()")
+        requested = nav_poll(requested_poll("navcheck-c-requested"), [""],
+                             want=lambda v: isinstance(v, dict) and v.get("captureId")
+                             and v.get("phase") in ("requested", "failed"))
+        if not (isinstance(requested, dict) and requested.get("captureId")
+                and requested.get("ctx") == creation_ctx):
+            raise RuntimeError("requested observation not generated by page-hook: requested=%r kick=%r"
+                               % (requested, kick))
+        nav_capture = requested["captureId"]
+
+        # 3) the tracker under test must have kept the creation context id
+        #    across the temporary URL (v1.0.9 fix semantic)
+        temp_ctx = nav_poll(
+            "return (async (captureId) => { /* navcheck-e-temp-ctx */"
+            " const tabs = await chrome.tabs.query({url: 'https://chatgpt.com/*'});"
+            " const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
+            " const ctx = st && st.captureContexts ? st.captureContexts[tabs[0].id] : null;"
+            " const t = (st.turns||[]).find(x => x.captureId === captureId) || {};"
+            " return {ctxId: ctx ? ctx.id : null, turnCtx: t.captureContextId || null,"
+            "  pageUrl: ctx ? ctx.pageUrl : null}; })(arguments[0])", [nav_capture],
+            want=lambda v: isinstance(v, dict) and v.get("ctxId"))
+        temp_ok = isinstance(temp_ctx, dict) and temp_ctx.get("ctxId") == creation_ctx
+
+        # 4) the real response (unauthenticated rejection) arrives after the
+        #    navigation and must land in the same capture record
+        settled = nav_poll(
+            "return (async (captureId) => { /* navcheck-f-response */"
+            " const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
+            " const t = (st.turns||[]).find(x => x.captureId === captureId) || {};"
+            " return {phase: t.phase || null, errorCode: t.errorCode || null,"
+            "  ctx: t.captureContextId || null}; })(arguments[0])", [nav_capture],
+            want=lambda v: isinstance(v, dict) and v.get("phase") not in (None, "requested"))
+        response_ok = isinstance(settled, dict) and settled.get("phase") == "failed" and \
+            bool(settled.get("errorCode")) and settled.get("ctx") == creation_ctx
+
+        # 5) a follow-up creation request carries the conversation correlation
+        #    in its body, exactly like the request parser reads it; the tracker
+        #    under test then assigns the conversation to the current context
+        kick2 = start_request("navcheck-conv", "navcheck-e2-fetch")
+        identity = nav_poll(requested_poll("navcheck-f-identity"), ["navcheck-conv"],
+                            want=lambda v: isinstance(v, dict) and v.get("captureId")
+                            and v.get("captureId") != nav_capture)
+        if not (isinstance(identity, dict) and identity.get("captureId")
+                and identity.get("ctx") == creation_ctx):
+            raise RuntimeError("correlated request was not associated: %r" % (identity,))
+
+        # 6) navigate to the formal conversation URL: the promoted creation
+        #    must keep the same context id
+        go_page()
+        exe("return (function () { /* navcheck-g-formal-push */"
+            " history.pushState({}, '', '" + formal_path + "');"
+            " return {pushed: true, url: location.pathname}; })()")
+        formal_ctx = nav_poll(
+            "return (async (captureId) => { /* navcheck-h-formal-ctx */"
+            " const tabs = await chrome.tabs.query({url: 'https://chatgpt.com/*'});"
+            " const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
+            " const ctx = st && st.captureContexts ? st.captureContexts[tabs[0].id] : null;"
+            " return {ctxId: ctx ? ctx.id : null, turnCtx: ((st.turns||[])"
+            "  .find(x => x.captureId === captureId) || {}).captureContextId || null}; })(arguments[0])",
+            [identity["captureId"]],
+            want=lambda v: isinstance(v, dict) and v.get("ctxId") == creation_ctx)
+        formal_ok = isinstance(formal_ctx, dict) and formal_ctx.get("ctxId") == creation_ctx
+
+        # 7) the overlay must still show this record as the current one
+        def overlay_text(marker):
+            return exe("return (() => { /* " + marker + " */"
+                       " const root = document.getElementById('chatgpt-route-inspector-root');"
+                       " if (!root || !root.shadowRoot) return {overlay: false, text: ''};"
+                       " const el = root.shadowRoot.querySelector('.probe') || root.shadowRoot.querySelector('.disconnected');"
+                       " return {overlay: true, text: el ? String(el.textContent).slice(0, 500) : ''}; })()")
+        go_page()
+        shown = None
+        for _ in range(20):
+            time.sleep(0.5)
+            shown = overlay_text("navcheck-j-overlay")
+            if isinstance(shown, dict) and "navcheck" in str(shown.get("text", "")).lower():
+                break
+        overlay_ok = isinstance(shown, dict) and shown.get("overlay") is True and \
+            "navcheck" in str(shown.get("text", "")).lower()
+
+        # 8) switching to an unrelated conversation must retire the record
+        go_page()
+        exe("return (function () { /* navcheck-k-unrelated-push */"
+            " history.pushState({}, '', '" + unrelated_path + "');"
+            " return {pushed: true}; })()")
+        unrelated = nav_poll(
+            "return (async (captureId) => { /* navcheck-l-unrelated */"
+            " const tabs = await chrome.tabs.query({url: 'https://chatgpt.com/*'});"
+            " const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
+            " const ctx = st && st.captureContexts ? st.captureContexts[tabs[0].id] : null;"
+            " const currentTurns = (st.turns||[]).filter(x => x.captureContextId === (ctx ? ctx.id : null));"
+            " return {ctxId: ctx ? ctx.id : null,"
+            "  oursCurrent: currentTurns.some(x => x.captureId === captureId)}; })(arguments[0])",
+            [nav_capture],
+            want=lambda v: isinstance(v, dict) and v.get("ctxId") not in (None, creation_ctx))
+        unrelated_ctx = unrelated.get("ctxId") if isinstance(unrelated, dict) else None
+        gone = overlay_text("navcheck-m-overlay-gone")
+        gone_ok = isinstance(gone, dict) and "navcheck" not in str(gone.get("text", "")).lower()
+
+        add("19.new-chat-navigation-association",
+            bool(temp_ok and formal_ok and response_ok and overlay_ok and unrelated_ctx
+                 and unrelated_ctx != creation_ctx and gone_ok
+                 and isinstance(kick, dict) and kick.get("started") is True
+                 and isinstance(kick2, dict) and kick2.get("started") is True),
+            {"captureId": nav_capture, "creationCtx": creation_ctx,
+             "tempCtx": (temp_ctx or {}).get("ctxId"), "tempPageUrl": (temp_ctx or {}).get("pageUrl"),
+             "responseArrived": {"phase": (settled or {}).get("phase"), "errorCode": (settled or {}).get("errorCode"),
+                                 "ctx": (settled or {}).get("ctx")},
+             "correlatedCaptureId": (identity or {}).get("captureId"),
+             "formalCtx": (formal_ctx or {}).get("ctxId"),
+             "overlayShown": (shown or {}).get("text", "")[:120],
+             "unrelatedCtx": unrelated_ctx, "overlayAfterSwitch": (gone or {}).get("text", "")[:120]})
     except Exception as error:
-        add("19.temporary-conversation-association", False, error)
+        add("19.new-chat-navigation-association", False, error)
 
     # Note (v1.0.9): the upstream "extension disconnected -> refresh page"
     # overlay card is covered by upstream tests with a mocked context failure

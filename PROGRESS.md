@@ -189,3 +189,17 @@
 - 止损项：断线提示卡片真机不可复现（FF156 不留孤儿内容脚本，3 轮实测），逻辑层以上游 mock 集成测试为准，详见 BLOCKED 第 12 项。
 - 交付：未签名 XPI `34ca9440…da523`、同次 build.json、源码 ZIP `0cc2412f…3d0`；仓库外复建与 XPI 30/30 逐文件一致（发现并修正源码包必须含 tsconfig.json，否则 esbuild 输出缺 "use strict"）。未上传、未签名、未安装。
 - e2e：仍无 extension-capable Chromium（本轮实测留证），沿用 BLOCKED 第 7 项。
+
+## 复审修正开工回执（2026-09-27，导航验证补齐）
+- 起点：HEAD `4ae924d`（分支 codex/sync-upstream-v1.0.9，工作区干净）；正式 XPI `34ca9440…da523`、源码 ZIP `0cc2412f…3d0` 哈希复核未变。
+- 目标：替换探针第 19 项为真实导航检查（page-hook 生成捕获关联 + history 导航），使旧 tracker 故障包在身份通过后于第 19 项退出 4、正式包退出 0；修正第 11 项管线表述。
+- 方案：在 chatgpt.com 受控页用 history.pushState/replaceState 模拟新建会话导航顺序，观测由受测 page-hook 自行生成（不预填 captureId/captureContextId、不直接发 route:observation）；响应路由断言同一当前记录 + 无关会话隔离。
+- 反例材料：管理者审计目录齐全（故障 XPI `2d9b8b78…`、匹配 build.json 与 dist、tracker-comparison/positive/mutant-probe JSON），当前探针对故障包实测 27/27 退出 0（复现管理者结论）。
+- 风险：受控页上 page-hook 的请求解析需要伪造 chatgpt 后端响应结构；若解析入口在 MAIN world 拦截 fetch，可用受控 Response 注入。方案失败 3 次止损改更简方案，最多 2 种。
+
+## 复审修正结果（2026-09-27，导航验证补齐）
+- 管理者验收（review-fix/REVIEW.md）两项 P2 已修：第 19 项换成真实导航检查；第 11 项表述改为 bridge→background→浮窗、不覆盖 page-hook 捕获解析。
+- 新检查链路：被测 XPI 真实 page-hook 解析合成创建请求并生成 captureId、wrapped history.pushState 驱动 tracker、请求体 correlation 承担会话身份、真实 403/422 拒绝作为到达响应；不预填 ID、不发 route:observation/合成信封。跨源受控响应不可行（page-hook 只查同源，方案 A 一次失败即止损），响应先行到达会破坏创建链（时序已按真实新会话流修正并记录）。
+- 红→绿（同一冻结探针 6690f89c…）：正式包 27/27 退出 0；旧 tracker 故障包身份合法通过后第 19 项失败退出 4。12 次迭代全留证（review-fix/attempt*）。
+- 工具回归 53 项（原 49 保留 + 新增 4 项导航失败传播）；lint 0；对 4ae924d 与 99f982d 业务同源均为空；正式 XPI/源码 ZIP/build.json 哈希未变。
+- 未覆盖仍登记：流式响应内的会话身份路径、真实账号流量；其余 BLOCKED 项不变。本轮理由记录：BLOCKED.md 与 README-FIREFOX.md 无涉及第 11/19 项的表述，故未改（导航验证已真机覆盖，无需新增阻塞项）。

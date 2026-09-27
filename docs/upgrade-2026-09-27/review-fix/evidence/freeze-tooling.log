@@ -1,0 +1,520 @@
+npm notice run chatgpt-route-inspector@1.0.9 test:firefox-tooling
+npm notice run node scripts/run-firefox-tooling-tests.mjs
+interpreter: C:\Users\<user>\.workbuddy\binaries\python\versions\3.13.12\python.exe
+test_missing_record_file (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_missing_record_file) ... ok
+test_record_missing_the_xpi_hash (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_record_missing_the_xpi_hash) ... ok
+test_record_that_is_not_an_object (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_record_that_is_not_an_object) ... ok
+test_record_with_empty_file_hashes (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_record_with_empty_file_hashes) ... ok
+test_record_with_invalid_json (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_record_with_invalid_json) ... ok
+test_record_with_wrongly_typed_fields (test_ff_marionette_early_failure.TestDamagedBuildRecord.test_record_with_wrongly_typed_fields) ... ok
+test_not_a_zip_exits_2_and_writes_a_result (test_ff_marionette_early_failure.TestDamagedPackage.test_not_a_zip_exits_2_and_writes_a_result) ... ok
+test_packaged_manifest_with_invalid_json_exits_2_and_writes_a_result (test_ff_marionette_early_failure.TestDamagedPackage.test_packaged_manifest_with_invalid_json_exits_2_and_writes_a_result) ... ok
+test_zip_without_manifest_json_exits_2_and_writes_a_result (test_ff_marionette_early_failure.TestDamagedPackage.test_zip_without_manifest_json_exits_2_and_writes_a_result) ... ok
+test_bad_command_line_is_rejected_before_anything_else (test_ff_marionette_early_failure.TestOutputPathFailures.test_bad_command_line_is_rejected_before_anything_else) ... ok
+test_existing_directory_as_output_is_refused (test_ff_marionette_early_failure.TestOutputPathFailures.test_existing_directory_as_output_is_refused) ... ok
+test_existing_output_is_refused_and_never_rewritten (test_ff_marionette_early_failure.TestOutputPathFailures.test_existing_output_is_refused_and_never_rewritten) ... D:\LAB\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:179: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-n8p4ofob\\results.json'>
+  before = open(self.out, "rb").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\LAB\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:184: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-n8p4ofob\\results.json'>
+  self.assertEqual(open(self.out, "rb").read(), before)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_no_extra_file_is_created_next_to_the_results (test_ff_marionette_early_failure.TestOutputPathFailures.test_no_extra_file_is_created_next_to_the_results) ... ok
+test_real_run_also_leaves_nothing_else_next_to_the_results (test_ff_marionette_early_failure.TestOutputPathFailures.test_real_run_also_leaves_nothing_else_next_to_the_results) ... ok
+test_unwritable_output_parent_fails_early_without_touching_files (test_ff_marionette_early_failure.TestOutputPathFailures.test_unwritable_output_parent_fails_early_without_touching_files) ... D:\LAB\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:162: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-7u764bcs\\blocker'>
+  before = open(blocker, "rb").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\LAB\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:171: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-7u764bcs\\blocker'>
+  self.assertEqual(open(blocker, "rb").read(), before)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_identity_reports_instead_of_raising (test_ff_marionette_early_failure.TestVerifyIdentityNeverRaises.test_identity_reports_instead_of_raising) ... FAIL 0b.xpi-contents | package could not be parsed (BadZipFile: File is not a zip file)
+FAIL 0d.manifest-sha256 | package could not be parsed (BadZipFile: File is not a zip file)
+FAIL 0a.xpi-sha256 | actual=a3989126344744ef800dbc88bf7e744853f3f2eac75c9ab3301f4e845ef22078 expected=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ok
+test_matching_profile_still_continues (test_ff_marionette_gate.TestUntrustedConnectionHarness.test_matching_profile_still_continues) ... PASS 0f.build-record | xpi=26447342ca04eeb8 files=6
+PASS 0a.xpi-sha256 | actual=26447342ca04eeb86ece37200c2826b079b0748976c006160b5be03d4306c231 expected=26447342ca04eeb86ece37200c2826b079b0748976c006160b5be03d4306c231
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=50653 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-f78itjud
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-f78itjud pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-f78itjud inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 19.new-chat-navigation-association | {'captureId': 'synthetic-navcheck-capture', 'creationCtx': 'ctx-1', 'tempCtx': 'ctx-1', 'tempPageUrl': 'https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_403', 'ctx': 'ctx-1'}, 'correlatedCaptureId': 'synthetic-navche
+ok
+test_mismatched_profile_blocks_every_later_command (test_ff_marionette_gate.TestUntrustedConnectionHarness.test_mismatched_profile_blocks_every_later_command) ... 27 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-vmrgf664\results.json
+PASS 0f.build-record | xpi=26447342ca04eeb8 files=6
+PASS 0a.xpi-sha256 | actual=26447342ca04eeb86ece37200c2826b079b0748976c006160b5be03d4306c231 expected=26447342ca04eeb86ece37200c2826b079b0748976c006160b5be03d4306c231
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=50654 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qzkyf612
+PASS 0.session | fake-session
+FAIL 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-NOT-THIS-RUN pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qzkyf612 inside_temp=True
+FAIL 0f.untrusted-connection | connection identity not verified; no Addon, storage, navigation or session command was sent, and the session was left untouched
+ok
+test_missing_profile_blocks_every_later_command (test_ff_marionette_gate.TestUntrustedConnectionHarness.test_missing_profile_blocks_every_later_command) ... 6 passed / 2 failed / 20 missing -> exit 4 (aborted for safety (connected browser is not the profile this run created); failed checks: 0e.session-profile, 0f.untrusted-connection)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-_8nxsyab\results.json
+PASS 0f.build-record | xpi=26447342ca04eeb8 files=6
+PASS 0a.xpi-sha256 | actual=26447342ca04eeb86ece37200c2826b079b0748976c006160b5be03d4306c231 expected=26447342ca04eeb86ece37200c2826b079b0748976c006160b5be03d4306c231
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=50655 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-vziiiksn
+PASS 0.session | fake-session
+FAIL 0e.session-profile | browser says moz:profile= pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-vziiiksn inside_temp=True
+FAIL 0f.untrusted-connection | connection identity not verified; no Addon, storage, navigation or session command was sent, and the session was left untouched
+ok
+test_profile_check_that_raises_blocks_every_later_command (test_ff_marionette_gate.TestUntrustedConnectionHarness.test_profile_check_that_raises_blocks_every_later_command) ... 6 passed / 2 failed / 20 missing -> exit 4 (aborted for safety (connected browser is not the profile this run created); failed checks: 0e.session-profile, 0f.untrusted-connection)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-e42lyxj7\results.json
+PASS 0f.build-record | xpi=26447342ca04eeb8 files=6
+PASS 0a.xpi-sha256 | actual=26447342ca04eeb86ece37200c2826b079b0748976c006160b5be03d4306c231 expected=26447342ca04eeb86ece37200c2826b079b0748976c006160b5be03d4306c231
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=50656 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-ka4fvvj8
+PASS 0.session | fake-session
+FAIL 0e.session-profile | profile check raised (TypeError: _path_normpath: path should be string, bytes or os.PathLike, not int)
+FAIL 0f.untrusted-connection | connection identity not verified; no Addon, storage, navigation or session command was sent, and the session was left untouched
+ok
+test_real_probe_process_sends_nothing_state_changing_to_an_untrusted_peer (test_ff_marionette_gate.TestUntrustedPeerRealProcess.test_real_probe_process_sends_nothing_state_changing_to_an_untrusted_peer) ... ok
+test_every_non_green_combination_is_non_zero (test_ff_marionette_identity.TestExitCodeAggregation.test_every_non_green_combination_is_non_zero) ... ok
+test_identity_failure_wins_over_everything (test_ff_marionette_identity.TestExitCodeAggregation.test_identity_failure_wins_over_everything) ... ok
+test_runtime_anomaly_is_non_zero (test_ff_marionette_identity.TestExitCodeAggregation.test_runtime_anomaly_is_non_zero) ... ok
+test_single_failed_check_is_non_zero (test_ff_marionette_identity.TestExitCodeAggregation.test_single_failed_check_is_non_zero) ... ok
+test_unexecuted_required_check_is_non_zero (test_ff_marionette_identity.TestExitCodeAggregation.test_unexecuted_required_check_is_non_zero) ... ok
+test_zero_requires_complete_and_green (test_ff_marionette_identity.TestExitCodeAggregation.test_zero_requires_complete_and_green) ... ok
+test_default_out_is_dated_and_never_the_historical_file (test_ff_marionette_identity.TestOutputProtection.test_default_out_is_dated_and_never_the_historical_file) ... ok
+test_default_out_never_collides (test_ff_marionette_identity.TestOutputProtection.test_default_out_never_collides) ... ok
+test_existing_out_is_refused_and_left_untouched (test_ff_marionette_identity.TestOutputProtection.test_existing_out_is_refused_and_left_untouched) ... refusing to overwrite existing results file: C:\Users\<user>\AppData\Local\Temp\ff-probe-test-32yzquhf\existing.json
+pass --force to overwrite, or choose another --out
+ok
+test_force_allows_overwrite (test_ff_marionette_identity.TestOutputProtection.test_force_allows_overwrite) ... 6 passed / 2 failed / 20 missing -> exit 4 (aborted for safety (connected browser is not the profile this run created); failed checks: 0e.session-profile, 0f.untrusted-connection)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-99904o61\results.json
+FAIL 0a.xpi-sha256 | XPI not found: C:\Users\<user>\AppData\Local\Temp\ff-probe-test-g5cuqfrw\does-not-exist.xpi
+FAIL 0b.xpi-contents | XPI not found
+FAIL 0d.manifest-sha256 | XPI not found
+ok
+test_historical_evidence_file_is_never_the_default_target (test_ff_marionette_identity.TestOutputProtection.test_historical_evidence_file_is_never_the_default_target) ... ok
+test_extra_file_inside_xpi_is_rejected (test_ff_marionette_identity.TestTamperedPackageRejected.test_extra_file_inside_xpi_is_rejected) ... 0 passed / 3 failed / 22 missing -> exit 2 (artifact identity rejected before browser interaction)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-test-g5cuqfrw\existing.json
+FAIL 0a.xpi-sha256 | actual=16b283304fc35b35c75819db397ef7944fa65cfe8a4d1c4e03f3d9e9398c988d expected=26447342ca04eeb86ece37200c2826b079b0748976c006160b5be03d4306c231
+FAIL 0b.xpi-contents | not in dist: ui/announcement/evil.js
+FAIL 0c.dist-matches-record | record xpiPath=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-cp9iy5rw\good.xpi but probing C:\Users\<user>\AppData\Local\Temp\ff-probe-test-cp9iy5rw\extra.xpi
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+ok
+test_file_missing_from_xpi_is_rejected (test_ff_marionette_identity.TestTamperedPackageRejected.test_file_missing_from_xpi_is_rejected) ... FAIL 0a.xpi-sha256 | actual=1ce1903b5253f9cfab4b152e0ee7e702d276f2632a5cb9ea0a68440681c9991b expected=26447342ca04eeb86ece37200c2826b079b0748976c006160b5be03d4306c231
+FAIL 0b.xpi-contents | missing from XPI: ui/announcement/index.html
+FAIL 0c.dist-matches-record | record xpiPath=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-x2o5bhgd\good.xpi but probing C:\Users\<user>\AppData\Local\Temp\ff-probe-test-x2o5bhgd\missing.xpi; recorded file absent from XPI: ui/announcement/index.html
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+ok
+test_missing_expectation_is_rejected (test_ff_marionette_identity.TestTamperedPackageRejected.test_missing_expectation_is_rejected) ... FAIL 0a.xpi-sha256 | no expected XPI sha256 supplied (pass --expect-build-record or --expect-xpi-sha256)
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+ok
+test_record_describing_another_dist_is_rejected (test_ff_marionette_identity.TestTamperedPackageRejected.test_record_describing_another_dist_is_rejected) ... FAIL 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=7eb02785a21960b2e85aa2b1a58c8c081a9c13ac316456f9a58c6b660adeb679
+PASS 0b.xpi-contents | 6 files identical to XPI
+FAIL 0c.dist-matches-record | record xpiPath=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-gsavozgm\other.xpi but probing C:\Users\<user>\AppData\Local\Temp\ff-probe-test-gsavozgm\good.xpi; record distDir=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-gsavozgm\other-dist but checking C:\Users\<user>\
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+ok
+test_same_manifest_different_js_is_rejected (test_ff_marionette_identity.TestTamperedPackageRejected.test_same_manifest_different_js_is_rejected) ... FAIL 0a.xpi-sha256 | actual=baffff6a83efe09fb7f6f8832657ec6ce9223818c58ddfb511fd1788f1385cc0 expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+FAIL 0b.xpi-contents | content differs: content/page-hook.js
+FAIL 0c.dist-matches-record | record xpiPath=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-ydfgy8mc\good.xpi but probing C:\Users\<user>\AppData\Local\Temp\ff-probe-test-ydfgy8mc\tampered.xpi; XPI content differs from record: content/page-hook.js
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+ok
+test_tampered_package_is_rejected_before_any_browser_interaction (test_ff_marionette_identity.TestTamperedPackageRejected.test_tampered_package_is_rejected_before_any_browser_interaction) ... PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+FAIL 0a.xpi-sha256 | actual=baffff6a83efe09fb7f6f8832657ec6ce9223818c58ddfb511fd1788f1385cc0 expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+FAIL 0b.xpi-contents | content differs: content/page-hook.js
+FAIL 0c.dist-matches-record | record xpiPath=C:\Users\<user>\AppData\Local\Temp\ff-probe-test-tmidj_lm\good.xpi but probing C:\Users\<user>\AppData\Local\Temp\ff-probe-test-tmidj_lm\tampered-before-connect.xpi; XPI content differs from record: content/page-hook.js
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+ok
+test_matching_build_passes_every_identity_check (test_ff_marionette_identity.TestTruePositive.test_matching_build_passes_every_identity_check) ... 2 passed / 3 failed / 22 missing -> exit 2 (artifact identity rejected before browser interaction)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-test-tmidj_lm\out.json
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+ok
+test_green_run_includes_the_navigation_check (test_ff_marionette_nav_check.TestNavCheckPropagation.test_green_run_includes_the_navigation_check) ... PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61756 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tb8q3kpp
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tb8q3kpp pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tb8q3kpp inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 19.new-chat-navigation-association | {'captureId': 'synthetic-navcheck-capture', 'creationCtx': 'ctx-1', 'tempCtx': 'ctx-1', 'tempPageUrl': 'https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_403', 'ctx': 'ctx-1'}, 'correlatedCaptureId': 'synthetic-navche
+ok
+test_lost_promotion_at_the_formal_url_fails_into_results (test_ff_marionette_nav_check.TestNavCheckPropagation.test_lost_promotion_at_the_formal_url_fails_into_results) ... 27 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-navcheck-3n89rbq1\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61757 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-2qxqmltk
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-2qxqmltk pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-2qxqmltk inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+FAIL 19.new-chat-navigation-association | {'captureId': 'synthetic-navcheck-capture', 'creationCtx': 'ctx-1', 'tempCtx': 'ctx-1', 'tempPageUrl': 'https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_403', 'ctx': 'ctx-1'}, 'correlatedCaptureId': 'synthetic-navche
+ok
+test_temporary_navigation_context_change_fails_into_results (test_ff_marionette_nav_check.TestNavCheckPropagation.test_temporary_navigation_context_change_fails_into_results) ... 26 passed / 1 failed / 0 missing -> exit 4 (checks failed: 19.new-chat-navigation-association)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-navcheck-66ita5o_\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61758 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-btgpo6k7
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-btgpo6k7 pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-btgpo6k7 inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+FAIL 19.new-chat-navigation-association | {'captureId': 'synthetic-navcheck-capture', 'creationCtx': 'ctx-1', 'tempCtx': 'ctx-CHANGED', 'tempPageUrl': 'changed', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_403', 'ctx': 'ctx-1'}, 'correlatedCaptureId': 'synthetic-navcheck-capture-2', 'formalCtx': 'ctx-1', 'o
+ok
+test_unrelated_conversation_must_retire_the_record (test_ff_marionette_nav_check.TestNavCheckPropagation.test_unrelated_conversation_must_retire_the_record) ... 26 passed / 1 failed / 0 missing -> exit 4 (checks failed: 19.new-chat-navigation-association)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-navcheck-rsovo41u\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61759 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gqzne6xt
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gqzne6xt pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gqzne6xt inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+FAIL 19.new-chat-navigation-association | {'captureId': 'synthetic-navcheck-capture', 'creationCtx': 'ctx-1', 'tempCtx': 'ctx-1', 'tempPageUrl': 'https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_403', 'ctx': 'ctx-1'}, 'correlatedCaptureId': 'synthetic-navche
+ok
+test_check_level_exception_is_recorded_and_does_not_abort_the_run (test_ff_marionette_run.TestFailingRuns.test_check_level_exception_is_recorded_and_does_not_abort_the_run) ... 26 passed / 1 failed / 0 missing -> exit 4 (checks failed: 19.new-chat-navigation-association)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-navcheck-9vhi4_ro\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61760 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-2rq6_jff
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-2rq6_jff pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-2rq6_jff inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+FAIL 9.page-hook-MAIN-world | WebDriver:NewWindow -> synthetic protocol failure
+FAIL 10.bridge-overlay-ISOLATED | WebDriver:NewWindow -> synthetic protocol failure
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+FAIL 19.new-chat-navigation-association | chatgpt.com tab handle not found
+ok
+test_failed_check_exits_nonzero_and_names_the_check (test_ff_marionette_run.TestFailingRuns.test_failed_check_exits_nonzero_and_names_the_check) ... 23 passed / 3 failed / 1 missing -> exit 5 (required checks did not run: 11.overlay-suspect-hint)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-8b8xiisq\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61761 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-jk9psl50
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-jk9psl50 pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-jk9psl50 inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+FAIL 6.popup-renders |    
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 19.new-chat-navigation-association | {'captureId': 'synthetic-navcheck-capture', 'creationCtx': 'ctx-1', 'tempCtx': 'ctx-1', 'tempPageUrl': 'https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_403', 'ctx': 'ctx-1'}, 'correlatedCaptureId': 'synthetic-navche
+ok
+test_install_failure_leaves_an_incomplete_run (test_ff_marionette_run.TestFailingRuns.test_install_failure_leaves_an_incomplete_run) ... 26 passed / 1 failed / 0 missing -> exit 4 (checks failed: 6.popup-renders)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-dxhxnru0\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61762 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-7q9h6g3w
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-7q9h6g3w pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-7q9h6g3w inside_temp=True
+FAIL 1.install-no-manifest-error | Addon:Install -> synthetic install failure
+FAIL 1b.addon-registered | uuid not found; browser checks aborted
+ok
+test_missing_announcement_page_exits_nonzero (test_ff_marionette_run.TestFailingRuns.test_missing_announcement_page_exits_nonzero) ... 7 passed / 2 failed / 19 missing -> exit 5 (required checks did not run: 1b.addon-uuid, 2.ext-namespaces, 3.ext-chrome.storage-promise, 4.ext-get-state-roundtrip, 5.ext-tabs-i18n-getURL, 6.popup-renders, 7.synthetic-observation-pipeline, 8.dashboard-shows-turn, 9.page-hook-MAIN-world, 10.bridge-overlay-ISOLATED, 11.overlay-suspect-hint, 12.capture-context-registered, 13.auto-reasoning-verdict, 14.announcement-page, 15.open-announcement-target, 16.suspected-downgrade-verdict, 17.work-unverifiable-verdict, 18.failed-phase-not-completed, 19.new-chat-navigation-association)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-tyskl2yw\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61763 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-8p5y5hxd
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-8p5y5hxd pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-8p5y5hxd inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+FAIL 14.announcement-page | {'title': '页面加载出错', 'text': '', 'script': False, 'href': None}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 19.new-chat-navigation-association | {'captureId': 'synthetic-navcheck-capture', 'creationCtx': 'ctx-1', 'tempCtx': 'ctx-1', 'tempPageUrl': 'https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_403', 'ctx': 'ctx-1'}, 'correlatedCaptureId': 'synthetic-navche
+ok
+test_missing_extension_uuid_leaves_an_incomplete_run (test_ff_marionette_run.TestFailingRuns.test_missing_extension_uuid_leaves_an_incomplete_run) ... 26 passed / 1 failed / 0 missing -> exit 4 (checks failed: 14.announcement-page)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-_3ezug1d\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61764 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-sf7hnib9
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-sf7hnib9 pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-sf7hnib9 inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+FAIL 1b.addon-uuid | handles=1 uuid=None last_url=about:blank
+FAIL 1b.addon-registered | uuid not found; browser checks aborted
+ok
+test_browser_identity_is_recorded_from_the_session_not_the_environment (test_ff_marionette_run.TestGreenRun.test_browser_identity_is_recorded_from_the_session_not_the_environment) ... 8 passed / 2 failed / 18 missing -> exit 5 (required checks did not run: 2.ext-namespaces, 3.ext-chrome.storage-promise, 4.ext-get-state-roundtrip, 5.ext-tabs-i18n-getURL, 6.popup-renders, 7.synthetic-observation-pipeline, 8.dashboard-shows-turn, 9.page-hook-MAIN-world, 10.bridge-overlay-ISOLATED, 11.overlay-suspect-hint, 12.capture-context-registered, 13.auto-reasoning-verdict, 14.announcement-page, 15.open-announcement-target, 16.suspected-downgrade-verdict, 17.work-unverifiable-verdict, 18.failed-phase-not-completed, 19.new-chat-navigation-association)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-byvzsn8o\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61765 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-4uumkp4i
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-4uumkp4i pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-4uumkp4i inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 19.new-chat-navigation-association | {'captureId': 'synthetic-navcheck-capture', 'creationCtx': 'ctx-1', 'tempCtx': 'ctx-1', 'tempPageUrl': 'https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_403', 'ctx': 'ctx-1'}, 'correlatedCaptureId': 'synthetic-navche
+ok
+test_complete_green_run_exits_zero (test_ff_marionette_run.TestGreenRun.test_complete_green_run_exits_zero) ... 27 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-xifz8umq\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61766 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-2q7ysqwf
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-2q7ysqwf pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-2q7ysqwf inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 19.new-chat-navigation-association | {'captureId': 'synthetic-navcheck-capture', 'creationCtx': 'ctx-1', 'tempCtx': 'ctx-1', 'tempPageUrl': 'https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_403', 'ctx': 'ctx-1'}, 'correlatedCaptureId': 'synthetic-navche
+ok
+test_omitting_out_creates_a_new_file_and_never_touches_history (test_ff_marionette_run.TestOutputDefaults.test_omitting_out_creates_a_new_file_and_never_touches_history) ... 27 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-1mf3e4u5\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61767 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-w0rwjk0f
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-w0rwjk0f pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-w0rwjk0f inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 19.new-chat-navigation-association | {'captureId': 'synthetic-navcheck-capture', 'creationCtx': 'ctx-1', 'tempCtx': 'ctx-1', 'tempPageUrl': 'https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_403', 'ctx': 'ctx-1'}, 'correlatedCaptureId': 'synthetic-navche
+ok
+test_connection_refused_is_non_zero_and_saves_evidence (test_ff_marionette_run.TestRuntimeAnomalyEvidence.test_connection_refused_is_non_zero_and_saves_evidence) ... 27 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-noyr5ix6\ff-probe-results-regression-20260927-181815.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61768 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-zly5m61d
+FATAL [browser] ConnectionRefusedError: synthetic: nothing is listening
+ok
+test_launch_timeout_is_non_zero_and_saves_evidence (test_ff_marionette_run.TestRuntimeAnomalyEvidence.test_launch_timeout_is_non_zero_and_saves_evidence) ... 5 passed / 0 failed / 22 missing -> exit 3 (runtime anomaly: synthetic: nothing is listening)
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-b54xj33l\results.json
+PASS 0f.build-record | xpi=bb14713927f29ecd files=6
+PASS 0a.xpi-sha256 | actual=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d expected=bb14713927f29ecd5577749c1d4675a2dad029db01ecd394395185002edb3d5d
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=61769 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-g8d_r9t5
+FATAL [browser] TimeoutError: Marionette port never opened (synthetic)
+ok
+
+----------------------------------------------------------------------
+Ran 53 tests in 13.924s
+
+OK
+5 passed / 0 failed / 22 missing -> exit 3 (runtime anomaly: Marionette port never opened (synthetic))
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-od6fpc00\results.json
+tooling exit=0

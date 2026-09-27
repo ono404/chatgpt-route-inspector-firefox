@@ -32,10 +32,11 @@ TypeScript + esbuild（background=esm，content/UI=iife），vitest，零新增�
 
 ## 当前状态和下一步
 
-- 已闭环：v1.0.5→v1.0.9 同步（merge `99f982d`）、门禁全绿（327 业务测试 + 49 项工具回归）、FF156.0.1 真机 27/27（退出码 0，含 suspect 浮窗提示、公告 HTTPS 目标、新判定与 local-chatgpt 关联检查）、产物身份核对、连接信任前置门禁、损坏输入留证、反向验证（退出码 2）+ 输出保护（退出码 6）。
+- 已闭环：v1.0.5→v1.0.9 同步（merge `99f982d`）、门禁全绿（327 业务测试 + 49 项工具回归）、FF156.0.1 真机 27/27（退出码 0，含 suspect 浮窗提示、公告 HTTPS 目标、新判定与 local-chatgpt 真实导航关联检查——经真实 page-hook/history 导航/tracker/浮窗，合成输入详见 docs/upgrade-2026-09-27/review-fix/REVIEW-FIX-REPORT.md）、产物身份核对、连接信任前置门禁、损坏输入留证、反向验证（退出码 2）+ 输出保护（退出码 6）。
 - 用户真实导出已复核，捕获与部分路由判定有证据；流式完成仍异常，不能称完整通过。真实更新事件、FF128、Chromium E2E 与额度专项验证仍待补，详见 BLOCKED.md。
 - 已知非缺陷抖动：`chatgpt.com` 慢时探针报 `9/10` 超时并退出 5（不重试、不静默通过）；“连接不可信”只能靠脚本化 peer 复现。见 BLOCKED.md 第 10/11 项。
 - 已知项：34 条 live `stream_parse_failed` 根因未确认（v1.0.9 未改 page-hook/sse-decoder）；按用户决定暂不改业务代码。
 - v1.0.9 断线提示卡片的真机触发在 FF156 不可复现（Gecko 不留孤儿内容脚本），逻辑层以上游 mock 集成测试为准，见 BLOCKED 第 12 项。
+- 探针第 11 项只覆盖 bridge→background→浮窗渲染；page-hook 捕获解析的导航链路由第 19 项真实导航检查覆盖（合成输入 + 真实未认证拒绝），流式响应身份路径仍未覆盖。
 - AMO 源码包、签名与安装状态统一见 README-FIREFOX.md；本地可复现不等于已签名或日常安装完成。
 - 推私人仓库前确认：`dist/` `coverage/` `node_modules/` `release/` 均被 `.gitignore` 排除；用户真实导出附件在 profile 目录内，永不进仓库。

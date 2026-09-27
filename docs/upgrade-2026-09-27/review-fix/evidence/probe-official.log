@@ -1,0 +1,64 @@
+PASS 0f.build-record | xpi=34ca9440d7ed25b7 files=30
+PASS 0a.xpi-sha256 | actual=34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523 expected=34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523
+PASS 0b.xpi-contents | 30 files identical to XPI
+PASS 0c.dist-matches-record | 30 recorded files agree
+PASS 0d.manifest-sha256 | sha256=b8957ae63a39dc392d693081e31e80e201eee4a093b168f78a3eacdd075e07a9 version=1.0.9 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=b8957ae63a39dc392d693081e31e80e201eee4a093b168f78a3eacdd075e07a9)
+launched firefox pid=40592 port=52540 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-txqvl6hl
+PASS 0.session | c63c48c1-c6b6-43e4-8d18-8f332736a56e
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-txqvl6hl pid=40592 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-txqvl6hl inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=9d642ba7-726b-4d5b-a25a-859874758b9a last_url=moz-extension://9d642ba7-726b-4d5b-a25a-859874758b9a/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://9d642ba7-726b-4d5b-a25a-859874758b9a/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://9d642ba7-726b-4d5b-a25a-859874758b9a/ui/popup/index.html', 'version': '1.0.9'}
+PASS 6.popup-renders | 
+  
+    
+      
+      
+        
+          Route Inspector
+          Created by @liuqi
+        
+        服务器报告的路由遥测
+      
+    
+    
+      
+        EN
+        中
+      
+      实时监听
+    
+  
+  
+    
+      
+
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.8.0'}
+PASS 8.dashboard-shows-turn | 
+
+  
+    Route Inspectorv1.0.9请求模型与真实响应路由GitHub
+    EN中仅保存在本机
+  
+  路由诊断台导出 JSON导出报告清空记录
+  全部记录1实时请求1会话重载0异常1
+  
+    捕获记录全部模式实时请求会话重载全部结论正常自动推理疑似降级无法判断错配冲突未比较时间模式请求模型标签响应路由判定响应来源09/27 18:10:43实时请求GPT 5.6 Pro未解析GPT 5.5 mini路由错配resolved_model_slug当前筛选条件下没有记录。
+  证据字段路由错配捕获模式实时请求捕获状态已
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 5, 'turnTabId': 5, 'turnCtx': '08eabd49-a3b5-4953-94eb-a61eaca26652'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': '08eabd49-a3b5-4953-94eb-a61eaca26652', 'documentId': '8a1bfc9c-e5a0-413d-ad70-771726c123eb', 'documentStartedAt': 1790503847485, 'visitStartedAt': 1790503847485, 'revision': 0, 'reloadEligible': False, 'pageUrl': 'https://chatgpt.com/'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.8.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '\n  \n    \n      Route Inspector1.0.9 · 版本公告\n      EN中\n    \n    \n      版本公告\n      \n        \n          根据此前投票反馈，响应结果中存在 resolved_model_slug 字段的用户约 80% 未降级；没有该字段的用户约 80% 发生了降级。\n          故针对响应结果中 resolved_model_slug 字段缺失的情
+PASS 15.open-announcement-target | {'openedTab': {'id': 7, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector · 1.0.9 版本公告', 'text': 'Route Inspector1.0.9 · 版本公告\n      EN中\n    \n    \n      版本公告\n      \n        \n          根据此前投票反馈，响应结果中存在 resolv
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'unknown'}
+DIAG navcheck temp_ok=True formal_ok=True response_ok=True overlay_ok=True unrelated_ctx='337caa06-f48d-4a5e-96ed-3d856b8b016c' gone_ok=True formal_ctx={'ctxId': '08eabd49-a3b5-4953-94eb-a61eaca26652', 'turnCtx': '08eabd49-a3b5-4953-94eb-a61eaca26652'} shown={'overlay': True, 'text': '\n      \n        Route InspectorCreated by @liuqi\n        未取得实际路由\n      \n      \n        实时请求会话重载\n        发送新消息，捕获请求与本轮响应。\n        请求模型gpt-5-6-pro-navcheck→响应路由未取得\n        \n          模式实时请求\n          响应来源未捕获响应模型字段\n          模型标签—\n          标签字段未捕获模型标签字段\n          捕获来源page_fetch\n        \n        PoW 难度06f02a（454698）\n        诊断台隐藏浮窗\n      \n    '} gone={'overlay': False, 'text': ''}
+PASS 19.new-chat-navigation-association | {'captureId': '485c0d17-d1b2-489e-b60f-6f17f93cd8af', 'creationCtx': '08eabd49-a3b5-4953-94eb-a61eaca26652', 'tempCtx': '08eabd49-a3b5-4953-94eb-a61eaca26652', 'tempPageUrl': 'https://chatgpt.com/', 'responseArrived': {'phase': 'failed', 'errorCode': 'http_422', 'ctx': '08eabd49-
+27 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved docs/upgrade-2026-09-27/review-fix/positive-official-v1.0.9.json
