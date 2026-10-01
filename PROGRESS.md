@@ -1,5 +1,13 @@
 # PROGRESS — Firefox 移植（自用）
 
+## 升级开工回执（2026-10-01，v1.0.9 → v1.1.0）
+- 起点：`HEAD=2470d15`（`codex/sync-upstream-v1.0.9`，隔离 worktree `D:\LAB\sync-v109-isolated`）；四文档 + 校验器改动、补强测试与证据目录未提交 → 已作保全提交 **`73696a7`**（19 文件，精确路径，未用 `git add .`），随后建分支 `codex/sync-upstream-v1.1.0`，工作树干净。
+- 目标：`dd5ea3366cdb3ed85025fc7a41f6e89ff1ee7552` == tag `v1.1.0`（上游仅 1 提交，40 文件 +1431/-45；schema `1.8.0→1.9.0`，新增图片/研究任务字段与 verdict）。
+- 升级前备份：`D:\LAB\sync-v110-backup-2026-10-01\`（preserve 19 + dist 94 + release 3 = **117 文件**，附 `HASHES.sha256`）。不动原目录、旧 release、历史证据。
+- 升级前基线（本机 Node v24.16.0 / npm 12.0.1）：typecheck 0 / lint 0 / vitest **35 文件 336 passed**（覆盖率 97.29/91.81/100）/ `test:firefox-tooling` **56 项 0**。
+- 旧交付物哈希复核未变：XPI `34ca9440…da523`、源码 ZIP `0cc2412f…3d0`、build.json `15debe2a…9dab`。
+- 本轮顺序：`merge --no-ff` → 最小适配（探针/夹具/迁移测试 schema 1.9.0）→ 完整门禁 → 真机正反向 → 源码包仓库外复建 → 提交。证据目录 `docs/upgrade-2026-10-01/`。
+
 ## 现役交接（2026-10-01，准备同步 v1.1.0）
 
 | 事实面 | 状态 | 当前结论 |
