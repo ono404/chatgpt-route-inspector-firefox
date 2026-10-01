@@ -1,0 +1,97 @@
+npm notice run chatgpt-route-inspector@1.0.9 npx
+npm notice run vitest run tests/integration/firefox-dist-verifier.test.ts
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/LAB/sync-v109-isolated[39m
+
+ [31m❯[39m tests/integration/firefox-dist-verifier.test.ts [2m([22m[2m9 tests[22m[2m | [22m[31m7 failed[39m[2m)[22m[33m 3319[2mms[22m[39m
+   [33m[2m✓[22m[39m accepts a legal fixture with exit code 0 [33m 350[2mms[22m[39m
+[31m   [31m×[31m rejects: firefox version is wrong[39m[33m 401[2mms[22m[39m
+[31m     → expected non-zero exit, output was:
+note  paths: extension=30 firefox=30 identical=true
+note  src UI pages: 5 checked against both targets
+note  boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only
+note  js byte-identical: 8 files checked
+verify-firefox-dist: OK
+: expected +0 not to be +0 // Object.is equality[39m
+[31m   [31m×[31m rejects: permissions gain an extra entry[39m[33m 399[2mms[22m[39m
+[31m     → expected non-zero exit, output was:
+note  paths: extension=30 firefox=30 identical=true
+note  src UI pages: 5 checked against both targets
+note  boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only
+note  js byte-identical: 8 files checked
+verify-firefox-dist: OK
+: expected +0 not to be +0 // Object.is equality[39m
+[31m   [31m×[31m rejects: host_permissions gain an extra entry[39m[33m 395[2mms[22m[39m
+[31m     → expected non-zero exit, output was:
+note  paths: extension=30 firefox=30 identical=true
+note  src UI pages: 5 checked against both targets
+note  boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only
+note  js byte-identical: 8 files checked
+verify-firefox-dist: OK
+: expected +0 not to be +0 // Object.is equality[39m
+[31m   [31m×[31m rejects: MAIN world content script is downgraded to ISOLATED[39m[33m 386[2mms[22m[39m
+[31m     → expected non-zero exit, output was:
+note  paths: extension=30 firefox=30 identical=true
+note  src UI pages: 5 checked against both targets
+note  boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only
+note  js byte-identical: 8 files checked
+verify-firefox-dist: OK
+: expected +0 not to be +0 // Object.is equality[39m
+[31m   [31m×[31m rejects: background.scripts is emptied[39m[33m 392[2mms[22m[39m
+[31m     → expected non-zero exit, output was:
+note  paths: extension=30 firefox=30 identical=true
+note  src UI pages: 5 checked against both targets
+note  boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only
+note  js byte-identical: 8 files checked
+verify-firefox-dist: OK
+: expected +0 not to be +0 // Object.is equality[39m
+[31m   [31m×[31m rejects: background.type is wrong[39m[33m 395[2mms[22m[39m
+[31m     → expected non-zero exit, output was:
+note  paths: extension=30 firefox=30 identical=true
+note  src UI pages: 5 checked against both targets
+note  boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only
+note  js byte-identical: 8 files checked
+verify-firefox-dist: OK
+: expected +0 not to be +0 // Object.is equality[39m
+[31m   [31m×[31m rejects: data_collection_permissions.required becomes ["none","locationInfo"][39m[33m 387[2mms[22m[39m
+[31m     → expected non-zero exit, output was:
+note  paths: extension=30 firefox=30 identical=true
+note  src UI pages: 5 checked against both targets
+note  boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only
+note  js byte-identical: 8 files checked
+verify-firefox-dist: OK
+: expected +0 not to be +0 // Object.is equality[39m
+   [32m✓[39m keeps the legal fixture passing after the mutation rounds (restore check)[32m 106[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 7 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tests/integration/firefox-dist-verifier.test.ts[2m > [22mrejects: firefox version is wrong
+[41m[1m FAIL [22m[49m tests/integration/firefox-dist-verifier.test.ts[2m > [22mrejects: permissions gain an extra entry
+[41m[1m FAIL [22m[49m tests/integration/firefox-dist-verifier.test.ts[2m > [22mrejects: host_permissions gain an extra entry
+[41m[1m FAIL [22m[49m tests/integration/firefox-dist-verifier.test.ts[2m > [22mrejects: MAIN world content script is downgraded to ISOLATED
+[41m[1m FAIL [22m[49m tests/integration/firefox-dist-verifier.test.ts[2m > [22mrejects: background.scripts is emptied
+[41m[1m FAIL [22m[49m tests/integration/firefox-dist-verifier.test.ts[2m > [22mrejects: background.type is wrong
+[41m[1m FAIL [22m[49m tests/integration/firefox-dist-verifier.test.ts[2m > [22mrejects: data_collection_permissions.required becomes ["none","locationInfo"]
+[31m[1mAssertionError[22m: expected non-zero exit, output was:
+note  paths: extension=30 firefox=30 identical=true
+note  src UI pages: 5 checked against both targets
+note  boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only
+note  js byte-identical: 8 files checked
+verify-firefox-dist: OK
+: expected +0 not to be +0 // Object.is equality[39m
+[36m [2m❯[22m tests/integration/firefox-dist-verifier.test.ts:[2m119:86[22m[39m
+    [90m117| [39m    [35mconst[39m firefoxDir [33m=[39m [35mawait[39m [34mmutatedFirefox[39m(mutation[33m.[39mapply)[33m;[39m
+    [90m118| [39m    [35mconst[39m result [33m=[39m [35mawait[39m [34mrunVerifier[39m(pristineExtension[33m,[39m firefoxDir)[33m;[39m
+    [90m119| [39m    expect(result.code, `expected non-zero exit, output was:\n${result…
+    [90m   | [39m                                                                                     [31m^[39m
+    [90m120| [39m    // The failure must come from the manifest comparison, not from a …
+    [90m121| [39m    [90m// file or an unrelated crash.[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m7 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (9)[39m
+[2m   Start at [22m 22:19:01
+[2m   Duration [22m 3.63s[2m (transform 29ms, setup 0ms, collect 29ms, tests 3.32s, environment 0ms, prepare 86ms)[22m
+

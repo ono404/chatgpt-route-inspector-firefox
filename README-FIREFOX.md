@@ -1,8 +1,10 @@
 # Firefox 版（自用本地构建）
 
+> 2026-10-01 状态：本页下方是 **v1.0.9 本地交付**的用法和历史验收，不是 v1.1.0 安装指南。上游已发布 [v1.1.0](https://github.com/Liu-Bot24/chatgpt-route-inspector/releases/tag/v1.1.0)；本地尚未同步、构建、签名或完成日常覆盖安装。升级前现场及未提交改动见 [PROGRESS](PROGRESS.md)。
+
 与 Chromium 共用同一份源码，仅构建产物不同。业务代码零改动。
 
-当前同步基线：上游 `Liu-Bot24/chatgpt-route-inspector` **v1.0.9**（`99f982d`）。上游业务源码与本仓库 `src/` 逐字节一致，差异只在构建与验证脚本。
+当前同步基线：上游 `Liu-Bot24/chatgpt-route-inspector` **v1.0.9**（`99f982d`）。**Git 内容**与上游完全一致（`src/` 等业务目录对上游提交 diff 为空），差异只在构建与验证脚本；本机检出文本因 `core.autocrlf=true` 存在换行转换（相对上游 blob 仅 CRLF/LF 差异，不影响构建产物）。两 target 的 8 个 `.js` 产物字节一致。
 
 v1.0.9 行为提示：升级公告改开上游固定站点 `https://rinotice.liu-qi.cn/`（手动入口通过 `route:open-announcement` 打开；符合版本条件的真实更新事件按 `routeInspectorNotice109Shown` 去重）；浮窗新增“疑似降级 / 无法判断”判定与提示；扩展连接失效时浮窗会提示刷新页面。隐私描述见上游 `PRIVACY.md`（2026-09-27 生效版）。
 
@@ -32,7 +34,7 @@ npm run package:firefox   # 打包 dist/firefox -> release/*.xpi，并写出构�
 3. 任一 `manifest.json` 引用的本地文件都存在；
 4. 任一产物内 `.html` 引用的本地文件都存在；
 5. 以 `src/ui/**/index.html` 为锚点，确认每个 UI 页面都进了**两个** target；
-6. Firefox 侧 gecko 声明守卫（`manifest_version` / 无 `minimum_chrome_version` / ID / `strict_min_version` / `data_collection_permissions`）。
+6. **manifest 完整对象比较**（2026-09-27 补强）：extension 侧 `manifest.json` 必须整体等于源真相 `manifest/manifest.json`，Firefox 侧必须整体等于 `toFirefoxManifest(manifest/manifest.json)`（复用构建同一转换函数，`node:assert` 深比较；键序与缩进不参与比较）。替换了旧的逐字段守卫——旧写法对 version 改错、增加 permissions/host_permissions、改 MAIN world、清空 `background.scripts`、改 `background.type`、`data_collection_permissions` 多值等情况会漏检（回归测试 `tests/integration/firefox-dist-verifier.test.ts` 固定这 7 类变异）。
 
 **已知边界**：仅靠第 1 条的两侧互比，无法发现“两个 target 同时漏掉”某个新增页面。第 5 条把这一盲区收窄到存在于 `src/` 的 UI 页面，但仍**看不到**“上游新增了 `uiEntries` 条目而对应 HTML/TS 文件不存在”的情况，也看不到非 HTML 资源的遗漏。
 
@@ -40,13 +42,14 @@ npm run package:firefox   # 打包 dist/firefox -> release/*.xpi，并写出构�
 
 > ZIP 会记录文件 mtime 等元数据，重新打包的 XPI 哈希可能变化。记录必须与 XPI 同一次生成；不要把跨次重打包的哈希差异直接当成源码变化。
 
-## AMO 升级提交与源码包（2026-09-27，v1.0.9）
+## v1.0.9 AMO 提交资料（2026-09-27 历史准备，尚未上传）
 
-在已有扩展条目上提交新版本，保持 ID `chatgpt-route-inspector-firefox@local` 不变：
+以下是当时准备的文件；本轮直升 v1.1.0 前保留作复核，不把它们当作新版提交物。既有扩展 ID `chatgpt-route-inspector-firefox@local` 应在下一轮核定后保持不变：
 
 - 扩展文件：`release/chatgpt-route-inspector-firefox-1.0.9.xpi`（本地未签名包，XPI SHA-256 `34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523`）。
 - 源代码步骤：上传 `release/chatgpt-route-inspector-firefox-1.0.9-source.zip`（170835 字节，SHA-256 `0cc2412fef597d0ea2d6a3b5ac2986c7f178f7a9c13a1c83e9f7a49cd16a73d0`）；包内 BUILD-README 写明 Windows 11 x64、Node 24.16.0、npm 12.0.1，以及 `npm ci` → `npm run build:firefox`。
 - 源码包包含原始源码、资源、`tsconfig.json`（必须！esbuild 自动读取，缺了产出的 JS 少 `"use strict";`、本次 7 个 JS 哈希变化）、锁文件与构建脚本，不含用户导出、profile、验证日志或依赖目录。它是 commit `6f932e0` 的提交用源码快照。
+- **勘误（2026-09-27，verify-hardening 轮）**：包内 BUILD-README 的"Build steps"漏了 Chromium 构建。正确顺序是在解压出的 `source/` 目录执行 `npm ci` → `npm run build`（生成 `dist/extension`）→ `npm run build:firefox`（生成 `dist/firefox`）→ `npm run verify:firefox`——校验脚本同时读取两个 target 的目录，只跑 `build:firefox` 时 `verify:firefox` 会因缺 `dist/extension` 报错。**冻结 ZIP 本轮未重新打包**，查看旧包请以本条勘误为准；本勘误的依据是已读的 `scripts/build.mjs` / `scripts/verify-firefox-dist.mjs` 与既有产物，本轮未重跑复建验证。
 - 已从源码包在独立临时目录安装依赖并构建，30 个输出文件与上述未签名 XPI 的路径和内容完全相同（REBUILD_MATCH，2026-09-27）。
 - 1.0.7 的 AMO 上传完成、签名下载与日常覆盖安装均未确认；旧版签名包在原工作区 `release/signed/`，不能代替新版签名凭证。1.0.9 尚未提交 AMO。
 - 获得签名后在 `about:addons` 齿轮菜单“从文件安装附加组件”覆盖升级；先导出备份，不卸载旧版。符合版本条件且未记录已展示的覆盖安装按代码设计会触发一次 `https://rinotice.liu-qi.cn/` 公告页打开（真实更新事件，本轮仍未验证，见 BLOCKED 第 5 项）。

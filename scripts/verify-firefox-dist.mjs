@@ -9,6 +9,12 @@
 //      All .js files are additionally required to be byte-identical.
 //   3. Every local file referenced by either manifest.json exists.
 //   4. Every local file referenced by any shipped .html exists.
+//   5. The shipped manifests match the source of truth as whole objects:
+//      extension manifest === manifest/manifest.json, and firefox manifest ===
+//      toFirefoxManifest(manifest/manifest.json). Field-by-field guardrails
+//      once let version / permissions / world / background / data-collection
+//      mutations through, so the comparison is total (key order and formatting
+//      are not compared).
 //
 // Boundary: the pairwise comparison in (1) alone cannot detect a page that is
 // missing from BOTH targets. (1b) narrows that blind spot to the pages that
@@ -17,10 +23,12 @@
 //
 // Usage: node scripts/verify-firefox-dist.mjs [extensionDir] [firefoxDir]
 // Exits non-zero with a report on any failure.
+import { deepStrictEqual } from 'node:assert';
 import { createHash } from 'node:crypto';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { toFirefoxManifest } from './firefox-manifest.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const extensionDir = path.resolve(process.argv[2] ?? path.join(root, 'dist', 'extension'));
@@ -138,34 +146,29 @@ for (const [label, dir] of [['extension', extensionDir], ['firefox', firefoxDir]
   }
 }
 
-// Firefox manifest guardrails.
-try {
-  const ffManifest = JSON.parse(await readFile(path.join(firefoxDir, 'manifest.json'), 'utf8'));
-  if (ffManifest.manifest_version !== 3) fail('firefox: manifest_version is not 3');
-  if ('minimum_chrome_version' in ffManifest) fail('firefox: minimum_chrome_version must be removed');
-  const gecko = ffManifest.browser_specific_settings?.gecko;
-  if (!gecko) fail('firefox: browser_specific_settings.gecko missing');
-  else {
-    if (gecko.id !== 'chatgpt-route-inspector-firefox@local') fail(`firefox: unexpected extension id ${gecko.id}`);
-    if (gecko.strict_min_version !== '128.0') fail(`firefox: unexpected strict_min_version ${gecko.strict_min_version}`);
-    if (gecko.data_collection_permissions?.required?.[0] !== 'none') fail('firefox: data_collection_permissions is not ["none"]');
-  }
-  if (!Array.isArray(ffManifest.background?.scripts) || !Array.isArray(ffManifest.background?.service_worker)) {
-    // service_worker is a string in the base manifest; the transform keeps both shapes.
-    if (!Array.isArray(ffManifest.background?.scripts)) fail('firefox: background.scripts missing (event page required)');
-  }
-} catch (error) {
-  fail(`firefox: manifest unreadable (${error.message})`);
+// Shipped manifests must equal the source-of-truth objects in full. deepEqual
+// ignores key order and whitespace; its diff output pinpoints the first
+// mismatch, which is all the report needs.
+function deepDiffMessage(error) {
+  return String(error.message).split('\n').filter((line) => line.trim()).slice(0, 12).join(' ⏎ ').slice(0, 600);
 }
 
-// Chromium manifest must keep the source-of-truth values.
 try {
   const base = JSON.parse(await readFile(path.join(root, 'manifest', 'manifest.json'), 'utf8'));
   const extManifest = JSON.parse(await readFile(path.join(extensionDir, 'manifest.json'), 'utf8'));
-  if (extManifest.version !== base.version) fail('extension: manifest version differs from manifest/manifest.json');
-  if (extManifest.permissions.join(',') !== base.permissions.join(',')) fail('extension: permissions differ from source of truth');
+  try {
+    deepStrictEqual(extManifest, base);
+  } catch (error) {
+    fail(`extension: manifest differs from manifest/manifest.json: ${deepDiffMessage(error)}`);
+  }
+  const ffManifest = JSON.parse(await readFile(path.join(firefoxDir, 'manifest.json'), 'utf8'));
+  try {
+    deepStrictEqual(ffManifest, toFirefoxManifest(base));
+  } catch (error) {
+    fail(`firefox: manifest differs from toFirefoxManifest(manifest/manifest.json): ${deepDiffMessage(error)}`);
+  }
 } catch (error) {
-  fail(`extension: manifest unreadable (${error.message})`);
+  fail(`manifest unreadable (${error.message})`);
 }
 
 for (const note of notes) process.stdout.write(`note  ${note}\n`);

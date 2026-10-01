@@ -1,12 +1,13 @@
 # AGENTS.md — chatgpt-route-inspector（Firefox 自用移植）
 
 Chromium 上游同源码 + 独立 Firefox 构建 target 的自用移植。读 PROGRESS.md / BLOCKED.md 恢复上下文。
-当前同步基线：上游 v1.0.9（`99f982d`），`src/` 与上游逐字节一致。
+> 2026-10-01：上游已发布 v1.1.0（标签 `dd5ea33`），本地仍是 v1.0.9，尚未同步新版或完成日常覆盖安装、真实流量验收。当前有未提交的校验器补强、回归测试和文档；先读 PROGRESS.md 顶部现役交接，升级时保全这些改动。下方 v1.0.9 数字只适用于该版。
+当前同步基线：上游 v1.0.9（`99f982d`），Git 内容与上游一致；本机检出文本存在换行转换（`core.autocrlf=true`，相对上游 blob 仅 CRLF/LF 差异）。
 当前交付位于 `D:\LAB\sync-v109-isolated`，分支 `codex/sync-upstream-v1.0.9`；原工作区仍为 v1.0.7，勿混用产物。独立验收见 [验收记录](docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md)。
 
 ## 怎么跑
 
-- `npm ci` → `npm run typecheck` / `npm run lint` / `npm test`（327 passed）/ `npm run build`
+- `npm ci` → `npm run typecheck` / `npm run lint` / `npm test`（v1.0.9 校验补强后上次实测 336 passed，含未提交 9 项；本次知识收尾未重跑）/ `npm run build`
 - Firefox 版：`npm run build:firefox` → `dist/firefox/`；本地加载见 README-FIREFOX.md
 - Firefox 产物校验 / 打包：`npm run verify:firefox` / `npm run package:firefox`
 - 验证工具回归测试：`npm run test:firefox-tooling`（Python，56 项；合成夹具 + 脚本化 Marionette peer；仅“真实进程/真实浏览器”两项按环境跳过）
@@ -23,7 +24,7 @@ TypeScript + esbuild（background=esm，content/UI=iife），vitest，零新增�
 ## 目录与约定
 
 - `manifest/manifest.json` 是 Chromium 唯一真相源；`scripts/firefox-manifest.mjs` 做 Firefox 转换（background 双声明、删 chrome 专属、加 gecko）。
-- 业务源码不分叉；两 target JS 产物应逐字节一致（除 manifest）——由 `scripts/verify-firefox-dist.mjs` 强制校验，包含引用完整性、路径集合双向比对与 `src/ui` 锚点完整性检查。
+- 业务源码不分叉；两 target JS 产物应逐字节一致（除 manifest）——由 `scripts/verify-firefox-dist.mjs` 强制校验，包含引用完整性、路径集合双向比对、`src/ui` 锚点完整性检查，以及 manifest 与源真相（extension==`manifest/manifest.json`、firefox==`toFirefoxManifest(...)`）的完整对象比较；回归测试在 `tests/integration/firefox-dist-verifier.test.ts`。
 - 上游新增 UI 页面必须同步加入 `scripts/build.mjs` 的 `uiEntries`，否则 Firefox 产物缺页面。
 - `strict_min_version 128.0` 是功能下限（world:MAIN），不是猜的。
 - `release/*.build.json` 是探针的“预期值”，必须与 XPI 同一次打包生成；ZIP 的 mtime 等元数据可能导致重打包哈希变化，比较源码复现时还须逐文件比对。

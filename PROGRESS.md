@@ -1,8 +1,21 @@
 # PROGRESS — Firefox 移植（自用）
 
-## 现役交接（2026-09-27，neat-freak 收尾）
+## 现役交接（2026-10-01，准备同步 v1.1.0）
 
-以下为当前答案；后续任务章节是历史记录，测试数量和结论按各轮次解读。
+| 事实面 | 状态 | 当前结论 |
+| --- | --- | --- |
+| 代码 | verified-current | 当前 worktree 仍在 `codex/sync-upstream-v1.0.9`，HEAD `2470d15`；业务目录对上游 v1.0.9 `99f982d` 无 Git 差异。校验器补强和 9 项回归测试仍未提交，见 [补强报告](docs/verify-hardening-2026-09-27/REPORT.md)。v1.1.0 尚未拉取、合并或构建。 |
+| 本地交付 | verified-current | 保留 v1.0.9 未签名 XPI、同次 build.json、源码 ZIP 与旧验收证据；本次仅复核三份交付物哈希，未重跑构建、业务测试或真机探针。 |
+| 发布与真实流量 | pending | 用户表示尚未完成覆盖安装及实际测试；没有 v1.0.9 或 v1.1.0 日常安装、成功 SSE、真实更新事件的验收凭证。上游 [v1.1.0 发布页](https://github.com/Liu-Bot24/chatgpt-route-inspector/releases/tag/v1.1.0)和远端标签指向 `dd5ea3366cdb3ed85025fc7a41f6e89ff1ee7552`；本机还没有该 Git 对象。下一轮应以**标签**核定目标，不默认上游 `main` 与标签相同。 |
+| 文档与规则 | changed-and-verified | 本节和 README-FIREFOX、AGENTS、BLOCKED 已标出 v1.0.9 本地现场与 v1.1.0 待升级目标；下方 2026-09-27 交接保留为历史快照。 |
+| 记忆 | out-of-scope | Codex 生成记忆与 `.workbuddy/` 只读，当前事实以本节及当前 Git/交付物为准。 |
+| 工作区 | pending | 本 worktree 有校验器、测试、文档及补强证据的未提交改动；原工作区仍为 v1.0.7 且有四文档修改、`.workbuddy/` 和 `.zcodeignore` 未跟踪。两 worktree、分支、产物和证据全部保留；进入 v1.1.0 同步前须先保全并接续这些未提交工作，不能从干净 HEAD 建新分支后遗漏它。 |
+
+`origin/main` 在 2026-10-01 只读查询仍为 `182fca1`；未查到此本地 v1.0.9 分支已推送/合并的凭证。v1.1.0 的源码差异、Firefox 接缝及测试数量尚未调查，不能沿用 v1.0.9 的 336/56/27 数字作新版结论。清场预览仅作参考：现有 worktree、release 文件、历史证据和临时复核现场均保留，未删、未重命名、未归档；升级前不清理。
+
+## 2026-09-27 历史交接（neat-freak 收尾）
+
+以下为当时的答案；当前状态以上方 2026-10-01 交接为准。后续任务章节是历史记录，测试数量和结论按各轮次解读。
 
 | 事实面 | 状态 | 当前结论 |
 | --- | --- | --- |
@@ -218,3 +231,17 @@
 - 工具回归 56 项（原 49 保留 + 导航回归扩到 7 项）；lint 0；对 f1f198e 与 99f982d 业务同源为空；正式 XPI/ZIP/build.json 未变。
 - 覆盖边界不变：合成请求 + 未认证拒绝响应，不验证成功流式响应的会话身份与模型路由；真实账号流量未覆盖。
 - 迭代 5 次全留证（review-fix-round2/attempt*）：根因是探针自身 JS 传参缺失与 pushState 在错误窗口执行，非业务缺陷。
+
+## 校验补强开工回执（2026-09-27，verify-hardening）
+- 起点：HEAD `2470d15`（分支 `codex/sync-upstream-v1.0.9`，工作树干净）；冻结哈希复核一致：XPI `34ca9440…da523`、源码 ZIP `0cc2412f…3d0`、build.json `15debe2a…9dab`。
+- 快照：dist 94 文件、历史证据 93 文件逐文件 SHA-256 已录 `docs/verify-hardening-2026-09-27/snapshot-*.txt`，收尾复比。
+- 本轮基线实测：npm test（vitest run --coverage）退出 0，34 文件 327 passed，覆盖率 97.29/91.83/100（日志 `log-task0-npm-test-baseline.txt`）；typecheck/lint/verify:firefox 为管理者实测 0，本轮收尾复跑。
+- 范围：只补强 `scripts/verify-firefox-dist.mjs`（复用 toFirefoxManifest 做完整对象比较）+ 新增 `tests/integration/firefox-dist-verifier.test.ts` + 文档；不改业务源码、探针、构建脚本、依赖；不启动浏览器。
+- 证据目录：`docs/verify-hardening-2026-09-27/`；故障夹具只放系统临时目录。
+
+## 校验补强结果（2026-09-27，verify-hardening）
+- 缺陷确认：旧校验器对 Firefox manifest 只做逐字段守卫，7 类变异（version、permissions/host_permissions、MAIN world、background.scripts 清空、background.type、data_collection_permissions 多值）全部漏检退出 0；红证据 `log-taskB-red-old-verifier-final-test.txt`（临时还原 HEAD 旧校验器实拍，7 failed / 2 passed，拍摄后已恢复并复验绿灯）。
+- 补强：`scripts/verify-firefox-dist.mjs` 删除被覆盖的逐字段守卫，改为 manifest 与源真相完整对象比较（extension==`manifest/manifest.json`、firefox==`toFirefoxManifest(...)`，`node:assert` deepStrictEqual，复用同一转换函数）；原有路径/逐文件/引用/UI 锚点检查与转换单测全部保留，无新依赖。
+- 新增 `tests/integration/firefox-dist-verifier.test.ts`（9 项）：真实 CLI + 冻结 dist 副本夹具（临时目录，缺失即报错不跳过），每次变异从合法夹具重开；新实现 9/9 通过（`log-taskB-green-new-verifier.txt`），合法夹具复验退出 0。
+- 收尾门禁（本轮实测退出码）：typecheck 0 / lint 0 / npm test 0（35 文件 336 passed = 原 327 + 新 9，覆盖率 97.29/91.81/100，阈值未改）/ verify:firefox 0。
+- 反向核对：dist 94 文件、历史证据 92 文件快照复比逐一相同；三份 release 冻结哈希与任务书一致；`git status` 白名单外零改动。完整报告与限制见 [REPORT](docs/verify-hardening-2026-09-27/REPORT.md)；BLOCKED 仅追加"本轮无新增阻塞"。

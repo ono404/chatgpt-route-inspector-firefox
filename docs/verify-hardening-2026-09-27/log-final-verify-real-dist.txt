@@ -1,0 +1,5 @@
+note  paths: extension=30 firefox=30 identical=true
+note  src UI pages: 5 checked against both targets
+note  boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only
+note  js byte-identical: 8 files checked
+verify-firefox-dist: OK
