@@ -15,6 +15,11 @@ by re-reading the package under test:
   * ``--expect-xpi-sha256 <sha>``
       a bare expected whole-archive sha256, for callers that have no record.
 
+Checks 20-24 cover the v1.1.0 image/research task identification and the
+planning/report model split. They are added, not substituted: checks 1-19 are
+unchanged in intent, and check 7's schema expectation moved with the build
+(``ROUTE_SCHEMA_VERSION``) instead of being relaxed.
+
 The probe then cross-checks three things that must all agree: the packaged
 archive, the ``--dist`` tree it was built from, and the build record. A
 manifest hash is still recorded, but on its own it never passes identity.
@@ -72,6 +77,10 @@ EXIT_OUTPUT_EXISTS = 6
 EXIT_USAGE = 64
 
 EXT_ID = "chatgpt-route-inspector-firefox@local"
+# The stored-record version this probe expects. It is an expectation, not a
+# tolerance: a record at any other version fails check 7, so a stale or
+# mis-packaged build cannot be reported as a pass.
+ROUTE_SCHEMA_VERSION = "1.9.0"
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_FIREFOX = r"C:\Program Files\Mozilla Firefox\firefox.exe"
 
@@ -103,6 +112,11 @@ REQUIRED_CHECKS = [
     "17.work-unverifiable-verdict",
     "18.failed-phase-not-completed",
     "19.new-chat-navigation-association",
+    "20.task-kind-verdicts",
+    "21.research-planning-report-split",
+    "22.deep-research-capture-taskkind",
+    "23.ui-task-filters",
+    "24.ui-research-model-split",
 ]
 # Only demanded when a build record was supplied.
 REQUIRED_WITH_RECORD = ["0c.dist-matches-record", "0f.build-record"]
@@ -647,9 +661,13 @@ def run_browser_checks(m, meta, args, results):
                "pageUrl": "https://chatgpt.com/c/ffprobe", "requestedModel": "gpt-5-6-pro",
                "resolvedModelSlug": "gpt-5-5-mini"}
         v = shexe("return (async (o) => { const r = await chrome.runtime.sendMessage({type:'route:observation', observation:o}); const t0 = (r.state.turns||[])[0]||{}; return {ok:r.ok, turns:(r.state.turns||[]).length, verdict:t0.verdict, route:t0.routeModel, req:t0.requestedModel, schemaVersion:t0.schemaVersion}; })(arguments[0])", [obs])
+        # v1.1.0: the stored record must carry exactly this build's schema
+        # version. Any other value (an old record from a previous package, or a
+        # future one) fails here rather than being accepted as "some version".
         add("7.synthetic-observation-pipeline",
             v.get("ok") and v.get("turns") == 1 and v.get("req") == "gpt-5-6-pro"
-            and v.get("schemaVersion") == "1.8.0", v)
+            and v.get("schemaVersion") == ROUTE_SCHEMA_VERSION,
+            dict(v, expectedSchemaVersion=ROUTE_SCHEMA_VERSION))
     except Exception as error:
         add("7.synthetic-observation-pipeline", False, error)
     try:
@@ -876,6 +894,173 @@ def run_browser_checks(m, meta, args, results):
             and v.get("verdict") != "suspected_downgrade" and v.get("verdict") != "work_unverifiable", v)
     except Exception as error:
         add("18.failed-phase-not-completed", False, error)
+
+    # v1.1.0: the two dedicated tasks must be recognised from structured
+    # metadata and must not be reported as a downgrade, even though neither
+    # carries resolved_model_slug (which is what the downgrade signal keys on).
+    # Synthetic observations in the extension context, no browser navigation:
+    # the capture path that derives taskKind from real request/response bodies
+    # is covered by check 20 and by upstream unit tests.
+    try:
+        v = shexe("return (async () => { const mk = (kind, over) => { const now = new Date().toISOString();"
+                  " return Object.assign({captureId: 'ff-probe-task-' + kind, source: 'page_fetch', captureMode: 'live',"
+                  " observedAt: now, startedAt: now, completedAt: now, phase: 'completed',"
+                  " pageUrl: 'https://chatgpt.com/c/ffprobe', requestedModel: 'gpt-5-6-pro',"
+                  " serverModelSlug: 'gpt-5-6-pro'}, {taskKind: kind}, over); };"
+                  " const rd = async (o) => { const r = await chrome.runtime.sendMessage({type:'route:observation', observation:o});"
+                  " const t = (r.state.turns||[]).find(x => x.captureId === o.captureId) || {};"
+                  " return {verdict: t.verdict, taskKind: t.taskKind, route: t.routeModel,"
+                  "  report: t.researchReportModel, schemaVersion: t.schemaVersion}; };"
+                  " return {image: await rd(mk('image_generation', {})),"
+                  " research: await rd(mk('deep_research', {researchReportModel: 'gpt-5-6-instant'}))}; })()")
+        add("20.task-kind-verdicts",
+            isinstance(v, dict)
+            and v.get("image", {}).get("verdict") == "image_generation"
+            and v.get("image", {}).get("taskKind") == "image_generation"
+            # A dedicated task is never downgraded for lacking resolved_model_slug.
+            and v.get("image", {}).get("verdict") != "suspected_downgrade"
+            and v.get("research", {}).get("verdict") == "deep_research"
+            and v.get("research", {}).get("taskKind") == "deep_research"
+            and v.get("research", {}).get("report") == "gpt-5-6-instant"
+            and v.get("research", {}).get("schemaVersion") == ROUTE_SCHEMA_VERSION, v)
+    except Exception as error:
+        add("20.task-kind-verdicts", False, error)
+
+    # v1.1.0: planning and report models stay separate. The planner's route must
+    # not be the report's model and vice versa - upstream models them as two
+    # distinct record fields for exactly this reason. Synthetic, extension context.
+    try:
+        v = shexe("return (async () => { const now = new Date().toISOString();"
+                  " const r = await chrome.runtime.sendMessage({type:'route:observation', observation:"
+                  " {captureId: 'ff-probe-research-split', source: 'page_fetch', captureMode: 'live',"
+                  " phase: 'completed', observedAt: now, startedAt: now, completedAt: now,"
+                  " pageUrl: 'https://chatgpt.com/c/ffprobe', requestedModel: 'gpt-6-pro',"
+                  " taskKind: 'deep_research', resolvedModelSlug: 'gpt-5-6-thinking',"
+                  " researchReportModel: 'gpt-5-6-instant'}});"
+                  " const t = (r.state.turns||[]).find(x => x.captureId === 'ff-probe-research-split') || {};"
+                  " return {verdict: t.verdict, planner: t.routeModel, report: t.researchReportModel}; })()")
+        add("21.research-planning-report-split",
+            isinstance(v, dict) and v.get("verdict") == "deep_research"
+            and v.get("planner") == "gpt-5-6-thinking" and v.get("report") == "gpt-5-6-instant"
+            and v.get("planner") != v.get("report"), v)
+    except Exception as error:
+        add("21.research-planning-report-split", False, error)
+
+    # v1.1.0: taskKind must survive the real capture path, not only a hand-built
+    # observation. A synthetic Deep Research creation request (structured
+    # metadata only, no prompt text) is sent through the packaged page-hook's
+    # own wrapped fetch; the observation under test is produced by that hook and
+    # carries no prefilled captureId/taskKind. The response is chatgpt.com's
+    # real unauthenticated rejection, so this proves the requested-side task
+    # identification end to end and says nothing about a successful stream.
+    try:
+        if not find_handle("https://chatgpt.com"):
+            raise RuntimeError("chatgpt.com tab handle not found")
+        dr_probe = exe("return (function () { /* taskkind-request */"
+                       " const body = {model: 'gpt-6-pro-taskkind', conversation_id: null, messages:"
+                       "  [{id: 'taskkind-input', author: {role: 'user'},"
+                       "    metadata: {system_hints: ['plugin:connector_openai_deep_research']},"
+                       "    content: {content_type: 'text'}}]};"
+                       " try { window.fetch('/backend-api/f/conversation',"
+                       "  {method: 'POST', body: JSON.stringify(body)}).catch(function () {}); }"
+                       " catch (e) { return {started: false, err: String((e && e.message) || e)}; }"
+                       " return {started: true, fetchName: (window.fetch && window.fetch.name) || null}; })()")
+        if not (isinstance(dr_probe, dict) and dr_probe.get("started")):
+            raise RuntimeError("deep-research request could not be sent: %r" % (dr_probe,))
+        found = None
+        for _ in range(24):
+            time.sleep(0.5)
+            found = shexe("return (async () => { const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
+                          " const t = (st.turns||[]).find(x => x.requestedModel === 'gpt-6-pro-taskkind') || null;"
+                          " return t ? {captureId: t.captureId, taskKind: t.taskKind, verdict: t.verdict,"
+                          "  captureContextId: t.captureContextId || null} : null; })()")
+            if isinstance(found, dict) and found.get("taskKind"):
+                break
+        # The capture may be the creation draft (dropped on navigation) or the
+        # resolved record; what must hold is that the hook derived the kind.
+        # The captureId is generated by the hook (crypto.randomUUID), never
+        # prefilled by this probe, so a synthetic id would fail here.
+        capture_id = str((found or {}).get("captureId") or "")
+        add("22.deep-research-capture-taskkind",
+            isinstance(found, dict) and found.get("taskKind") == "deep_research"
+            and found.get("verdict") == "deep_research"
+            and not capture_id.startswith("ff-probe"),
+            json.dumps({"found": found, "sent": dr_probe}, default=str))
+    except Exception as error:
+        add("22.deep-research-capture-taskkind", False, error)
+
+    # v1.1.0: the two new verdicts must be surfaced in the shipped UI, not only
+    # stored. Both new labels must exist in the dashboard's verdict filter, and
+    # a deep-research record must show its planning and report models as
+    # separate fields. Synthetic observation; the dashboard is re-rendered by
+    # the running extension after the observation is stored.
+    try:
+        now = time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())
+        obs = {"captureId": "ff-probe-ui-research", "source": "page_fetch", "captureMode": "live",
+               "phase": "completed", "observedAt": now, "startedAt": now, "completedAt": now,
+               "pageUrl": "https://chatgpt.com/c/ffprobe", "requestedModel": "gpt-6-pro",
+               "taskKind": "deep_research", "resolvedModelSlug": "gpt-5-6-thinking",
+               "researchReportModel": "gpt-5-6-instant"}
+        stored = shexe("return (async (o) => { const r = await chrome.runtime.sendMessage({type:'route:observation', observation:o});"
+                       " const t = (r.state.turns||[]).find(x => x.captureId === 'ff-probe-ui-research') || {};"
+                       " return {ok:r.ok, verdict:t.verdict}; })(arguments[0])", [obs])
+        if not (isinstance(stored, dict) and stored.get("verdict") == "deep_research"):
+            add("23.ui-task-filters", False, {"stage": "store", "stored": stored})
+            raise RuntimeError("deep-research record was not stored as deep_research: %r" % (stored,))
+        dash = open_extension_page(EXT + "/ui/dashboard/index.html")
+        if not dash:
+            add("23.ui-task-filters", False, "no dashboard handle")
+        else:
+            m.cmd("WebDriver:SwitchToWindow", {"handle": dash})
+            time.sleep(1)
+            # Lock the dashboard handle to the extension origin before reading:
+            # a URL that merely contains the fragment is not this page.
+            dash_url = str(m.cmd("WebDriver:GetCurrentURL")["value"] or "")
+            if not dash_url.startswith(EXT):
+                add("23.ui-task-filters", False, {"stage": "navigate", "url": dash_url})
+            else:
+                v = exe("return (() => { const filters = [...document.querySelectorAll('[data-filter]')].map(b => b.dataset.filter);"
+                        " return {filters: filters, deepSelected: filters.includes('deep_research'),"
+                        "  imageSelected: filters.includes('image_generation')}; })()")
+                add("23.ui-task-filters",
+                    isinstance(v, dict) and v.get("deepSelected") is True and v.get("imageSelected") is True,
+                    {"url": dash_url, "ui": v})
+    except Exception as error:
+        add("23.ui-task-filters", False, error)
+
+    # v1.1.0: selecting a deep-research record must expose a planning model and a
+    # report model as two distinct rows, and the report row must carry the
+    # report model rather than the planner's route.
+    try:
+        dash = find_handle("/ui/dashboard/index.html")
+        if not dash:
+            add("24.ui-research-model-split", False, "no dashboard handle")
+        else:
+            m.cmd("WebDriver:SwitchToWindow", {"handle": dash})
+            dash_url = str(m.cmd("WebDriver:GetCurrentURL")["value"] or "")
+            if not dash_url.startswith(EXT):
+                add("24.ui-research-model-split", False, {"stage": "navigate", "url": dash_url})
+            else:
+                row = exe("return (() => { const r = [...document.querySelectorAll('#rows tr')]"
+                          ".find(x => x.dataset.id === 'ff-probe-ui-research'); if (!r) return {row: false};"
+                          " r.click(); return {row: true}; })()")
+                time.sleep(1)
+                if not (isinstance(row, dict) and row.get("row")):
+                    add("24.ui-research-model-split", False, {"stage": "select", "row": row})
+                else:
+                    v = exe("return (() => { const detail = document.getElementById('detail') || document.querySelector('.detail');"
+                            " const pairs = [...document.querySelectorAll('.evidence')].map(e => ["
+                            "  (e.querySelector('small')?.textContent || '').trim(),"
+                            "  (e.querySelector('code')?.textContent || '').trim()]);"
+                            " const find = (needles) => { const hit = pairs.find(([label]) => needles.some(n => label.includes(n))); return hit ? hit[1] : null; };"
+                            " return {planner: find(['规划模型', 'Planning model']),"
+                            "  report: find(['报告模型', 'Report model']), pairs: pairs.slice(0, 6)}; })()")
+                    add("24.ui-research-model-split",
+                        isinstance(v, dict)
+                        and v.get("planner") == "gpt-5-6-thinking" and v.get("report") == "gpt-5-6-instant"
+                        and v.get("planner") != v.get("report"), {"url": dash_url, "ui": v})
+    except Exception as error:
+        add("24.ui-research-model-split", False, error)
 
     # v1.0.9 (revised 2026-09-27, review-fix round 2): every stage of the
     # new-chat navigation check must first prove the navigation actually

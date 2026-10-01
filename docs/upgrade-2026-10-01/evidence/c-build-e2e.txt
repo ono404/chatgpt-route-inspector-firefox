@@ -1,0 +1,19 @@
+npm notice run chatgpt-route-inspector@1.1.0 build:e2e
+npm notice run node scripts/build.mjs e2e && npm run build:notice
+
+  dist\e2e\background\service-worker.js  42.3kb
+
+Done in 29ms
+
+  dist\e2e\content\page-hook.js   90.0kb
+  dist\e2e\content\bridge.js      82.5kb
+  dist\e2e\ui\popup\index.js      55.9kb
+  dist\e2e\ui\dashboard\index.js  55.5kb
+  dist\e2e\ui\options\index.js    39.1kb
+  ...and 2 more output files...
+
+Done in 64ms
+Built e2e: D:\LAB\sync-v109-isolated\dist\e2e
+npm notice run chatgpt-route-inspector@1.1.0 build:notice
+npm notice run node scripts/build-notice.mjs
+Built public notice: D:\LAB\sync-v109-isolated\dist\notice

@@ -1,7 +1,8 @@
-// Firefox-upgrade verification artifact (2026-09-20, upstream v1.0.5 -> v1.0.7).
+// Firefox-upgrade verification artifact (2026-09-20, upstream v1.0.5 -> v1.0.7;
+// target schema advanced to v1.1.0 on 2026-10-01).
 //
 // Purpose: prove the new storage layer (revision / captureContexts / clearedAt,
-// schema 1.4.0 -> 1.7.0) still loads and migrates a *pre-upgrade* snapshot.
+// schema 1.4.0 -> 1.9.0) still loads and migrates a *pre-upgrade* snapshot.
 // All snapshots below are synthetic. No real user export or profile data is used,
 // and `readState()` must never write back to storage.
 import { afterEach, expect, it, vi } from 'vitest';
@@ -63,7 +64,7 @@ async function readState() {
 
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); vi.resetModules(); });
 
-it('migrates a pre-upgrade 1.0.5 snapshot to schema 1.7.0 without writing to storage', async () => {
+it('migrates a pre-upgrade 1.0.5 snapshot to the current schema without writing to storage', async () => {
   const { set } = setup({ [STORAGE_KEY]: legacyStoredState() });
   const state = await readState();
 
@@ -83,7 +84,7 @@ it('migrates a pre-upgrade 1.0.5 snapshot to schema 1.7.0 without writing to sto
   expect(state.turns.some((turn) => turn.captureId === 'legacy-retired')).toBe(false);
 });
 
-it('reassesses legacy verdicts and back-fills the v1.7.0 quota/quota-timestamp fields', async () => {
+it('reassesses legacy verdicts and back-fills the v1.1.0 null-defaulted task and quota fields', async () => {
   setup({ [STORAGE_KEY]: legacyStoredState() });
   const state = await readState();
 
@@ -93,6 +94,11 @@ it('reassesses legacy verdicts and back-fills the v1.7.0 quota/quota-timestamp f
   for (const [field, value] of Object.entries(EMPTY_QUOTA_FIELDS)) {
     expect(live).toHaveProperty(field, value);
   }
+  // v1.1.0 task fields behave the same way on a record that predates them.
+  expect(live).toHaveProperty('taskKind', null);
+  expect(live).toHaveProperty('researchReportModel', null);
+  expect(live).toHaveProperty('researchWidgetId', null);
+  expect(live).toHaveProperty('researchMessageId', null);
   // Legacy-only fields are not carried forward.
   expect(live).not.toHaveProperty('confidence');
   expect(live).not.toHaveProperty('effectiveModel');

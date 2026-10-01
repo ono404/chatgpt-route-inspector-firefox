@@ -1,0 +1,68 @@
+PASS 0f.build-record | xpi=04af228b03f85e95 files=30
+PASS 0a.xpi-sha256 | actual=04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae expected=04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae
+PASS 0b.xpi-contents | 30 files identical to XPI
+PASS 0c.dist-matches-record | 30 recorded files agree
+PASS 0d.manifest-sha256 | sha256=19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee version=1.1.0 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee)
+launched firefox pid=38984 port=62901 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-42eqva0d
+PASS 0.session | ac9f7b26-f67b-43bb-8f21-fffc71ff920e
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-42eqva0d pid=38984 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-42eqva0d inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=af9c7df8-b27a-4687-bfa5-ffd76d2e8c00 last_url=moz-extension://af9c7df8-b27a-4687-bfa5-ffd76d2e8c00/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://af9c7df8-b27a-4687-bfa5-ffd76d2e8c00/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://af9c7df8-b27a-4687-bfa5-ffd76d2e8c00/ui/popup/index.html', 'version': '1.1.0'}
+PASS 6.popup-renders | 
+  
+    
+      
+      
+        
+          Route Inspector
+          Created by @liuqi
+        
+        服务器报告的路由遥测
+      
+    
+    
+      
+        EN
+        中
+      
+      实时监听
+    
+  
+  
+    
+      
+
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 
+
+  
+    Route Inspectorv1.1.0请求模型与真实响应路由GitHub
+    EN中仅保存在本机
+  
+  路由诊断台导出 JSON导出报告清空记录
+  全部记录1实时请求1会话重载0异常1
+  
+    捕获记录全部模式实时请求会话重载全部结论正常自动推理图片生成深度研究疑似降级无法判断错配冲突未比较时间模式请求模型标签响应路由判定响应来源10/01 17:49:33实时请求GPT 5.6 Pro未解析GPT 5.5 mini路由错配resolved_model_slug当前筛选条件下没有记录。
+  证据字段路由错配捕获模式实
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 5, 'turnTabId': 5, 'turnCtx': 'e1e4db51-759f-40b5-8ba3-c92da356cee0'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'e1e4db51-759f-40b5-8ba3-c92da356cee0', 'documentId': '3555560e-1d04-43e0-a731-960756dc973a', 'documentStartedAt': 1790848177672, 'visitStartedAt': 1790848177672, 'revision': 0, 'reloadEligible': False, 'pageUrl': 'https://chatgpt.com/'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '\n  \n    \n      Route Inspector1.0.9 · 版本公告\n      EN中\n    \n    \n      版本公告\n      \n        \n          根据此前投票反馈，响应结果中存在 resolved_model_slug 字段的用户约 80% 未降级；没有该字段的用户约 80% 发生了降级。\n          故针对响应结果中 resolved_model_slug 字段缺失的情
+PASS 15.open-announcement-target | {'openedTab': {'id': 7, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector · 1.1.0 版本公告', 'text': 'Route Inspector1.1.0 · 版本公告\n      EN中\n    \n    \n      版本公告\n      \n        新增“图片生成”和“深度研究”状态，避免将这两类任务误判为降级或路由错
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'unknown'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "ea85da1b-abaf-4626-8853-39f2fc01d498", "taskKind": "deep_research", "verdict": "deep_research", "captureContextId": "e1e4db51-759f-40b5-8ba3-c92da356cee0"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://af9c7df8-b27a-4687-bfa5-ffd76d2e8c00/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade', 'work_unverifiable', 'mismatch', 'conflict', 'unknown'], 'deepSelected': True,
+PASS 24.ui-research-model-split | {'url': 'moz-extension://af9c7df8-b27a-4687-bfa5-ffd76d2e8c00/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant'], ['捕获模式', '实时请求'], ['捕获状态', '已完成'], ['请求模型', 'gpt-6-pro']
+PASS 19.new-chat-navigation-association | all navigation stages verified
+32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved docs/upgrade-2026-10-01/ff-probe-positive-v1.1.0-2026-10-01.json

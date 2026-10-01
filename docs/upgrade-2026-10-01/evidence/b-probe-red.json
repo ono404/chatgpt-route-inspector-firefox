@@ -1,0 +1,275 @@
+{
+ "meta": {
+  "schema": "ff-probe/2",
+  "date": "2026-10-01",
+  "startedAt": "2026-10-01T17:22:55+0800",
+  "finishedAt": "2026-10-01T17:23:30+0800",
+  "label": "v1.1.0-red-unadapted",
+  "probeFile": "D:\\LAB\\sync-v109-isolated\\ff-marionette.py",
+  "probeSha256": "a204ae0afb0c413e4e8d6a0e4cf81fc5bfcf5c2ea87d654d04d85aa65d1da303",
+  "stage": "checks",
+  "reachedStages": [
+   "probe-hash",
+   "git",
+   "build-record",
+   "identity",
+   "browser",
+   "connect",
+   "checks"
+  ],
+  "identity": {
+   "xpi": "D:\\LAB\\sync-v110-red-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.xpi",
+   "distDir": "D:\\LAB\\sync-v109-isolated\\dist\\firefox",
+   "buildRecordPath": "D:\\LAB\\sync-v110-red-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.build.json",
+   "expectedXpiSha256": "c2930cf0debc82be2319b6154b49a7d81076397567181f95306fd871795a6545",
+   "xpiSha256": "c2930cf0debc82be2319b6154b49a7d81076397567181f95306fd871795a6545",
+   "manifestSha256": "19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee",
+   "manifestVersion": "1.1.0",
+   "geckoId": "chatgpt-route-inspector-firefox@local",
+   "strictMinVersion": "128.0",
+   "packagedFiles": 30,
+   "distFileCount": 30,
+   "parseError": null
+  },
+  "expectation": {
+   "source": "build-record: D:\\LAB\\sync-v110-red-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.build.json",
+   "expectedXpiSha256": "c2930cf0debc82be2319b6154b49a7d81076397567181f95306fd871795a6545",
+   "buildRecordSha256": "06abd5aa3b6df63e598e07a8e2daab4d38c0f24cd5fd71624b63afdb85511b8d",
+   "buildRecordError": null
+  },
+  "git": {
+   "repoDir": "D:\\LAB\\sync-v109-isolated",
+   "available": true,
+   "head": "770095f1b5f180e93c6184a4d052b229b37ad354",
+   "dirty": true,
+   "porcelain": "?? docs/upgrade-2026-10-01/evidence/b-package-red.txt\n?? docs/upgrade-2026-10-01/evidence/b-probe-red.txt\n?? docs/upgrade-2026-10-01/evidence/b-test-red.txt\n?? docs/upgrade-2026-10-01/evidence/b-tooling-red.txt\n?? docs/upgrade-2026-10-01/evidence/base-lint.txt\n?? docs/upgrade-2026-10-01/evidence/base-npm-test.txt\n?? docs/upgrade-2026-10-01/evidence/base-tooling.txt\n?? docs/upgrade-2026-10-01/evidence/base-typecheck.txt\n?? docs/upgrade-2026-10-01/evidence/c-build-firefox.txt\n?? docs/upgrade-2026-10-01/evidence/c-build.txt\n?? docs/upgrade-2026-10-01/evidence/c-npm-ci.txt",
+   "error": null,
+   "labelCommit": "770095f"
+  },
+  "launch": {
+   "firefoxExe": "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+   "pid": 33332,
+   "host": "127.0.0.1",
+   "port": 53938,
+   "profileDir": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-847ypzgm",
+   "cmdline": [
+    "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+    "-headless",
+    "-no-remote",
+    "-marionette",
+    "-remote-allow-system-access",
+    "-profile",
+    "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-847ypzgm",
+    "about:blank"
+   ],
+   "launchedAt": "2026-10-01T17:22:55+0800",
+   "expectedManifestVersion": "1.1.0"
+  },
+  "session": {
+   "sessionId": "bd777f5f-8e8a-4143-94a9-7b1644e4d198",
+   "capabilities": {
+    "browserName": "firefox",
+    "browserVersion": "157.0",
+    "platformName": "windows",
+    "moz:profile": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-847ypzgm",
+    "moz:buildID": "20260924084938",
+    "moz:headless": true,
+    "moz:geckodriverVersion": null
+   }
+  },
+  "browserLaunched": true,
+  "browserConnected": true,
+  "connectionTrusted": true,
+  "firefoxVersion": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0",
+  "fatal": null,
+  "summary": {
+   "executed": 27,
+   "passed": 26,
+   "failed": 1,
+   "failedChecks": [
+    "7.synthetic-observation-pipeline"
+   ],
+   "requiredChecks": [
+    "0a.xpi-sha256",
+    "0b.xpi-contents",
+    "0d.manifest-sha256",
+    "0.session",
+    "0e.session-profile",
+    "1.install-no-manifest-error",
+    "1b.addon-uuid",
+    "2.ext-namespaces",
+    "3.ext-chrome.storage-promise",
+    "4.ext-get-state-roundtrip",
+    "5.ext-tabs-i18n-getURL",
+    "6.popup-renders",
+    "7.synthetic-observation-pipeline",
+    "8.dashboard-shows-turn",
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "11.overlay-suspect-hint",
+    "12.capture-context-registered",
+    "13.auto-reasoning-verdict",
+    "14.announcement-page",
+    "15.open-announcement-target",
+    "16.suspected-downgrade-verdict",
+    "17.work-unverifiable-verdict",
+    "18.failed-phase-not-completed",
+    "19.new-chat-navigation-association",
+    "0c.dist-matches-record",
+    "0f.build-record"
+   ],
+   "missingChecks": [],
+   "identityOk": true,
+   "aborted": null,
+   "stage": "checks",
+   "browserLaunched": true,
+   "browserConnected": true,
+   "connectionTrusted": true,
+   "profileDir": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-847ypzgm",
+   "profileDirRemoved": true,
+   "profilesKeptByRequest": false,
+   "browserStoppedByThisRun": true
+  },
+  "exitCode": 4,
+  "exitReason": "checks failed: 7.synthetic-observation-pipeline",
+  "resultsPath": "D:\\LAB\\sync-v109-isolated\\docs\\upgrade-2026-10-01\\evidence\\b-probe-red.json",
+  "notes": []
+ },
+ "results": [
+  {
+   "check": "0f.build-record",
+   "ok": true,
+   "detail": "xpiSha256=c2930cf0debc82be manifestSha256=19bec35aef869de7 files=30"
+  },
+  {
+   "check": "0a.xpi-sha256",
+   "ok": true,
+   "detail": "actual=c2930cf0debc82be2319b6154b49a7d81076397567181f95306fd871795a6545 expected=c2930cf0debc82be2319b6154b49a7d81076397567181f95306fd871795a6545"
+  },
+  {
+   "check": "0b.xpi-contents",
+   "ok": true,
+   "detail": "30 files identical to XPI"
+  },
+  {
+   "check": "0c.dist-matches-record",
+   "ok": true,
+   "detail": "30 recorded files agree"
+  },
+  {
+   "check": "0d.manifest-sha256",
+   "ok": true,
+   "detail": "sha256=19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee version=1.1.0 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee)"
+  },
+  {
+   "check": "0.session",
+   "ok": true,
+   "detail": "bd777f5f-8e8a-4143-94a9-7b1644e4d198"
+  },
+  {
+   "check": "0e.session-profile",
+   "ok": true,
+   "detail": "browser says moz:profile=C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-847ypzgm pid=33332 launched=C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-847ypzgm inside_temp=True"
+  },
+  {
+   "check": "1.install-no-manifest-error",
+   "ok": true,
+   "detail": "chatgpt-route-inspector-firefox@local"
+  },
+  {
+   "check": "1b.addon-uuid",
+   "ok": true,
+   "detail": "handles=2 uuid=1dcd367d-3b3d-469c-bc4d-ef1dcbd57628 last_url=moz-extension://1dcd367d-3b3d-469c-bc4d-ef1dcbd57628/ui/onboarding/index.html"
+  },
+  {
+   "check": "2.ext-namespaces",
+   "ok": true,
+   "detail": "{'c': 'object', 'b': 'object', 'url': 'moz-extension://1dcd367d-3b3d-469c-bc4d-ef1dcbd57628/ui/onboarding/index.html'}"
+  },
+  {
+   "check": "3.ext-chrome.storage-promise",
+   "ok": true,
+   "detail": "42"
+  },
+  {
+   "check": "4.ext-get-state-roundtrip",
+   "ok": true,
+   "detail": "{'ok': True, 'hasState': True, 'schemaVersion': None}"
+  },
+  {
+   "check": "5.ext-tabs-i18n-getURL",
+   "ok": true,
+   "detail": "{'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://1dcd367d-3b3d-469c-bc4d-ef1dcbd57628/ui/popup/index.html', 'version': '1.1.0'}"
+  },
+  {
+   "check": "6.popup-renders",
+   "ok": true,
+   "detail": "\n  \n    \n      \n      \n        \n          Route Inspector\n          Created by @liuqi\n        \n        服务器报告的路由遥测\n      \n    \n    \n      \n        EN\n        中\n      \n      实时监听\n    \n  \n  \n    \n      \n"
+  },
+  {
+   "check": "7.synthetic-observation-pipeline",
+   "ok": false,
+   "detail": "{'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0'}"
+  },
+  {
+   "check": "8.dashboard-shows-turn",
+   "ok": true,
+   "detail": "\n\n  \n    Route Inspectorv1.1.0请求模型与真实响应路由GitHub\n    EN中仅保存在本机\n  \n  路由诊断台导出 JSON导出报告清空记录\n  全部记录1实时请求1会话重载0异常1\n  \n    捕获记录全部模式实时请求会话重载全部结论正常自动推理图片生成深度研究疑似降级无法判断错配冲突未比较时间模式请求模型标签响应路由判定响应来源10/01 17:23:03实时请求GPT 5.6 Pro未解析GPT 5.5 mini路由错配resolved_model_slug当前筛选条件下没有记录。\n  证据字段路由错配捕获模式实时请求捕获状态已完成请求模型gpt-5-"
+  },
+  {
+   "check": "9.page-hook-MAIN-world",
+   "ok": true,
+   "detail": "{'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}"
+  },
+  {
+   "check": "10.bridge-overlay-ISOLATED",
+   "ok": true,
+   "detail": "{'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}"
+  },
+  {
+   "check": "11.overlay-suspect-hint",
+   "ok": true,
+   "detail": "{'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 5, 'turnTabId': 5, 'turnCtx': 'a45bfb74-f158-41d1-a4cb-6d2db524db99'}}"
+  },
+  {
+   "check": "12.capture-context-registered",
+   "ok": true,
+   "detail": "{'ok': True, 'count': 1, 'sample': {'id': 'a45bfb74-f158-41d1-a4cb-6d2db524db99', 'documentId': '04924450-1cf2-42ea-bce9-0cc44b1fa88a', 'documentStartedAt': 1790846587198, 'visitStartedAt': 1790846587198, 'revision': 0, 'reloadEligible': False, 'pageUrl': 'https://chatgpt.com/'}}"
+  },
+  {
+   "check": "13.auto-reasoning-verdict",
+   "ok": true,
+   "detail": "{'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}"
+  },
+  {
+   "check": "14.announcement-page",
+   "ok": true,
+   "detail": "{'title': 'Route Inspector · 1.0.9 版本公告', 'text': '\\n  \\n    \\n      Route Inspector1.0.9 · 版本公告\\n      EN中\\n    \\n    \\n      版本公告\\n      \\n        \\n          根据此前投票反馈，响应结果中存在 resolved_model_slug 字段的用户约 80% 未降级；没有该字段的用户约 80% 发生了降级。\\n          故针对响应结果中 resolved_model_slug 字段缺失的情况，新增“疑似降级”标记提醒。*\\n        \\n        本扩展的正确应用范围是网页版 Chat 模式。网页版 Work 模式的降级情况与 Codex 一致，请按照 Codex 排查。\\n      \\n      *\\xa0单纯图片生成任务响应结果中不带 resolved_model_slug 字段属正常现象，请自行辨别。\\n      \\n        关闭公', 'script': True, 'href': 'https://x.com/liu_9982/status/2100132495455043829?s=20'}"
+  },
+  {
+   "check": "15.open-announcement-target",
+   "ok": true,
+   "detail": "{'openedTab': {'id': 7, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector · 1.1.0 版本公告', 'text': 'Route Inspector1.1.0 · 版本公告\\n      EN中\\n    \\n    \\n      版本公告\\n      \\n        新增“图片生成”和“深度研究”状态，避免将这两类任务误判为降级或路由错配。\\n        '}, 'history': {'before': 3, 'after': 3}}"
+  },
+  {
+   "check": "16.suspected-downgrade-verdict",
+   "ok": true,
+   "detail": "{'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}"
+  },
+  {
+   "check": "17.work-unverifiable-verdict",
+   "ok": true,
+   "detail": "{'completed': 'work_unverifiable', 'responding': 'normal'}"
+  },
+  {
+   "check": "18.failed-phase-not-completed",
+   "ok": true,
+   "detail": "{'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'unknown'}"
+  },
+  {
+   "check": "19.new-chat-navigation-association",
+   "ok": true,
+   "detail": "{\"probeSha256\": \"a204ae0afb0c413e4e8d6a0e4cf81fc5bfcf5c2ea87d654d04d85aa65d1da303\", \"xpi\": \"D:\\\\LAB\\\\sync-v110-red-2026-10-01\\\\chatgpt-route-inspector-firefox-1.1.0.xpi\", \"xpiSha256\": \"c2930cf0debc82be2319b6154b49a7d81076397567181f95306fd871795a6545\", \"buildRecord\": \"D:\\\\LAB\\\\sync-v110-red-2026-10-01\\\\chatgpt-route-inspector-firefox-1.1.0.build.json\", \"tabId\": 5, \"beforePageUrl\": \"https://chatgpt.com/\", \"beforeRevision\": 0, \"creationCtx\": \"a45bfb74-f158-41d1-a4cb-6d2db524db99\", \"captureId\": \"951cc32e-2485-4bd6-a17c-0d9fe7bea505\", \"correlatedCaptureId\": \"37deb401-7fd5-4ef3-a4d3-7f2f90011b9a\", \"tempStage\": {\"pushReturnedPathname\": \"/c/local-chatgpt%3Anavcheck-draft\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft\", \"revision\": 2, \"ctxId\": \"a45bfb74-f158-41d1-a4cb-6d2db524db99\", \"ok\": true}, \"responseArrived\": {\"phase\": \"failed\", \"errorCode\": \"http_422\", \"ctx\": \"a45bfb74-f158-41d1-a4cb-6d2db524db99\", \"ok\": true}, \"formalStage\": {\"pushReturnedPathname\": \"/c/navcheck-conv\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-conv\", \"revision\": 4, \"ctxId\": \"a45bfb74-f158-41d1-a4cb-6d2db524db99\", \"ok\": true}, \"overlayShown\": {\"pathname\": \"/c/navcheck-conv\", \"text\": \"\\n      \\n        Route InspectorCreated by @liuqi\\n        \\u672a\\u53d6\\u5f97\\u5b9e\\u9645\\u8def\\u7531\\n      \\n      \\n        \\u5b9e\\u65f6\\u8bf7\\u6c42\\u4f1a\\u8bdd\\u91cd\\u8f7d\\n        \\u53d1\\u9001\\u65b0\\u6d88\\u606f\\uff0c\\u6355\\u83b7\\u8bf7\\u6c42\\u4e0e\\u672c\\u8f6e\\u54cd\\u5e94\\u3002\\n        \\u8bf7\\u6c42\\u6a21\\u578bgpt-5-6-pro-navcheck\\u2192\\u54cd\\u5e94\\u8def\\u7531\\u672a\\u53d6\\u5f97\\n        \\n          \\u6a21\\u5f0f\\u5b9e\\u65f6\\u8bf7\\u6c42\\n          \\u54cd\\u5e94\", \"ok\": true}, \"unrelatedStage\": {\"pushReturnedPathname\": \"/c/navcheck-unrelated\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-unrelated\", \"revision\": 5, \"ctxId\": \"662e892d-e198-458c-8ae9-99b25e47dc5c\", \"oursCurrent\": false, \"ok\": true}, \"overlayAfterSwitch\": {\"pathname\": \"/c/navcheck-unrelated\", \"text\": \"\\n      \\n        Route InspectorCreated by @liuqi\\n        \\u7b49\\u5f85\\u4e0b\\u4e00\\u6b21\\u56de\\u7b54\\n      \\n      \\n        \\u5b9e\\u65f6\\u8bf7\\u6c42\\u4f1a\\u8bdd\\u91cd\\u8f7d\\n        \\u53d1\\u9001\\u65b0\\u6d88\\u606f\\uff0c\\u6355\\u83b7\\u8bf7\\u6c42\\u4e0e\\u672c\\u8f6e\\u54cd\\u5e94\\u3002\\n        \\u8bf7\\u6c42\\u6a21\\u578b\\u2014\\u2192\\u54cd\\u5e94\\u8def\\u7531\\u2014\\n        \\n          \\u6a21\\u5f0f\\u5b9e\\u65f6\\u8bf7\\u6c42\\n          \\u54cd\\u5e94\\u6765\\u6e90\\u672a\\u6355\\u83b7\\u54cd\\u5e94\\u6a21\\u578b\\u5b57\\u6bb5\\n         \", \"ok\": true}, \"ok\": true}"
+  }
+ ]
+}

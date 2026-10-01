@@ -1,0 +1,42 @@
+{
+  "version": "1.1.0",
+  "branch": "codex/sync-upstream-v1.1.0",
+  "upstreamTag": "v1.1.0",
+  "upstreamSha": "dd5ea3366cdb3ed85025fc7a41f6e89ff1ee7552",
+  "mergeCommit": "770095f",
+  "preserveCommit": "73696a7",
+  "receiptCommit": "0c46668",
+  "deliverables": {
+    "xpi": {"path": "release/chatgpt-route-inspector-firefox-1.1.0.xpi",
+            "sha256": "04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae",
+            "bytes": 155451, "signed": false, "installed": false, "uploaded": false},
+    "buildRecord": {"path": "release/chatgpt-route-inspector-firefox-1.1.0.build.json",
+                    "sha256": "a2028179ed18602da5d6be288dd2142a0140dab0d64bfdb6fcd267afaba263a1"},
+    "sourceZip": {"path": "release/chatgpt-route-inspector-firefox-1.1.0-source.zip",
+                  "sha256": "51523360d4063fc939177672b9bf990278a1e0495f4e715f5e22b0cc49888846"}
+  },
+  "identity": {
+    "manifestSha256": "19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee",
+    "geckoId": "chatgpt-route-inspector-firefox@local",
+    "strictMinVersion": "128.0",
+    "packagedFiles": 30
+  },
+  "probe": {
+    "path": "docs/upgrade-2026-10-01/ff-probe-positive-v1.1.0-2026-10-01.json",
+    "probeSha256": "7c56cfd335db2e19e96b6fd7d58dd96882a2bef011536d4b4ff6a8f9a92f0ac6",
+    "browserVersion": "157.0",
+    "buildID": "20260924084938",
+    "executed": 32, "passed": 32, "failed": 0, "missing": 0, "exitCode": 0
+  },
+  "rebuild": {
+    "match": true,
+    "files": 30,
+    "note": "out-of-repo rebuild from the source ZIP; every path and every file hash equals the delivered XPI"
+  },
+  "packagingNote": "The XPI was packaged twice with byte-identical contents; only 9 ZIP mtime entries differ, which changes the archive sha256. The delivered hash above is from the frozen second packaging, and the positive probe (and the rebuild comparison) were re-run against that exact archive.",
+  "previousDeliverablesUnchanged": {
+    "xpi1_0_9": "34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523",
+    "sourceZip1_0_9": "0cc2412fef597d0ea2d6a3b5ac2986c7f178f7a9c13a1c83e9f7a49cd16a73d0",
+    "buildJson1_0_9": "15debe2ae37957a21c7f91161e6627acc33afdd6dd67e29ae00268b6451e9dab"
+  }
+}

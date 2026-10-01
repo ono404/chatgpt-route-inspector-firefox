@@ -1,5 +1,17 @@
 # PROGRESS — Firefox 移植（自用）
 
+## v1.1.0 同步结果（2026-10-01）
+
+- 提交链：`73696a7`（保全补强）→ `0c46668`（开工回执）→ `770095f`（`merge --no-ff` 上游 `dd5ea33`，双亲）。分支 `codex/sync-upstream-v1.1.0`；原目录与旧分支未动。
+- 同源：`git diff --exit-code dd5ea33 -- src schemas _locales icons manifest` **为空**；`verify:firefox` extension=30 firefox=30 identical=true、8 个 JS 逐字节一致。
+- 门禁（逐条退出码，原始输出 `docs/upgrade-2026-10-01/evidence/`）：npm ci 0 / build 0 / build:firefox 0 / typecheck 0 / lint 0 / test 0（**38 文件 442 passed**，覆盖率 98.1/91.8/100）/ test:firefox-tooling 0（**66 passed**，基线 56 + 新增 10 反例）/ build:notice 0 / build:e2e 0 / verify:firefox 0 / package:firefox 0；`test:e2e` 退出 1（缺 extension-capable Chromium，环境阻塞，未安装）。基线 336/56 → 442/66，无删/跳。
+- 最小适配：探针新增 `ROUTE_SCHEMA_VERSION="1.9.0"` 常量并让检查 7 等值断言（非放宽；错误 schema 仍有 `1.8.0`/`2.0.0` 两个反例）；新增检查 **20–24** 并注册为必需；夹具同步 1.9.0；迁移测试补 v1.1.0 字段 null 默认断言。未全局替换版本：1.0.9 公告页与去重逻辑在 v1.1.0 仍在，真机检查 14/15 照常通过。
+- 红→绿：适配前同一 v1.1.0 包 **26 passed / 1 failed**（检查 7，schema 1.8.0 期望 vs 1.9.0 实际）退出 4；适配后 **32 passed / 0 failed / 0 missing** 退出 0。
+- 真机（Firefox **157.0**，`moz:buildID=20260924084938`，临时 profile）：`docs/upgrade-2026-10-01/ff-probe-positive-v1.1.0-2026-10-01.json`，32/32 退出 0；检查 22 拿到 hook 生成的真实 UUID（非预填），证明 page-hook→bridge→后台链路。
+- 真机反向（仓库外 `D:\LAB\sync-v110-reverse-2026-10-01\`）：篡改 XPI **2**（浏览器未启动，0d manifest PASS 而 0a/0b/0c FAIL）；已有 `--out` **6** 且原哈希不变；坏 manifest 经真实 CLI **1**、还原 **0**；禁导航反例身份通过后第 19 项 FAIL **4**。
+- 交付：未签名 XPI `04af228b…65ae`、同次 build.json `a2028179…63a1`、源码 ZIP `51523360…8846`；**仓库外复建 30/30 逐文件一致**（REBUILD_MATCH）。旧交付 1.0.9 三份哈希与历史证据 92 文件均未变。XPI 打包两次内容逐字节相同（仅 9 个 ZIP mtime 不同导致整包哈希变化），冻结后已针对最终包重跑正向探针与复建比对。
+- 未完成：签名/安装、成功真实 SSE、真实更新事件、FF128、额度专项、Chromium E2E。`stream_parse_failed` 上游未定点修复，不因升级宣布已解决。详见 BLOCKED.md。
+
 ## 升级开工回执（2026-10-01，v1.0.9 → v1.1.0）
 - 起点：`HEAD=2470d15`（`codex/sync-upstream-v1.0.9`，隔离 worktree `D:\LAB\sync-v109-isolated`）；四文档 + 校验器改动、补强测试与证据目录未提交 → 已作保全提交 **`73696a7`**（19 文件，精确路径，未用 `git add .`），随后建分支 `codex/sync-upstream-v1.1.0`，工作树干净。
 - 目标：`dd5ea3366cdb3ed85025fc7a41f6e89ff1ee7552` == tag `v1.1.0`（上游仅 1 提交，40 文件 +1431/-45；schema `1.8.0→1.9.0`，新增图片/研究任务字段与 verdict）。
@@ -8,18 +20,19 @@
 - 旧交付物哈希复核未变：XPI `34ca9440…da523`、源码 ZIP `0cc2412f…3d0`、build.json `15debe2a…9dab`。
 - 本轮顺序：`merge --no-ff` → 最小适配（探针/夹具/迁移测试 schema 1.9.0）→ 完整门禁 → 真机正反向 → 源码包仓库外复建 → 提交。证据目录 `docs/upgrade-2026-10-01/`。
 
-## 现役交接（2026-10-01，准备同步 v1.1.0）
+## 现役交接（2026-10-01，v1.1.0 已同步）
 
 | 事实面 | 状态 | 当前结论 |
 | --- | --- | --- |
-| 代码 | verified-current | 当前 worktree 仍在 `codex/sync-upstream-v1.0.9`，HEAD `2470d15`；业务目录对上游 v1.0.9 `99f982d` 无 Git 差异。校验器补强和 9 项回归测试仍未提交，见 [补强报告](docs/verify-hardening-2026-09-27/REPORT.md)。v1.1.0 尚未拉取、合并或构建。 |
-| 本地交付 | verified-current | 保留 v1.0.9 未签名 XPI、同次 build.json、源码 ZIP 与旧验收证据；本次仅复核三份交付物哈希，未重跑构建、业务测试或真机探针。 |
-| 发布与真实流量 | pending | 用户表示尚未完成覆盖安装及实际测试；没有 v1.0.9 或 v1.1.0 日常安装、成功 SSE、真实更新事件的验收凭证。上游 [v1.1.0 发布页](https://github.com/Liu-Bot24/chatgpt-route-inspector/releases/tag/v1.1.0)和远端标签指向 `dd5ea3366cdb3ed85025fc7a41f6e89ff1ee7552`；本机还没有该 Git 对象。下一轮应以**标签**核定目标，不默认上游 `main` 与标签相同。 |
-| 文档与规则 | changed-and-verified | 本节和 README-FIREFOX、AGENTS、BLOCKED 已标出 v1.0.9 本地现场与 v1.1.0 待升级目标；下方 2026-09-27 交接保留为历史快照。 |
+| 代码 | verified-current | 分支 `codex/sync-upstream-v1.1.0`，合并提交 `770095f`（双亲 `0c46668` + 上游 `dd5ea33`）；业务目录对上游 v1.1.0 `dd5ea33` 无 Git 差异。校验器补强已由 `73696a7` 纳入版本控制。 |
+| 本地交付 | verified-current | v1.1.0 未签名 XPI / 同次 build.json / 源码 ZIP 已生成，仓库外复建 30/30 逐文件一致；旧 v1.0.9 交付物与历史证据哈希未变。 |
+| 发布与真实流量 | pending | 未签名、未上传 AMO、未日常覆盖安装；成功 SSE、真实更新事件（1.0.9→1.1.0）未验证。 |
+| 文档与规则 | changed-and-verified | 本轮新增 [升级报告](docs/upgrade-2026-10-01/UPGRADE-REPORT.md) 与 `DELIVERY.json`；AGENTS、README-FIREFOX、BLOCKED 已更新到 v1.1.0 事实。 |
 | 记忆 | out-of-scope | Codex 生成记忆与 `.workbuddy/` 只读，当前事实以本节及当前 Git/交付物为准。 |
-| 工作区 | pending | 本 worktree 有校验器、测试、文档及补强证据的未提交改动；原工作区仍为 v1.0.7 且有四文档修改、`.workbuddy/` 和 `.zcodeignore` 未跟踪。两 worktree、分支、产物和证据全部保留；进入 v1.1.0 同步前须先保全并接续这些未提交工作，不能从干净 HEAD 建新分支后遗漏它。 |
+| 工作区 | verified-current | 本 worktree 白名单内改动已全部提交；原工作区、旧分支、`release/` 旧产物、历史证据与仓库外备份全部保留。 |
 
-`origin/main` 在 2026-10-01 只读查询仍为 `182fca1`；未查到此本地 v1.0.9 分支已推送/合并的凭证。v1.1.0 的源码差异、Firefox 接缝及测试数量尚未调查，不能沿用 v1.0.9 的 336/56/27 数字作新版结论。清场预览仅作参考：现有 worktree、release 文件、历史证据和临时复核现场均保留，未删、未重命名、未归档；升级前不清理。
+**本轮未 push**，未查询远端推送状态。下方开工回执与 2026-09-27 及更早交接保留为历史快照。
+清场预览：所有 worktree、release 文件、历史证据与仓库外备份/临时现场均保留，未删、未重命名、未归档。
 
 ## 2026-09-27 历史交接（neat-freak 收尾）
 

@@ -1,0 +1,68 @@
+npm notice run chatgpt-route-inspector@1.1.0 test:e2e
+npm notice run npm run build:e2e && playwright test
+npm notice run chatgpt-route-inspector@1.1.0 build:e2e
+npm notice run node scripts/build.mjs e2e && npm run build:notice
+
+  dist\e2e\background\service-worker.js  42.3kb
+
+Done in 19ms
+
+  dist\e2e\content\page-hook.js   90.0kb
+  dist\e2e\content\bridge.js      82.5kb
+  dist\e2e\ui\popup\index.js      55.9kb
+  dist\e2e\ui\dashboard\index.js  55.5kb
+  dist\e2e\ui\options\index.js    39.1kb
+  ...and 2 more output files...
+
+Done in 47ms
+Built e2e: D:\LAB\sync-v109-isolated\dist\e2e
+npm notice run chatgpt-route-inspector@1.1.0 build:notice
+npm notice run node scripts/build-notice.mjs
+Built public notice: D:\LAB\sync-v109-isolated\dist\notice
+
+Running 13 tests using 1 worker
+
+  x   1 tests\e2e\extension.spec.ts:187:1 › links the dashboard version to its notice and keeps GitHub separate (0ms)
+  -   2 tests\e2e\extension.spec.ts:230:1 › anchors the yellow suspected-downgrade hint to the status in live and reload modes
+  -   3 tests\e2e\extension.spec.ts:364:1 › marks -wm Work responses white and inconclusive in reload and live without mixing them
+  -   4 tests\e2e\extension.spec.ts:427:1 › keeps live and reload captures distinct and stores no chat text
+  -   5 tests\e2e\extension.spec.ts:1240:1 › restores a detached overlay host while respecting manual hide
+  -   6 tests\e2e\extension.spec.ts:1295:1 › captures delta metadata through real fetch chunks and interleaved WebSocket frames
+  -   7 tests\e2e\extension.spec.ts:1414:1 › aligns diagnostic evidence fields without adding PoW
+  -   8 tests\e2e\extension.spec.ts:1509:1 › shows only GPT-5.6 and GPT-5.5 auto reasoning in the dashboard, popup and overlay
+  -   9 tests\e2e\extension.spec.ts:1590:1 › collects both modes independently and isolates reloads, SPA visits and late responses
+  -  10 tests\e2e\extension.spec.ts:1702:1 › captures passive quota snapshots and displays four rows immediately above request ID
+  -  11 tests\e2e\extension.spec.ts:1760:1 › retires the current route and badge when the same tab leaves the supported site
+  -  12 tests\e2e\extension.spec.ts:1814:1 › keeps normal and 256-character model fields inside full and compact overlays
+  -  13 tests\e2e\extension.spec.ts:1870:1 › rejects stale UI snapshots, keeps overlay nodes stable, and blocks post-clear resurrection
+
+
+  1) tests\e2e\extension.spec.ts:187:1 › links the dashboard version to its notice and keeps GitHub separate 
+
+    Error: No extension-capable Chromium found. Run: npx playwright install chromium
+
+      83 |   }
+      84 |   const match = candidates.find((candidate) => existsSync(candidate));
+    > 85 |   if (!match) throw new Error('No extension-capable Chromium found. Run: npx playwright install chromium');
+         |                     ^
+      86 |   return match;
+      87 | }
+      88 |
+        at findExtensionCapableChromium (D:\LAB\sync-v109-isolated\tests\e2e\extension.spec.ts:85:21)
+        at D:\LAB\sync-v109-isolated\tests\e2e\extension.spec.ts:150:22
+
+    Error Context: output\playwright\test-results\extension-links-the-dashbo-b31b7-e-and-keeps-GitHub-separate\error-context.md
+
+    Error Context: output\playwright\test-results\extension-links-the-dashbo-b31b7-e-and-keeps-GitHub-separate\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    output\playwright\test-results\extension-links-the-dashbo-b31b7-e-and-keeps-GitHub-separate\trace.zip
+    Usage:
+
+        npx playwright show-trace output\playwright\test-results\extension-links-the-dashbo-b31b7-e-and-keeps-GitHub-separate\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\extension.spec.ts:187:1 › links the dashboard version to its notice and keeps GitHub separate 
+  12 did not run

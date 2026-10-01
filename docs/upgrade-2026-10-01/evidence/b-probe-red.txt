@@ -1,0 +1,63 @@
+PASS 0f.build-record | xpi=c2930cf0debc82be files=30
+PASS 0a.xpi-sha256 | actual=c2930cf0debc82be2319b6154b49a7d81076397567181f95306fd871795a6545 expected=c2930cf0debc82be2319b6154b49a7d81076397567181f95306fd871795a6545
+PASS 0b.xpi-contents | 30 files identical to XPI
+PASS 0c.dist-matches-record | 30 recorded files agree
+PASS 0d.manifest-sha256 | sha256=19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee version=1.1.0 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee)
+launched firefox pid=33332 port=53938 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-847ypzgm
+PASS 0.session | bd777f5f-8e8a-4143-94a9-7b1644e4d198
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-847ypzgm pid=33332 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-847ypzgm inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=1dcd367d-3b3d-469c-bc4d-ef1dcbd57628 last_url=moz-extension://1dcd367d-3b3d-469c-bc4d-ef1dcbd57628/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://1dcd367d-3b3d-469c-bc4d-ef1dcbd57628/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://1dcd367d-3b3d-469c-bc4d-ef1dcbd57628/ui/popup/index.html', 'version': '1.1.0'}
+PASS 6.popup-renders | 
+  
+    
+      
+      
+        
+          Route Inspector
+          Created by @liuqi
+        
+        服务器报告的路由遥测
+      
+    
+    
+      
+        EN
+        中
+      
+      实时监听
+    
+  
+  
+    
+      
+
+FAIL 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 
+
+  
+    Route Inspectorv1.1.0请求模型与真实响应路由GitHub
+    EN中仅保存在本机
+  
+  路由诊断台导出 JSON导出报告清空记录
+  全部记录1实时请求1会话重载0异常1
+  
+    捕获记录全部模式实时请求会话重载全部结论正常自动推理图片生成深度研究疑似降级无法判断错配冲突未比较时间模式请求模型标签响应路由判定响应来源10/01 17:23:03实时请求GPT 5.6 Pro未解析GPT 5.5 mini路由错配resolved_model_slug当前筛选条件下没有记录。
+  证据字段路由错配捕获模式实
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 5, 'turnTabId': 5, 'turnCtx': 'a45bfb74-f158-41d1-a4cb-6d2db524db99'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'a45bfb74-f158-41d1-a4cb-6d2db524db99', 'documentId': '04924450-1cf2-42ea-bce9-0cc44b1fa88a', 'documentStartedAt': 1790846587198, 'visitStartedAt': 1790846587198, 'revision': 0, 'reloadEligible': False, 'pageUrl': 'https://chatgpt.com/'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '\n  \n    \n      Route Inspector1.0.9 · 版本公告\n      EN中\n    \n    \n      版本公告\n      \n        \n          根据此前投票反馈，响应结果中存在 resolved_model_slug 字段的用户约 80% 未降级；没有该字段的用户约 80% 发生了降级。\n          故针对响应结果中 resolved_model_slug 字段缺失的情
+PASS 15.open-announcement-target | {'openedTab': {'id': 7, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector · 1.1.0 版本公告', 'text': 'Route Inspector1.1.0 · 版本公告\n      EN中\n    \n    \n      版本公告\n      \n        新增“图片生成”和“深度研究”状态，避免将这两类任务误判为降级或路由错
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'unknown'}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+26 passed / 1 failed / 0 missing -> exit 4 (checks failed: 7.synthetic-observation-pipeline)
+saved docs/upgrade-2026-10-01/evidence/b-probe-red.json

@@ -1,0 +1,170 @@
+{
+ "meta": {
+  "schema": "ff-probe/2",
+  "date": "2026-10-01",
+  "startedAt": "2026-10-01T17:40:30+0800",
+  "finishedAt": "2026-10-01T17:40:30+0800",
+  "label": "reverse-tampered",
+  "probeFile": "D:\\LAB\\sync-v110-reverse-2026-10-01\\ff-marionette.py",
+  "probeSha256": "7c56cfd335db2e19e96b6fd7d58dd96882a2bef011536d4b4ff6a8f9a92f0ac6",
+  "stage": "identity",
+  "reachedStages": [
+   "probe-hash",
+   "git",
+   "build-record",
+   "identity"
+  ],
+  "identity": {
+   "xpi": "D:\\LAB\\sync-v110-reverse-2026-10-01\\tampered.xpi",
+   "distDir": "D:\\LAB\\sync-v110-reverse-2026-10-01\\dist\\firefox",
+   "buildRecordPath": "D:\\LAB\\sync-v110-reverse-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.build.json",
+   "expectedXpiSha256": "45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0",
+   "xpiSha256": "09da34f2ce1e2446440514000e1ebc6144f08039c895e319689062c1a991057c",
+   "manifestSha256": "19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee",
+   "manifestVersion": "1.1.0",
+   "geckoId": "chatgpt-route-inspector-firefox@local",
+   "strictMinVersion": "128.0",
+   "packagedFiles": 30,
+   "distFileCount": 30,
+   "parseError": null
+  },
+  "expectation": {
+   "source": "build-record: D:\\LAB\\sync-v110-reverse-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.build.json",
+   "expectedXpiSha256": "45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0",
+   "buildRecordSha256": "283e5b17cdc6eaff408aaa36cbe57e7601adbd1972cd9303dab476d910744f26",
+   "buildRecordError": null
+  },
+  "git": {
+   "repoDir": "D:\\LAB\\sync-v110-reverse-2026-10-01",
+   "available": false,
+   "head": null,
+   "dirty": null,
+   "porcelain": null,
+   "error": "fatal: not a git repository (or any of the parent directories): .git",
+   "labelCommit": ""
+  },
+  "launch": null,
+  "session": null,
+  "browserLaunched": false,
+  "browserConnected": false,
+  "connectionTrusted": null,
+  "firefoxVersion": null,
+  "fatal": null,
+  "summary": {
+   "executed": 5,
+   "passed": 2,
+   "failed": 3,
+   "failedChecks": [
+    "0a.xpi-sha256",
+    "0b.xpi-contents",
+    "0c.dist-matches-record"
+   ],
+   "requiredChecks": [
+    "0a.xpi-sha256",
+    "0b.xpi-contents",
+    "0d.manifest-sha256",
+    "0.session",
+    "0e.session-profile",
+    "1.install-no-manifest-error",
+    "1b.addon-uuid",
+    "2.ext-namespaces",
+    "3.ext-chrome.storage-promise",
+    "4.ext-get-state-roundtrip",
+    "5.ext-tabs-i18n-getURL",
+    "6.popup-renders",
+    "7.synthetic-observation-pipeline",
+    "8.dashboard-shows-turn",
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "11.overlay-suspect-hint",
+    "12.capture-context-registered",
+    "13.auto-reasoning-verdict",
+    "14.announcement-page",
+    "15.open-announcement-target",
+    "16.suspected-downgrade-verdict",
+    "17.work-unverifiable-verdict",
+    "18.failed-phase-not-completed",
+    "19.new-chat-navigation-association",
+    "20.task-kind-verdicts",
+    "21.research-planning-report-split",
+    "22.deep-research-capture-taskkind",
+    "23.ui-task-filters",
+    "24.ui-research-model-split",
+    "0c.dist-matches-record",
+    "0f.build-record"
+   ],
+   "missingChecks": [
+    "0.session",
+    "0e.session-profile",
+    "1.install-no-manifest-error",
+    "1b.addon-uuid",
+    "2.ext-namespaces",
+    "3.ext-chrome.storage-promise",
+    "4.ext-get-state-roundtrip",
+    "5.ext-tabs-i18n-getURL",
+    "6.popup-renders",
+    "7.synthetic-observation-pipeline",
+    "8.dashboard-shows-turn",
+    "9.page-hook-MAIN-world",
+    "10.bridge-overlay-ISOLATED",
+    "11.overlay-suspect-hint",
+    "12.capture-context-registered",
+    "13.auto-reasoning-verdict",
+    "14.announcement-page",
+    "15.open-announcement-target",
+    "16.suspected-downgrade-verdict",
+    "17.work-unverifiable-verdict",
+    "18.failed-phase-not-completed",
+    "19.new-chat-navigation-association",
+    "20.task-kind-verdicts",
+    "21.research-planning-report-split",
+    "22.deep-research-capture-taskkind",
+    "23.ui-task-filters",
+    "24.ui-research-model-split"
+   ],
+   "identityOk": false,
+   "aborted": null,
+   "stage": "identity",
+   "browserLaunched": false,
+   "browserConnected": false,
+   "connectionTrusted": null,
+   "profileDir": null,
+   "profileDirRemoved": true,
+   "profilesKeptByRequest": false,
+   "browserStoppedByThisRun": false
+  },
+  "exitCode": 2,
+  "exitReason": "artifact identity rejected before browser interaction",
+  "resultsPath": "D:\\LAB\\sync-v110-reverse-2026-10-01\\r-tampered.json",
+  "notes": [
+   "identity rejected; browser was not launched, connected, installed to or uninstalled from"
+  ]
+ },
+ "results": [
+  {
+   "check": "0f.build-record",
+   "ok": true,
+   "detail": "xpiSha256=45ce3d10b5d4acd1 manifestSha256=19bec35aef869de7 files=30"
+  },
+  {
+   "check": "0a.xpi-sha256",
+   "ok": false,
+   "detail": "actual=09da34f2ce1e2446440514000e1ebc6144f08039c895e319689062c1a991057c expected=45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0"
+  },
+  {
+   "check": "0b.xpi-contents",
+   "ok": false,
+   "detail": "content differs: content/page-hook.js"
+  },
+  {
+   "check": "0c.dist-matches-record",
+   "ok": false,
+   "detail": "record xpiPath=D:\\LAB\\sync-v110-reverse-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.xpi but probing D:\\LAB\\sync-v110-reverse-2026-10-01\\tampered.xpi; XPI content differs from record: content/page-hook.js"
+  },
+  {
+   "check": "0d.manifest-sha256",
+   "ok": true,
+   "detail": "sha256=19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee version=1.1.0 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee)"
+  }
+ ]
+}

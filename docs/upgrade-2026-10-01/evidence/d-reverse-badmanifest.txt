@@ -1,0 +1,6 @@
+note  paths: extension=30 firefox=30 identical=true
+note  src UI pages: 5 checked against both targets
+note  boundary: the pairwise path comparison cannot see an entry missing from BOTH targets; the src-anchored check covers src/ui/**/index.html only
+note  js byte-identical: 8 files checked
+FAIL  firefox: manifest differs from toFirefoxManifest(manifest/manifest.json): Expected values to be strictly deep-equal: ⏎ + actual - expected ⏎ ... Skipped lines ⏎   { ⏎     action: { ⏎       default_icon: { ⏎         '128': 'icons/icon-128.png', ⏎         '16': 'icons/icon-16.png', ⏎ ... ⏎         id: 'chatgpt-route-inspector-firefox@local', ⏎ +       strict_min_version: '120.0' ⏎ -       strict_min_version: '128.0'
+verify-firefox-dist: 1 failure(s)

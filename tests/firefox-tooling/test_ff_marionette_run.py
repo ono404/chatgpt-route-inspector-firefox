@@ -223,6 +223,97 @@ class TestRuntimeAnomalyEvidence(RunHarness):
         self.assert_cleanup()
 
 
+class TestV110TaskKindChecks(RunHarness):
+    """The v1.1.0 checks must be able to fail, not merely to pass.
+
+    A green run proves the checks exist; these cases prove each new check
+    actually reads the thing it claims to read. The schema expectation is an
+    equality against the probe's own ROUTE_SCHEMA_VERSION, so a record from any
+    other build is rejected rather than tolerated.
+    """
+
+    def test_expected_schema_version_is_the_v110_record_version(self):
+        self.assertEqual(PROBE.ROUTE_SCHEMA_VERSION, "1.9.0")
+        self.assertIn("7.synthetic-observation-pipeline", PROBE.REQUIRED_CHECKS)
+
+    def test_new_task_checks_are_required(self):
+        for name in ("20.task-kind-verdicts", "21.research-planning-report-split",
+                     "22.deep-research-capture-taskkind", "23.ui-task-filters",
+                     "24.ui-research-model-split"):
+            self.assertIn(name, PROBE.REQUIRED_CHECKS, name)
+
+    def test_stale_schema_version_fails_the_pipeline_check(self):
+        # A record left at the previous version must not be accepted.
+        code = self.run_probe(fake_kwargs={"answers": {"turn": {
+            "ok": True, "turns": 1, "verdict": "mismatch", "route": "gpt-5-5-mini",
+            "req": "gpt-5-6-pro", "schemaVersion": "1.8.0"}}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        payload = self.saved()
+        self.assertIn("7.synthetic-observation-pipeline",
+                      payload["meta"]["summary"]["failedChecks"])
+
+    def test_future_schema_version_is_also_rejected(self):
+        code = self.run_probe(fake_kwargs={"answers": {"turn": {
+            "ok": True, "turns": 1, "verdict": "mismatch", "route": "gpt-5-5-mini",
+            "req": "gpt-5-6-pro", "schemaVersion": "2.0.0"}}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        self.assertIn("7.synthetic-observation-pipeline",
+                      self.saved()["meta"]["summary"]["failedChecks"])
+
+    def test_downgraded_image_task_fails_the_task_kind_check(self):
+        # If a dedicated task were reported as a downgrade, check 20 must fail.
+        code = self.run_probe(fake_kwargs={"answers": {"taskKinds": {
+            "image": {"verdict": "suspected_downgrade", "taskKind": "image_generation",
+                      "route": "gpt-5-6-pro", "report": None, "schemaVersion": "1.9.0"},
+            "research": {"verdict": "deep_research", "taskKind": "deep_research",
+                         "route": "gpt-5-6-pro", "report": "gpt-5-6-instant",
+                         "schemaVersion": "1.9.0"}}}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        self.assertIn("20.task-kind-verdicts",
+                      self.saved()["meta"]["summary"]["failedChecks"])
+
+    def test_report_model_folded_into_planner_fails_the_split_check(self):
+        code = self.run_probe(fake_kwargs={"answers": {"researchSplit": {
+            "verdict": "deep_research", "planner": "gpt-5-6-thinking",
+            "report": "gpt-5-6-thinking"}}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        self.assertIn("21.research-planning-report-split",
+                      self.saved()["meta"]["summary"]["failedChecks"])
+
+    def test_hook_that_never_sees_the_task_fails_check_22(self):
+        # The capture path must derive the kind; a null kind means the hook
+        # did not identify the Deep Research request.
+        code = self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": "hook-generated-uuid-1", "taskKind": None,
+            "verdict": "normal", "captureContextId": "ctx-1"}}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        self.assertIn("22.deep-research-capture-taskkind",
+                      self.saved()["meta"]["summary"]["failedChecks"])
+
+    def test_prefilled_capture_id_fails_check_22(self):
+        # A captureId invented by the probe is not evidence the hook ran.
+        code = self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": "ff-probe-fabricated", "taskKind": "deep_research",
+            "verdict": "deep_research", "captureContextId": "ctx-1"}}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        self.assertIn("22.deep-research-capture-taskkind",
+                      self.saved()["meta"]["summary"]["failedChecks"])
+
+    def test_missing_task_filter_fails_the_ui_check(self):
+        code = self.run_probe(fake_kwargs={"answers": {"uiFilters": {
+            "filters": ["all", "normal"], "deepSelected": False, "imageSelected": False}}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        self.assertIn("23.ui-task-filters",
+                      self.saved()["meta"]["summary"]["failedChecks"])
+
+    def test_ui_report_row_showing_the_planner_fails(self):
+        code = self.run_probe(fake_kwargs={"answers": {"uiSplit": {
+            "planner": "gpt-5-6-thinking", "report": "gpt-5-6-thinking", "pairs": []}}})
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        self.assertIn("24.ui-research-model-split",
+                      self.saved()["meta"]["summary"]["failedChecks"])
+
+
 class TestOutputDefaults(RunHarness):
     def test_omitting_out_creates_a_new_file_and_never_touches_history(self):
         history = probe_loader.HISTORICAL_RESULTS

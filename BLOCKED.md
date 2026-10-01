@@ -1,6 +1,10 @@
 # BLOCKED（需人工验证项）
 
-2026-10-01 升级前状态：下方为 v1.0.9 及更早版本的未完成项；用户尚未完成覆盖安装与真实使用测试，上游 v1.1.0 虽已发布，本地未同步。成功 SSE、真实更新事件、签名/安装等项目不能因决定直升 v1.1.0 而视为通过；新版的待办需在同步后按实际变化重新核定。现役代码和工作区状态见 PROGRESS.md 顶部。
+2026-10-01 升级后状态：本地已同步上游 **v1.1.0**（`dd5ea33`）并交付未签名包。
+下方第 1–14 项为 v1.0.9 及更早版本的未完成项，**原样保留**；升级不使它们自动通过，
+本轮也没有重跑其中任何一项的人工步骤。第 15 项记录本轮新增/复测的边界。
+现役代码与工作区状态见 PROGRESS.md 顶部，本轮结果与证据见
+[docs/upgrade-2026-10-01/UPGRADE-REPORT.md](docs/upgrade-2026-10-01/UPGRADE-REPORT.md)。
 
 状态更新至 2026-09-27 v1.0.9 / round2 独立验收；历史用户样本保留原日期，不能当作新版真实流量证据。
 
@@ -96,3 +100,38 @@ round2 第 19 项已验证真实 tracker 导航、临时地址提升与浮窗归
 
 ## 2026-09-27 verify-hardening 轮状态
 本轮无新增阻塞：manifest 完整对象比较与回归测试均已落地，冻结交付物、dist 与历史证据哈希未变。上一轮遗留问题（第 1–14 项）原样保留，未在本轮重跑浏览器探针或工具回归。
+
+## 15. v1.1.0 同步轮新增与复测的边界 — **2026-10-01**
+
+以下为本轮**如实记录**的边界，不是产品缺陷结论：
+
+1. **成功流式响应的会话身份/模型路由仍未覆盖**（承接第 14 项）。v1.1.0 新增的检查 22
+   （深研任务识别）与既有检查 19 一样，走的是**合成请求 + chatgpt.com 真实未认证拒绝响应**，
+   因此证明了「请求侧任务识别与上下文关联」链路，**不证明**成功 SSE 内的
+   `conversation_id` / 模型路由 / 研究任务关联。检查 22 的真实 UUID 仅证明 hook 自己生成 captureId。
+2. **`stream_parse_failed` 仍未确认根因**（承接第 4 项）。上游 v1.1.0 未针对该路径定点修复
+   （`sse-decoder.ts` 只扩了 KEYS 白名单与 `widget_state`/`image_gen_title` 投影）。
+   **不因升级宣布已修复**；探针检查 18 只断言失败记录不被误报为 completed。
+3. **Chromium E2E 仍缺环境**（承接第 7 项）。本轮 `npm run test:e2e` 退出 **1**：
+   `No extension-capable Chromium found. Run: npx playwright install chromium`，
+   1 failed / 12 did not run。证据 `docs/upgrade-2026-10-01/evidence/c-test-e2e.txt`；
+   按约束未安装浏览器，`build:e2e` 退出 0 不代表 E2E 执行通过。
+4. **真机版本为 Firefox 157.0，非 128**（承接第 6 项）。`strict_min_version 128.0` 未改动、
+   仍**未在 128 上实测**。本轮 `moz:buildID=20260924084938`。
+5. **v1.1.0 的图片任务/研究任务只做了合成断言**。检查 20/21/23/24 的输入是**合成 observation**
+   （扩展上下文注入，或经真实扩展页读取 DOM）；没有任何一次**真实账号**的图片生成或深研请求。
+   因此「识别正确」有代码级与 UI 级证据，**没有真实流量证据**。
+6. **检查 22 的注入层级**：真实 **page-hook**（被测 XPI 内）解析探针发出的合成创建请求，
+   故覆盖 page-hook → bridge → background；它**不经过** bridge 的 DOM 浮窗渲染，
+   也**不覆盖** WebSocket/SSE 侧的 `task-captures` 路径（那条路径由上游单测
+   `tests/unit/task-association.test.ts` 以合成数据覆盖）。
+7. **反向验证的策略性取舍**：篡改 XPI 的反例在**仓库外临时副本**中重打包后才得到干净信号
+   （`0c.dist-matches-record` 会因为记录里的绝对路径而先拒绝对照外的副本）。这**不是**放宽检查：
+   终次运行的失败项是 `0a/0b/0c`，而 `0d.manifest-sha256` PASS，正是「同 manifest 异内容」被拒的实证。
+8. **旧公告页仍在**：v1.1.0 未移除 1.0.9 公告页与去重逻辑，故 `src/ui/announcement/` 与
+   `upgrade-notice.ts` 的版本语义、`tests/integration/upgrade-notice.test.ts` 均**保持 1.0.9**，
+   未做全局版本替换。真实更新事件（1.0.9→1.1.0）因此仍**未验证**（承接第 5 项）。
+9. **未签名、未上传 AMO、未日常安装**：本轮交付仅为本地未签名 XPI；签名与安装状态
+   见 README-FIREFOX.md 的「AMO 提交资料」一节。
+10. **`npm ci` 报 5 项依赖漏洞**（3 moderate、2 high），未做可达性分析、未升级依赖。
+    证据 `docs/upgrade-2026-10-01/evidence/c-npm-ci.txt`。

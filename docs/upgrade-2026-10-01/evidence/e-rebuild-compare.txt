@@ -1,0 +1,2 @@
+rebuilt=30 xpi=30 recorded=30
+REBUILD_MATCH: every rebuilt file matches the delivered XPI byte for byte

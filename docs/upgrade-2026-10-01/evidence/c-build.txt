@@ -1,0 +1,16 @@
+npm notice run chatgpt-route-inspector@1.1.0 build
+npm notice run node scripts/build.mjs
+
+  dist\extension\background\service-worker.js  42.3kb
+
+Done in 15ms
+
+  dist\extension\content\page-hook.js   90.0kb
+  dist\extension\content\bridge.js      82.5kb
+  dist\extension\ui\popup\index.js      55.9kb
+  dist\extension\ui\dashboard\index.js  55.5kb
+  dist\extension\ui\options\index.js    39.1kb
+  ...and 2 more output files...
+
+Done in 31ms
+Built extension: D:\LAB\sync-v109-isolated\dist\extension
