@@ -1,0 +1,784 @@
+test_ambiguous_chatgpt_pages_fail (test_ff_marionette_run.TestCheck22CaptureIdentity.test_ambiguous_chatgpt_pages_fail) ... PASS 0f.build-record | xpi=8567ac58b9d3bbab files=6
+PASS 0a.xpi-sha256 | actual=8567ac58b9d3bbab7f9100524c3895b7b2ce58322f184ec002cef013ff8e52e5 expected=8567ac58b9d3bbab7f9100524c3895b7b2ce58322f184ec002cef013ff8e52e5
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55587 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-y_0o304g
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-y_0o304g pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-y_0o304g inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=3 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 3, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research", "verdict": "deep_research"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_blank_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_blank_capture_id_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-qw9vmkne\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55590 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-pgmkvzhd
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-pgmkvzhd pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-pgmkvzhd inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "   ", "taskKind": "deep_research", "verdict": "deep_research"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_empty_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_empty_capture_id_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-oq5wtsgg\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55591 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-whm9_w5a
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-whm9_w5a pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-whm9_w5a inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "", "taskKind": "deep_research", "verdict": "deep_research"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_legal_new_capture_passes (test_ff_marionette_run.TestCheck22CaptureIdentity.test_legal_new_capture_passes) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-b__c6h0l\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55592 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xzcavgf
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xzcavgf pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xzcavgf inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research", "verdict": "deep_research"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+ERROR
+test_malformed_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_malformed_capture_id_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-rwfl4qnc\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55593 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qjvwap7j
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qjvwap7j pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qjvwap7j inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "hook-generated-uuid-1", "taskKind": "deep_research", "verdict": "deep_research"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_mismatched_context_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_mismatched_context_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-st03zq4f\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55594 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-rh3lpqid
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-rh3lpqid pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-rh3lpqid inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research", "verdict": "deep_research", "captureContextId": "ctx-other"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_missing_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_missing_capture_id_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-46xyy38u\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55596 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-n6jkq51b
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-n6jkq51b pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-n6jkq51b inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": null, "taskKind": "deep_research", "verdict": "deep_research"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_missing_context_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_missing_context_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-fqii4f1k\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55597 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-9tbbw0n_
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-9tbbw0n_ pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-9tbbw0n_ inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research", "verdict": "deep_research"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_native_fetch_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_native_fetch_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-zkoeq2wa\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55598 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-bns7o5c4
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-bns7o5c4 pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-bns7o5c4 inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research", "verdict": "deep_research"}, "sent": {"started": true, "fetchName": "fetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_no_capture_produced_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_no_capture_produced_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-ihr7ocy8\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55601 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xydm4b6
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xydm4b6 pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xydm4b6 inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+FAIL 22.deep-research-capture-taskkind | {"found": {}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+ok
+test_no_revision_growth_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_no_revision_growth_fails) ... 31 passed / 1 failed / 0 missing -> exit 4 (checks failed: 22.deep-research-capture-taskkind)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-13w8tkyf\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55602 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-ub4kywmq
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-ub4kywmq pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-ub4kywmq inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research", "verdict": "deep_research"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_old_record_with_valid_uuid_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_old_record_with_valid_uuid_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-m300xrkg\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55603 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-o2t8k9ku
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-o2t8k9ku pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-o2t8k9ku inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "0f1e2d3c-4b5a-4978-8967-5a4b3c2d1e0f", "taskKind": "deep_research", "verdict": "deep_research"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_unstarted_request_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_unstarted_request_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-e04343bg\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55604 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-x0xvbumy
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-x0xvbumy pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-x0xvbumy inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+FAIL 22.deep-research-capture-taskkind | deep-research request could not be sent: {'started': False, 'fetchName': 'routeInspectorFetch'}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+ok
+test_wrong_page_url_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_page_url_fails) ... 31 passed / 1 failed / 0 missing -> exit 4 (checks failed: 22.deep-research-capture-taskkind)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-rxx44ldb\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55605 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tq5pj6uf
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tq5pj6uf pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tq5pj6uf inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research", "verdict": "deep_research", "pageUrl": "https://chatgpt.com/c/other"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_wrong_request_marker_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_request_marker_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-kktwk5cp\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55606 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-3ijimtuj
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-3ijimtuj pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-3ijimtuj inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research", "verdict": "deep_research", "requestedModel": "gpt-6-dr-deadbeefdeadbeef"}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+test_wrong_tab_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_tab_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-1nimbzxo\results.json
+PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
+PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=55609 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-byl_krue
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-byl_krue pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-byl_krue inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"found": {"captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research", "verdict": "deep_research", "tabId": 9999}, "sent": {"started": true, "fetchName": "routeInspectorFetch"}}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+FAIL
+
+======================================================================
+ERROR: test_legal_new_capture_passes (test_ff_marionette_run.TestCheck22CaptureIdentity.test_legal_new_capture_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 344, in test_legal_new_capture_passes
+    self.assertTrue(evidence["markerModel"].startswith("gpt-6-dr-"))
+                    ~~~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'markerModel'
+
+======================================================================
+FAIL: test_ambiguous_chatgpt_pages_fail (test_ff_marionette_run.TestCheck22CaptureIdentity.test_ambiguous_chatgpt_pages_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 419, in test_ambiguous_chatgpt_pages_fail
+    self.assert_check_failed(self.run_probe(fake_kwargs={"extra_chatgpt_pages": 1}))
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_blank_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_blank_capture_id_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 357, in test_blank_capture_id_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "captureId": "   ", "taskKind": "deep_research", "verdict": "deep_research"}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_empty_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_empty_capture_id_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 353, in test_empty_capture_id_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "captureId": "", "taskKind": "deep_research", "verdict": "deep_research"}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_malformed_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_malformed_capture_id_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 361, in test_malformed_capture_id_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "captureId": "hook-generated-uuid-1", "taskKind": "deep_research",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "verdict": "deep_research"}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_mismatched_context_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_mismatched_context_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 372, in test_mismatched_context_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "verdict": "deep_research", "captureContextId": "ctx-other"}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_missing_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_missing_capture_id_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 349, in test_missing_capture_id_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "captureId": None, "taskKind": "deep_research", "verdict": "deep_research"}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_missing_context_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_missing_context_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 366, in test_missing_context_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drLock": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "tabCount": 1, "tabId": 4242, "stateRevision": 20, "ctxId": None,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "ctxPageUrl": "https://chatgpt.com/", "ctxRevision": 11,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "beforeIds": ["0f1e2d3c-4b5a-4978-8967-5a4b3c2d1e0f"]}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_native_fetch_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_native_fetch_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 379, in test_native_fetch_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drCapture": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "started": True, "fetchName": "fetch"}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_no_revision_growth_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_no_revision_growth_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 409, in test_no_revision_growth_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drAfter": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "stateRevision": 20}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_old_record_with_valid_uuid_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_old_record_with_valid_uuid_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 390, in test_old_record_with_valid_uuid_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "captureId": old_id, "taskKind": "deep_research", "verdict": "deep_research"}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_wrong_page_url_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_page_url_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 404, in test_wrong_page_url_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "verdict": "deep_research", "pageUrl": "https://chatgpt.com/c/other"}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_wrong_request_marker_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_request_marker_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 394, in test_wrong_request_marker_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "verdict": "deep_research", "requestedModel": "gpt-6-dr-deadbeefdeadbeef"}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+======================================================================
+FAIL: test_wrong_tab_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_tab_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 399, in test_wrong_tab_fails
+    self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "verdict": "deep_research", "tabId": 9999}}}))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+    self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 4
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.334s
+
+FAILED (failures=13, errors=1)
+32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-w8htj8yk\results.json

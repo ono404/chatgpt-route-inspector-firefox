@@ -161,6 +161,12 @@ profile 以浏览器回报的 `moz:profile` 为准并校验其等于本次启动
 - 检查 11 从 postMessage 注入合成观测，只覆盖 bridge→background→浮窗；检查 19 与 22 经真实 page-hook，但输入为合成请求、响应为真实未认证拒绝。**均不覆盖成功 SSE 内的会话身份、模型路由或真实账号完整流量。**
 - `test:e2e` 本轮再次尝试仍退出 1：缺 extension-capable Chromium，1 failed / 12 did not run。构建 E2E 通过不等于 E2E 执行通过。其余边界见 [BLOCKED](BLOCKED.md) 第 15 项。
 
+### 检查 22 误报加固（2026-10-02）
+
+- 背景：`22.deep-research-capture-taskkind` 此前只在“有 taskKind=deep_research 且 captureId 不以 `ff-probe` 开头”时通过，captureId 缺失会被转成空串而误通过——缺失/空/伪造身份、旧记录、错标记、错 tab、无 revision 增长均可冒充本轮捕获。
+- 加固后判定（冻结包真机 **32/32，退出 0**，探针 `17297ab4…681e`，继续绑定原 XPI `04af228b…65ae`）：锁定**唯一** `https://chatgpt.com` 首页句柄 ↔ 后台 tabId；发送前读该 tab 的 context/state revision/既有 capture 集合；本轮唯一标记 `gpt-6-dr-<16hex>`；必须走 page-hook 的 `routeInspectorFetch`；结果是发送前不存在、合法 UUID 且非 `ff-probe*` 的新捕获，taskKind/verdict 均 `deep_research`，tabId/context/pageUrl 一致，state revision 严格增长（真机 14→17）；异常一律失败退出 4。
+- 红→绿：未改探针上 **13** 个非法身份反例“不该退出 0 却退出 0”；加固后工具回归 **82 项**（66 基线 + 16 新增）全过。报告 [HARDENING-REPORT](docs/probe-check22-hardening-2026-10-02/HARDENING-REPORT.md)。
+
 ### 历史验收（v1.0.9，2026-09-27）
 
 - 327 项业务测试 / 工具 56 项；Firefox 156.0.1 正式包 27/27 退出 0。详见 [v1.0.9 独立验收](docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md)。

@@ -6,6 +6,7 @@ exit-code aggregation are the code under test. Responses are scriptable so a
 test can make a specific check fail on purpose.
 """
 import os
+import re
 import sys
 
 sys.dont_write_bytecode = True
@@ -62,8 +63,21 @@ DEFAULT_ANSWERS = {
     "researchSplit": {"verdict": "deep_research", "planner": "gpt-5-6-thinking",
                       "report": "gpt-5-6-instant"},
     "drCapture": {"started": True, "fetchName": "routeInspectorFetch"},
-    "drTurn": {"captureId": "hook-generated-uuid-1", "taskKind": "deep_research",
-               "verdict": "deep_research", "captureContextId": "ctx-1"},
+    # Check 22 (hardened 2026-10-02). drLock is the pre-request background
+    # snapshot the probe reads before sending: the single chatgpt.com tab, its
+    # background context (id/pageUrl/revision), the state revision and the
+    # capture ids that already exist (beforeIds). A test replaces one field to
+    # break exactly one condition (e.g. ctxId None => missing context). drAfter
+    # is the result-time state revision, which must exceed drLock.stateRevision.
+    # drTurn is the capture the hook derives; the fake fills tabId/pageUrl/
+    # captureContextId/requestedModel from the lock and the injected marker
+    # unless a test overrides them, and {} means "no capture was produced".
+    "drLock": {"tabCount": 1, "tabId": 4242, "stateRevision": 20,
+               "ctxId": "ctx-1", "ctxPageUrl": "https://chatgpt.com/", "ctxRevision": 11,
+               "beforeIds": ["0f1e2d3c-4b5a-4978-8967-5a4b3c2d1e0f"]},
+    "drAfter": {"stateRevision": 21},
+    "drTurn": {"captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
+               "verdict": "deep_research"},
     "uiFilters": {"filters": ["all", "normal", "auto_reasoning", "image_generation",
                               "deep_research", "suspected_downgrade"],
                   "deepSelected": True, "imageSelected": True},
@@ -107,10 +121,19 @@ ROUTES = [
     ("navcheck-m-overlay-gone", "navOverlayGone"),
     # v1.1.0 checks. The more specific fragments must precede the generic
     # ("fetchName", "page") / ("route:observation") matches further down.
+    # Hardened check 22 (2026-10-02): the tab/context lock, the page-side
+    # request wrapper and the new-capture lookup. These precede the generic
+    # "captureContexts" / "route:get-state" / "fetchName" matches.
+    ("dr22-lock", "drLock"),
+    ("dr22-request", "drCapture"),
+    ("dr22-poll", "drWrapped"),
     ("#rows tr", "uiSelect"),
     ("\u89c4\u5212\u6a21\u578b", "uiSplit"),
     ("x.captureId === 'ff-probe-ui-research'", "uiResearchStore"),
     ("[data-filter]", "uiFilters"),
+    # Pre-hardening fragments, kept so the red run against the *unchanged*
+    # probe still reaches its old check 22 (the evidence that it exited 0 when
+    # it should have failed). The hardened probe uses dr22-lock/request/poll.
     ("taskkind-request", "drCapture"),
     ("gpt-6-pro-taskkind", "drTurn"),
     ("ff-probe-task-", "taskKinds"),
@@ -148,7 +171,7 @@ ROUTES = [
 class FakeMarionette:
     def __init__(self, profile_dir, answers=None, discover_uuid=True,
                  fail_install=False, fail_new_session=False, fail_new_window=False,
-                 profile_mode="match"):
+                 profile_mode="match", extra_chatgpt_pages=0):
         self.profile_dir = profile_dir
         self.answers = dict(DEFAULT_ANSWERS)
         self.answers.update(answers or {})
@@ -161,6 +184,10 @@ class FakeMarionette:
         self.handles = [("w0", "about:blank")]
         if discover_uuid:
             self.handles.append(("w1", BASE_URL + "/ui/onboarding/index.html"))
+        # Hardened check 22 must reject ambiguity, so a test can add a second
+        # chatgpt.com page beyond the one the probe itself opened.
+        for index in range(extra_chatgpt_pages):
+            self.handles.append(("w-chatgpt-extra-%d" % index, "https://chatgpt.com/"))
         self.current = self.handles[-1][0]
         self.calls = []
         self.closed = False
@@ -274,6 +301,27 @@ class FakeMarionette:
                 return self.answers[tag]
             if tag == "chatgptTabQuery":
                 return self.answers[tag]
+            if tag == "drWrapped":
+                # Hardened check 22 (2026-10-02). The probe passes
+                # [marker, tabId, ctxId] and reads the result-time state. The
+                # fake never filters for the probe: it fills the honest defaults
+                # (marker, locked tabId, locked pageUrl, locked contextId) and a
+                # test overrides one key to break exactly one condition. drTurn
+                # set to {} yields no capture at all (timeout path).
+                marker = script_args[0] if script_args else ""
+                lock = self.answers["drLock"]
+                after = self.answers.get("drAfter") or {}
+                base = self.answers.get("drTurn")
+                found = None
+                if base:
+                    found = {"requestedModel": marker, "tabId": lock.get("tabId"),
+                             "pageUrl": lock.get("ctxPageUrl"),
+                             "captureContextId": lock.get("ctxId")}
+                    found.update(base)
+                return {"found": found,
+                        "ctxId": lock.get("ctxId"), "ctxPageUrl": lock.get("ctxPageUrl"),
+                        "ctxRevision": lock.get("ctxRevision"),
+                        "stateRevision": after.get("stateRevision")}
             if tag == "announcementPage":
                 # Mirror Firefox: a URL that does not resolve inside the
                 # extension renders an error page, so the page probe sees an

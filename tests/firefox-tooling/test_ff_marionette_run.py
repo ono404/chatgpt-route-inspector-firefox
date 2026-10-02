@@ -314,6 +314,111 @@ class TestV110TaskKindChecks(RunHarness):
                       self.saved()["meta"]["summary"]["failedChecks"])
 
 
+class TestCheck22CaptureIdentity(RunHarness):
+    """Check 22 must prove the capture's identity, not merely its existence.
+
+    Each counterexample breaks exactly one condition of the check and must fail
+    the check and the whole run (exit 4). The legal peer (no overrides) must
+    still exit 0. The check must be a required check, so a failing condition is
+    never silently dropped.
+    """
+
+    CHECK = "22.deep-research-capture-taskkind"
+
+    def assert_check_failed(self, code):
+        self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
+        payload = self.saved()
+        self.assertIn(self.CHECK, payload["meta"]["summary"]["failedChecks"])
+        self.assertIn(self.CHECK, PROBE.REQUIRED_CHECKS)
+        checks = {c["check"]: c for c in payload["results"]}
+        self.assertFalse(checks[self.CHECK]["ok"])
+
+    def test_legal_new_capture_passes(self):
+        code = self.run_probe()
+        self.assertEqual(code, PROBE.EXIT_OK)
+        payload = self.saved()
+        check = next(c for c in payload["results"] if c["check"] == self.CHECK)
+        self.assertTrue(check["ok"], check)
+        evidence = json.loads(check["detail"])
+        # The marker is generated per run and shared by request and lookup.
+        self.assertTrue(evidence["markerModel"].startswith("gpt-6-dr-"))
+        self.assertNotIn(evidence["found"]["captureId"], evidence["beforeIds"])
+        self.assertGreater(evidence["afterRevision"], evidence["beforeRevision"])
+
+    def test_missing_capture_id_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": None, "taskKind": "deep_research", "verdict": "deep_research"}}}))
+
+    def test_empty_capture_id_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": "", "taskKind": "deep_research", "verdict": "deep_research"}}}))
+
+    def test_blank_capture_id_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": "   ", "taskKind": "deep_research", "verdict": "deep_research"}}}))
+
+    def test_malformed_capture_id_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": "hook-generated-uuid-1", "taskKind": "deep_research",
+            "verdict": "deep_research"}}}))
+
+    def test_missing_context_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drLock": {
+            "tabCount": 1, "tabId": 4242, "stateRevision": 20, "ctxId": None,
+            "ctxPageUrl": "https://chatgpt.com/", "ctxRevision": 11,
+            "beforeIds": ["0f1e2d3c-4b5a-4978-8967-5a4b3c2d1e0f"]}}}))
+
+    def test_mismatched_context_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
+            "verdict": "deep_research", "captureContextId": "ctx-other"}}}))
+
+    def test_native_fetch_fails(self):
+        # If the shipped hook did not wrap fetch, the request never entered the
+        # inspection path and the record cannot be attributed to it.
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drCapture": {
+            "started": True, "fetchName": "fetch"}}}))
+
+    def test_unstarted_request_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drCapture": {
+            "started": False, "fetchName": "routeInspectorFetch"}}}))
+
+    def test_old_record_with_valid_uuid_fails(self):
+        # A well-formed id is not enough: it must be a capture that did not
+        # already exist before the request was sent.
+        old_id = "0f1e2d3c-4b5a-4978-8967-5a4b3c2d1e0f"
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": old_id, "taskKind": "deep_research", "verdict": "deep_research"}}}))
+
+    def test_wrong_request_marker_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
+            "verdict": "deep_research", "requestedModel": "gpt-6-dr-deadbeefdeadbeef"}}}))
+
+    def test_wrong_tab_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
+            "verdict": "deep_research", "tabId": 9999}}}))
+
+    def test_wrong_page_url_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
+            "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
+            "verdict": "deep_research", "pageUrl": "https://chatgpt.com/c/other"}}}))
+
+    def test_no_revision_growth_fails(self):
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drAfter": {
+            "stateRevision": 20}}}))
+
+    def test_no_capture_produced_fails(self):
+        # The bounded poll times out when no capture carrying the marker exists;
+        # that is a failure, never an optional skip.
+        self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {}}}))
+
+    def test_ambiguous_chatgpt_pages_fail(self):
+        # Two chatgpt.com pages make the locked tab ambiguous.
+        self.assert_check_failed(self.run_probe(fake_kwargs={"extra_chatgpt_pages": 1}))
+
+
 class TestOutputDefaults(RunHarness):
     def test_omitting_out_creates_a_new_file_and_never_touches_history(self):
         history = probe_loader.HISTORICAL_RESULTS

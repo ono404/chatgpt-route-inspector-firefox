@@ -1,5 +1,17 @@
 # PROGRESS — Firefox 移植（自用）
 
+## 检查 22 误报加固（2026-10-02）
+
+- 目标：修复探针 `22.deep-research-capture-taskkind` 的误报——此前 captureId 缺失被转成空串，只判断“不以 `ff-probe` 开头”，故缺失/空/伪造身份、旧记录、错标记、错 tab、无 revision 增长都能冒充本轮 page-hook 捕获。
+- 起点/基线：`HEAD=e830b4e`（`codex/sync-upstream-v1.1.0`）工作树干净；四份哈希与交接一致（探针 `7c56cfd3…0ac6`、XPI `04af228b…65ae`、build.json `a2028179…63a1`、源码 ZIP `51523360…8846`）。基线快照（业务 src / docs 历史证据 / dist / release，306 行）在仓库外留证。
+- 红（未改探针，仓库外副本，逐项单独运行）：新增 **16** 项工具回归用例中 **13** 个非法身份反例“不该退出 0 却退出 0”（missing/empty/blank/malformed captureId、context 缺失/错配、原生 fetch、旧 UUID 记录、错标记、错 tab、错 pageUrl、歧义页、无 revision 增长）；另 2 项（无捕获、请求未发出）未改探针已拒绝；1 项为合法场景报错。原始输出 `docs/probe-check22-hardening-2026-10-02/red-*.txt`。
+- 最小修复：仅改 `ff-marionette.py` 检查 22 块（949–1095 行）+ 两条 import（`secrets`、`urlsplit`）。判定必须同时满足：唯一准确 chatgpt.com 首页句柄 ↔ 后台 tabId；发送前读 context/state revision/既有 capture 集合；唯一标记 `gpt-6-dr-<16hex>`；走 `routeInspectorFetch`（核 `started`/`fetchName`）；结果是发送前不存在的新捕获，合法 UUID 且非 `ff-probe*`，taskKind/verdict 均 `deep_research`，tabId/context/pageUrl 一致，revision 严格增长；轮询有上限，异常一律失败退出 4。其他检查、连接信任门禁、检查 19/20/21/23/24、schema 1.9.0 等值检查与输出保护均未动。
+- 绿（修后）：`test:firefox-tooling` **Ran 82 tests，OK**（66 基线 + 16 新增）。门禁逐条退出码：typecheck 0 / lint 0 / test 0（**38 文件 442 passed / 0 failed / 0 skipped**，覆盖率 98.1/91.79/100，阈值未改）/ test:firefox-tooling 0 / verify:firefox 0（extension=30 firefox=30 identical=true）。日志 `docs/probe-check22-hardening-2026-10-02/*.log`。
+- 真机（Firefox 157.0，临时 profile，冻结正式包）：**32 passed / 0 failed / 0 missing -> exit 0**，`probeSha256=17297ab4…681e`，继续绑定原 XPI `04af228b…65ae`。检查 22 取得本轮新生成合法 UUID `1a85ec40-…28d5`（不在发送前集合中），tabId=5、context/pageUrl 与锁定页一致，state revision 14→17。结果 `ff-probe-positive-v1.1.0-check22-hardened-2026-10-02.json`。
+- 过程诊断（如实记录）：加固首版真机报 `found:null`；与**未改探针**同机对照（未改探针同日仍 32/32）后定位为本轮自有的 JS 调用笔误 `})()` 漏传 `arguments[0]`（标记丢失），已修正并真机复现通过；与检查 22 判定逻辑无关。诊断轮结果保留。
+- 脚本化反例（仓库外 `D:\LAB\sync-v110-check22-scripted-2026-10-02`，探针同哈希副本）：hook 未包装 fetch 且只给发送前旧记录 → 身份通过后检查 22 失败、退出 **4**；恢复合法对端 → 32/32、退出 0。层级为脚本化对端；真机层由上面冻结包运行单独佐证。
+- 只提交白名单（探针、工具测试/fixture、四文档、新增 docs 报告目录）；不提交生成物、不 push。业务源码、冻结交付物与历史证据哈希复核未变。
+
 ## v1.1.0 同步结果（2026-10-01）
 
 - 提交链：`73696a7`（保全补强）→ `0c46668`（开工回执）→ `770095f`（`merge --no-ff` 上游 `dd5ea33`，双亲）。分支 `codex/sync-upstream-v1.1.0`；原目录与旧分支未动。

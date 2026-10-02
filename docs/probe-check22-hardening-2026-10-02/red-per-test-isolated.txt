@@ -1,0 +1,20 @@
+=== TDD red, per-test isolated (8x for the two entries that once looked flaky), against the UNCHANGED probe ===
+probe: git HEAD:e830b4e  sha256 7c56cfd335db2e19e96b6fd7d58dd96882a2bef011536d4b4ff6a8f9a92f0ac6
+method: run each test alone, parse the probe's own final summary line
+
+ambiguous_chatgpt_pages_fail         | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+blank_capture_id_fails               | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+empty_capture_id_fails               | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+malformed_capture_id_fails           | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+mismatched_context_fails             | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+missing_capture_id_fails             | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+missing_context_fails                | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+native_fetch_fails                   | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+no_revision_growth_fails             | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+old_record_with_valid_uuid_fails     | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+wrong_page_url_fails                 | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+wrong_request_marker_fails           | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+wrong_tab_fails                      | exit codes seen over 8 runs: 0          | unittest: FAILED (failures=1)
+no_capture_produced_fails            | exit codes seen over 8 runs: 4          | unittest: OK
+unstarted_request_fails              | exit codes seen over 8 runs: 4          | unittest: OK
+legal_new_capture_passes             | exit codes seen over 8 runs: 0          | unittest: FAILED (errors=1)

@@ -1,0 +1,15 @@
+=== TDD red attribution (2026-10-02) ===
+Method: new tests run ALONE against the UNCHANGED probe (git HEAD:e830b4e, sha256 7c56cfd3...0ac6), external copy at D:/LAB/sync-v110-check22-red-2026-10-02
+
+13 counterexamples that exited 0 on the unchanged probe (must be exit 4):
+  missing_capture_id, empty_capture_id, blank_capture_id, malformed_capture_id,
+  missing_context, mismatched_context, native_fetch (fetchName=fetch),
+  old_record_with_valid_uuid, wrong_request_marker, wrong_tab, wrong_page_url,
+  no_revision_growth, ambiguous_chatgpt_pages
+
+2 counterexamples the unchanged probe already rejected (exit 4): no_capture_produced, unstarted_request
+
+1 test errored on the unchanged probe: legal_new_capture_passes - the old check's evidence JSON
+  had no markerModel/beforeIds/afterRevision keys, so the new evidence-shape assertion could not read them.
+
+Full per-test table: red-per-test-isolated.txt; raw interleaved suite output: red-unchanged-probe.txt

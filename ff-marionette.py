@@ -58,6 +58,7 @@ import hashlib
 import json
 import os
 import re
+import secrets
 import shutil
 import socket
 import subprocess
@@ -65,7 +66,7 @@ import sys
 import tempfile
 import time
 import zipfile
-from urllib.parse import unquote
+from urllib.parse import unquote, urlsplit
 
 # --- exit codes -------------------------------------------------------------
 EXIT_OK = 0
@@ -946,46 +947,149 @@ def run_browser_checks(m, meta, args, results):
     except Exception as error:
         add("21.research-planning-report-split", False, error)
 
-    # v1.1.0: taskKind must survive the real capture path, not only a hand-built
-    # observation. A synthetic Deep Research creation request (structured
-    # metadata only, no prompt text) is sent through the packaged page-hook's
-    # own wrapped fetch; the observation under test is produced by that hook and
-    # carries no prefilled captureId/taskKind. The response is chatgpt.com's
-    # real unauthenticated rejection, so this proves the requested-side task
-    # identification end to end and says nothing about a successful stream.
+    # v1.1.0 (hardened 2026-10-02): the deep-research capture check must prove
+    # identity, not merely that some record exists. A synthetic Deep Research
+    # creation request (structured metadata only, no prompt text) is sent
+    # through the packaged page-hook's own wrapped fetch, on one exactly-locked
+    # chatgpt.com page; the observation under test is produced by that hook -
+    # no captureId/context is prefilled and no route:observation or
+    # postMessage envelope is sent to make this check pass. The locked page and
+    # its background context id/pageUrl/revision and the existing capture set
+    # are read before the send and re-checked when the result is read, so a
+    # missing or forged identity, a stale record, a wrong tab/page, a
+    # non-matching request marker or a non-growing revision cannot pass.
+    # The response is chatgpt.com's real unauthenticated rejection, so this
+    # proves the requested-side task identification end to end and says nothing
+    # about a successful stream.
     try:
-        if not find_handle("https://chatgpt.com"):
-            raise RuntimeError("chatgpt.com tab handle not found")
-        dr_probe = exe("return (function () { /* taskkind-request */"
-                       " const body = {model: 'gpt-6-pro-taskkind', conversation_id: null, messages:"
-                       "  [{id: 'taskkind-input', author: {role: 'user'},"
+        hook_uuid = re.compile(
+            r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
+
+        def chatgpt_pages():
+            # Every page handle whose URL really sits on the chatgpt.com origin.
+            # A substring match is not enough: host and path are parsed.
+            found_pages = []
+            for handle in handles():
+                try:
+                    m.cmd("WebDriver:SwitchToWindow", {"handle": handle})
+                    url = str(m.cmd("WebDriver:GetCurrentURL")["value"] or "")
+                except Exception:
+                    continue
+                parts = urlsplit(url)
+                if parts.scheme == "https" and parts.hostname == "chatgpt.com":
+                    found_pages.append((handle, parts.path or "/"))
+            return found_pages
+
+        lock_pages = chatgpt_pages()
+        if len(lock_pages) != 1:
+            raise RuntimeError("expected exactly one chatgpt.com page, found %d" % len(lock_pages))
+        page_handle, page_path = lock_pages[0]
+        if page_path != "/":
+            raise RuntimeError("locked chatgpt.com page is not the homepage: %r" % (page_path,))
+
+        # Pre-request background snapshot for the locked tab: its context
+        # (id/pageUrl/revision), the state revision and the capture ids that
+        # already exist. Any missing field fails the check.
+        snapshot = shexe("return (async () => { /* dr22-lock */"
+                         " const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
+                         " const tabs = await chrome.tabs.query({url: 'https://chatgpt.com/*'});"
+                         " const tabId = tabs.length === 1 ? tabs[0].id : null;"
+                         " const ctx = st && st.captureContexts && tabId !== null ? st.captureContexts[tabId] : null;"
+                         " const ids = (st.turns||[]).filter(x => ctx && x.captureContextId === ctx.id).map(x => x.captureId);"
+                         " return {tabCount: tabs.length, tabId: tabId, stateRevision: st ? st.revision : null,"
+                         "  ctxId: ctx ? ctx.id : null, ctxPageUrl: ctx ? ctx.pageUrl : null,"
+                         "  ctxRevision: ctx ? ctx.revision : null, beforeIds: ids}; })()")
+        if not (isinstance(snapshot, dict) and snapshot.get("tabCount") == 1
+                and isinstance(snapshot.get("tabId"), int)
+                and isinstance(snapshot.get("stateRevision"), int)
+                and isinstance(snapshot.get("ctxId"), str) and snapshot["ctxId"].strip()
+                and isinstance(snapshot.get("ctxPageUrl"), str) and snapshot["ctxPageUrl"]
+                and isinstance(snapshot.get("ctxRevision"), int)
+                and isinstance(snapshot.get("beforeIds"), list)):
+            raise RuntimeError("locked tab/context snapshot incomplete: %r" % (snapshot,))
+        tab_id = snapshot["tabId"]
+        ctx_id = snapshot["ctxId"]
+        ctx_page_url = snapshot["ctxPageUrl"]
+        before_revision = snapshot["stateRevision"]
+        before_ids = [str(x) for x in snapshot["beforeIds"]]
+        if ctx_page_url != "https://chatgpt.com/":
+            raise RuntimeError("locked background context is not the homepage: %r" % (ctx_page_url,))
+
+        # Send once through the packaged hook's wrapped fetch, on the locked
+        # page, with a unique, length-bounded request marker shared by the
+        # request and the result lookup.
+        marker_model = "gpt-6-dr-" + secrets.token_hex(8)
+        m.cmd("WebDriver:SwitchToWindow", {"handle": page_handle})
+        dr_probe = exe("return (function (model) { /* dr22-request */"
+                       " const body = {model: model, conversation_id: null, messages:"
+                       "  [{id: 'dr22-input', author: {role: 'user'},"
                        "    metadata: {system_hints: ['plugin:connector_openai_deep_research']},"
                        "    content: {content_type: 'text'}}]};"
                        " try { window.fetch('/backend-api/f/conversation',"
                        "  {method: 'POST', body: JSON.stringify(body)}).catch(function () {}); }"
                        " catch (e) { return {started: false, err: String((e && e.message) || e)}; }"
-                       " return {started: true, fetchName: (window.fetch && window.fetch.name) || null}; })()")
-        if not (isinstance(dr_probe, dict) and dr_probe.get("started")):
-            raise RuntimeError("deep-research request could not be sent: %r" % (dr_probe,))
+                       " return {started: true, fetchName: (window.fetch && window.fetch.name) || null}; })(arguments[0])",
+                       [marker_model])
+        if not (isinstance(dr_probe, dict) and dr_probe.get("started") is True
+                and dr_probe.get("fetchName") == "routeInspectorFetch"):
+            raise RuntimeError("deep-research request did not go through the hook: %r" % (dr_probe,))
+
+        # Result read: re-verify the locked page, then poll a bounded number of
+        # times for the hook-produced record that carries this marker on this
+        # tab and context. A missing record is a failure, never a downgrade.
+        after = None
         found = None
         for _ in range(24):
             time.sleep(0.5)
-            found = shexe("return (async () => { const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
-                          " const t = (st.turns||[]).find(x => x.requestedModel === 'gpt-6-pro-taskkind') || null;"
-                          " return t ? {captureId: t.captureId, taskKind: t.taskKind, verdict: t.verdict,"
-                          "  captureContextId: t.captureContextId || null} : null; })()")
+            after = shexe("return (async (marker, tabId, ctxId) => { /* dr22-poll */"
+                          " const st = (await chrome.runtime.sendMessage({type:'route:get-state'})).state;"
+                          " const t = (st.turns||[]).find(x => x.requestedModel === marker"
+                          "  && x.tabId === tabId && x.captureContextId === ctxId) || null;"
+                          " const ctx = st && st.captureContexts && tabId !== null ? st.captureContexts[tabId] : null;"
+                          " const matches = (st.turns||[]).filter(x => x.requestedModel === marker).map(x =>"
+                          "  ({captureId: x.captureId, tabId: x.tabId === undefined ? null : x.tabId,"
+                          "    captureContextId: x.captureContextId || null, pageUrl: x.pageUrl || null,"
+                          "    taskKind: x.taskKind || null, verdict: x.verdict || null, phase: x.phase || null}));"
+                          " return {found: t ? {captureId: t.captureId, taskKind: t.taskKind, verdict: t.verdict,"
+                          "   captureContextId: t.captureContextId || null, requestedModel: t.requestedModel || null,"
+                          "   tabId: t.tabId === undefined ? null : t.tabId, pageUrl: t.pageUrl || null} : null,"
+                          "  ctxId: ctx ? ctx.id : null, ctxPageUrl: ctx ? ctx.pageUrl : null,"
+                          "  ctxRevision: ctx ? ctx.revision : null, stateRevision: st ? st.revision : null,"
+                          "  markerMatches: matches}; })(arguments[0], arguments[1], arguments[2])",
+                          [marker_model, tab_id, ctx_id])
+            found = (after or {}).get("found") if isinstance(after, dict) else None
             if isinstance(found, dict) and found.get("taskKind"):
                 break
-        # The capture may be the creation draft (dropped on navigation) or the
-        # resolved record; what must hold is that the hook derived the kind.
-        # The captureId is generated by the hook (crypto.randomUUID), never
-        # prefilled by this probe, so a synthetic id would fail here.
-        capture_id = str((found or {}).get("captureId") or "")
+
+        # The locked page must still be the same exact origin/path at read time.
+        now_pages = chatgpt_pages()
+        page_ok = (len(now_pages) == 1 and now_pages[0][0] == page_handle and now_pages[0][1] == "/")
+        capture_id = found.get("captureId") if isinstance(found, dict) else None
+        evidence = {
+            "markerModel": marker_model, "tabId": tab_id, "ctxId": ctx_id,
+            "ctxPageUrl": ctx_page_url, "beforeRevision": before_revision,
+            "beforeIds": before_ids, "sent": dr_probe,
+            "afterRevision": (after or {}).get("stateRevision") if isinstance(after, dict) else None,
+            "afterCtxId": (after or {}).get("ctxId") if isinstance(after, dict) else None,
+            "markerMatches": (after or {}).get("markerMatches") if isinstance(after, dict) else None,
+            "found": found,
+        }
         add("22.deep-research-capture-taskkind",
-            isinstance(found, dict) and found.get("taskKind") == "deep_research"
+            isinstance(after, dict) and isinstance(found, dict)
+            and isinstance(capture_id, str) and capture_id.strip() != ""
+            and bool(hook_uuid.match(capture_id)) and not capture_id.startswith("ff-probe")
+            and capture_id not in before_ids
+            and found.get("taskKind") == "deep_research"
             and found.get("verdict") == "deep_research"
-            and not capture_id.startswith("ff-probe"),
-            json.dumps({"found": found, "sent": dr_probe}, default=str))
+            and found.get("requestedModel") == marker_model
+            and found.get("tabId") == tab_id
+            and found.get("captureContextId") == ctx_id
+            and found.get("pageUrl") == ctx_page_url
+            and after.get("ctxId") == ctx_id and after.get("ctxPageUrl") == ctx_page_url
+            and isinstance(after.get("stateRevision"), int)
+            and after["stateRevision"] > before_revision
+            and page_ok,
+            json.dumps(evidence, default=str))
     except Exception as error:
         add("22.deep-research-capture-taskkind", False, error)
 

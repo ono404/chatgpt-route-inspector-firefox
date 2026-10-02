@@ -1,0 +1,100 @@
+PASS 0f.build-record | xpi=f2c293952eda8580 files=6
+PASS 0a.xpi-sha256 | actual=f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10 expected=f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=58482 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-njfxj6r_
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-njfxj6r_ pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-njfxj6r_ inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+FAIL 22.deep-research-capture-taskkind | deep-research request did not go through the hook: {'started': True, 'fetchName': 'fetch'}
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+31 passed / 1 failed / 0 missing -> exit 4 (checks failed: 22.deep-research-capture-taskkind)
+saved D:\LAB\sync-v110-check22-scripted-2026-10-02\out\negative-hookless-old-record-20261002-094644.json
+PASS 0f.build-record | xpi=f2c293952eda8580 files=6
+PASS 0a.xpi-sha256 | actual=f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10 expected=f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10
+PASS 0b.xpi-contents | 6 files identical to XPI
+PASS 0c.dist-matches-record | 6 recorded files agree
+PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
+launched firefox pid=4242 port=58485 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gd1519vh
+PASS 0.session | fake-session
+PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gd1519vh pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gd1519vh inside_temp=True
+PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
+PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
+PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
+PASS 3.ext-chrome.storage-promise | 42
+PASS 4.ext-get-state-roundtrip | {'ok': True, 'hasState': True, 'schemaVersion': None}
+PASS 5.ext-tabs-i18n-getURL | {'tabs': 2, 'lang': 'zh-CN', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/popup/index.html', 'version': '1.0.7'}
+PASS 6.popup-renders | Route Inspector Created by @liuqi 实时监听
+PASS 7.synthetic-observation-pipeline | {'ok': True, 'turns': 1, 'verdict': 'mismatch', 'route': 'gpt-5-5-mini', 'req': 'gpt-5-6-pro', 'schemaVersion': '1.9.0', 'expectedSchemaVersion': '1.9.0'}
+PASS 8.dashboard-shows-turn | 路由诊断台 ... GPT 5.6 Pro ... GPT 5.5 mini ...
+PASS 9.page-hook-MAIN-world | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 10.bridge-overlay-ISOLATED | {'fetchName': 'routeInspectorFetch', 'overlay': True, 'url': 'https://chatgpt.com/'}
+PASS 11.overlay-suspect-hint | {'hint': {'root': True, 'suspect': True, 'legacy': False, 'href': 'https://rinotice.liu-qi.cn/'}, 'sent': {'ok': True, 'verdict': 'suspected_downgrade', 'tabId': 4242, 'turnTabId': 4242, 'turnCtx': 'ctx-1'}}
+PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': 'ctx-1'}}
+PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.9.0'}
+PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.9 版本公告', 'text': '1.0.9 · 版本公告 版本公告 疑似降级 历代更新日志 v1.0.9', 'script': True, 'href': 'https://x.com/liuqi'}
+PASS 15.open-announcement-target | {'openedTab': {'id': 999, 'url': 'https://rinotice.liu-qi.cn/'}, 'page': {'finalUrl': 'https://rinotice.liu-qi.cn/', 'title': 'Route Inspector 公告', 'text': '版本公告'}, 'history': {'before': 2, 'after': 2}}
+PASS 16.suspected-downgrade-verdict | {'completed': 'suspected_downgrade', 'responding': 'normal', 'failed': 'normal', 'resolved': 'normal'}
+PASS 17.work-unverifiable-verdict | {'completed': 'work_unverifiable', 'responding': 'normal'}
+PASS 18.failed-phase-not-completed | {'phase': 'failed', 'errorCode': 'stream_parse_failed', 'completedAt': None, 'verdict': 'normal'}
+PASS 20.task-kind-verdicts | {'image': {'verdict': 'image_generation', 'taskKind': 'image_generation', 'route': 'gpt-5-6-pro', 'report': None, 'schemaVersion': '1.9.0'}, 'research': {'verdict': 'deep_research', 'taskKind': 'deep_research', 'route': 'gpt-5-6-pro', 'report': 'gpt-5-6-instant', 'schemaVersion':
+PASS 21.research-planning-report-split | {'verdict': 'deep_research', 'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant'}
+PASS 22.deep-research-capture-taskkind | {"markerModel": "gpt-6-dr-8ea309ac53c0eab0", "tabId": 4242, "ctxId": "ctx-1", "ctxPageUrl": "https://chatgpt.com/", "beforeRevision": 20, "beforeIds": ["0f1e2d3c-4b5a-4978-8967-5a4b3c2d1e0f"], "sent": {"started": true, "fetchName": "routeInspectorFetch"}, "afterRevision": 21, "af
+PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'filters': ['all', 'normal', 'auto_reasoning', 'image_generation', 'deep_research', 'suspected_downgrade'], 'deepSelected': True, 'imageSelected': True}}
+PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
+PASS 19.new-chat-navigation-association | all navigation stages verified
+32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
+saved D:\LAB\sync-v110-check22-scripted-2026-10-02\out\positive-restored-20261002-094644.json
+{
+  "probeSha256": "17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e",
+  "negative": {
+    "processExit": 4,
+    "exitCode": 4,
+    "executed": 32,
+    "passed": 31,
+    "failed": 1,
+    "failedChecks": [
+      "22.deep-research-capture-taskkind"
+    ],
+    "missingChecks": [],
+    "identityOk": true,
+    "check22ok": false,
+    "check22detail": "deep-research request did not go through the hook: {'started': True, 'fetchName': 'fetch'}"
+  },
+  "positive": {
+    "processExit": 0,
+    "exitCode": 0,
+    "executed": 32,
+    "passed": 32,
+    "failed": 0,
+    "failedChecks": [],
+    "missingChecks": [],
+    "identityOk": true,
+    "check22ok": true,
+    "check22detail": "{\"markerModel\": \"gpt-6-dr-8ea309ac53c0eab0\", \"tabId\": 4242, \"ctxId\": \"ctx-1\", \"ctxPageUrl\": \"https://chatgpt.com/\", \"beforeRevision\": 20, \"beforeIds\": [\"0f1e2d3c-4b5a-4978-8967-5a4b3c2d1e0f\"], \"sent\": {\"started\": true, \"fetchName\": \"routeInspectorFetch\"}, \"afterRevision\": 21, \"afterCtxId\": \"ctx-1\", \"markerMatches\": null, \"found\": {\"requestedModel\": \"gpt-6-dr-8ea309ac53c0eab0\", \"tabId\": 4242, \"page"
+  }
+}
+SCRIPTED_NEGATIVE_RESULT: OK
