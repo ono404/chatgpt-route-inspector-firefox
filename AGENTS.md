@@ -1,8 +1,10 @@
 # AGENTS.md — chatgpt-route-inspector（Firefox 自用移植）
 
-Chromium 上游同源码 + 独立 Firefox 构建 target 的自用移植。接手先读 [2026-10-02 交接](docs/handoff-2026-10-02/HANDOFF.md)，再读 PROGRESS.md / BLOCKED.md。交接中的审查意见由接手者独立判断，不是新增的必修要求。
+Chromium 上游同源码 + 独立 Firefox 构建 target 的自用移植。接手先读 [2026-10-02 发布与归并状态](docs/publish-2026-10-02/STATUS.md)，再读 PROGRESS.md / BLOCKED.md。此前的独立审查意见保留在 [历史交接](docs/handoff-2026-10-02/HANDOFF.md)，由接手者独立判断。
 当前同步基线：上游 **v1.1.0**（`dd5ea3366cdb3ed85025fc7a41f6e89ff1ee7552`，tag `v1.1.0`），业务目录 `src schemas _locales icons manifest` 的 Git 内容与该上游一致；本机检出文本存在换行转换（`core.autocrlf=true`，相对上游 blob 仅 CRLF/LF 差异）。
-当前交付位于 `D:\LAB\sync-v109-isolated`，分支 `codex/sync-upstream-v1.1.0`；原工作区仍为 v1.0.7，勿混用产物。本轮结果见 [升级报告](docs/upgrade-2026-10-01/UPGRADE-REPORT.md)。
+当前唯一主工作区为 `D:\LAB\火狐浏览器插件制作2`，分支 `main`，版本 v1.1.0。原隔离工作区及相关临时目录已逐文件核验归档；上文换行设置为历史记录，归并后的仓库本地设置为 `core.autocrlf=false`。历史构建与探针结果见 [升级报告](docs/upgrade-2026-10-01/UPGRADE-REPORT.md)。
+
+用户已接受已知限制并授权 GitHub 上传、归并和清理，暂不修流式解析。14:47 起的真实样本为 6 条 live、6 条 `stream_parse_failed`、0 重复；根因仍未证明，不能声称已确认上游缺陷或完整流式验收通过。Mozilla 提交签名由用户在终端执行，签名与日常覆盖安装仍待完成。
 
 ## 怎么跑
 
