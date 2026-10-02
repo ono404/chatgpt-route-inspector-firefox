@@ -2,12 +2,16 @@ import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist/**', 'release/**', 'coverage/**', 'node_modules/**', 'test-results/**', 'playwright-report/**', 'output/playwright/**'] },
+  { ignores: ['dist/**', 'release/**', 'coverage/**', 'node_modules/**', 'test-results/**', 'playwright-report/**', 'output/playwright/**', 'local-archive/**'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
     files: ['scripts/**/*.mjs'],
     languageOptions: { globals: { process: 'readonly' } }
+  },
+  {
+    files: ['docs/handoff-2026-10-02/evidence/replay-poll.mjs'],
+    languageOptions: { globals: { console: 'readonly' } }
   },
   {
     files: ['**/*.ts'],

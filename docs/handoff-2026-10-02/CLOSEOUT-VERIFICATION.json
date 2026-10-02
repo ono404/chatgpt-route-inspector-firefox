@@ -1,0 +1,247 @@
+{
+  "active": {
+    "root": "D:\\LAB\\sync-v109-isolated",
+    "beforeInventory": {
+      "files": 368,
+      "markdown": 17
+    },
+    "changedExistingFiles": [
+      "AGENTS.md",
+      "BLOCKED.md",
+      "PROGRESS.md",
+      "README-FIREFOX.md"
+    ],
+    "unexpectedChangedFiles": [],
+    "diffCheckExitCode": 0,
+    "statusAfter": " M AGENTS.md\n M BLOCKED.md\n M PROGRESS.md\n M README-FIREFOX.md\n?? docs/handoff-2026-10-02/\n",
+    "checkedExistingHashes": 467,
+    "diffCheckDiagnostics": "warning: in the working copy of 'AGENTS.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'BLOCKED.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'PROGRESS.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'README-FIREFOX.md', LF will be replaced by CRLF the next time Git touches it\n"
+  },
+  "original": {
+    "root": "D:\\LAB\\火狐浏览器插件制作2",
+    "beforeInventory": {
+      "files": 246,
+      "markdown": 11
+    },
+    "changedExistingFiles": [
+      "AGENTS.md",
+      "BLOCKED.md",
+      "PROGRESS.md",
+      "README-FIREFOX.md"
+    ],
+    "unexpectedChangedFiles": [],
+    "diffCheckExitCode": 0,
+    "statusAfter": " M AGENTS.md\n M BLOCKED.md\n M PROGRESS.md\n M README-FIREFOX.md\n?? .workbuddy/\n?? .zcodeignore\n",
+    "checkedExistingHashes": 313,
+    "diffCheckDiagnostics": "warning: in the working copy of 'AGENTS.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'PROGRESS.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'README-FIREFOX.md', LF will be replaced by CRLF the next time Git touches it\n"
+  },
+  "businessSourceEqualsUpstream": true,
+  "localLinks": [
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\docs\\handoff-2026-10-02\\HANDOFF.md",
+      "target": "../upgrade-2026-10-01/UPGRADE-REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\docs\\handoff-2026-10-02\\HANDOFF.md",
+      "target": "../../README-FIREFOX.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\docs\\handoff-2026-10-02\\HANDOFF.md",
+      "target": "../../BLOCKED.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\docs\\handoff-2026-10-02\\HANDOFF.md",
+      "target": "../upgrade-2026-10-01/UPGRADE-REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\docs\\handoff-2026-10-02\\HANDOFF.md",
+      "target": "../probe-check22-hardening-2026-10-02/HARDENING-REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\README-FIREFOX.md",
+      "target": "docs/handoff-2026-10-02/HANDOFF.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\README-FIREFOX.md",
+      "target": "docs/upgrade-2026-10-01/UPGRADE-REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\README-FIREFOX.md",
+      "target": "docs/upgrade-2026-10-01/UPGRADE-REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\README-FIREFOX.md",
+      "target": "BLOCKED.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\README-FIREFOX.md",
+      "target": "docs/probe-check22-hardening-2026-10-02/HARDENING-REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\README-FIREFOX.md",
+      "target": "docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\README-FIREFOX.md",
+      "target": "docs/upgrade-2026-09-20/UPGRADE-REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\BLOCKED.md",
+      "target": "docs/handoff-2026-10-02/HANDOFF.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\BLOCKED.md",
+      "target": "docs/upgrade-2026-10-01/UPGRADE-REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\BLOCKED.md",
+      "target": "docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\AGENTS.md",
+      "target": "docs/handoff-2026-10-02/HANDOFF.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\AGENTS.md",
+      "target": "docs/upgrade-2026-10-01/UPGRADE-REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\PROGRESS.md",
+      "target": "docs/handoff-2026-10-02/HANDOFF.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\PROGRESS.md",
+      "target": "docs/upgrade-2026-10-01/UPGRADE-REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\PROGRESS.md",
+      "target": "docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\sync-v109-isolated\\PROGRESS.md",
+      "target": "docs/verify-hardening-2026-09-27/REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\火狐浏览器插件制作2\\README-FIREFOX.md",
+      "target": "../sync-v109-isolated/docs/handoff-2026-10-02/HANDOFF.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\火狐浏览器插件制作2\\BLOCKED.md",
+      "target": "../sync-v109-isolated/docs/handoff-2026-10-02/HANDOFF.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\火狐浏览器插件制作2\\AGENTS.md",
+      "target": "../sync-v109-isolated/docs/handoff-2026-10-02/HANDOFF.md",
+      "exists": true
+    },
+    {
+      "file": "D:\\LAB\\火狐浏览器插件制作2\\PROGRESS.md",
+      "target": "../sync-v109-isolated/docs/handoff-2026-10-02/HANDOFF.md",
+      "exists": true
+    }
+  ],
+  "frozenHashes": {
+    "chatgpt-route-inspector-firefox-1.1.0.xpi": "04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae",
+    "chatgpt-route-inspector-firefox-1.1.0.build.json": "a2028179ed18602da5d6be288dd2142a0140dab0d64bfdb6fcd267afaba263a1",
+    "chatgpt-route-inspector-firefox-1.1.0-source.zip": "51523360d4063fc939177672b9bf990278a1e0495f4e715f5e22b0cc49888846",
+    "ff-marionette.py": "17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e"
+  },
+  "archiveCopies": [
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\adversarial.py",
+      "file": "adversarial.py",
+      "sha256": "b5b5f99cabfd961f59d0764beca2462acacd5b944c4f84b1082b798e910b07b3",
+      "copyVerified": true
+    },
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\adversarial-summary.json",
+      "file": "adversarial-summary.json",
+      "sha256": "22a8094085f85669b4b8897e8608ae93dce0d3c30f81542ad4ff1cabf489e77e",
+      "copyVerified": true
+    },
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\control.json",
+      "file": "control.json",
+      "sha256": "2194d3f985bf2f8d3734a631138aa7fcfd4cec01e91bbb3c672fad43868f3857",
+      "copyVerified": true
+    },
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\nondefault-port.json",
+      "file": "nondefault-port.json",
+      "sha256": "66006f65cca92fc8026a2cde0ee50b7c46e28ef5ffc2e1b7a367e1c5c5f6bc13",
+      "copyVerified": true
+    },
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\duplicate-results.json",
+      "file": "duplicate-results.json",
+      "sha256": "8feff7f57cda1c320c50355f6f046bc6907473e4f4fe35239acd5588895b8194",
+      "copyVerified": true
+    },
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\independent-positive.json",
+      "file": "independent-positive.json",
+      "sha256": "c3c1fc0f95bbba16f2a04444b8cf4bd947c30c6b7909829b5cce00be82a31a7d",
+      "copyVerified": true
+    },
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\actual-poll.json",
+      "file": "actual-poll.json",
+      "sha256": "3aba7f9cbc87c6c9cae12a5f0a04af15717d617c49d156c0c287736e04ecffaf",
+      "copyVerified": true
+    },
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\actual-found.json",
+      "file": "actual-found.json",
+      "sha256": "436903ab45362fcc37aa4176c8b3df56bcb767a173a524bc99dc47e5db133692",
+      "copyVerified": true
+    },
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\actual-js-duplicate-result.json",
+      "file": "actual-js-duplicate-result.json",
+      "sha256": "9b48ab20826cb2c3762fc99c879a4f07862e0a22b682ae863e84741f6c513d83",
+      "copyVerified": true
+    },
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\replay-poll.mjs",
+      "file": "replay-poll.mjs",
+      "sha256": "a4a73e914daeea5e20e6f19830e088e91a8a4b206f74e53cafa537a3602e3676",
+      "copyVerified": true
+    },
+    {
+      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\ACCEPTANCE.md",
+      "file": "prior-review.md",
+      "sha256": "32a0d4a60afa57b58ebe8c64acbd17f2b4b8b48172c3daf84a182acc80d801ab",
+      "copyVerified": true
+    }
+  ],
+  "codeTestsRerunInCloseout": false,
+  "memoryWrites": false,
+  "committed": false,
+  "cleanupPerformed": false,
+  "errors": [],
+  "result": "OK",
+  "documentLineEndingsPreserved": true
+}

@@ -1,0 +1,35 @@
+{
+  "found": {
+    "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d",
+    "taskKind": "deep_research",
+    "verdict": "deep_research",
+    "captureContextId": "ctx-1",
+    "requestedModel": "gpt-6-dr-93b555e10e8de1dc",
+    "tabId": 4242,
+    "pageUrl": "https://chatgpt.com/"
+  },
+  "ctxId": "ctx-1",
+  "ctxPageUrl": "https://chatgpt.com/",
+  "ctxRevision": 11,
+  "stateRevision": 21,
+  "markerMatches": [
+    {
+      "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d",
+      "tabId": 4242,
+      "captureContextId": "ctx-1",
+      "pageUrl": "https://chatgpt.com/",
+      "taskKind": "deep_research",
+      "verdict": "deep_research",
+      "phase": null
+    },
+    {
+      "captureId": "4f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d",
+      "tabId": 4242,
+      "captureContextId": "ctx-1",
+      "pageUrl": "https://chatgpt.com/",
+      "taskKind": "deep_research",
+      "verdict": "deep_research",
+      "phase": null
+    }
+  ]
+}

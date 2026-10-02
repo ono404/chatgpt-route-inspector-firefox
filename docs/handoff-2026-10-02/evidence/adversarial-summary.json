@@ -1,0 +1,77 @@
+[
+  {
+    "name": "control",
+    "exit": 0,
+    "check22": true,
+    "identityOk": true,
+    "failed": []
+  },
+  {
+    "name": "empty-id",
+    "exit": 4,
+    "check22": false,
+    "identityOk": true,
+    "failed": [
+      "22.deep-research-capture-taskkind"
+    ]
+  },
+  {
+    "name": "missing-id",
+    "exit": 4,
+    "check22": false,
+    "identityOk": true,
+    "failed": [
+      "22.deep-research-capture-taskkind"
+    ]
+  },
+  {
+    "name": "native-fetch",
+    "exit": 4,
+    "check22": false,
+    "identityOk": true,
+    "failed": [
+      "22.deep-research-capture-taskkind"
+    ]
+  },
+  {
+    "name": "old-id",
+    "exit": 4,
+    "check22": false,
+    "identityOk": true,
+    "failed": [
+      "22.deep-research-capture-taskkind"
+    ]
+  },
+  {
+    "name": "wrong-after-context",
+    "exit": 4,
+    "check22": false,
+    "identityOk": true,
+    "failed": [
+      "22.deep-research-capture-taskkind"
+    ]
+  },
+  {
+    "name": "wrong-after-url",
+    "exit": 4,
+    "check22": false,
+    "identityOk": true,
+    "failed": [
+      "22.deep-research-capture-taskkind"
+    ]
+  },
+  {
+    "name": "nondefault-port",
+    "exit": 0,
+    "check22": true,
+    "identityOk": true,
+    "failed": []
+  },
+  {
+    "name": "duplicate-results",
+    "exit": 0,
+    "check22": true,
+    "identityOk": true,
+    "failed": []
+  }
+]
