@@ -20,7 +20,7 @@
 ## 缺口（任务 A：先在未改探针上复现）
 
 新增 16 个工具回归用例，先在**未改动的探针**（`git HEAD:e830b4e`，哈希 `7c56cfd3…0ac6`，
-仓库外副本 `D:\LAB\sync-v110-check22-red-2026-10-02`）上运行。逐项单独运行、解析探针自身汇总行：
+仓库外副本 `C:\workspace\sync-v110-check22-red-2026-10-02`）上运行。逐项单独运行、解析探针自身汇总行：
 
 | 反例 | 未改探针退出码 | 应为 |
 | --- | --- | --- |
@@ -109,7 +109,7 @@ py -3 -B ff-marionette.py \
 
 ## 脚本化对端反例（任务 D，可复现）
 
-仓库外 `D:\LAB\sync-v110-check22-scripted-2026-10-02\scripted_negatives.py`，用与本轮修后
+仓库外 `C:\workspace\sync-v110-check22-scripted-2026-10-02\scripted_negatives.py`，用与本轮修后
 探针同哈希（`17297ab4…681e`）的字节副本驱动进程内脚本化 Marionette 对端：
 
 - 反例（hook 未包装 fetch 且只给发送前旧记录）：`identityOk=true`、`failedChecks=["22…"]`、

@@ -32,12 +32,12 @@ d_command_line_is_rejected_before_anything_else) ... ok
 test_existing_directory_as_output_is_refused (test_ff_marionette_early_failure.TestOutputPathFailures.test_existing_dir
 ectory_as_output_is_refused) ... ok
 test_existing_output_is_refused_and_never_rewritten (test_ff_marionette_early_failure.TestOutputPathFailures.test_exist
-ing_output_is_refused_and_never_rewritten) ... D:\LAB\火狐浏览器插件制作2\tests\firefox-tooling\test_ff_marionette_early_failure
+ing_output_is_refused_and_never_rewritten) ... C:\workspace\chatgpt-route-inspector-firefox\tests\firefox-tooling\test_ff_marionette_early_failure
 .py:179: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-ea
 rly-cbthawyy\\results.json'>
   before = open(self.out, "rb").read()
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-D:\LAB\火狐浏览器插件制作2\tests\firefox-tooling\test_ff_marionette_early_failure.py:184: ResourceWarning: unclosed file <_io.Bu
+C:\workspace\chatgpt-route-inspector-firefox\tests\firefox-tooling\test_ff_marionette_early_failure.py:184: ResourceWarning: unclosed file <_io.Bu
 fferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-cbthawyy\\results.json'>
   self.assertEqual(open(self.out, "rb").read(), before)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
@@ -47,12 +47,12 @@ a_file_is_created_next_to_the_results) ... ok
 test_real_run_also_leaves_nothing_else_next_to_the_results (test_ff_marionette_early_failure.TestOutputPathFailures.tes
 t_real_run_also_leaves_nothing_else_next_to_the_results) ... ok
 test_unwritable_output_parent_fails_early_without_touching_files (test_ff_marionette_early_failure.TestOutputPathFailur
-es.test_unwritable_output_parent_fails_early_without_touching_files) ... D:\LAB\火狐浏览器插件制作2\tests\firefox-tooling\test_f
+es.test_unwritable_output_parent_fails_early_without_touching_files) ... C:\workspace\chatgpt-route-inspector-firefox\tests\firefox-tooling\test_f
 f_marionette_early_failure.py:162: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData
 \\Local\\Temp\\ff-probe-early-xkko1st6\\blocker'>
   before = open(blocker, "rb").read()
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-D:\LAB\火狐浏览器插件制作2\tests\firefox-tooling\test_ff_marionette_early_failure.py:171: ResourceWarning: unclosed file <_io.Bu
+C:\workspace\chatgpt-route-inspector-firefox\tests\firefox-tooling\test_ff_marionette_early_failure.py:171: ResourceWarning: unclosed file <_io.Bu
 fferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-xkko1st6\\blocker'>
   self.assertEqual(open(blocker, "rb").read(), before)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback

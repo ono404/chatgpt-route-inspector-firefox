@@ -1,4 +1,4 @@
-src dist     D:\LAB\火狐浏览器插件制作2\dist\firefox
+src dist     C:\workspace\chatgpt-route-inspector-firefox\dist\firefox
 tampered src C:\Users\<user>\AppData\Local\Temp\ri-exec2\tamper\tampered-src
 tampered xpi C:\Users\<user>\AppData\Local\Temp\ri-exec2\tamper\tampered.xpi
 manifest sha256 (must equal the real build) c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a

@@ -1,6 +1,6 @@
-src dist     D:\LAB\sync-v110-reverse-2026-10-01\dist\firefox
-tampered src D:\LAB\sync-v110-reverse-2026-10-01\tampered-src
-tampered xpi D:\LAB\sync-v110-reverse-2026-10-01\tampered.xpi
+src dist     C:\workspace\sync-v110-reverse-2026-10-01\dist\firefox
+tampered src C:\workspace\sync-v110-reverse-2026-10-01\tampered-src
+tampered xpi C:\workspace\sync-v110-reverse-2026-10-01\tampered.xpi
 manifest sha256 (must equal the real build) 19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee
 tampered file sha256 f5f3d3a95d4680f7bdd79f2c6c8f7486e94d68043ca7858fe15b236e9360211c
 xpi sha256   09da34f2ce1e2446440514000e1ebc6144f08039c895e319689062c1a991057c

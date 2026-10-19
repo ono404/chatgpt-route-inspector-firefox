@@ -3,9 +3,9 @@ PASS 0a.xpi-sha256 | actual=8567ac58b9d3bbab7f9100524c3895b7b2ce58322f184ec002ce
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55587 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-y_0o304g
+launched firefox pid=4242 port=55587 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-y_0o304g
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-y_0o304g pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-y_0o304g inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-y_0o304g pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-y_0o304g inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=3 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -33,15 +33,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_blank_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_blank_capture_id_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-qw9vmkne\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-qw9vmkne\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55590 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-pgmkvzhd
+launched firefox pid=4242 port=55590 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-pgmkvzhd
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-pgmkvzhd pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-pgmkvzhd inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-pgmkvzhd pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-pgmkvzhd inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -69,15 +69,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_empty_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_empty_capture_id_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-oq5wtsgg\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-oq5wtsgg\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55591 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-whm9_w5a
+launched firefox pid=4242 port=55591 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-whm9_w5a
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-whm9_w5a pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-whm9_w5a inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-whm9_w5a pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-whm9_w5a inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -105,15 +105,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_legal_new_capture_passes (test_ff_marionette_run.TestCheck22CaptureIdentity.test_legal_new_capture_passes) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-b__c6h0l\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-b__c6h0l\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55592 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xzcavgf
+launched firefox pid=4242 port=55592 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xzcavgf
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xzcavgf pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xzcavgf inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xzcavgf pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xzcavgf inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -141,15 +141,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 ERROR
 test_malformed_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_malformed_capture_id_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-rwfl4qnc\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-rwfl4qnc\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55593 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qjvwap7j
+launched firefox pid=4242 port=55593 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qjvwap7j
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qjvwap7j pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qjvwap7j inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qjvwap7j pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-qjvwap7j inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -177,15 +177,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_mismatched_context_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_mismatched_context_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-st03zq4f\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-st03zq4f\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55594 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-rh3lpqid
+launched firefox pid=4242 port=55594 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-rh3lpqid
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-rh3lpqid pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-rh3lpqid inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-rh3lpqid pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-rh3lpqid inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -213,15 +213,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_missing_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_missing_capture_id_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-46xyy38u\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-46xyy38u\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55596 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-n6jkq51b
+launched firefox pid=4242 port=55596 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-n6jkq51b
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-n6jkq51b pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-n6jkq51b inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-n6jkq51b pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-n6jkq51b inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -249,15 +249,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_missing_context_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_missing_context_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-fqii4f1k\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-fqii4f1k\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55597 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-9tbbw0n_
+launched firefox pid=4242 port=55597 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-9tbbw0n_
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-9tbbw0n_ pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-9tbbw0n_ inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-9tbbw0n_ pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-9tbbw0n_ inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -285,15 +285,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_native_fetch_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_native_fetch_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-zkoeq2wa\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-zkoeq2wa\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55598 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-bns7o5c4
+launched firefox pid=4242 port=55598 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-bns7o5c4
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-bns7o5c4 pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-bns7o5c4 inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-bns7o5c4 pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-bns7o5c4 inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -321,15 +321,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_no_capture_produced_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_no_capture_produced_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-ihr7ocy8\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-ihr7ocy8\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55601 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xydm4b6
+launched firefox pid=4242 port=55601 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xydm4b6
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xydm4b6 pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xydm4b6 inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xydm4b6 pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-5xydm4b6 inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -357,15 +357,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 ok
 test_no_revision_growth_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_no_revision_growth_fails) ... 31 passed / 1 failed / 0 missing -> exit 4 (checks failed: 22.deep-research-capture-taskkind)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-13w8tkyf\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-13w8tkyf\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55602 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-ub4kywmq
+launched firefox pid=4242 port=55602 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-ub4kywmq
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-ub4kywmq pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-ub4kywmq inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-ub4kywmq pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-ub4kywmq inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -393,15 +393,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_old_record_with_valid_uuid_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_old_record_with_valid_uuid_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-m300xrkg\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-m300xrkg\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55603 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-o2t8k9ku
+launched firefox pid=4242 port=55603 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-o2t8k9ku
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-o2t8k9ku pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-o2t8k9ku inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-o2t8k9ku pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-o2t8k9ku inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -429,15 +429,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_unstarted_request_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_unstarted_request_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-e04343bg\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-e04343bg\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55604 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-x0xvbumy
+launched firefox pid=4242 port=55604 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-x0xvbumy
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-x0xvbumy pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-x0xvbumy inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-x0xvbumy pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-x0xvbumy inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -465,15 +465,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 ok
 test_wrong_page_url_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_page_url_fails) ... 31 passed / 1 failed / 0 missing -> exit 4 (checks failed: 22.deep-research-capture-taskkind)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-rxx44ldb\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-rxx44ldb\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55605 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tq5pj6uf
+launched firefox pid=4242 port=55605 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tq5pj6uf
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tq5pj6uf pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tq5pj6uf inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tq5pj6uf pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-tq5pj6uf inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -501,15 +501,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_wrong_request_marker_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_request_marker_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-kktwk5cp\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-kktwk5cp\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55606 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-3ijimtuj
+launched firefox pid=4242 port=55606 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-3ijimtuj
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-3ijimtuj pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-3ijimtuj inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-3ijimtuj pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-3ijimtuj inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -537,15 +537,15 @@ PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-44
 PASS 19.new-chat-navigation-association | all navigation stages verified
 FAIL
 test_wrong_tab_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_tab_fails) ... 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-1nimbzxo\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-1nimbzxo\results.json
 PASS 0f.build-record | xpi=2787f3932fa30a28 files=6
 PASS 0a.xpi-sha256 | actual=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86 expected=2787f3932fa30a28055793fed43863be4288e51b6fc6e3071a520501e7fdca86
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=55609 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-byl_krue
+launched firefox pid=4242 port=55609 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-byl_krue
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-byl_krue pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-byl_krue inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-byl_krue pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-byl_krue inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -577,7 +577,7 @@ FAIL
 ERROR: test_legal_new_capture_passes (test_ff_marionette_run.TestCheck22CaptureIdentity.test_legal_new_capture_passes)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 344, in test_legal_new_capture_passes
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 344, in test_legal_new_capture_passes
     self.assertTrue(evidence["markerModel"].startswith("gpt-6-dr-"))
                     ~~~~~~~~^^^^^^^^^^^^^^^
 KeyError: 'markerModel'
@@ -586,10 +586,10 @@ KeyError: 'markerModel'
 FAIL: test_ambiguous_chatgpt_pages_fail (test_ff_marionette_run.TestCheck22CaptureIdentity.test_ambiguous_chatgpt_pages_fail)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 419, in test_ambiguous_chatgpt_pages_fail
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 419, in test_ambiguous_chatgpt_pages_fail
     self.assert_check_failed(self.run_probe(fake_kwargs={"extra_chatgpt_pages": 1}))
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -598,12 +598,12 @@ AssertionError: 0 != 4
 FAIL: test_blank_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_blank_capture_id_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 357, in test_blank_capture_id_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 357, in test_blank_capture_id_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "   ", "taskKind": "deep_research", "verdict": "deep_research"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -612,12 +612,12 @@ AssertionError: 0 != 4
 FAIL: test_empty_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_empty_capture_id_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 353, in test_empty_capture_id_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 353, in test_empty_capture_id_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "", "taskKind": "deep_research", "verdict": "deep_research"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -626,14 +626,14 @@ AssertionError: 0 != 4
 FAIL: test_malformed_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_malformed_capture_id_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 361, in test_malformed_capture_id_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 361, in test_malformed_capture_id_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "hook-generated-uuid-1", "taskKind": "deep_research",
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "verdict": "deep_research"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -642,14 +642,14 @@ AssertionError: 0 != 4
 FAIL: test_mismatched_context_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_mismatched_context_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 372, in test_mismatched_context_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 372, in test_mismatched_context_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "verdict": "deep_research", "captureContextId": "ctx-other"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -658,12 +658,12 @@ AssertionError: 0 != 4
 FAIL: test_missing_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_missing_capture_id_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 349, in test_missing_capture_id_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 349, in test_missing_capture_id_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": None, "taskKind": "deep_research", "verdict": "deep_research"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -672,7 +672,7 @@ AssertionError: 0 != 4
 FAIL: test_missing_context_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_missing_context_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 366, in test_missing_context_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 366, in test_missing_context_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drLock": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "tabCount": 1, "tabId": 4242, "stateRevision": 20, "ctxId": None,
@@ -681,7 +681,7 @@ Traceback (most recent call last):
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "beforeIds": ["0f1e2d3c-4b5a-4978-8967-5a4b3c2d1e0f"]}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -690,12 +690,12 @@ AssertionError: 0 != 4
 FAIL: test_native_fetch_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_native_fetch_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 379, in test_native_fetch_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 379, in test_native_fetch_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drCapture": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "started": True, "fetchName": "fetch"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -704,12 +704,12 @@ AssertionError: 0 != 4
 FAIL: test_no_revision_growth_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_no_revision_growth_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 409, in test_no_revision_growth_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 409, in test_no_revision_growth_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drAfter": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "stateRevision": 20}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -718,12 +718,12 @@ AssertionError: 0 != 4
 FAIL: test_old_record_with_valid_uuid_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_old_record_with_valid_uuid_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 390, in test_old_record_with_valid_uuid_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 390, in test_old_record_with_valid_uuid_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": old_id, "taskKind": "deep_research", "verdict": "deep_research"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -732,14 +732,14 @@ AssertionError: 0 != 4
 FAIL: test_wrong_page_url_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_page_url_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 404, in test_wrong_page_url_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 404, in test_wrong_page_url_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "verdict": "deep_research", "pageUrl": "https://chatgpt.com/c/other"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -748,14 +748,14 @@ AssertionError: 0 != 4
 FAIL: test_wrong_request_marker_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_request_marker_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 394, in test_wrong_request_marker_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 394, in test_wrong_request_marker_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "verdict": "deep_research", "requestedModel": "gpt-6-dr-deadbeefdeadbeef"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -764,14 +764,14 @@ AssertionError: 0 != 4
 FAIL: test_wrong_tab_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_tab_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 399, in test_wrong_tab_fails
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 399, in test_wrong_tab_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "verdict": "deep_research", "tabId": 9999}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\LAB\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -781,4 +781,4 @@ Ran 16 tests in 1.334s
 
 FAILED (failures=13, errors=1)
 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\Users\gyjxjkg\AppData\Local\Temp\ff-probe-run-w8htj8yk\results.json
+saved C:\Users\<user>\AppData\Local\Temp\ff-probe-run-w8htj8yk\results.json

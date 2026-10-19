@@ -12,19 +12,19 @@ test_packaged_manifest_with_invalid_json_exits_2_and_writes_a_result (test_ff_ma
 test_zip_without_manifest_json_exits_2_and_writes_a_result (test_ff_marionette_early_failure.TestDamagedPackage.test_zip_without_manifest_json_exits_2_and_writes_a_result) ... ok
 test_bad_command_line_is_rejected_before_anything_else (test_ff_marionette_early_failure.TestOutputPathFailures.test_bad_command_line_is_rejected_before_anything_else) ... ok
 test_existing_directory_as_output_is_refused (test_ff_marionette_early_failure.TestOutputPathFailures.test_existing_directory_as_output_is_refused) ... ok
-test_existing_output_is_refused_and_never_rewritten (test_ff_marionette_early_failure.TestOutputPathFailures.test_existing_output_is_refused_and_never_rewritten) ... D:\LAB\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:179: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-n8p4ofob\\results.json'>
+test_existing_output_is_refused_and_never_rewritten (test_ff_marionette_early_failure.TestOutputPathFailures.test_existing_output_is_refused_and_never_rewritten) ... C:\workspace\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:179: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-n8p4ofob\\results.json'>
   before = open(self.out, "rb").read()
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-D:\LAB\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:184: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-n8p4ofob\\results.json'>
+C:\workspace\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:184: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-n8p4ofob\\results.json'>
   self.assertEqual(open(self.out, "rb").read(), before)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 ok
 test_no_extra_file_is_created_next_to_the_results (test_ff_marionette_early_failure.TestOutputPathFailures.test_no_extra_file_is_created_next_to_the_results) ... ok
 test_real_run_also_leaves_nothing_else_next_to_the_results (test_ff_marionette_early_failure.TestOutputPathFailures.test_real_run_also_leaves_nothing_else_next_to_the_results) ... ok
-test_unwritable_output_parent_fails_early_without_touching_files (test_ff_marionette_early_failure.TestOutputPathFailures.test_unwritable_output_parent_fails_early_without_touching_files) ... D:\LAB\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:162: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-7u764bcs\\blocker'>
+test_unwritable_output_parent_fails_early_without_touching_files (test_ff_marionette_early_failure.TestOutputPathFailures.test_unwritable_output_parent_fails_early_without_touching_files) ... C:\workspace\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:162: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-7u764bcs\\blocker'>
   before = open(blocker, "rb").read()
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-D:\LAB\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:171: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-7u764bcs\\blocker'>
+C:\workspace\sync-v109-isolated\tests\firefox-tooling\test_ff_marionette_early_failure.py:171: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-early-7u764bcs\\blocker'>
   self.assertEqual(open(blocker, "rb").read(), before)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 ok

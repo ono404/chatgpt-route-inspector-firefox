@@ -2,7 +2,7 @@
 
 The principal missing/stale capture identity fix passes independent checks. Strict page-origin locking has one remaining P2 gap, so the claim that every incorrect page identity is rejected is not fully supported.
 
-Repository: `D:\LAB\sync-v109-isolated`, HEAD `cdbf1b35c16ef9e996d509bdbcee94e93c78c368`. No repository source was edited during acceptance. All independent results are in this directory.
+Repository: `C:\workspace\sync-v109-isolated`, HEAD `cdbf1b35c16ef9e996d509bdbcee94e93c78c368`. No repository source was edited during acceptance. All independent results are in this directory.
 
 ## Confirmed results
 
@@ -36,8 +36,8 @@ This does not by itself invalidate the narrower claim that a new matching captur
 From the repository, run the independently written script with the interpreter used by its tooling runner:
 
 ```powershell
-& 'C:\Users\gyjxjkg\.workbuddy\binaries\python\versions\3.13.12\python.exe' -B 'C:\Users\gyjxjkg\AppData\Local\Temp\ff-check22-accept-a755a99d0a10457891ac8785e3720425\adversarial.py'
-node 'C:\Users\gyjxjkg\AppData\Local\Temp\ff-check22-accept-a755a99d0a10457891ac8785e3720425\replay-poll.mjs'
+& 'C:\Users\<user>\.workbuddy\binaries\python\versions\3.13.12\python.exe' -B 'C:\Users\<user>\AppData\Local\Temp\ff-check22-accept-a755a99d0a10457891ac8785e3720425\adversarial.py'
+node 'C:\Users\<user>\AppData\Local\Temp\ff-check22-accept-a755a99d0a10457891ac8785e3720425\replay-poll.mjs'
 ```
 
 These use temporary synthetic packages and scripted peers. They do not rebuild, install into the daily profile, sign or publish the frozen delivery.

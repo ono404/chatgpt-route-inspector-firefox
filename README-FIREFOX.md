@@ -1,5 +1,7 @@
 # Firefox 版（自用本地构建）
 
+> 2026-10-19 公开元数据脱敏：本机用户名与工作目录已替换为占位信息；历史报告中的校验值仍指向当时的原始文件。当前发布的构建记录仅调整路径元数据，XPI 与源码 ZIP 保持不变。见 [脱敏范围与历史边界](docs/PRIVACY-REDACTION.md)。
+
 > 2026-10-02 当前入口：[发布与归并状态](docs/publish-2026-10-02/STATUS.md)。主目录与 `main` 已同步上游 **v1.1.0**（`dd5ea33`）；此前的独立审查保留在 [历史交接](docs/handoff-2026-10-02/HANDOFF.md)。
 > 交付仍是**未签名本地包**——未上传 AMO、未完成日常覆盖安装。
 
@@ -9,7 +11,7 @@
 
 v1.1.0 行为提示：新增「**图片生成**」「**深度研究**」两种结论，避免把这两类专用任务误判为降级或路由错配；深度研究记录会分列显示**规划模型**与**报告模型**（两者相互独立，报告模型不参与规划者的路由判定）。升级公告仍走上游固定站点 `https://rinotice.liu-qi.cn/`（包内 1.0.9 公告页与去重逻辑在 v1.1.0 **仍然保留**，真机检查 14/15 照常通过）。浮窗继续保留「疑似降级 / 无法判断」判定与断线提示刷新卡片。隐私描述见上游 `PRIVACY.md`。
 
-当前交付工作区：`D:\LAB\火狐浏览器插件制作2`，分支 `main`。历史报告与证据见 [升级报告](docs/upgrade-2026-10-01/UPGRADE-REPORT.md)。归并后本地 `core.autocrlf=false`，上文换行转换描述为历史构建记录。
+工作区以当前克隆目录为准，分支 `main`。历史报告与证据见 [升级报告](docs/upgrade-2026-10-01/UPGRADE-REPORT.md)。归并后本地 `core.autocrlf=false`，上文换行转换描述为历史构建记录。
 
 ## 安装依赖 / 构建
 
@@ -48,12 +50,12 @@ npm run package:firefox   # 打包 dist/firefox -> release/*.xpi，并写出构�
 以下是本轮生成的交付物；**尚未上传 AMO、尚未签名**：
 
 - 扩展文件：`release/chatgpt-route-inspector-firefox-1.1.0.xpi`（本地未签名包，155451 字节，XPI SHA-256 `04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae`）。
-- 同次构建记录：`release/chatgpt-route-inspector-firefox-1.1.0.build.json`（SHA-256 `a2028179ed18602da5d6be288dd2142a0140dab0d64bfdb6fcd267afaba263a1`）。
+- 同次构建记录的公开脱敏副本：`release/chatgpt-route-inspector-firefox-1.1.0.build.json`（SHA-256 `4f7b019d47d573df03b6272b901986a9abdb1d2396103f43c92ec46c0ec7184b`；包内文件与 XPI 哈希保持不变）。
 - 源代码步骤：上传 `release/chatgpt-route-inspector-firefox-1.1.0-source.zip`（76 条目，SHA-256 `51523360d4063fc939177672b9bf990278a1e0495f4e715f5e22b0cc49888846`）；包内 BUILD-README 写明 Windows 11 x64、Node 24.16.0、npm 12.0.1，以及完整构建步骤 `npm ci` → `npm run build` → `npm run build:firefox` → `npm run verify:firefox`。
 - 源码包包含原始源码、资源、`tsconfig.json`（必须！esbuild 自动读取，缺了产出的 JS 少 `"use strict";`）、锁文件与全部构建脚本，不含用户导出、profile、验证日志、探针、测试源码或依赖目录。它是 `770095f` 的提交用源码快照。
 - **已从源码包在独立临时目录安装依赖并构建**（`npm ci` → `build` → `build:firefox` → `verify:firefox` 全部退出 0），30 个输出文件与上述未签名 XPI 的**路径和内容逐文件完全相同**（REBUILD_MATCH，2026-10-01，脚本 `compare.py` 在仓库外运行）。
 - 既有扩展 ID `chatgpt-route-inspector-firefox@local`、`strict_min_version 128.0` 保持不变。旧版签名包已保存在 `local-archive/2026-10-02-pre-consolidation/release/signed/`，不能代替新版签名凭证。
-- 冻结构建记录保留原隔离目录绝对路径以保持文件身份。迁移后运行探针时显式加 `--dist dist/firefox`，并使用主目录中的 XPI 和构建记录，不重写冻结记录；Mozilla 签名由用户自行在终端进行。
+- 当前公开构建记录使用仓库相对路径；运行探针时先进入仓库根目录，显式加 `--dist dist/firefox`，并将下载的 XPI 和构建记录放在 `release/`。历史原始记录哈希只作历史参考；Mozilla 签名由用户自行在终端进行。
 - 获得签名后在 `about:addons` 齿轮菜单“从文件安装附加组件”覆盖升级；先导出备份，不卸载旧版。符合版本条件且未记录已展示的覆盖安装按代码设计会触发一次 `https://rinotice.liu-qi.cn/` 公告页打开（真实更新事件，本轮仍未验证，见 BLOCKED 第 5 项）。
 
 本轮干净安装依赖时 npm 报告 5 项依赖漏洞（3 moderate、2 high）及 esbuild 安装脚本被阻止的警告；构建仍成功。未做漏洞可达性分析，也未执行 `npm audit fix`，不能据此宣称依赖安全已验收。
@@ -75,7 +77,7 @@ npm run package:firefox   # 打包 dist/firefox -> release/*.xpi，并写出构�
 探针**自己启动浏览器**：创建全新专用临时 profile、自行挑选一个空闲端口、以隐藏窗口启动 Firefox、连接、跑完检查、只停掉自己启动的那个实例，随后删除自己创建的 profile（`--keep-profile` / `--keep-browser` 可保留）。它不会附着到、也不会停止任何它没有启动的浏览器，也不碰日常 profile。
 
 ```powershell
-Set-Location D:\LAB\sync-v109-isolated
+# 在自己的仓库根目录执行。
 # 复验使用冻结 XPI、同次 build.json 和匹配 dist，不要重新打包。
 py -B ff-marionette.py `
   --xpi "release\chatgpt-route-inspector-firefox-1.1.0.xpi" `

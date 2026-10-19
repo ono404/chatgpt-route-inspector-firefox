@@ -6,8 +6,8 @@
 
 | 目录 | 本次收尾核对的状态 | 使用方式 |
 | --- | --- | --- |
-| `D:\LAB\sync-v109-isolated` | 现役 v1.1.0 工作树；分支 `codex/sync-upstream-v1.1.0`；HEAD `cdbf1b35c16ef9e996d509bdbcee94e93c78c368` | 先读本文件，再读该目录 AGENTS.md、PROGRESS.md 顶部及 BLOCKED.md 第 15–16 项 |
-| `D:\LAB\火狐浏览器插件制作2` | 旧 v1.0.7 工作树；HEAD `909941e60b2cb97f58ca3be41c3354c7e5f2416c` | 历史参考；不要因当前会话 cwd 在此而把它当新版工作区 |
+| `C:\workspace\sync-v109-isolated` | 现役 v1.1.0 工作树；分支 `codex/sync-upstream-v1.1.0`；HEAD `cdbf1b35c16ef9e996d509bdbcee94e93c78c368` | 先读本文件，再读该目录 AGENTS.md、PROGRESS.md 顶部及 BLOCKED.md 第 15–16 项 |
+| `C:\workspace\chatgpt-route-inspector-firefox` | 旧 v1.0.7 工作树；HEAD `909941e60b2cb97f58ca3be41c3354c7e5f2416c` | 历史参考；不要因当前会话 cwd 在此而把它当新版工作区 |
 
 本次文档收尾开始前，现役工作树干净；原目录已有四文档修改及未知 `.workbuddy/`、`.zcodeignore`。本次只改交接文档和导航，不提交、不 push、不修改代码、不重新构建/打包、不清理现场。收尾后现役工作树存在本次未提交文档和证据归档，HEAD 仍为 cdbf1b3；接手时请重新看 `git status`。
 
@@ -61,7 +61,7 @@ v1.1.0 新增图片生成、深度研究任务结论与规划/报告模型分列
 
 ## 5. 冻结交付物
 
-目录均为 `D:\LAB\sync-v109-isolated\release`；本次重新计算哈希一致。
+目录均为 `C:\workspace\sync-v109-isolated\release`；本次重新计算哈希一致。
 
 | 文件 | SHA-256 |
 | --- | --- |
@@ -90,10 +90,10 @@ v1.1.0 新增图片生成、深度研究任务结论与规划/报告模型分列
 - 执行者检查 22 加固证据：[HARDENING-REPORT.md](../probe-check22-hardening-2026-10-02/HARDENING-REPORT.md)。
 - 本会话独立结果：本目录 `evidence/`；索引/来源/复制前后哈希见 `evidence/ARCHIVE.json`。`prior-review.md` 是原审查意见，`independent-positive.json` 是独立真机结果。
 - 可选重现：先把 `evidence/` 整目录复制到新的仓库外目录，再从现役工作区用 `py -3 -B <新目录>/adversarial.py` 与 `node <新目录>/replay-poll.mjs` 运行。脚本使用现役探针、项目测试夹具或提取的 JS，结果写在脚本同目录；先复制可保留原归档。不要把重现夹具的成功当作真机验证。
-- 上一轮独立运行全套日志与剩余反例仍在 `C:\Users\gyjxjkg\AppData\Local\Temp\ff-check22-accept-a755a99d0a10457891ac8785e3720425`。主要脚本/结果已复制归档，原现场未删除。
-- 升级前保全目录仍在 `D:\LAB\sync-v110-backup-2026-10-01`，本次只确认 HASHES.sha256 存在，未重新逐项比对备份。
+- 上一轮独立运行全套日志与剩余反例仍在 `C:\Users\<user>\AppData\Local\Temp\ff-check22-accept-a755a99d0a10457891ac8785e3720425`。主要脚本/结果已复制归档，原现场未删除。
+- 升级前保全目录仍在 `C:\workspace\sync-v110-backup-2026-10-01`，本次只确认 HASHES.sha256 存在，未重新逐项比对备份。
 
-本机 `py -3` 当前可用，指向 Python 3.14；上一轮工具测试/独立探针使用的路径是 `C:\Users\gyjxjkg\.workbuddy\binaries\python\versions\3.13.12\python.exe`，路径名不能当作解释器实际版本。工具 runner 会打印所选解释器，复验时按实际输出记证据。
+本机 `py -3` 当前可用，指向 Python 3.14；上一轮工具测试/独立探针使用的路径是 `C:\Users\<user>\.workbuddy\binaries\python\versions\3.13.12\python.exe`，路径名不能当作解释器实际版本。工具 runner 会打印所选解释器，复验时按实际输出记证据。
 
 ## 8. 本次 neat-freak 收尾的六个事实面
 
@@ -102,12 +102,12 @@ v1.1.0 新增图片生成、深度研究任务结论与规划/报告模型分列
 | 代码 | verified-current | 重新核对 HEAD、分支、上游业务目录 diff、现役探针；未改代码 |
 | 受控运行/发布 | pending | 本会话前轮独立真机 32/32 证据已归档；真实账号、签名安装和外部发布状态仍未验证 |
 | 文档 | changed-and-verified | 新增本交接与独立证据归档；更新现役入口及旧目录导航，历史报告正文不改 |
-| 规则 | changed-and-verified | 两工作树各有 AGENTS.md；本次盘点未发现项目内额外规则/override；上级 D: 与 D:\LAB 未发现 AGENTS/CLAUDE；仅更新交接指针与明显错表述 |
+| 规则 | changed-and-verified | 两工作树各有 AGENTS.md；本次盘点未发现项目内额外规则/override；上级 D: 与 C:\workspace 未发现 AGENTS/CLAUDE；仅更新交接指针与明显错表述 |
 | 记忆 | out-of-scope | Codex 生成记忆为 generated-read-only，存在旧版摘要，仅作检索线索；没有写入记忆或未知 .workbuddy 内容 |
 | 工作区 | pending | 两 worktree、备份与临时现场全保留；文档未提交；原目录已有改动保留，没有删除候选或自动清场 |
 
 盘点：排除 Git 内部、依赖、构建/交付及输出目录后，收尾前现役目录 368 文件/17 Markdown，原目录 246 文件/11 Markdown。当前源码包、历史证据及备份均无需为此次文档收尾重建或清理。
 
-本次修改前的四文档备份、文件枚举和哈希快照在 `C:\Users\gyjxjkg\AppData\Local\Temp\ff-neat-handoff-cb20fb422e6b4174b9f0ed6a32c4ee7c`。文档变更通过 diff、路径/链接存在性、归档哈希及非文档文件不变检查验收，结果见本目录 `CLOSEOUT-VERIFICATION.json`。
+本次修改前的四文档备份、文件枚举和哈希快照在 `C:\Users\<user>\AppData\Local\Temp\ff-neat-handoff-cb20fb422e6b4174b9f0ed6a32c4ee7c`。文档变更通过 diff、路径/链接存在性、归档哈希及非文档文件不变检查验收，结果见本目录 `CLOSEOUT-VERIFICATION.json`。
 
 收尾检查仍有 Git 换行提示：现役四文档修改前已是 LF，配置为 `core.autocrlf=true`，Git 提示未来检出可能转为 CRLF；本次保留其原有换行风格，`git diff --check` 退出 0，未修改 Git 配置。

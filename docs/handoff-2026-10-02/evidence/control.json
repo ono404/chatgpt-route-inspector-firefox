@@ -5,7 +5,7 @@
     "startedAt": "2026-10-02T09:55:45+0800",
     "finishedAt": "2026-10-02T09:55:45+0800",
     "label": "regression",
-    "probeFile": "D:\\LAB\\sync-v109-isolated\\ff-marionette.py",
+    "probeFile": "C:\\workspace\\sync-v109-isolated\\ff-marionette.py",
     "probeSha256": "17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e",
     "stage": "checks",
     "reachedStages": [
@@ -18,9 +18,9 @@
       "checks"
     ],
     "identity": {
-      "xpi": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\good.xpi",
-      "distDir": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\dist",
-      "buildRecordPath": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\good.build.json",
+      "xpi": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\good.xpi",
+      "distDir": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\dist",
+      "buildRecordPath": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\good.build.json",
       "expectedXpiSha256": "76b579c755e1c599491594dfc482fa16269b31296c83759b8fe0deeb347307c4",
       "xpiSha256": "76b579c755e1c599491594dfc482fa16269b31296c83759b8fe0deeb347307c4",
       "manifestSha256": "89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e",
@@ -32,13 +32,13 @@
       "parseError": null
     },
     "expectation": {
-      "source": "build-record: C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\good.build.json",
+      "source": "build-record: C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\good.build.json",
       "expectedXpiSha256": "76b579c755e1c599491594dfc482fa16269b31296c83759b8fe0deeb347307c4",
       "buildRecordSha256": "f8576865ea8baea8bb2b7beadd4250c9249e44d8337db454f108d52630e1627b",
       "buildRecordError": null
     },
     "git": {
-      "repoDir": "D:\\LAB\\sync-v109-isolated",
+      "repoDir": "C:\\workspace\\sync-v109-isolated",
       "available": true,
       "head": "cdbf1b35c16ef9e996d509bdbcee94e93c78c368",
       "dirty": false,
@@ -47,15 +47,15 @@
       "labelCommit": ""
     },
     "launch": {
-      "firefoxExe": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\fake-firefox.exe",
+      "firefoxExe": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\fake-firefox.exe",
       "pid": 4242,
       "host": "127.0.0.1",
       "port": 54050,
-      "profileDir": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci",
+      "profileDir": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci",
       "cmdline": [
         "fake-firefox",
         "-profile",
-        "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci"
+        "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci"
       ],
       "launchedAt": "2026-10-02T09:55:45+0800",
       "expectedManifestVersion": "1.0.7"
@@ -66,7 +66,7 @@
         "browserName": "firefox",
         "browserVersion": "156.0",
         "platformName": "windows",
-        "moz:profile": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci",
+        "moz:profile": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci",
         "moz:buildID": "synthetic",
         "moz:headless": true,
         "moz:geckodriverVersion": null
@@ -123,14 +123,14 @@
       "browserLaunched": true,
       "browserConnected": true,
       "connectionTrusted": true,
-      "profileDir": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci",
+      "profileDir": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci",
       "profileDirRemoved": true,
       "profilesKeptByRequest": false,
       "browserStoppedByThisRun": true
     },
     "exitCode": 0,
     "exitReason": "all expected checks ran and passed",
-    "resultsPath": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\results.json",
+    "resultsPath": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-run-ukr1aa_0\\results.json",
     "notes": []
   },
   "results": [
@@ -167,7 +167,7 @@
     {
       "check": "0e.session-profile",
       "ok": true,
-      "detail": "browser says moz:profile=C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci pid=4242 launched=C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci inside_temp=True"
+      "detail": "browser says moz:profile=C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci pid=4242 launched=C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-_3fucsci inside_temp=True"
     },
     {
       "check": "1.install-no-manifest-error",
@@ -292,7 +292,7 @@
     {
       "check": "19.new-chat-navigation-association",
       "ok": true,
-      "detail": "{\"probeSha256\": \"17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e\", \"xpi\": \"C:\\\\Users\\\\gyjxjkg\\\\AppData\\\\Local\\\\Temp\\\\ff-probe-run-ukr1aa_0\\\\good.xpi\", \"xpiSha256\": \"76b579c755e1c599491594dfc482fa16269b31296c83759b8fe0deeb347307c4\", \"buildRecord\": \"C:\\\\Users\\\\gyjxjkg\\\\AppData\\\\Local\\\\Temp\\\\ff-probe-run-ukr1aa_0\\\\good.build.json\", \"tabId\": 4242, \"beforePageUrl\": \"https://chatgpt.com/\", \"beforeRevision\": 5, \"creationCtx\": \"ctx-1\", \"captureId\": \"synthetic-navcheck-capture\", \"correlatedCaptureId\": \"synthetic-navcheck-capture-2\", \"tempStage\": {\"pushReturnedPathname\": \"/c/local-chatgpt%3Anavcheck-draft\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft\", \"revision\": 6, \"ctxId\": \"ctx-1\", \"ok\": true}, \"responseArrived\": {\"phase\": \"failed\", \"errorCode\": \"http_403\", \"ctx\": \"ctx-1\", \"ok\": true}, \"formalStage\": {\"pushReturnedPathname\": \"/c/navcheck-conv\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-conv\", \"revision\": 7, \"ctxId\": \"ctx-1\", \"ok\": true}, \"overlayShown\": {\"pathname\": \"/c/navcheck-conv\", \"text\": \"Route Inspector gpt-5-6-pro-navcheck gpt-5-5-mini-navcheck\", \"ok\": true}, \"unrelatedStage\": {\"pushReturnedPathname\": \"/c/navcheck-unrelated\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-unrelated\", \"revision\": 8, \"ctxId\": \"ctx-2\", \"oursCurrent\": false, \"ok\": true}, \"overlayAfterSwitch\": {\"pathname\": \"/c/navcheck-unrelated\", \"text\": \"waiting for the next message\", \"ok\": true}, \"ok\": true}"
+      "detail": "{\"probeSha256\": \"17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e\", \"xpi\": \"C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\ff-probe-run-ukr1aa_0\\\\good.xpi\", \"xpiSha256\": \"76b579c755e1c599491594dfc482fa16269b31296c83759b8fe0deeb347307c4\", \"buildRecord\": \"C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\ff-probe-run-ukr1aa_0\\\\good.build.json\", \"tabId\": 4242, \"beforePageUrl\": \"https://chatgpt.com/\", \"beforeRevision\": 5, \"creationCtx\": \"ctx-1\", \"captureId\": \"synthetic-navcheck-capture\", \"correlatedCaptureId\": \"synthetic-navcheck-capture-2\", \"tempStage\": {\"pushReturnedPathname\": \"/c/local-chatgpt%3Anavcheck-draft\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft\", \"revision\": 6, \"ctxId\": \"ctx-1\", \"ok\": true}, \"responseArrived\": {\"phase\": \"failed\", \"errorCode\": \"http_403\", \"ctx\": \"ctx-1\", \"ok\": true}, \"formalStage\": {\"pushReturnedPathname\": \"/c/navcheck-conv\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-conv\", \"revision\": 7, \"ctxId\": \"ctx-1\", \"ok\": true}, \"overlayShown\": {\"pathname\": \"/c/navcheck-conv\", \"text\": \"Route Inspector gpt-5-6-pro-navcheck gpt-5-5-mini-navcheck\", \"ok\": true}, \"unrelatedStage\": {\"pushReturnedPathname\": \"/c/navcheck-unrelated\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-unrelated\", \"revision\": 8, \"ctxId\": \"ctx-2\", \"oursCurrent\": false, \"ok\": true}, \"overlayAfterSwitch\": {\"pathname\": \"/c/navcheck-unrelated\", \"text\": \"waiting for the next message\", \"ok\": true}, \"ok\": true}"
     }
   ]
 }

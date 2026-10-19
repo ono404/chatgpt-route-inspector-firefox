@@ -5,7 +5,7 @@
   "startedAt": "2026-09-27T16:22:37+0800",
   "finishedAt": "2026-09-27T16:22:37+0800",
   "label": "v1.0.9-tamper",
-  "probeFile": "D:\\LAB\\sync-v109-isolated\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\sync-v109-isolated\\ff-marionette.py",
   "probeSha256": "6d2cef0dd53608361327b93f63c3eb63b5a39c1d853584c679afa685761b0d49",
   "stage": "identity",
   "reachedStages": [
@@ -15,9 +15,9 @@
    "identity"
   ],
   "identity": {
-   "xpi": "D:\\LAB\\sync-v109-tamper\\tampered.xpi",
-   "distDir": "D:\\LAB\\sync-v109-isolated\\dist\\firefox",
-   "buildRecordPath": "D:\\LAB\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
+   "xpi": "C:\\workspace\\sync-v109-tamper\\tampered.xpi",
+   "distDir": "C:\\workspace\\sync-v109-isolated\\dist\\firefox",
+   "buildRecordPath": "C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
    "expectedXpiSha256": "34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523",
    "xpiSha256": "cb7f6bcfc6386f657b3bacebe508aab53249bd20f674567b41363b6424fe4955",
    "manifestSha256": "b8957ae63a39dc392d693081e31e80e201eee4a093b168f78a3eacdd075e07a9",
@@ -29,13 +29,13 @@
    "parseError": null
   },
   "expectation": {
-   "source": "build-record: D:\\LAB\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
+   "source": "build-record: C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
    "expectedXpiSha256": "34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523",
    "buildRecordSha256": "15debe2ae37957a21c7f91161e6627acc33afdd6dd67e29ae00268b6451e9dab",
    "buildRecordError": null
   },
   "git": {
-   "repoDir": "D:\\LAB\\sync-v109-isolated",
+   "repoDir": "C:\\workspace\\sync-v109-isolated",
    "available": true,
    "head": "55d3ccfcf492b4dd9ee54f11d2cb0edf45551571",
    "dirty": true,
@@ -125,7 +125,7 @@
   },
   "exitCode": 2,
   "exitReason": "artifact identity rejected before browser interaction",
-  "resultsPath": "D:\\LAB\\sync-v109-isolated\\docs\\upgrade-2026-09-27\\ff-probe-tampered-v1.0.9-2026-09-27.json",
+  "resultsPath": "C:\\workspace\\sync-v109-isolated\\docs\\upgrade-2026-09-27\\ff-probe-tampered-v1.0.9-2026-09-27.json",
   "notes": [
    "identity rejected; browser was not launched, connected, installed to or uninstalled from"
   ]
@@ -149,7 +149,7 @@
   {
    "check": "0c.dist-matches-record",
    "ok": false,
-   "detail": "record xpiPath=D:\\LAB\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.xpi but probing D:\\LAB\\sync-v109-tamper\\tampered.xpi; XPI content differs from record: content/page-hook.js"
+   "detail": "record xpiPath=C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.xpi but probing C:\\workspace\\sync-v109-tamper\\tampered.xpi; XPI content differs from record: content/page-hook.js"
   },
   {
    "check": "0d.manifest-sha256",

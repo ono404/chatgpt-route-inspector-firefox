@@ -1,4 +1,4 @@
-> 2026-10-02 发布归并：当前主目录为 D:\LAB\火狐浏览器插件制作2，分支 main，v1.1.0。用户接受已知流式限制并授权 GitHub 上传与清理；Mozilla 签名由用户执行，日常覆盖安装尚未完成。当前状态见 [STATUS.md](docs/publish-2026-10-02/STATUS.md)，以下保留历史记录。
+> 2026-10-02 发布归并：当前主目录为 C:\workspace\chatgpt-route-inspector-firefox，分支 main，v1.1.0。用户接受已知流式限制并授权 GitHub 上传与清理；Mozilla 签名由用户执行，日常覆盖安装尚未完成。当前状态见 [STATUS.md](docs/publish-2026-10-02/STATUS.md)，以下保留历史记录。
 
 # PROGRESS — Firefox 移植（自用）
 
@@ -17,7 +17,7 @@
 - 绿（修后）：`test:firefox-tooling` **Ran 82 tests，OK**（66 基线 + 16 新增）。门禁逐条退出码：typecheck 0 / lint 0 / test 0（**38 文件 442 passed / 0 failed / 0 skipped**，覆盖率 98.1/91.79/100，阈值未改）/ test:firefox-tooling 0 / verify:firefox 0（extension=30 firefox=30 identical=true）。日志 `docs/probe-check22-hardening-2026-10-02/*.log`。
 - 真机（Firefox 157.0，临时 profile，冻结正式包）：**32 passed / 0 failed / 0 missing -> exit 0**，`probeSha256=17297ab4…681e`，继续绑定原 XPI `04af228b…65ae`。检查 22 取得本轮新生成合法 UUID `1a85ec40-…28d5`（不在发送前集合中），tabId=5、context/pageUrl 与锁定页一致，state revision 14→17。结果 `ff-probe-positive-v1.1.0-check22-hardened-2026-10-02.json`。
 - 过程诊断（如实记录）：加固首版真机报 `found:null`；与**未改探针**同机对照（未改探针同日仍 32/32）后定位为本轮自有的 JS 调用笔误 `})()` 漏传 `arguments[0]`（标记丢失），已修正并真机复现通过；与检查 22 判定逻辑无关。诊断轮结果保留。
-- 脚本化反例（仓库外 `D:\LAB\sync-v110-check22-scripted-2026-10-02`，探针同哈希副本）：hook 未包装 fetch 且只给发送前旧记录 → 身份通过后检查 22 失败、退出 **4**；恢复合法对端 → 32/32、退出 0。层级为脚本化对端；真机层由上面冻结包运行单独佐证。
+- 脚本化反例（仓库外 `C:\workspace\sync-v110-check22-scripted-2026-10-02`，探针同哈希副本）：hook 未包装 fetch 且只给发送前旧记录 → 身份通过后检查 22 失败、退出 **4**；恢复合法对端 → 32/32、退出 0。层级为脚本化对端；真机层由上面冻结包运行单独佐证。
 - 只提交白名单（探针、工具测试/fixture、四文档、新增 docs 报告目录）；不提交生成物、不 push。业务源码、冻结交付物与历史证据哈希复核未变。
 
 ## v1.1.0 同步结果（2026-10-01）
@@ -28,14 +28,14 @@
 - 最小适配：探针新增 `ROUTE_SCHEMA_VERSION="1.9.0"` 常量并让检查 7 等值断言（非放宽；错误 schema 仍有 `1.8.0`/`2.0.0` 两个反例）；新增检查 **20–24** 并注册为必需；夹具同步 1.9.0；迁移测试补 v1.1.0 字段 null 默认断言。未全局替换版本：1.0.9 公告页与去重逻辑在 v1.1.0 仍在，真机检查 14/15 照常通过。
 - 红→绿：适配前同一 v1.1.0 包 **26 passed / 1 failed**（检查 7，schema 1.8.0 期望 vs 1.9.0 实际）退出 4；适配后 **32 passed / 0 failed / 0 missing** 退出 0。
 - 真机（Firefox **157.0**，`moz:buildID=20260924084938`，临时 profile）：`docs/upgrade-2026-10-01/ff-probe-positive-v1.1.0-2026-10-01.json`，32/32 退出 0；检查 22 拿到 hook 生成的真实 UUID（非预填），证明 page-hook→bridge→后台链路。
-- 真机反向（仓库外 `D:\LAB\sync-v110-reverse-2026-10-01\`）：篡改 XPI **2**（浏览器未启动，0d manifest PASS 而 0a/0b/0c FAIL）；已有 `--out` **6** 且原哈希不变；坏 manifest 经真实 CLI **1**、还原 **0**；禁导航反例身份通过后第 19 项 FAIL **4**。
+- 真机反向（仓库外 `C:\workspace\sync-v110-reverse-2026-10-01\`）：篡改 XPI **2**（浏览器未启动，0d manifest PASS 而 0a/0b/0c FAIL）；已有 `--out` **6** 且原哈希不变；坏 manifest 经真实 CLI **1**、还原 **0**；禁导航反例身份通过后第 19 项 FAIL **4**。
 - 交付：未签名 XPI `04af228b…65ae`、同次 build.json `a2028179…63a1`、源码 ZIP `51523360…8846`；**仓库外复建 30/30 逐文件一致**（REBUILD_MATCH）。旧交付 1.0.9 三份哈希与历史证据 92 文件均未变。XPI 打包两次内容逐字节相同（仅 9 个 ZIP mtime 不同导致整包哈希变化），冻结后已针对最终包重跑正向探针与复建比对。
 - 未完成：签名/安装、成功真实 SSE、真实更新事件、FF128、额度专项、Chromium E2E。`stream_parse_failed` 上游未定点修复，不因升级宣布已解决。详见 BLOCKED.md。
 
 ## 升级开工回执（2026-10-01，v1.0.9 → v1.1.0）
-- 起点：`HEAD=2470d15`（`codex/sync-upstream-v1.0.9`，隔离 worktree `D:\LAB\sync-v109-isolated`）；四文档 + 校验器改动、补强测试与证据目录未提交 → 已作保全提交 **`73696a7`**（19 文件，精确路径，未用 `git add .`），随后建分支 `codex/sync-upstream-v1.1.0`，工作树干净。
+- 起点：`HEAD=2470d15`（`codex/sync-upstream-v1.0.9`，隔离 worktree `C:\workspace\sync-v109-isolated`）；四文档 + 校验器改动、补强测试与证据目录未提交 → 已作保全提交 **`73696a7`**（19 文件，精确路径，未用 `git add .`），随后建分支 `codex/sync-upstream-v1.1.0`，工作树干净。
 - 目标：`dd5ea3366cdb3ed85025fc7a41f6e89ff1ee7552` == tag `v1.1.0`（上游仅 1 提交，40 文件 +1431/-45；schema `1.8.0→1.9.0`，新增图片/研究任务字段与 verdict）。
-- 升级前备份：`D:\LAB\sync-v110-backup-2026-10-01\`（preserve 19 + dist 94 + release 3 = **117 文件**，附 `HASHES.sha256`）。不动原目录、旧 release、历史证据。
+- 升级前备份：`C:\workspace\sync-v110-backup-2026-10-01\`（preserve 19 + dist 94 + release 3 = **117 文件**，附 `HASHES.sha256`）。不动原目录、旧 release、历史证据。
 - 升级前基线（本机 Node v24.16.0 / npm 12.0.1）：typecheck 0 / lint 0 / vitest **35 文件 336 passed**（覆盖率 97.29/91.81/100）/ `test:firefox-tooling` **56 项 0**。
 - 旧交付物哈希复核未变：XPI `34ca9440…da523`、源码 ZIP `0cc2412f…3d0`、build.json `15debe2a…9dab`。
 - 本轮顺序：`merge --no-ff` → 最小适配（探针/夹具/迁移测试 schema 1.9.0）→ 完整门禁 → 真机正反向 → 源码包仓库外复建 → 提交。证据目录 `docs/upgrade-2026-10-01/`。
@@ -60,7 +60,7 @@
 
 | 事实面 | 状态 | 当前结论 |
 | --- | --- | --- |
-| 代码 | verified-current | 当前交付在 `D:\LAB\sync-v109-isolated`、`codex/sync-upstream-v1.0.9`，代码验收提交 `8d01fd5`；业务目录与上游 `99f982d` 无差异。原工作区仍为 v1.0.7 / `909941e`。 |
+| 代码 | verified-current | 当前交付在 `C:\workspace\sync-v109-isolated`、`codex/sync-upstream-v1.0.9`，代码验收提交 `8d01fd5`；业务目录与上游 `99f982d` 无差异。原工作区仍为 v1.0.7 / `909941e`。 |
 | 本地运行与交付 | verified-current | v1.0.9 未签名 XPI / 同次 build.json / 源码 ZIP 冻结，30/30 文件复建一致；FF156.0.1 正式探针 27/27，两个语义反例退出 4。只代表受控临时 profile 场景。 |
 | 发布与真实流量 | pending | 新版未上传 AMO、未签名、未日常覆盖安装；成功 SSE、真实更新事件、FF128、断线提示、Chromium E2E 等见 BLOCKED.md。未查询远端，不宣称已 push/merged。 |
 | 文档 | changed-and-verified | README-FIREFOX 为交付与用法入口，BLOCKED 为未完成项；独立验收证据已归档，历史报告保留。 |
@@ -181,7 +181,7 @@
 - D1 关键证据：真实探针进程 + 脚本化 peer（`tests/firefox-tooling/fake_peer.py`）谎报 `moz:profile` → 探针退出 **4**，**对端收到的命令只有 `["WebDriver:NewSession"]`**，`connectionTrusted=false`，`notes` 记录“session 未被删除”。进程内假连接侧另断言危险调用为零。
 - 已知抖动（非缺陷，BLOCKED 第 11 项）：`chatgpt.com` 慢时 `9/10` 超时、`11` 未执行 → 退出 5（不重试、不静默通过）。本轮实测遇到一次并保留证据 `r3-probe-negative-badpage-attempt1-navtimeout.*`，同命令第二次恢复为 4。
 - 新增 `fake_peer.py` / `test_ff_marionette_gate.py` / `test_ff_marionette_early_failure.py`，扩展 `fake_marionette.py`（`profile_mode`）与 `probe_loader.py`（真实进程助手）。**未删改任何既有测试**（原 28 项全保留）。
-- 产物身份与历史证据：`ff-marionette.py=9e04541c…`（11 份结果 JSON 的 `probeSha256` 与之一致）；历史 `ff-probe-results.json=4bec56b9…`、`ff-probe-results-v1.0.7-2026-09-20.json=3da8fab7…` 未变；一/二轮证据未覆盖。本轮证据已审查（凭据类扫描零命中）+ 脱敏（`gyjxjkg`→`<user>`），按精确路径提交。**未使用 `--force`**，未清理未知文件，`.workbuddy/` 未处理。
+- 产物身份与历史证据：`ff-marionette.py=9e04541c…`（11 份结果 JSON 的 `probeSha256` 与之一致）；历史 `ff-probe-results.json=4bec56b9…`、`ff-probe-results-v1.0.7-2026-09-20.json=3da8fab7…` 未变；一/二轮证据未覆盖。本轮证据已审查（凭据类扫描零命中）+ 脱敏（`<user>`→`<user>`），按精确路径提交。**未使用 `--force`**，未清理未知文件，`.workbuddy/` 未处理。
 - 新增限制（BLOCKED 第 10 项）：真实 Firefox 会如实回报自己的 profile，“连接不可信”无法在真机自然产生，只能由脚本化对端复现。
 - 本轮只说明这两处遗漏的修复，不声称全部升级场景已验证，也不声称已获管理者验收。
 - 提交 `ee74203`（40 文件：探针 + 3 个新测试夹具/用例 + 文档 + 29 个 `r3-*` 证据；`.log` 按精确路径 `git add -f`，未改 `.gitignore`、未强制添加目录）。收尾 `git status --porcelain -uall` 只剩 `.workbuddy/memory/*` 两条未跟踪，即**已跟踪文件干净、仍有未知未跟踪文件**；`main=182fca1e`、`git diff d5524a0 HEAD -- src schemas _locales icons manifest` 为空、两份历史结果哈希未变。
@@ -193,7 +193,7 @@
 - 顺序：先读管理者证据复现 → 改 `ff-marionette.py`（profile 作为前置门禁 + 全流程统一收口）→ 新增回归测试（含真实进程）→ 真机正反向复跑 → 文档 → 提交。
 - 改动范围：仅 `ff-marionette.py`、`tests/firefox-tooling/**`、4 个文档、`docs/upgrade-2026-09-20/evidence/` 新增证据。不碰业务源码/manifest/构建与打包脚本/依赖/版本/package scripts/既有业务测试阈值。
 - 退出码沿用现有体系：安全中止归入 4（有检查失败），输入损坏归入 2（身份未建立），运行异常仍为 3。
-- Python：`C:\Users\gyjxjkg\.workbuddy\binaries\python\versions\3.13.12\python.exe`（裸 python 是 WindowsApps 别名，退出 9009）。
+- Python：`C:\Users\<user>\.workbuddy\binaries\python\versions\3.13.12\python.exe`（裸 python 是 WindowsApps 别名，退出 9009）。
 - 最大风险：把 profile 门禁做过头会误伤真实浏览器 → 用真机正向复跑证明不退化。
 
 ## 任务 6 验证工具修正开工回执（2026-09-20，第二轮）
@@ -202,7 +202,7 @@
 - 旧证据哈希已录（不得覆盖）：`ff-probe-results.json=4bec56b9…`、`UPGRADE-REPORT.md=881c3fda…`、`ff-probe-results-v1.0.7-2026-09-20.json=3da8fab7…`，17 个 `evidence/*.log` 逐个记录于 `docs/upgrade-2026-09-20/evidence/`。
 - 本轮范围：只修 `ff-marionette.py` / `package-firefox.mjs` / `verify-firefox-dist.mjs` / 新增验证工具回归测试 / 必要 npm script / 文档；不碰业务源码与构建脚本。
 - 已确认缺陷（管理者实测）：`ff-marionette.py` 检查失败仍退出 0；仅核对 manifest 哈希；`--out` 默认写死旧结果文件；meta 用环境变量冒充 profile；README 顺序倒置。
-- Python 解释器：裸 `python` 是 WindowsApps 别名（退出 9009），一律用 `C:\Users\gyjxjkg\.workbuddy\binaries\python\versions\3.13.12\python.exe`。
+- Python 解释器：裸 `python` 是 WindowsApps 别名（退出 9009），一律用 `C:\Users\<user>\.workbuddy\binaries\python\versions\3.13.12\python.exe`。
 - 方案：探针自行以全新专用临时 profile 启动 Firefox（隐藏窗口）并连接；身份改为「构建记录 → XPI 全量哈希 + 逐文件比对」；退出码按检查聚合；`--out` 缺省生成不碰撞新路径且拒绝覆盖。
 - 最大风险：`ff-marionette.py` 重构后真机行为变化 → 用真机正/反向各跑一遍，且回归测试用本地 stub Marionette 夹具固定。
 
@@ -216,7 +216,7 @@
 - 真机反向：坏公告页 → 4（`14.announcement-page` FAIL）；同 manifest 异 JS → 2（`0a/0b/0c` FAIL 而 `0d` PASS，且未连接浏览器）；浏览器启动即退出 → 3；启动超时 → 3；`--out` 指向已有文件 → 6 且原文件哈希不变；省略 `--out` → 0 且生成新时间戳文件、历史 `ff-probe-results.json` 哈希不变。
 - 新增 `scripts/run-firefox-tooling-tests.mjs`（本机裸 `python` 是 WindowsApps 别名会退出 9009；另：本沙箱内 Node 的 `spawnSync` 一律 EBUSY，必须用异步 `spawn`）与 `tests/firefox-tooling/**` 6 文件。
 - 历史证据零改动（逐个哈希核对）：`ff-probe-results.json=4bec56b9…`、`ff-probe-results-v1.0.7-2026-09-20.json=3da8fab7…`、第一轮 17 个 `evidence/*.log` 全部原值。
-- 本轮证据已审查 + 脱敏（`gyjxjkg` → `<user>`，仅出现在绝对路径；凭据类模式扫描零命中），按精确路径 `git add -f` 纳入提交，未改 `.gitignore`、未把整个目录强制添加。
+- 本轮证据已审查 + 脱敏（`<user>` → `<user>`，仅出现在绝对路径；凭据类模式扫描零命中），按精确路径 `git add -f` 纳入提交，未改 `.gitignore`、未把整个目录强制添加。
 - 仍未处理：未跟踪的 `.workbuddy/`（其存在已在报告 §9.8 与最终 Git 状态中明确列出）。
 - 提交：`f55c1ed`（工具 + 文档 + 本轮证据，38 文件）；其后一个提交把**第一轮那 17 个被全局 `*.log` 规则漏掉的 `evidence/*.log`** 按精确路径补入版本控制（此前它们只存在于工作区，正是第一轮“证据未进入提交”的成因）。
 - 本轮**只说明验证修正结果**，不声称全部升级场景已验证，也不声称已获管理者验收；额度真机等未验证项见 BLOCKED.md 第 8 项。
@@ -228,7 +228,7 @@
 - 回退方法：`git switch main`（main 仍为 `182fca1`，未被触碰）；或 `git revert -m 1 33f0879` 撤回本次合并。
 
 ## 升级开工回执（2026-09-27，v1.0.7 → v1.0.9）
-- 起点：`HEAD=909941e`（分支 `codex/sync-upstream-v1.0.9`，隔离 worktree `D:\LAB\sync-v109-isolated`，从 v1.0.7 分支 HEAD 建立；原工作区四文档未提交修改已复制快照并哈希核对一致）。
+- 起点：`HEAD=909941e`（分支 `codex/sync-upstream-v1.0.9`，隔离 worktree `C:\workspace\sync-v109-isolated`，从 v1.0.7 分支 HEAD 建立；原工作区四文档未提交修改已复制快照并哈希核对一致）。
 - 目标：`99f982dd089b020afa85b897b07edfb340cc58dd`（upstream v1.0.9，3 提交 40 文件 +1056/-357）；顺序：merge → 最小适配（探针 schema 1.8.0/公告）→ 完整门禁 → 真机正反向 → 交付。
 - 升级前基线（本机 Node v24.16.0 / npm 12.0.1，npm ci 按锁文件）：typecheck 0 / lint 0 / vitest 33 文件 301 passed 0 failed（覆盖率 97.19/91.37/100）/ test:firefox-tooling 49 passed 退出码 0。
 - 环境：Firefox 156.0.1（C:\Program Files\Mozilla Firefox）；`python` 为 WindowsApps 占位符不可用，用 `py` 启动器（Python 3.14.6，工具回归实测可用）。
@@ -237,7 +237,7 @@
 
 ## v1.0.9 同步结果（2026-09-27）
 
-- 提交链：`b1f06aa`（快照）→ `55d3ccf`（merge 上游 `99f982d`）→ `6f932e0`（探针/夹具适配）。分支 `codex/sync-upstream-v1.0.9`，隔离 worktree `D:\LAB\sync-v109-isolated`；原工作区未动。
+- 提交链：`b1f06aa`（快照）→ `55d3ccf`（merge 上游 `99f982d`）→ `6f932e0`（探针/夹具适配）。分支 `codex/sync-upstream-v1.0.9`，隔离 worktree `C:\workspace\sync-v109-isolated`；原工作区未动。
 - 同源：`git diff --exit-code 99f982d -- src schemas _locales icons manifest` 工作区与最终提交均为空；verify-firefox-dist 30/30、8 JS 逐字节一致。
 - 门禁：typecheck/lint/test/test:firefox-tooling/build/build:firefox/build:notice/build:e2e/verify:firefox/package:firefox 全部退出码 0；vitest 34 文件 327 passed（上游净增 26），覆盖率 97.29/91.82/100；工具回归 49 passed 未变。
 - 真机（FF156.0.1，临时 profile）：探针正向 27/27 退出码 0（新增检查：suspect 浮窗提示走真实 page-hook 管线、公告真实打开 `https://rinotice.liu-qi.cn/` 且历史不变、suspected_downgrade/work_unverifiable/failed 判定、local-chatgpt 会话关联）；篡改反向退出码 2（浏览器前拒绝）；输出保护退出码 6。迭代 run1–run3 红灯证据全保留。

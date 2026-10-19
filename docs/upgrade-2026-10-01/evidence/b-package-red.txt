@@ -1,5 +1,5 @@
-Packaged D:\LAB\sync-v110-red-2026-10-01\chatgpt-route-inspector-firefox-1.1.0.xpi
+Packaged C:\workspace\sync-v110-red-2026-10-01\chatgpt-route-inspector-firefox-1.1.0.xpi
 manifest.json sha256 19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee
 xpi sha256 c2930cf0debc82be2319b6154b49a7d81076397567181f95306fd871795a6545
 archive verified against dist: 30 files identical
-build record D:\LAB\sync-v110-red-2026-10-01\chatgpt-route-inspector-firefox-1.1.0.build.json
+build record C:\workspace\sync-v110-red-2026-10-01\chatgpt-route-inspector-firefox-1.1.0.build.json

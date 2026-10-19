@@ -5,7 +5,7 @@
   "startedAt": "2026-09-20T14:54:25+0800",
   "finishedAt": "2026-09-20T14:54:25+0800",
   "label": "r3-negative-record-wrong-type",
-  "probeFile": "D:\\LAB\\火狐浏览器插件制作2\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\chatgpt-route-inspector-firefox\\ff-marionette.py",
   "probeSha256": "9e04541c33f52fc5b1100586c042776f0b9d7e0111cc4ce0cb2cffc7e2f243c9",
   "stage": "identity",
   "reachedStages": [
@@ -15,8 +15,8 @@
    "identity"
   ],
   "identity": {
-   "xpi": "D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.xpi",
-   "distDir": "D:\\LAB\\火狐浏览器插件制作2\\dist\\firefox",
+   "xpi": "C:\\workspace\\chatgpt-route-inspector-firefox\\release\\chatgpt-route-inspector-firefox-1.0.7.xpi",
+   "distDir": "C:\\workspace\\chatgpt-route-inspector-firefox\\dist\\firefox",
    "buildRecordPath": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ri-exec3\\fixtures\\record-wrong-type.json",
    "expectedXpiSha256": null,
    "xpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
@@ -35,7 +35,7 @@
    "buildRecordError": "build record field fileHashes has type list, expected dict"
   },
   "git": {
-   "repoDir": "D:\\LAB\\火狐浏览器插件制作2",
+   "repoDir": "C:\\workspace\\chatgpt-route-inspector-firefox",
    "available": true,
    "head": "f2f53b284b39d7df2b08b900d8b4893ec0bf41a4",
    "dirty": true,
@@ -117,7 +117,7 @@
   },
   "exitCode": 2,
   "exitReason": "artifact identity rejected before browser interaction",
-  "resultsPath": "D:\\LAB\\火狐浏览器插件制作2\\docs\\upgrade-2026-09-20\\evidence\\r3-probe-negative-record-wrong-type.json",
+  "resultsPath": "C:\\workspace\\chatgpt-route-inspector-firefox\\docs\\upgrade-2026-09-20\\evidence\\r3-probe-negative-record-wrong-type.json",
   "notes": [
    "identity rejected; browser was not launched, connected, installed to or uninstalled from"
   ]

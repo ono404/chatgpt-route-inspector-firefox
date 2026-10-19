@@ -5,7 +5,7 @@
   "startedAt": "2026-10-02T09:46:44+0800",
   "finishedAt": "2026-10-02T09:46:44+0800",
   "label": "scripted",
-  "probeFile": "D:\\LAB\\sync-v110-check22-scripted-2026-10-02\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\sync-v110-check22-scripted-2026-10-02\\ff-marionette.py",
   "probeSha256": "17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e",
   "stage": "checks",
   "reachedStages": [
@@ -18,9 +18,9 @@
    "checks"
   ],
   "identity": {
-   "xpi": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-scripted-xggnvw_8\\good.xpi",
-   "distDir": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-scripted-xggnvw_8\\dist",
-   "buildRecordPath": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-scripted-xggnvw_8\\good.build.json",
+   "xpi": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-scripted-xggnvw_8\\good.xpi",
+   "distDir": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-scripted-xggnvw_8\\dist",
+   "buildRecordPath": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-scripted-xggnvw_8\\good.build.json",
    "expectedXpiSha256": "f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10",
    "xpiSha256": "f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10",
    "manifestSha256": "89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e",
@@ -32,13 +32,13 @@
    "parseError": null
   },
   "expectation": {
-   "source": "build-record: C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-scripted-xggnvw_8\\good.build.json",
+   "source": "build-record: C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-scripted-xggnvw_8\\good.build.json",
    "expectedXpiSha256": "f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10",
    "buildRecordSha256": "90ae7ece120767f62243272f120c74662203b1aef3148442d09fb98b6b4b2f8c",
    "buildRecordError": null
   },
   "git": {
-   "repoDir": "D:\\LAB\\sync-v110-check22-scripted-2026-10-02",
+   "repoDir": "C:\\workspace\\sync-v110-check22-scripted-2026-10-02",
    "available": false,
    "head": null,
    "dirty": null,
@@ -47,15 +47,15 @@
    "labelCommit": ""
   },
   "launch": {
-   "firefoxExe": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-probe-scripted-xggnvw_8\\fake-firefox.exe",
+   "firefoxExe": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-probe-scripted-xggnvw_8\\fake-firefox.exe",
    "pid": 4242,
    "host": "127.0.0.1",
    "port": 58485,
-   "profileDir": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh",
+   "profileDir": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh",
    "cmdline": [
     "fake-firefox",
     "-profile",
-    "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh"
+    "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh"
    ],
    "launchedAt": "2026-10-02T09:46:44+0800",
    "expectedManifestVersion": "1.0.7"
@@ -66,7 +66,7 @@
     "browserName": "firefox",
     "browserVersion": "156.0",
     "platformName": "windows",
-    "moz:profile": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh",
+    "moz:profile": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh",
     "moz:buildID": "synthetic",
     "moz:headless": true,
     "moz:geckodriverVersion": null
@@ -123,14 +123,14 @@
    "browserLaunched": true,
    "browserConnected": true,
    "connectionTrusted": true,
-   "profileDir": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh",
+   "profileDir": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh",
    "profileDirRemoved": true,
    "profilesKeptByRequest": false,
    "browserStoppedByThisRun": true
   },
   "exitCode": 0,
   "exitReason": "all expected checks ran and passed",
-  "resultsPath": "D:\\LAB\\sync-v110-check22-scripted-2026-10-02\\out\\positive-restored-20261002-094644.json",
+  "resultsPath": "C:\\workspace\\sync-v110-check22-scripted-2026-10-02\\out\\positive-restored-20261002-094644.json",
   "notes": []
  },
  "results": [
@@ -167,7 +167,7 @@
   {
    "check": "0e.session-profile",
    "ok": true,
-   "detail": "browser says moz:profile=C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh pid=4242 launched=C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh inside_temp=True"
+   "detail": "browser says moz:profile=C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh pid=4242 launched=C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-ri-probe-profiles\\ff-ri-probe-gd1519vh inside_temp=True"
   },
   {
    "check": "1.install-no-manifest-error",
@@ -292,7 +292,7 @@
   {
    "check": "19.new-chat-navigation-association",
    "ok": true,
-   "detail": "{\"probeSha256\": \"17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e\", \"xpi\": \"C:\\\\Users\\\\gyjxjkg\\\\AppData\\\\Local\\\\Temp\\\\ff-probe-scripted-xggnvw_8\\\\good.xpi\", \"xpiSha256\": \"f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10\", \"buildRecord\": \"C:\\\\Users\\\\gyjxjkg\\\\AppData\\\\Local\\\\Temp\\\\ff-probe-scripted-xggnvw_8\\\\good.build.json\", \"tabId\": 4242, \"beforePageUrl\": \"https://chatgpt.com/\", \"beforeRevision\": 5, \"creationCtx\": \"ctx-1\", \"captureId\": \"synthetic-navcheck-capture\", \"correlatedCaptureId\": \"synthetic-navcheck-capture-2\", \"tempStage\": {\"pushReturnedPathname\": \"/c/local-chatgpt%3Anavcheck-draft\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft\", \"revision\": 6, \"ctxId\": \"ctx-1\", \"ok\": true}, \"responseArrived\": {\"phase\": \"failed\", \"errorCode\": \"http_403\", \"ctx\": \"ctx-1\", \"ok\": true}, \"formalStage\": {\"pushReturnedPathname\": \"/c/navcheck-conv\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-conv\", \"revision\": 7, \"ctxId\": \"ctx-1\", \"ok\": true}, \"overlayShown\": {\"pathname\": \"/c/navcheck-conv\", \"text\": \"Route Inspector gpt-5-6-pro-navcheck gpt-5-5-mini-navcheck\", \"ok\": true}, \"unrelatedStage\": {\"pushReturnedPathname\": \"/c/navcheck-unrelated\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-unrelated\", \"revision\": 8, \"ctxId\": \"ctx-2\", \"oursCurrent\": false, \"ok\": true}, \"overlayAfterSwitch\": {\"pathname\": \"/c/navcheck-unrelated\", \"text\": \"waiting for the next message\", \"ok\": true}, \"ok\": true}"
+   "detail": "{\"probeSha256\": \"17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e\", \"xpi\": \"C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\ff-probe-scripted-xggnvw_8\\\\good.xpi\", \"xpiSha256\": \"f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10\", \"buildRecord\": \"C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\ff-probe-scripted-xggnvw_8\\\\good.build.json\", \"tabId\": 4242, \"beforePageUrl\": \"https://chatgpt.com/\", \"beforeRevision\": 5, \"creationCtx\": \"ctx-1\", \"captureId\": \"synthetic-navcheck-capture\", \"correlatedCaptureId\": \"synthetic-navcheck-capture-2\", \"tempStage\": {\"pushReturnedPathname\": \"/c/local-chatgpt%3Anavcheck-draft\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft\", \"revision\": 6, \"ctxId\": \"ctx-1\", \"ok\": true}, \"responseArrived\": {\"phase\": \"failed\", \"errorCode\": \"http_403\", \"ctx\": \"ctx-1\", \"ok\": true}, \"formalStage\": {\"pushReturnedPathname\": \"/c/navcheck-conv\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-conv\", \"revision\": 7, \"ctxId\": \"ctx-1\", \"ok\": true}, \"overlayShown\": {\"pathname\": \"/c/navcheck-conv\", \"text\": \"Route Inspector gpt-5-6-pro-navcheck gpt-5-5-mini-navcheck\", \"ok\": true}, \"unrelatedStage\": {\"pushReturnedPathname\": \"/c/navcheck-unrelated\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-unrelated\", \"revision\": 8, \"ctxId\": \"ctx-2\", \"oursCurrent\": false, \"ok\": true}, \"overlayAfterSwitch\": {\"pathname\": \"/c/navcheck-unrelated\", \"text\": \"waiting for the next message\", \"ok\": true}, \"ok\": true}"
   }
  ]
 }

@@ -1,4 +1,4 @@
-> 2026-10-02 发布归并：当前主目录为 D:\LAB\火狐浏览器插件制作2，分支 main，v1.1.0。用户接受已知流式限制并授权 GitHub 上传与清理；Mozilla 签名由用户执行，日常覆盖安装尚未完成。当前状态见 [STATUS.md](docs/publish-2026-10-02/STATUS.md)，以下保留历史记录。
+> 2026-10-02 发布归并：当前主目录为 C:\workspace\chatgpt-route-inspector-firefox，分支 main，v1.1.0。用户接受已知流式限制并授权 GitHub 上传与清理；Mozilla 签名由用户执行，日常覆盖安装尚未完成。当前状态见 [STATUS.md](docs/publish-2026-10-02/STATUS.md)，以下保留历史记录。
 
 # BLOCKED（需人工验证项）
 
@@ -152,7 +152,7 @@ round2 第 19 项已验证真实 tracker 导航、临时地址提升与浮窗归
    本轮**未登录、未发真实消息**，用的仍是专用临时 profile。
 3. **真机为 Firefox 157.0，非 128**（承接第 15 节第 4 项）；`strict_min_version 128.0` 未改。
 4. **脚本化反例的层级**：hook 未包装 fetch + 只给发送前旧记录的反例由**进程内脚本化
-   Marionette 对端**证明（`D:\LAB\sync-v110-check22-scripted-2026-10-02`），不是真实浏览器；
+   Marionette 对端**证明（`C:\workspace\sync-v110-check22-scripted-2026-10-02`），不是真实浏览器；
    真机层由冻结包正向运行单独佐证。两者都**不能**代表“连接不可信”之外的真实故障注入。
 5. **本轮自造缺陷已如实记录**：加固首版真机上 `found:null`，根因是本轮自有的 JS 调用笔误
    `})()` 漏传 `arguments[0]`（唯一标记丢失），非检查判定逻辑缺陷；与未改探针同日对照后定位，

@@ -5,7 +5,7 @@
   "startedAt": "2026-09-20T14:51:37+0800",
   "finishedAt": "2026-09-20T14:52:06+0800",
   "label": "r3-positive",
-  "probeFile": "D:\\LAB\\火狐浏览器插件制作2\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\chatgpt-route-inspector-firefox\\ff-marionette.py",
   "probeSha256": "9e04541c33f52fc5b1100586c042776f0b9d7e0111cc4ce0cb2cffc7e2f243c9",
   "stage": "checks",
   "reachedStages": [
@@ -18,9 +18,9 @@
    "checks"
   ],
   "identity": {
-   "xpi": "D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.xpi",
-   "distDir": "D:\\LAB\\火狐浏览器插件制作2\\dist\\firefox",
-   "buildRecordPath": "D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
+   "xpi": "C:\\workspace\\chatgpt-route-inspector-firefox\\release\\chatgpt-route-inspector-firefox-1.0.7.xpi",
+   "distDir": "C:\\workspace\\chatgpt-route-inspector-firefox\\dist\\firefox",
+   "buildRecordPath": "C:\\workspace\\chatgpt-route-inspector-firefox\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
    "expectedXpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
    "xpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
    "manifestSha256": "c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a",
@@ -32,13 +32,13 @@
    "parseError": null
   },
   "expectation": {
-   "source": "build-record: D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
+   "source": "build-record: C:\\workspace\\chatgpt-route-inspector-firefox\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
    "expectedXpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
    "buildRecordSha256": "0208c1e2b7a8d1d7379992b5e93e917172243a7782ed47cbeb9f06be4e7dc1d1",
    "buildRecordError": null
   },
   "git": {
-   "repoDir": "D:\\LAB\\火狐浏览器插件制作2",
+   "repoDir": "C:\\workspace\\chatgpt-route-inspector-firefox",
    "available": true,
    "head": "f2f53b284b39d7df2b08b900d8b4893ec0bf41a4",
    "dirty": true,
@@ -126,7 +126,7 @@
   },
   "exitCode": 0,
   "exitReason": "all expected checks ran and passed",
-  "resultsPath": "D:\\LAB\\火狐浏览器插件制作2\\docs\\upgrade-2026-09-20\\evidence\\r3-probe-positive.json",
+  "resultsPath": "C:\\workspace\\chatgpt-route-inspector-firefox\\docs\\upgrade-2026-09-20\\evidence\\r3-probe-positive.json",
   "notes": []
  },
  "results": [

@@ -52,6 +52,6 @@ PASS 12.capture-context-registered | {'ok': True, 'count': 1, 'sample': {'id': '
 PASS 13.auto-reasoning-verdict | {'ok': True, 'verdict': 'auto_reasoning', 'route': 'gpt-5-6-auto-thinking', 'schemaVersion': '1.7.0'}
 PASS 14.announcement-page | {'title': 'Route Inspector · 1.0.7 公告', 'text': '\n  \n    \n      Route Inspector1.0.7 · 用户公告\n      EN中\n    \n    \n      样本观察与反馈邀请\n      关于响应路由字段的一点观察\n      \n        目前收集到的一些案例表明，发生降级的账户在网页端进行 Chat 会话时，响应中会缺少 resolved_model_slug 字段，只能通过 server_ste_metadata.model_slug 识别路由信
 PASS 15.open-announcement-message | {'before': 2, 'after': 2, 'ok': True}
-saved D:\LAB\火狐浏览器插件制作2\docs\upgrade-2026-09-20\ff-probe-results-v1.0.7-2026-09-20.json
+saved C:\workspace\chatgpt-route-inspector-firefox\docs\upgrade-2026-09-20\ff-probe-results-v1.0.7-2026-09-20.json
 PROBE_EXIT=0
 FF_STOPPED

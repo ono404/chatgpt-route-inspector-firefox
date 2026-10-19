@@ -3,67 +3,67 @@
   "scope": "Byte copies of prior independent evidence. Historical review judgments remain opinions for successor reassessment.",
   "files": [
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\adversarial.py",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\adversarial.py",
       "file": "adversarial.py",
       "sha256": "b5b5f99cabfd961f59d0764beca2462acacd5b944c4f84b1082b798e910b07b3",
       "copyVerified": true
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\adversarial-summary.json",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\adversarial-summary.json",
       "file": "adversarial-summary.json",
       "sha256": "22a8094085f85669b4b8897e8608ae93dce0d3c30f81542ad4ff1cabf489e77e",
       "copyVerified": true
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\control.json",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\control.json",
       "file": "control.json",
       "sha256": "2194d3f985bf2f8d3734a631138aa7fcfd4cec01e91bbb3c672fad43868f3857",
       "copyVerified": true
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\nondefault-port.json",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\nondefault-port.json",
       "file": "nondefault-port.json",
       "sha256": "66006f65cca92fc8026a2cde0ee50b7c46e28ef5ffc2e1b7a367e1c5c5f6bc13",
       "copyVerified": true
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\duplicate-results.json",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\duplicate-results.json",
       "file": "duplicate-results.json",
       "sha256": "8feff7f57cda1c320c50355f6f046bc6907473e4f4fe35239acd5588895b8194",
       "copyVerified": true
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\independent-positive.json",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\independent-positive.json",
       "file": "independent-positive.json",
       "sha256": "c3c1fc0f95bbba16f2a04444b8cf4bd947c30c6b7909829b5cce00be82a31a7d",
       "copyVerified": true
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\actual-poll.json",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\actual-poll.json",
       "file": "actual-poll.json",
       "sha256": "3aba7f9cbc87c6c9cae12a5f0a04af15717d617c49d156c0c287736e04ecffaf",
       "copyVerified": true
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\actual-found.json",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\actual-found.json",
       "file": "actual-found.json",
       "sha256": "436903ab45362fcc37aa4176c8b3df56bcb767a173a524bc99dc47e5db133692",
       "copyVerified": true
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\actual-js-duplicate-result.json",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\actual-js-duplicate-result.json",
       "file": "actual-js-duplicate-result.json",
       "sha256": "9b48ab20826cb2c3762fc99c879a4f07862e0a22b682ae863e84741f6c513d83",
       "copyVerified": true
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\replay-poll.mjs",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\replay-poll.mjs",
       "file": "replay-poll.mjs",
       "sha256": "a4a73e914daeea5e20e6f19830e088e91a8a4b206f74e53cafa537a3602e3676",
       "copyVerified": true
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\ACCEPTANCE.md",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\ACCEPTANCE.md",
       "file": "prior-review.md",
       "sha256": "32a0d4a60afa57b58ebe8c64acbd17f2b4b8b48172c3daf84a182acc80d801ab",
       "copyVerified": true
@@ -71,27 +71,27 @@
   ],
   "originalLogsPreservedOutsideRepository": [
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\typecheck.log",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\typecheck.log",
       "sha256": "a69e7ea5704a40e7fdd14171636eb1373e92acddeff7181aad8035d148f2a198"
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\lint.log",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\lint.log",
       "sha256": "a3efa9d3e269321fa9b79c5795c8b75e78303a1f6c05a5a67b508d0881a284d2"
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\test.log",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\test.log",
       "sha256": "bde8858c66080ffa7cba3cff79c4076c06c74f9d22c06b373ed410463ecf762c"
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\tooling.log",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\tooling.log",
       "sha256": "0ee78d67af6d0ac058ddb088190e2936a8150436d27218f1edc386c921a0626e"
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\verify.log",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\verify.log",
       "sha256": "10e2278aafe26ad7dbf80f13013e4e9fba3cdeaad9befd73875825bf6ccbe561"
     },
     {
-      "source": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\real-probe-actual.log",
+      "source": "C:\\Users\\<user>\\AppData\\Local\\Temp\\ff-check22-accept-a755a99d0a10457891ac8785e3720425\\real-probe-actual.log",
       "sha256": "0582fb87754487148888bfa8f36378cde83ce69a07d5442fe05f0ed7f5e44820"
     }
   ]

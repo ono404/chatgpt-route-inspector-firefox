@@ -5,7 +5,7 @@
   "startedAt": "2026-10-01T17:36:14+0800",
   "finishedAt": "2026-10-01T17:36:55+0800",
   "label": "v1.1.0-positive",
-  "probeFile": "D:\\LAB\\sync-v109-isolated\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\sync-v109-isolated\\ff-marionette.py",
   "probeSha256": "7c56cfd335db2e19e96b6fd7d58dd96882a2bef011536d4b4ff6a8f9a92f0ac6",
   "stage": "checks",
   "reachedStages": [
@@ -18,9 +18,9 @@
    "checks"
   ],
   "identity": {
-   "xpi": "D:\\LAB\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.1.0.xpi",
-   "distDir": "D:\\LAB\\sync-v109-isolated\\dist\\firefox",
-   "buildRecordPath": "D:\\LAB\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.1.0.build.json",
+   "xpi": "C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.1.0.xpi",
+   "distDir": "C:\\workspace\\sync-v109-isolated\\dist\\firefox",
+   "buildRecordPath": "C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.1.0.build.json",
    "expectedXpiSha256": "45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0",
    "xpiSha256": "45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0",
    "manifestSha256": "19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee",
@@ -32,13 +32,13 @@
    "parseError": null
   },
   "expectation": {
-   "source": "build-record: D:\\LAB\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.1.0.build.json",
+   "source": "build-record: C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.1.0.build.json",
    "expectedXpiSha256": "45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0",
    "buildRecordSha256": "f9c67898592b94a74f46263bd436d43b6e9e2b7d80b4772972fd6c1d5dbe0b1d",
    "buildRecordError": null
   },
   "git": {
-   "repoDir": "D:\\LAB\\sync-v109-isolated",
+   "repoDir": "C:\\workspace\\sync-v109-isolated",
    "available": true,
    "head": "770095f1b5f180e93c6184a4d052b229b37ad354",
    "dirty": true,
@@ -135,7 +135,7 @@
   },
   "exitCode": 0,
   "exitReason": "all expected checks ran and passed",
-  "resultsPath": "D:\\LAB\\sync-v109-isolated\\docs\\upgrade-2026-10-01\\ff-probe-positive-v1.1.0-2026-10-01.json",
+  "resultsPath": "C:\\workspace\\sync-v109-isolated\\docs\\upgrade-2026-10-01\\ff-probe-positive-v1.1.0-2026-10-01.json",
   "notes": []
  },
  "results": [
@@ -297,7 +297,7 @@
   {
    "check": "19.new-chat-navigation-association",
    "ok": true,
-   "detail": "{\"probeSha256\": \"7c56cfd335db2e19e96b6fd7d58dd96882a2bef011536d4b4ff6a8f9a92f0ac6\", \"xpi\": \"D:\\\\LAB\\\\sync-v109-isolated\\\\release\\\\chatgpt-route-inspector-firefox-1.1.0.xpi\", \"xpiSha256\": \"45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0\", \"buildRecord\": \"D:\\\\LAB\\\\sync-v109-isolated\\\\release\\\\chatgpt-route-inspector-firefox-1.1.0.build.json\", \"tabId\": 5, \"beforePageUrl\": \"https://chatgpt.com/\", \"beforeRevision\": 1, \"creationCtx\": \"284b5b94-7c7f-44a6-8855-2d2c0d1ccba8\", \"captureId\": \"d7a35f91-b680-48b6-92af-b8129e0c4100\", \"correlatedCaptureId\": \"07f37652-89bf-42c8-9d3a-9ab84113dc1f\", \"tempStage\": {\"pushReturnedPathname\": \"/c/local-chatgpt%3Anavcheck-draft\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft\", \"revision\": 3, \"ctxId\": \"284b5b94-7c7f-44a6-8855-2d2c0d1ccba8\", \"ok\": true}, \"responseArrived\": {\"phase\": \"failed\", \"errorCode\": \"http_422\", \"ctx\": \"284b5b94-7c7f-44a6-8855-2d2c0d1ccba8\", \"ok\": true}, \"formalStage\": {\"pushReturnedPathname\": \"/c/navcheck-conv\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-conv\", \"revision\": 5, \"ctxId\": \"284b5b94-7c7f-44a6-8855-2d2c0d1ccba8\", \"ok\": true}, \"overlayShown\": {\"pathname\": \"/c/navcheck-conv\", \"text\": \"\\n      \\n        Route InspectorCreated by @liuqi\\n        \\u672a\\u53d6\\u5f97\\u5b9e\\u9645\\u8def\\u7531\\n      \\n      \\n        \\u5b9e\\u65f6\\u8bf7\\u6c42\\u4f1a\\u8bdd\\u91cd\\u8f7d\\n        \\u53d1\\u9001\\u65b0\\u6d88\\u606f\\uff0c\\u6355\\u83b7\\u8bf7\\u6c42\\u4e0e\\u672c\\u8f6e\\u54cd\\u5e94\\u3002\\n        \\u8bf7\\u6c42\\u6a21\\u578bgpt-5-6-pro-navcheck\\u2192\\u54cd\\u5e94\\u8def\\u7531\\u672a\\u53d6\\u5f97\\n        \\n          \\u6a21\\u5f0f\\u5b9e\\u65f6\\u8bf7\\u6c42\\n          \\u54cd\\u5e94\", \"ok\": true}, \"unrelatedStage\": {\"pushReturnedPathname\": \"/c/navcheck-unrelated\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-unrelated\", \"revision\": 6, \"ctxId\": \"d4616f5b-579a-4f95-8c34-dbac775f9de5\", \"oursCurrent\": false, \"ok\": true}, \"overlayAfterSwitch\": {\"pathname\": \"/c/navcheck-unrelated\", \"text\": \"\\n      \\n        Route InspectorCreated by @liuqi\\n        \\u7b49\\u5f85\\u4e0b\\u4e00\\u6b21\\u56de\\u7b54\\n      \\n      \\n        \\u5b9e\\u65f6\\u8bf7\\u6c42\\u4f1a\\u8bdd\\u91cd\\u8f7d\\n        \\u53d1\\u9001\\u65b0\\u6d88\\u606f\\uff0c\\u6355\\u83b7\\u8bf7\\u6c42\\u4e0e\\u672c\\u8f6e\\u54cd\\u5e94\\u3002\\n        \\u8bf7\\u6c42\\u6a21\\u578b\\u2014\\u2192\\u54cd\\u5e94\\u8def\\u7531\\u2014\\n        \\n          \\u6a21\\u5f0f\\u5b9e\\u65f6\\u8bf7\\u6c42\\n          \\u54cd\\u5e94\\u6765\\u6e90\\u672a\\u6355\\u83b7\\u54cd\\u5e94\\u6a21\\u578b\\u5b57\\u6bb5\\n         \", \"ok\": true}, \"ok\": true}"
+   "detail": "{\"probeSha256\": \"7c56cfd335db2e19e96b6fd7d58dd96882a2bef011536d4b4ff6a8f9a92f0ac6\", \"xpi\": \"C:\\\\workspace\\\\sync-v109-isolated\\\\release\\\\chatgpt-route-inspector-firefox-1.1.0.xpi\", \"xpiSha256\": \"45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0\", \"buildRecord\": \"C:\\\\workspace\\\\sync-v109-isolated\\\\release\\\\chatgpt-route-inspector-firefox-1.1.0.build.json\", \"tabId\": 5, \"beforePageUrl\": \"https://chatgpt.com/\", \"beforeRevision\": 1, \"creationCtx\": \"284b5b94-7c7f-44a6-8855-2d2c0d1ccba8\", \"captureId\": \"d7a35f91-b680-48b6-92af-b8129e0c4100\", \"correlatedCaptureId\": \"07f37652-89bf-42c8-9d3a-9ab84113dc1f\", \"tempStage\": {\"pushReturnedPathname\": \"/c/local-chatgpt%3Anavcheck-draft\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft\", \"revision\": 3, \"ctxId\": \"284b5b94-7c7f-44a6-8855-2d2c0d1ccba8\", \"ok\": true}, \"responseArrived\": {\"phase\": \"failed\", \"errorCode\": \"http_422\", \"ctx\": \"284b5b94-7c7f-44a6-8855-2d2c0d1ccba8\", \"ok\": true}, \"formalStage\": {\"pushReturnedPathname\": \"/c/navcheck-conv\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-conv\", \"revision\": 5, \"ctxId\": \"284b5b94-7c7f-44a6-8855-2d2c0d1ccba8\", \"ok\": true}, \"overlayShown\": {\"pathname\": \"/c/navcheck-conv\", \"text\": \"\\n      \\n        Route InspectorCreated by @liuqi\\n        \\u672a\\u53d6\\u5f97\\u5b9e\\u9645\\u8def\\u7531\\n      \\n      \\n        \\u5b9e\\u65f6\\u8bf7\\u6c42\\u4f1a\\u8bdd\\u91cd\\u8f7d\\n        \\u53d1\\u9001\\u65b0\\u6d88\\u606f\\uff0c\\u6355\\u83b7\\u8bf7\\u6c42\\u4e0e\\u672c\\u8f6e\\u54cd\\u5e94\\u3002\\n        \\u8bf7\\u6c42\\u6a21\\u578bgpt-5-6-pro-navcheck\\u2192\\u54cd\\u5e94\\u8def\\u7531\\u672a\\u53d6\\u5f97\\n        \\n          \\u6a21\\u5f0f\\u5b9e\\u65f6\\u8bf7\\u6c42\\n          \\u54cd\\u5e94\", \"ok\": true}, \"unrelatedStage\": {\"pushReturnedPathname\": \"/c/navcheck-unrelated\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-unrelated\", \"revision\": 6, \"ctxId\": \"d4616f5b-579a-4f95-8c34-dbac775f9de5\", \"oursCurrent\": false, \"ok\": true}, \"overlayAfterSwitch\": {\"pathname\": \"/c/navcheck-unrelated\", \"text\": \"\\n      \\n        Route InspectorCreated by @liuqi\\n        \\u7b49\\u5f85\\u4e0b\\u4e00\\u6b21\\u56de\\u7b54\\n      \\n      \\n        \\u5b9e\\u65f6\\u8bf7\\u6c42\\u4f1a\\u8bdd\\u91cd\\u8f7d\\n        \\u53d1\\u9001\\u65b0\\u6d88\\u606f\\uff0c\\u6355\\u83b7\\u8bf7\\u6c42\\u4e0e\\u672c\\u8f6e\\u54cd\\u5e94\\u3002\\n        \\u8bf7\\u6c42\\u6a21\\u578b\\u2014\\u2192\\u54cd\\u5e94\\u8def\\u7531\\u2014\\n        \\n          \\u6a21\\u5f0f\\u5b9e\\u65f6\\u8bf7\\u6c42\\n          \\u54cd\\u5e94\\u6765\\u6e90\\u672a\\u6355\\u83b7\\u54cd\\u5e94\\u6a21\\u578b\\u5b57\\u6bb5\\n         \", \"ok\": true}, \"ok\": true}"
   }
  ]
 }

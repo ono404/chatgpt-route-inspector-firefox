@@ -19,7 +19,7 @@ Done in 10ms
   ...and 2 more output files...
 
 Done in 16ms
-Built e2e: D:\LAB\火狐浏览器插件制作2\dist\e2e
+Built e2e: C:\workspace\chatgpt-route-inspector-firefox\dist\e2e
 
 Running 16 tests using 1 worker
 
@@ -52,8 +52,8 @@ Running 16 tests using 1 worker
       86 |   return match;
       87 | }
       88 |
-        at findExtensionCapableChromium (D:\LAB\火狐浏览器插件制作2\tests\e2e\extension.spec.ts:85:21)
-        at D:\LAB\火狐浏览器插件制作2\tests\e2e\extension.spec.ts:150:22
+        at findExtensionCapableChromium (C:\workspace\chatgpt-route-inspector-firefox\tests\e2e\extension.spec.ts:85:21)
+        at C:\workspace\chatgpt-route-inspector-firefox\tests\e2e\extension.spec.ts:150:22
 
     Error Context: output\playwright\test-results\extension-notice-regression-reload\error-context.md
 

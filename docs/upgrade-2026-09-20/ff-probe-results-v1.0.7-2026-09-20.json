@@ -4,7 +4,7 @@
   "startedAt": "2026-09-20T12:06:24+0800",
   "label": "v1.0.7-upgrade-2026-09-20",
   "commit": "33f0879cc6022d7d3112e68b3ee7f8777338ca7d",
-  "xpi": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\route-inspector-upgrade-2026-09-20\\xpi\\chatgpt-route-inspector-firefox-1.0.7.xpi",
+  "xpi": "C:\\Users\\<user>\\AppData\\Local\\Temp\\route-inspector-upgrade-2026-09-20\\xpi\\chatgpt-route-inspector-firefox-1.0.7.xpi",
   "xpiSha256": "7c49d39d9fd35601a896aee23a8e7dbbe8d941340734858b0f9c9ca24b11e1e6",
   "manifestSha256": "c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a",
   "manifestsMatchExpected": true,
@@ -12,7 +12,7 @@
   "geckoId": "chatgpt-route-inspector-firefox@local",
   "strictMinVersion": "128.0",
   "firefoxVersion": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0",
-  "profile": "C:\\Users\\gyjxjkg\\AppData\\Local\\Temp\\route-inspector-upgrade-2026-09-20\\ff-profile",
+  "profile": "C:\\Users\\<user>\\AppData\\Local\\Temp\\route-inspector-upgrade-2026-09-20\\ff-profile",
   "notes": [],
   "packagedFiles": 30
  },

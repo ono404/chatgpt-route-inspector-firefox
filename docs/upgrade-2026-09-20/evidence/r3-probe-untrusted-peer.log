@@ -15,5 +15,5 @@ peer lie: moz:profile = C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-NOT-THIS-
 commands the peer received: ["WebDriver:NewSession"]
 saved exitCode=4 exitReason=aborted for safety (connected browser is not the profile this run created); failed checks: 0e.session-profile, 0f.untrusted-connection
 browserLaunched=True browserConnected=True connectionTrusted=False
-resultsPath=D:\LAB\火狐浏览器插件制作2\docs\upgrade-2026-09-20\evidence\r3-probe-untrusted-peer.json
+resultsPath=C:\workspace\chatgpt-route-inspector-firefox\docs\upgrade-2026-09-20\evidence\r3-probe-untrusted-peer.json
 notes=["session was not deleted: this connection was never verified as the browser this run created"]

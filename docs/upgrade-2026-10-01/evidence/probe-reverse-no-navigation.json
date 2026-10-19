@@ -5,7 +5,7 @@
   "startedAt": "2026-10-01T17:39:19+0800",
   "finishedAt": "2026-10-01T17:40:22+0800",
   "label": "reverse-no-navigation",
-  "probeFile": "D:\\LAB\\sync-v110-reverse-2026-10-01\\probe-no-navigation.py",
+  "probeFile": "C:\\workspace\\sync-v110-reverse-2026-10-01\\probe-no-navigation.py",
   "probeSha256": "a62a0a44d08e6584e95417f1f8592bdf36779a87678e6476d7c878f3f9a56c9a",
   "stage": "checks",
   "reachedStages": [
@@ -18,9 +18,9 @@
    "checks"
   ],
   "identity": {
-   "xpi": "D:\\LAB\\sync-v110-reverse-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.xpi",
-   "distDir": "D:\\LAB\\sync-v110-reverse-2026-10-01\\dist\\firefox",
-   "buildRecordPath": "D:\\LAB\\sync-v110-reverse-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.build.json",
+   "xpi": "C:\\workspace\\sync-v110-reverse-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.xpi",
+   "distDir": "C:\\workspace\\sync-v110-reverse-2026-10-01\\dist\\firefox",
+   "buildRecordPath": "C:\\workspace\\sync-v110-reverse-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.build.json",
    "expectedXpiSha256": "45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0",
    "xpiSha256": "45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0",
    "manifestSha256": "19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee",
@@ -32,13 +32,13 @@
    "parseError": null
   },
   "expectation": {
-   "source": "build-record: D:\\LAB\\sync-v110-reverse-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.build.json",
+   "source": "build-record: C:\\workspace\\sync-v110-reverse-2026-10-01\\chatgpt-route-inspector-firefox-1.1.0.build.json",
    "expectedXpiSha256": "45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0",
    "buildRecordSha256": "283e5b17cdc6eaff408aaa36cbe57e7601adbd1972cd9303dab476d910744f26",
    "buildRecordError": null
   },
   "git": {
-   "repoDir": "D:\\LAB\\sync-v110-reverse-2026-10-01",
+   "repoDir": "C:\\workspace\\sync-v110-reverse-2026-10-01",
    "available": false,
    "head": null,
    "dirty": null,
@@ -137,7 +137,7 @@
   },
   "exitCode": 4,
   "exitReason": "checks failed: 19.new-chat-navigation-association",
-  "resultsPath": "D:\\LAB\\sync-v110-reverse-2026-10-01\\r-no-navigation.json",
+  "resultsPath": "C:\\workspace\\sync-v110-reverse-2026-10-01\\r-no-navigation.json",
   "notes": []
  },
  "results": [

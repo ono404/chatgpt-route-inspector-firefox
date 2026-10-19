@@ -5,12 +5,12 @@
   "startedAt": "2026-09-20T13:45:03+0800",
   "finishedAt": "2026-09-20T13:45:41+0800",
   "label": "r2-defaultout",
-  "probeFile": "D:\\LAB\\火狐浏览器插件制作2\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\chatgpt-route-inspector-firefox\\ff-marionette.py",
   "probeSha256": "f46f9d36e56409cdfa6aa303ab9c8f531dae4394224d248f3220cd1bc683615c",
   "identity": {
-   "xpi": "D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.xpi",
-   "distDir": "D:\\LAB\\火狐浏览器插件制作2\\dist\\firefox",
-   "buildRecordPath": "D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
+   "xpi": "C:\\workspace\\chatgpt-route-inspector-firefox\\release\\chatgpt-route-inspector-firefox-1.0.7.xpi",
+   "distDir": "C:\\workspace\\chatgpt-route-inspector-firefox\\dist\\firefox",
+   "buildRecordPath": "C:\\workspace\\chatgpt-route-inspector-firefox\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
    "expectedXpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
    "xpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
    "manifestSha256": "c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a",
@@ -21,12 +21,12 @@
    "distFileCount": 30
   },
   "expectation": {
-   "source": "build-record: D:\\LAB\\火狐浏览器插件制作2\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
+   "source": "build-record: C:\\workspace\\chatgpt-route-inspector-firefox\\release\\chatgpt-route-inspector-firefox-1.0.7.build.json",
    "expectedXpiSha256": "2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993",
    "buildRecordSha256": "0208c1e2b7a8d1d7379992b5e93e917172243a7782ed47cbeb9f06be4e7dc1d1"
   },
   "git": {
-   "repoDir": "D:\\LAB\\火狐浏览器插件制作2",
+   "repoDir": "C:\\workspace\\chatgpt-route-inspector-firefox",
    "available": true,
    "head": "7dd7a86ed3df12ea5f9fdc4d8551316b371041b4",
    "dirty": true,

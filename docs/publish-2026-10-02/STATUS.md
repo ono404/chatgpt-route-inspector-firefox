@@ -1,11 +1,13 @@
 # v1.1.0 发布与工作区归并
 
-2026-10-02，用户接受已知限制，授权上传私人 GitHub 仓库、归并主目录和清理相关临时内容；Mozilla 提交签名由用户在终端执行。本文件取代旧文档中的“现役目录”描述，历史报告与证据保留原样。
+2026-10-02，用户接受已知限制，授权上传私人 GitHub 仓库、归并主目录和清理相关临时内容；Mozilla 提交签名由用户在终端执行。本文件取代旧文档中的“现役目录”描述，历史报告与证据保留当时结论。
+
+2026-10-19 仓库已公开，本机用户名与工作目录已脱敏。历史校验值对应脱敏前文件，不代表当前公开副本的字节身份；最新发布附件状态见下表及 [脱敏说明](../PRIVACY-REDACTION.md)。
 
 ## 当前交付
 
-- 主工作区：`D:\LAB\火狐浏览器插件制作2`，分支 `main`，版本 v1.1.0。
-- 私人仓库：<https://github.com/ono404/chatgpt-route-inspector-firefox>。
+- 主工作区以当前克隆目录为准，分支 `main`，版本 v1.1.0。
+- 公开仓库：<https://github.com/ono404/chatgpt-route-inspector-firefox>。
 - 发布入口：<https://github.com/ono404/chatgpt-route-inspector-firefox/releases/tag/v1.1.0-firefox>；标注未签名自用构建及已知限制。
 - 业务目录 `src schemas _locales icons manifest` 与上游 v1.1.0 `dd5ea3366cdb3ed85025fc7a41f6e89ff1ee7552` 的 Git 内容一致。本次只调整交付文档和 ESLint 对归档 Node 证据脚本的环境声明，未修改业务解析器。
 - 用户真实导出、`.workbuddy/`、`.zcodeignore`、本地归档和依赖未上传。
@@ -18,15 +20,15 @@
 
 Mozilla 尚未提交签名；新版尚未完成日常覆盖安装。真实更新事件、FF128、Chromium E2E 等未完成项保留在 BLOCKED.md。旧版签名包不能作为新版签名凭证。
 
-## 冻结文件
+## 当前公开文件
 
 | 主目录 release 下文件 | SHA-256 |
 |---|---|
 | chatgpt-route-inspector-firefox-1.1.0.xpi | `04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae` |
-| chatgpt-route-inspector-firefox-1.1.0.build.json | `a2028179ed18602da5d6be288dd2142a0140dab0d64bfdb6fcd267afaba263a1` |
+| chatgpt-route-inspector-firefox-1.1.0.build.json | `4f7b019d47d573df03b6272b901986a9abdb1d2396103f43c92ec46c0ec7184b` |
 | chatgpt-route-inspector-firefox-1.1.0-source.zip | `51523360d4063fc939177672b9bf990278a1e0495f4e715f5e22b0cc49888846` |
 
-构建记录中的旧绝对路径是历史打包元数据，不修改冻结文件。若要再次运行探针，在主目录执行并指定 `--dist dist/firefox`；输出必须用新的、不存在的路径。探针会自行启动专用浏览器，不能当作只读检查。
+公开构建记录的本机绝对路径已替换为仓库相对路径，并同步更新 SHA256SUMS；XPI 与源码 ZIP 未重打包，哈希保持不变。再次运行探针时，在仓库根目录执行并指定 `--dist dist/firefox`，XPI 与构建记录放在 `release/`；输出必须用新的、不存在的路径。探针会自行启动专用浏览器，不能当作只读检查。
 
 ## 本地保全与清理
 

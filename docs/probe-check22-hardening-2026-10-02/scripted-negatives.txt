@@ -3,9 +3,9 @@ PASS 0a.xpi-sha256 | actual=f2c293952eda858094fc489345418f021b4a5a30e07e3f019e06
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=58482 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-njfxj6r_
+launched firefox pid=4242 port=58482 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-njfxj6r_
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-njfxj6r_ pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-njfxj6r_ inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-njfxj6r_ pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-njfxj6r_ inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -32,15 +32,15 @@ PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-55555
 PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
 PASS 19.new-chat-navigation-association | all navigation stages verified
 31 passed / 1 failed / 0 missing -> exit 4 (checks failed: 22.deep-research-capture-taskkind)
-saved D:\LAB\sync-v110-check22-scripted-2026-10-02\out\negative-hookless-old-record-20261002-094644.json
+saved C:\workspace\sync-v110-check22-scripted-2026-10-02\out\negative-hookless-old-record-20261002-094644.json
 PASS 0f.build-record | xpi=f2c293952eda8580 files=6
 PASS 0a.xpi-sha256 | actual=f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10 expected=f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10
 PASS 0b.xpi-contents | 6 files identical to XPI
 PASS 0c.dist-matches-record | 6 recorded files agree
 PASS 0d.manifest-sha256 | sha256=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e version=1.0.7 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=89251cf9e6b9e3a6e75f5745eb59686ebd63e87a6d7d24779a4aa747920afb5e)
-launched firefox pid=4242 port=58485 profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gd1519vh
+launched firefox pid=4242 port=58485 profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gd1519vh
 PASS 0.session | fake-session
-PASS 0e.session-profile | browser says moz:profile=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gd1519vh pid=4242 launched=C:\Users\gyjxjkg\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gd1519vh inside_temp=True
+PASS 0e.session-profile | browser says moz:profile=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gd1519vh pid=4242 launched=C:\Users\<user>\AppData\Local\Temp\ff-ri-probe-profiles\ff-ri-probe-gd1519vh inside_temp=True
 PASS 1.install-no-manifest-error | chatgpt-route-inspector-firefox@local
 PASS 1b.addon-uuid | handles=2 uuid=11111111-2222-3333-4444-555555555555 last_url=moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html
 PASS 2.ext-namespaces | {'c': 'object', 'b': 'object', 'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/onboarding/index.html'}
@@ -67,7 +67,7 @@ PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-55555
 PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
 PASS 19.new-chat-navigation-association | all navigation stages verified
 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved D:\LAB\sync-v110-check22-scripted-2026-10-02\out\positive-restored-20261002-094644.json
+saved C:\workspace\sync-v110-check22-scripted-2026-10-02\out\positive-restored-20261002-094644.json
 {
   "probeSha256": "17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e",
   "negative": {

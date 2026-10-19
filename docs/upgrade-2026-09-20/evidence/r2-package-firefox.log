@@ -2,8 +2,8 @@
 > chatgpt-route-inspector@1.0.7 package:firefox
 > node scripts/package-firefox.mjs
 
-Packaged D:\LAB\火狐浏览器插件制作2\release\chatgpt-route-inspector-firefox-1.0.7.xpi
+Packaged C:\workspace\chatgpt-route-inspector-firefox\release\chatgpt-route-inspector-firefox-1.0.7.xpi
 manifest.json sha256 c43c9104de4a6b00bbb9bb6317d88da4570113066c2235b4ceaed793f327d16a
 xpi sha256 2b3044146252c76e8816496e26e4a0d09b86090e592578df5c876a95e1933993
 archive verified against dist: 30 files identical
-build record D:\LAB\火狐浏览器插件制作2\release\chatgpt-route-inspector-firefox-1.0.7.build.json
+build record C:\workspace\chatgpt-route-inspector-firefox\release\chatgpt-route-inspector-firefox-1.0.7.build.json

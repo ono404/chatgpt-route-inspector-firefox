@@ -1,7 +1,7 @@
 npm notice run chatgpt-route-inspector@1.1.0 package:firefox
 npm notice run node scripts/package-firefox.mjs
-Packaged D:\LAB\sync-v109-isolated\release\chatgpt-route-inspector-firefox-1.1.0.xpi
+Packaged C:\workspace\sync-v109-isolated\release\chatgpt-route-inspector-firefox-1.1.0.xpi
 manifest.json sha256 19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee
 xpi sha256 04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae
 archive verified against dist: 30 files identical
-build record D:\LAB\sync-v109-isolated\release\chatgpt-route-inspector-firefox-1.1.0.build.json
+build record C:\workspace\sync-v109-isolated\release\chatgpt-route-inspector-firefox-1.1.0.build.json
