@@ -6,7 +6,7 @@
 
 | 目录 | 本次收尾核对的状态 | 使用方式 |
 | --- | --- | --- |
-| `C:\workspace\sync-v109-isolated` | 现役 v1.1.0 工作树；分支 `codex/sync-upstream-v1.1.0`；HEAD `cdbf1b35c16ef9e996d509bdbcee94e93c78c368` | 先读本文件，再读该目录 AGENTS.md、PROGRESS.md 顶部及 BLOCKED.md 第 15–16 项 |
+| `C:\workspace\run-01` | 现役 v1.1.0 工作树；分支 `codex/sync-upstream-v1.1.0`；HEAD `cdbf1b35c16ef9e996d509bdbcee94e93c78c368` | 先读本文件，再读该目录 AGENTS.md、PROGRESS.md 顶部及 BLOCKED.md 第 15–16 项 |
 | `C:\workspace\chatgpt-route-inspector-firefox` | 旧 v1.0.7 工作树；HEAD `909941e60b2cb97f58ca3be41c3354c7e5f2416c` | 历史参考；不要因当前会话 cwd 在此而把它当新版工作区 |
 
 本次文档收尾开始前，现役工作树干净；原目录已有四文档修改及未知 `.workbuddy/`、`.zcodeignore`。本次只改交接文档和导航，不提交、不 push、不修改代码、不重新构建/打包、不清理现场。收尾后现役工作树存在本次未提交文档和证据归档，HEAD 仍为 cdbf1b3；接手时请重新看 `git status`。
@@ -61,7 +61,7 @@ v1.1.0 新增图片生成、深度研究任务结论与规划/报告模型分列
 
 ## 5. 冻结交付物
 
-目录均为 `C:\workspace\sync-v109-isolated\release`；本次重新计算哈希一致。
+目录均为 `C:\workspace\run-01\release`；本次重新计算哈希一致。
 
 | 文件 | SHA-256 |
 | --- | --- |
@@ -91,7 +91,7 @@ v1.1.0 新增图片生成、深度研究任务结论与规划/报告模型分列
 - 本会话独立结果：本目录 `evidence/`；索引/来源/复制前后哈希见 `evidence/ARCHIVE.json`。`prior-review.md` 是原审查意见，`independent-positive.json` 是独立真机结果。
 - 可选重现：先把 `evidence/` 整目录复制到新的仓库外目录，再从现役工作区用 `py -3 -B <新目录>/adversarial.py` 与 `node <新目录>/replay-poll.mjs` 运行。脚本使用现役探针、项目测试夹具或提取的 JS，结果写在脚本同目录；先复制可保留原归档。不要把重现夹具的成功当作真机验证。
 - 上一轮独立运行全套日志与剩余反例仍在 `C:\Users\<user>\AppData\Local\Temp\ff-check22-accept-a755a99d0a10457891ac8785e3720425`。主要脚本/结果已复制归档，原现场未删除。
-- 升级前保全目录仍在 `C:\workspace\sync-v110-backup-2026-10-01`，本次只确认 HASHES.sha256 存在，未重新逐项比对备份。
+- 升级前保全目录仍在 `C:\workspace\run-03`，本次只确认 HASHES.sha256 存在，未重新逐项比对备份。
 
 本机 `py -3` 当前可用，指向 Python 3.14；上一轮工具测试/独立探针使用的路径是 `C:\Users\<user>\.workbuddy\binaries\python\versions\3.13.12\python.exe`，路径名不能当作解释器实际版本。工具 runner 会打印所选解释器，复验时按实际输出记证据。
 

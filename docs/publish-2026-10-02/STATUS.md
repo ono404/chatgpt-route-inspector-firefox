@@ -34,6 +34,6 @@ Mozilla 尚未提交签名；新版尚未完成日常覆盖安装。真实更新
 
 原主目录未提交的四份文档、旧签名包及生成物已复制至 `local-archive/2026-10-02-pre-consolidation/`，145 文件逐一验证；Git stash 和 `repository-all-refs.bundle` 保留旧分支与现场。未知 `.workbuddy/` 和 `.zcodeignore` 保留原位并仅用本地 exclude 排除。
 
-`sync-v109-isolated` 与八个明确相关的 `sync-v110-*` 临时目录已压缩到 `local-archive/2026-10-02-consolidation/`，共九份 ZIP；逐文件读取比对 SHA-256，索引为 `ARCHIVE-INDEX.json`。只排除可重新生成的 node_modules、Python 缓存和另行保全的 Git 元数据。隔离 worktree 已由 Git 正常移除。
+`run-01` 与八个明确相关的 `run-*` 临时目录已压缩到 `local-archive/2026-10-02-consolidation/`，共九份 ZIP；逐文件读取比对 SHA-256，索引为 `ARCHIVE-INDEX.json`。只排除可重新生成的 node_modules、Python 缓存和另行保全的 Git 元数据。隔离 worktree 已由 Git 正常移除。
 
 自动审批以 `blocked by policy` 拒绝递归删除，未提供更具体原因，命令未执行。八个临时目录与主目录旧 `.tmp`、output 改为移动至 `local-archive/retired-workspaces-2026-10-02/`，原路径均已腾空，保留可恢复备份。旧生成目录仍在 `local-archive/replaced-generated-2026-10-02/`，未声称已释放这些备份的磁盘空间。新的 release 只保留本次交付文件。Git 分支、标签与 stash 留存。

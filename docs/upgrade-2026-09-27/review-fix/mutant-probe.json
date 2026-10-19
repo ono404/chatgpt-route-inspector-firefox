@@ -5,7 +5,7 @@
   "startedAt": "2026-09-27T16:43:41+0800",
   "finishedAt": "2026-09-27T16:44:14+0800",
   "label": "",
-  "probeFile": "C:\\workspace\\sync-v109-isolated\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\run-01\\ff-marionette.py",
   "probeSha256": "6d2cef0dd53608361327b93f63c3eb63b5a39c1d853584c679afa685761b0d49",
   "stage": "checks",
   "reachedStages": [
@@ -38,7 +38,7 @@
    "buildRecordError": null
   },
   "git": {
-   "repoDir": "C:\\workspace\\sync-v109-isolated",
+   "repoDir": "C:\\workspace\\run-01",
    "available": true,
    "head": "4ae924d062ab0978c33ddfa7b75d502a724b7a0c",
    "dirty": false,

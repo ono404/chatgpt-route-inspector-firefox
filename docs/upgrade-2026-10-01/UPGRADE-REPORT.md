@@ -1,6 +1,6 @@
 # 升级报告：v1.0.9 → v1.1.0（Firefox 自用移植）
 
-日期：2026-10-01 ｜ 分支 `codex/sync-upstream-v1.1.0` ｜ 工作区 `C:\workspace\sync-v109-isolated`
+日期：2026-10-01 ｜ 分支 `codex/sync-upstream-v1.1.0` ｜ 工作区 `C:\workspace\run-01`
 
 ## 1. 结论摘要
 
@@ -24,7 +24,7 @@
 
 ## 3. 执行顺序与产物
 
-1. **备份**（进任何修改之前）：`C:\workspace\sync-v110-backup-2026-10-01\`
+1. **备份**（进任何修改之前）：`C:\workspace\run-03\`
    —— preserve 19 文件 + `dist/`(94) + `release/`(3) = **117 文件**，附 `HASHES.sha256`。
 2. **保全提交** `73696a7`（19 文件，精确路径 `git add`，未用 `git add .`；未提交任何生成物或备份）。
 3. **建分支** `codex/sync-upstream-v1.1.0`。
@@ -120,7 +120,7 @@
   `manifestVersion=1.1.0`、`geckoId=chatgpt-route-inspector-firefox@local`、`strictMinVersion=128.0`。
 - 保留原 27 项门禁的**全部语义**，只把检查 7 的 schema 期望值与构建同步；新增 5 项（20–24）。
 
-### 反向验证（全部在仓库外临时副本 `C:\workspace\sync-v110-reverse-2026-10-01\`）
+### 反向验证（全部在仓库外临时副本 `C:\workspace\run-09\`）
 
 | 反例 | 预期 | 实测 |
 | --- | --- | --- |
@@ -147,7 +147,7 @@
 > `evidence/probe-positive-r1-superseded-packaging.json`，可对照：其 `manifestSha256`
 > 与检查明细完全一致）。这正是 AGENTS.md 中「ZIP mtime 会让重打包哈希变化」那条约定。
 
-**仓库外复建**：`C:\workspace\sync-v110-rebuild-2026-10-01\`，解压源码 ZIP → `npm ci` → `npm run build`
+**仓库外复建**：`C:\workspace\run-07\`，解压源码 ZIP → `npm ci` → `npm run build`
 → `npm run build:firefox` → `npm run verify:firefox`（均退出 0）→ 与交付 XPI **逐文件比对**：
 
 ```

@@ -32,7 +32,7 @@ PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-55555
 PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
 PASS 19.new-chat-navigation-association | all navigation stages verified
 31 passed / 1 failed / 0 missing -> exit 4 (checks failed: 22.deep-research-capture-taskkind)
-saved C:\workspace\sync-v110-check22-scripted-2026-10-02\out\negative-hookless-old-record-20261002-094644.json
+saved C:\workspace\run-06\out\negative-hookless-old-record-20261002-094644.json
 PASS 0f.build-record | xpi=f2c293952eda8580 files=6
 PASS 0a.xpi-sha256 | actual=f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10 expected=f2c293952eda858094fc489345418f021b4a5a30e07e3f019e0677de99922e10
 PASS 0b.xpi-contents | 6 files identical to XPI
@@ -67,7 +67,7 @@ PASS 23.ui-task-filters | {'url': 'moz-extension://11111111-2222-3333-4444-55555
 PASS 24.ui-research-model-split | {'url': 'moz-extension://11111111-2222-3333-4444-555555555555/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant']]}}
 PASS 19.new-chat-navigation-association | all navigation stages verified
 32 passed / 0 failed / 0 missing -> exit 0 (all expected checks ran and passed)
-saved C:\workspace\sync-v110-check22-scripted-2026-10-02\out\positive-restored-20261002-094644.json
+saved C:\workspace\run-06\out\positive-restored-20261002-094644.json
 {
   "probeSha256": "17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e",
   "negative": {

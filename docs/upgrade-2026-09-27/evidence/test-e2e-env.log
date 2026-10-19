@@ -15,10 +15,10 @@ Done in 17ms
   ...and 2 more output files...
 
 Done in 38ms
-Built e2e: C:\workspace\sync-v109-isolated\dist\e2e
+Built e2e: C:\workspace\run-01\dist\e2e
 npm notice run chatgpt-route-inspector@1.0.9 build:notice
 npm notice run node scripts/build-notice.mjs
-Built public notice: C:\workspace\sync-v109-isolated\dist\notice
+Built public notice: C:\workspace\run-01\dist\notice
 
 Running 13 tests using 1 worker
 
@@ -48,8 +48,8 @@ Running 13 tests using 1 worker
       86 |   return match;
       87 | }
       88 |
-        at findExtensionCapableChromium (C:\workspace\sync-v109-isolated\tests\e2e\extension.spec.ts:85:21)
-        at C:\workspace\sync-v109-isolated\tests\e2e\extension.spec.ts:150:22
+        at findExtensionCapableChromium (C:\workspace\run-01\tests\e2e\extension.spec.ts:85:21)
+        at C:\workspace\run-01\tests\e2e\extension.spec.ts:150:22
 
     Error Context: output\playwright\test-results\extension-links-the-dashbo-b31b7-e-and-keeps-GitHub-separate\error-context.md
 

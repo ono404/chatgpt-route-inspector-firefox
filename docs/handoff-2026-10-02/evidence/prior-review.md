@@ -2,7 +2,7 @@
 
 The principal missing/stale capture identity fix passes independent checks. Strict page-origin locking has one remaining P2 gap, so the claim that every incorrect page identity is rejected is not fully supported.
 
-Repository: `C:\workspace\sync-v109-isolated`, HEAD `cdbf1b35c16ef9e996d509bdbcee94e93c78c368`. No repository source was edited during acceptance. All independent results are in this directory.
+Repository: `C:\workspace\run-01`, HEAD `cdbf1b35c16ef9e996d509bdbcee94e93c78c368`. No repository source was edited during acceptance. All independent results are in this directory.
 
 ## Confirmed results
 

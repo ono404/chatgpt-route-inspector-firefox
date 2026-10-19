@@ -5,7 +5,7 @@
   "startedAt": "2026-10-02T09:46:44+0800",
   "finishedAt": "2026-10-02T09:46:44+0800",
   "label": "scripted",
-  "probeFile": "C:\\workspace\\sync-v110-check22-scripted-2026-10-02\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\run-06\\ff-marionette.py",
   "probeSha256": "17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e",
   "stage": "checks",
   "reachedStages": [
@@ -38,7 +38,7 @@
    "buildRecordError": null
   },
   "git": {
-   "repoDir": "C:\\workspace\\sync-v110-check22-scripted-2026-10-02",
+   "repoDir": "C:\\workspace\\run-06",
    "available": false,
    "head": null,
    "dirty": null,
@@ -132,7 +132,7 @@
   },
   "exitCode": 4,
   "exitReason": "checks failed: 22.deep-research-capture-taskkind",
-  "resultsPath": "C:\\workspace\\sync-v110-check22-scripted-2026-10-02\\out\\negative-hookless-old-record-20261002-094644.json",
+  "resultsPath": "C:\\workspace\\run-06\\out\\negative-hookless-old-record-20261002-094644.json",
   "notes": []
  },
  "results": [

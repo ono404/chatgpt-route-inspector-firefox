@@ -5,7 +5,7 @@
   "startedAt": "2026-09-27T15:59:44+0800",
   "finishedAt": "2026-09-27T16:00:55+0800",
   "label": "v1.0.9-sync",
-  "probeFile": "C:\\workspace\\sync-v109-isolated\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\run-01\\ff-marionette.py",
   "probeSha256": "fb8aea0de6b427adbe9e39d1509229cdc6427a778259904680a3ebd121d0ff2b",
   "stage": "checks",
   "reachedStages": [
@@ -18,9 +18,9 @@
    "checks"
   ],
   "identity": {
-   "xpi": "C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.xpi",
-   "distDir": "C:\\workspace\\sync-v109-isolated\\dist\\firefox",
-   "buildRecordPath": "C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
+   "xpi": "C:\\workspace\\run-01\\release\\chatgpt-route-inspector-firefox-1.0.9.xpi",
+   "distDir": "C:\\workspace\\run-01\\dist\\firefox",
+   "buildRecordPath": "C:\\workspace\\run-01\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
    "expectedXpiSha256": "34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523",
    "xpiSha256": "34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523",
    "manifestSha256": "b8957ae63a39dc392d693081e31e80e201eee4a093b168f78a3eacdd075e07a9",
@@ -32,13 +32,13 @@
    "parseError": null
   },
   "expectation": {
-   "source": "build-record: C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
+   "source": "build-record: C:\\workspace\\run-01\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
    "expectedXpiSha256": "34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523",
    "buildRecordSha256": "15debe2ae37957a21c7f91161e6627acc33afdd6dd67e29ae00268b6451e9dab",
    "buildRecordError": null
   },
   "git": {
-   "repoDir": "C:\\workspace\\sync-v109-isolated",
+   "repoDir": "C:\\workspace\\run-01",
    "available": true,
    "head": "55d3ccfcf492b4dd9ee54f11d2cb0edf45551571",
    "dirty": true,
@@ -136,7 +136,7 @@
   },
   "exitCode": 4,
   "exitReason": "checks failed: 11.overlay-suspect-hint, 15.open-announcement-target, 19.temporary-conversation-association, 20.context-invalidated-refresh",
-  "resultsPath": "C:\\workspace\\sync-v109-isolated\\docs\\upgrade-2026-09-27\\ff-probe-results-v1.0.9-2026-09-27.json",
+  "resultsPath": "C:\\workspace\\run-01\\docs\\upgrade-2026-09-27\\ff-probe-results-v1.0.9-2026-09-27.json",
   "notes": []
  },
  "results": [

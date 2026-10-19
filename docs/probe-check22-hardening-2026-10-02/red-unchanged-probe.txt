@@ -577,7 +577,7 @@ FAIL
 ERROR: test_legal_new_capture_passes (test_ff_marionette_run.TestCheck22CaptureIdentity.test_legal_new_capture_passes)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 344, in test_legal_new_capture_passes
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 344, in test_legal_new_capture_passes
     self.assertTrue(evidence["markerModel"].startswith("gpt-6-dr-"))
                     ~~~~~~~~^^^^^^^^^^^^^^^
 KeyError: 'markerModel'
@@ -586,10 +586,10 @@ KeyError: 'markerModel'
 FAIL: test_ambiguous_chatgpt_pages_fail (test_ff_marionette_run.TestCheck22CaptureIdentity.test_ambiguous_chatgpt_pages_fail)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 419, in test_ambiguous_chatgpt_pages_fail
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 419, in test_ambiguous_chatgpt_pages_fail
     self.assert_check_failed(self.run_probe(fake_kwargs={"extra_chatgpt_pages": 1}))
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -598,12 +598,12 @@ AssertionError: 0 != 4
 FAIL: test_blank_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_blank_capture_id_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 357, in test_blank_capture_id_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 357, in test_blank_capture_id_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "   ", "taskKind": "deep_research", "verdict": "deep_research"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -612,12 +612,12 @@ AssertionError: 0 != 4
 FAIL: test_empty_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_empty_capture_id_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 353, in test_empty_capture_id_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 353, in test_empty_capture_id_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "", "taskKind": "deep_research", "verdict": "deep_research"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -626,14 +626,14 @@ AssertionError: 0 != 4
 FAIL: test_malformed_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_malformed_capture_id_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 361, in test_malformed_capture_id_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 361, in test_malformed_capture_id_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "hook-generated-uuid-1", "taskKind": "deep_research",
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "verdict": "deep_research"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -642,14 +642,14 @@ AssertionError: 0 != 4
 FAIL: test_mismatched_context_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_mismatched_context_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 372, in test_mismatched_context_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 372, in test_mismatched_context_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "verdict": "deep_research", "captureContextId": "ctx-other"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -658,12 +658,12 @@ AssertionError: 0 != 4
 FAIL: test_missing_capture_id_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_missing_capture_id_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 349, in test_missing_capture_id_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 349, in test_missing_capture_id_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": None, "taskKind": "deep_research", "verdict": "deep_research"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -672,7 +672,7 @@ AssertionError: 0 != 4
 FAIL: test_missing_context_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_missing_context_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 366, in test_missing_context_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 366, in test_missing_context_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drLock": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "tabCount": 1, "tabId": 4242, "stateRevision": 20, "ctxId": None,
@@ -681,7 +681,7 @@ Traceback (most recent call last):
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "beforeIds": ["0f1e2d3c-4b5a-4978-8967-5a4b3c2d1e0f"]}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -690,12 +690,12 @@ AssertionError: 0 != 4
 FAIL: test_native_fetch_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_native_fetch_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 379, in test_native_fetch_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 379, in test_native_fetch_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drCapture": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "started": True, "fetchName": "fetch"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -704,12 +704,12 @@ AssertionError: 0 != 4
 FAIL: test_no_revision_growth_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_no_revision_growth_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 409, in test_no_revision_growth_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 409, in test_no_revision_growth_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drAfter": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "stateRevision": 20}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -718,12 +718,12 @@ AssertionError: 0 != 4
 FAIL: test_old_record_with_valid_uuid_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_old_record_with_valid_uuid_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 390, in test_old_record_with_valid_uuid_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 390, in test_old_record_with_valid_uuid_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": old_id, "taskKind": "deep_research", "verdict": "deep_research"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -732,14 +732,14 @@ AssertionError: 0 != 4
 FAIL: test_wrong_page_url_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_page_url_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 404, in test_wrong_page_url_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 404, in test_wrong_page_url_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "verdict": "deep_research", "pageUrl": "https://chatgpt.com/c/other"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -748,14 +748,14 @@ AssertionError: 0 != 4
 FAIL: test_wrong_request_marker_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_request_marker_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 394, in test_wrong_request_marker_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 394, in test_wrong_request_marker_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "verdict": "deep_research", "requestedModel": "gpt-6-dr-deadbeefdeadbeef"}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4
@@ -764,14 +764,14 @@ AssertionError: 0 != 4
 FAIL: test_wrong_tab_fails (test_ff_marionette_run.TestCheck22CaptureIdentity.test_wrong_tab_fails)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 399, in test_wrong_tab_fails
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 399, in test_wrong_tab_fails
     self.assert_check_failed(self.run_probe(fake_kwargs={"answers": {"drTurn": {
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "captureId": "3f9a1c2d-5b6e-4a71-9c8d-2e4f6a8b0c1d", "taskKind": "deep_research",
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         "verdict": "deep_research", "tabId": 9999}}}))
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\workspace\sync-v110-check22-red-2026-10-02\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
+  File "C:\workspace\run-05\tests\firefox-tooling\test_ff_marionette_run.py", line 329, in assert_check_failed
     self.assertEqual(code, PROBE.EXIT_CHECKS_FAILED)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 4

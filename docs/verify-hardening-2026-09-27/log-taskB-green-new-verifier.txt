@@ -1,7 +1,7 @@
 npm notice run chatgpt-route-inspector@1.0.9 npx
 npm notice run vitest run tests/integration/firefox-dist-verifier.test.ts
 
-[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/LAB/sync-v109-isolated[39m
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/workspace/run-01[39m
 
  [32m✓[39m tests/integration/firefox-dist-verifier.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 3526[2mms[22m[39m
    [33m[2m✓[22m[39m accepts a legal fixture with exit code 0 [33m 384[2mms[22m[39m

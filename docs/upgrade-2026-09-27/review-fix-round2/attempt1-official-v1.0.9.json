@@ -5,7 +5,7 @@
   "startedAt": "2026-09-27T19:20:51+0800",
   "finishedAt": "2026-09-27T19:21:34+0800",
   "label": "round2-official",
-  "probeFile": "C:\\workspace\\sync-v109-isolated\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\run-01\\ff-marionette.py",
   "probeSha256": "9d2199e69dd88f0292333617a14e23a9d929c15f39c65d38b881870e2016ed37",
   "stage": "checks",
   "reachedStages": [
@@ -18,9 +18,9 @@
    "checks"
   ],
   "identity": {
-   "xpi": "C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.xpi",
-   "distDir": "C:\\workspace\\sync-v109-isolated\\dist\\firefox",
-   "buildRecordPath": "C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
+   "xpi": "C:\\workspace\\run-01\\release\\chatgpt-route-inspector-firefox-1.0.9.xpi",
+   "distDir": "C:\\workspace\\run-01\\dist\\firefox",
+   "buildRecordPath": "C:\\workspace\\run-01\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
    "expectedXpiSha256": "34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523",
    "xpiSha256": "34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523",
    "manifestSha256": "b8957ae63a39dc392d693081e31e80e201eee4a093b168f78a3eacdd075e07a9",
@@ -32,13 +32,13 @@
    "parseError": null
   },
   "expectation": {
-   "source": "build-record: C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
+   "source": "build-record: C:\\workspace\\run-01\\release\\chatgpt-route-inspector-firefox-1.0.9.build.json",
    "expectedXpiSha256": "34ca9440d7ed25b7d40570a8272fa672fedbba8b4739f557f1075399ec2da523",
    "buildRecordSha256": "15debe2ae37957a21c7f91161e6627acc33afdd6dd67e29ae00268b6451e9dab",
    "buildRecordError": null
   },
   "git": {
-   "repoDir": "C:\\workspace\\sync-v109-isolated",
+   "repoDir": "C:\\workspace\\run-01",
    "available": true,
    "head": "f1f198e2d2a7d8b841ce44d1b71ae9d49f67a0af",
    "dirty": true,
@@ -132,7 +132,7 @@
   },
   "exitCode": 4,
   "exitReason": "checks failed: 19.new-chat-navigation-association",
-  "resultsPath": "C:\\workspace\\sync-v109-isolated\\docs\\upgrade-2026-09-27\\review-fix-round2\\positive-official-v1.0.9.json",
+  "resultsPath": "C:\\workspace\\run-01\\docs\\upgrade-2026-09-27\\review-fix-round2\\positive-official-v1.0.9.json",
   "notes": []
  },
  "results": [

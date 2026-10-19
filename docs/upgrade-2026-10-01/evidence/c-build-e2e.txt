@@ -13,7 +13,7 @@ Done in 29ms
   ...and 2 more output files...
 
 Done in 64ms
-Built e2e: C:\workspace\sync-v109-isolated\dist\e2e
+Built e2e: C:\workspace\run-01\dist\e2e
 npm notice run chatgpt-route-inspector@1.1.0 build:notice
 npm notice run node scripts/build-notice.mjs
-Built public notice: C:\workspace\sync-v109-isolated\dist\notice
+Built public notice: C:\workspace\run-01\dist\notice

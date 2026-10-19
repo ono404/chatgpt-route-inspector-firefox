@@ -13,4 +13,4 @@ Done in 10ms
   ...and 2 more output files...
 
 Done in 18ms
-Built firefox: C:\workspace\sync-v109-isolated\dist\firefox
+Built firefox: C:\workspace\run-01\dist\firefox

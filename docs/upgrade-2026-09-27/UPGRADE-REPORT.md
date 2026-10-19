@@ -18,7 +18,7 @@
 | `55d3ccf` | merge 上游 `99f982d`（唯一冲突 `package.json`：双侧 scripts 合并，保留 build:notice/build:e2e 上游定义 + 本地 Firefox scripts） |
 | `6f932e0` | 探针与工具夹具的 v1.0.9 语义适配 |
 
-隔离 worktree：`C:\workspace\sync-v109-isolated`（从 `909941e` 建立；无 managed worktree 工具，按任务书降级用 `git worktree`）。原工作区 `C:\workspace\chatgpt-route-inspector-firefox` 全程未动（四个文档的未提交修改保留原样，`.workbuddy/` 未复制、未改动）。
+隔离 worktree：`C:\workspace\run-01`（从 `909941e` 建立；无 managed worktree 工具，按任务书降级用 `git worktree`）。原工作区 `C:\workspace\chatgpt-route-inspector-firefox` 全程未动（四个文档的未提交修改保留原样，`.workbuddy/` 未复制、未改动）。
 
 ## 3. 上游 v1.0.9 行为变化（实测核实，不凭文件名）
 
@@ -64,7 +64,7 @@
 
 检查 15（公告目标）：`route:open-announcement` 实际打开新标签页，URL 由浏览器侧 `WebDriver:GetCurrentURL` 核实为 `https://rinotice.liu-qi.cn/`（扩展无 tabs 权限，`tabs.query` 读不到第三方 URL，这是 Firefox 权限模型的正确行为）；页面加载成功（标题 "Route Inspector · 1.0.9 版本公告"），路由历史不变。**注意：真机探针运行会对该公开公告站点发起一次普通浏览器导航（不附带任何扩展数据）。**
 
-篡改反向验证：仓库外 `C:\workspace\sync-v109-tamper`（`make_tampered_copy.py`，manifest 不变、`content/page-hook.js` 篡改）→ 探针 **退出码 2**，"artifact identity rejected before browser interaction"，浏览器未启动（`evidence/probe-tampered-run.log`、`ff-probe-tampered-verified-v1.0.9-2026-09-27.json`）。输出保护：`--out` 指向已存在文件实测 **退出码 6**、原文件未动。
+篡改反向验证：仓库外 `C:\workspace\run-02`（`make_tampered_copy.py`，manifest 不变、`content/page-hook.js` 篡改）→ 探针 **退出码 2**，"artifact identity rejected before browser interaction"，浏览器未启动（`evidence/probe-tampered-run.log`、`ff-probe-tampered-verified-v1.0.9-2026-09-27.json`）。输出保护：`--out` 指向已存在文件实测 **退出码 6**、原文件未动。
 
 ## 6. 检查 20（扩展上下文失效提示）的止损记录
 

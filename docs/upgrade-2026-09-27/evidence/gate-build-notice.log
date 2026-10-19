@@ -1,4 +1,4 @@
 npm notice run chatgpt-route-inspector@1.0.9 build:notice
 npm notice run node scripts/build-notice.mjs
-Built public notice: C:\workspace\sync-v109-isolated\dist\notice
+Built public notice: C:\workspace\run-01\dist\notice
 build:notice exit=0

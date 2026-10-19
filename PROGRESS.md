@@ -17,7 +17,7 @@
 - 绿（修后）：`test:firefox-tooling` **Ran 82 tests，OK**（66 基线 + 16 新增）。门禁逐条退出码：typecheck 0 / lint 0 / test 0（**38 文件 442 passed / 0 failed / 0 skipped**，覆盖率 98.1/91.79/100，阈值未改）/ test:firefox-tooling 0 / verify:firefox 0（extension=30 firefox=30 identical=true）。日志 `docs/probe-check22-hardening-2026-10-02/*.log`。
 - 真机（Firefox 157.0，临时 profile，冻结正式包）：**32 passed / 0 failed / 0 missing -> exit 0**，`probeSha256=17297ab4…681e`，继续绑定原 XPI `04af228b…65ae`。检查 22 取得本轮新生成合法 UUID `1a85ec40-…28d5`（不在发送前集合中），tabId=5、context/pageUrl 与锁定页一致，state revision 14→17。结果 `ff-probe-positive-v1.1.0-check22-hardened-2026-10-02.json`。
 - 过程诊断（如实记录）：加固首版真机报 `found:null`；与**未改探针**同机对照（未改探针同日仍 32/32）后定位为本轮自有的 JS 调用笔误 `})()` 漏传 `arguments[0]`（标记丢失），已修正并真机复现通过；与检查 22 判定逻辑无关。诊断轮结果保留。
-- 脚本化反例（仓库外 `C:\workspace\sync-v110-check22-scripted-2026-10-02`，探针同哈希副本）：hook 未包装 fetch 且只给发送前旧记录 → 身份通过后检查 22 失败、退出 **4**；恢复合法对端 → 32/32、退出 0。层级为脚本化对端；真机层由上面冻结包运行单独佐证。
+- 脚本化反例（仓库外 `C:\workspace\run-06`，探针同哈希副本）：hook 未包装 fetch 且只给发送前旧记录 → 身份通过后检查 22 失败、退出 **4**；恢复合法对端 → 32/32、退出 0。层级为脚本化对端；真机层由上面冻结包运行单独佐证。
 - 只提交白名单（探针、工具测试/fixture、四文档、新增 docs 报告目录）；不提交生成物、不 push。业务源码、冻结交付物与历史证据哈希复核未变。
 
 ## v1.1.0 同步结果（2026-10-01）
@@ -28,14 +28,14 @@
 - 最小适配：探针新增 `ROUTE_SCHEMA_VERSION="1.9.0"` 常量并让检查 7 等值断言（非放宽；错误 schema 仍有 `1.8.0`/`2.0.0` 两个反例）；新增检查 **20–24** 并注册为必需；夹具同步 1.9.0；迁移测试补 v1.1.0 字段 null 默认断言。未全局替换版本：1.0.9 公告页与去重逻辑在 v1.1.0 仍在，真机检查 14/15 照常通过。
 - 红→绿：适配前同一 v1.1.0 包 **26 passed / 1 failed**（检查 7，schema 1.8.0 期望 vs 1.9.0 实际）退出 4；适配后 **32 passed / 0 failed / 0 missing** 退出 0。
 - 真机（Firefox **157.0**，`moz:buildID=20260924084938`，临时 profile）：`docs/upgrade-2026-10-01/ff-probe-positive-v1.1.0-2026-10-01.json`，32/32 退出 0；检查 22 拿到 hook 生成的真实 UUID（非预填），证明 page-hook→bridge→后台链路。
-- 真机反向（仓库外 `C:\workspace\sync-v110-reverse-2026-10-01\`）：篡改 XPI **2**（浏览器未启动，0d manifest PASS 而 0a/0b/0c FAIL）；已有 `--out` **6** 且原哈希不变；坏 manifest 经真实 CLI **1**、还原 **0**；禁导航反例身份通过后第 19 项 FAIL **4**。
+- 真机反向（仓库外 `C:\workspace\run-09\`）：篡改 XPI **2**（浏览器未启动，0d manifest PASS 而 0a/0b/0c FAIL）；已有 `--out` **6** 且原哈希不变；坏 manifest 经真实 CLI **1**、还原 **0**；禁导航反例身份通过后第 19 项 FAIL **4**。
 - 交付：未签名 XPI `04af228b…65ae`、同次 build.json `a2028179…63a1`、源码 ZIP `51523360…8846`；**仓库外复建 30/30 逐文件一致**（REBUILD_MATCH）。旧交付 1.0.9 三份哈希与历史证据 92 文件均未变。XPI 打包两次内容逐字节相同（仅 9 个 ZIP mtime 不同导致整包哈希变化），冻结后已针对最终包重跑正向探针与复建比对。
 - 未完成：签名/安装、成功真实 SSE、真实更新事件、FF128、额度专项、Chromium E2E。`stream_parse_failed` 上游未定点修复，不因升级宣布已解决。详见 BLOCKED.md。
 
 ## 升级开工回执（2026-10-01，v1.0.9 → v1.1.0）
-- 起点：`HEAD=2470d15`（`codex/sync-upstream-v1.0.9`，隔离 worktree `C:\workspace\sync-v109-isolated`）；四文档 + 校验器改动、补强测试与证据目录未提交 → 已作保全提交 **`73696a7`**（19 文件，精确路径，未用 `git add .`），随后建分支 `codex/sync-upstream-v1.1.0`，工作树干净。
+- 起点：`HEAD=2470d15`（`codex/sync-upstream-v1.0.9`，隔离 worktree `C:\workspace\run-01`）；四文档 + 校验器改动、补强测试与证据目录未提交 → 已作保全提交 **`73696a7`**（19 文件，精确路径，未用 `git add .`），随后建分支 `codex/sync-upstream-v1.1.0`，工作树干净。
 - 目标：`dd5ea3366cdb3ed85025fc7a41f6e89ff1ee7552` == tag `v1.1.0`（上游仅 1 提交，40 文件 +1431/-45；schema `1.8.0→1.9.0`，新增图片/研究任务字段与 verdict）。
-- 升级前备份：`C:\workspace\sync-v110-backup-2026-10-01\`（preserve 19 + dist 94 + release 3 = **117 文件**，附 `HASHES.sha256`）。不动原目录、旧 release、历史证据。
+- 升级前备份：`C:\workspace\run-03\`（preserve 19 + dist 94 + release 3 = **117 文件**，附 `HASHES.sha256`）。不动原目录、旧 release、历史证据。
 - 升级前基线（本机 Node v24.16.0 / npm 12.0.1）：typecheck 0 / lint 0 / vitest **35 文件 336 passed**（覆盖率 97.29/91.81/100）/ `test:firefox-tooling` **56 项 0**。
 - 旧交付物哈希复核未变：XPI `34ca9440…da523`、源码 ZIP `0cc2412f…3d0`、build.json `15debe2a…9dab`。
 - 本轮顺序：`merge --no-ff` → 最小适配（探针/夹具/迁移测试 schema 1.9.0）→ 完整门禁 → 真机正反向 → 源码包仓库外复建 → 提交。证据目录 `docs/upgrade-2026-10-01/`。
@@ -60,7 +60,7 @@
 
 | 事实面 | 状态 | 当前结论 |
 | --- | --- | --- |
-| 代码 | verified-current | 当前交付在 `C:\workspace\sync-v109-isolated`、`codex/sync-upstream-v1.0.9`，代码验收提交 `8d01fd5`；业务目录与上游 `99f982d` 无差异。原工作区仍为 v1.0.7 / `909941e`。 |
+| 代码 | verified-current | 当前交付在 `C:\workspace\run-01`、`codex/sync-upstream-v1.0.9`，代码验收提交 `8d01fd5`；业务目录与上游 `99f982d` 无差异。原工作区仍为 v1.0.7 / `909941e`。 |
 | 本地运行与交付 | verified-current | v1.0.9 未签名 XPI / 同次 build.json / 源码 ZIP 冻结，30/30 文件复建一致；FF156.0.1 正式探针 27/27，两个语义反例退出 4。只代表受控临时 profile 场景。 |
 | 发布与真实流量 | pending | 新版未上传 AMO、未签名、未日常覆盖安装；成功 SSE、真实更新事件、FF128、断线提示、Chromium E2E 等见 BLOCKED.md。未查询远端，不宣称已 push/merged。 |
 | 文档 | changed-and-verified | README-FIREFOX 为交付与用法入口，BLOCKED 为未完成项；独立验收证据已归档，历史报告保留。 |
@@ -228,7 +228,7 @@
 - 回退方法：`git switch main`（main 仍为 `182fca1`，未被触碰）；或 `git revert -m 1 33f0879` 撤回本次合并。
 
 ## 升级开工回执（2026-09-27，v1.0.7 → v1.0.9）
-- 起点：`HEAD=909941e`（分支 `codex/sync-upstream-v1.0.9`，隔离 worktree `C:\workspace\sync-v109-isolated`，从 v1.0.7 分支 HEAD 建立；原工作区四文档未提交修改已复制快照并哈希核对一致）。
+- 起点：`HEAD=909941e`（分支 `codex/sync-upstream-v1.0.9`，隔离 worktree `C:\workspace\run-01`，从 v1.0.7 分支 HEAD 建立；原工作区四文档未提交修改已复制快照并哈希核对一致）。
 - 目标：`99f982dd089b020afa85b897b07edfb340cc58dd`（upstream v1.0.9，3 提交 40 文件 +1056/-357）；顺序：merge → 最小适配（探针 schema 1.8.0/公告）→ 完整门禁 → 真机正反向 → 交付。
 - 升级前基线（本机 Node v24.16.0 / npm 12.0.1，npm ci 按锁文件）：typecheck 0 / lint 0 / vitest 33 文件 301 passed 0 failed（覆盖率 97.19/91.37/100）/ test:firefox-tooling 49 passed 退出码 0。
 - 环境：Firefox 156.0.1（C:\Program Files\Mozilla Firefox）；`python` 为 WindowsApps 占位符不可用，用 `py` 启动器（Python 3.14.6，工具回归实测可用）。
@@ -237,7 +237,7 @@
 
 ## v1.0.9 同步结果（2026-09-27）
 
-- 提交链：`b1f06aa`（快照）→ `55d3ccf`（merge 上游 `99f982d`）→ `6f932e0`（探针/夹具适配）。分支 `codex/sync-upstream-v1.0.9`，隔离 worktree `C:\workspace\sync-v109-isolated`；原工作区未动。
+- 提交链：`b1f06aa`（快照）→ `55d3ccf`（merge 上游 `99f982d`）→ `6f932e0`（探针/夹具适配）。分支 `codex/sync-upstream-v1.0.9`，隔离 worktree `C:\workspace\run-01`；原工作区未动。
 - 同源：`git diff --exit-code 99f982d -- src schemas _locales icons manifest` 工作区与最终提交均为空；verify-firefox-dist 30/30、8 JS 逐字节一致。
 - 门禁：typecheck/lint/test/test:firefox-tooling/build/build:firefox/build:notice/build:e2e/verify:firefox/package:firefox 全部退出码 0；vitest 34 文件 327 passed（上游净增 26），覆盖率 97.29/91.82/100；工具回归 49 passed 未变。
 - 真机（FF156.0.1，临时 profile）：探针正向 27/27 退出码 0（新增检查：suspect 浮窗提示走真实 page-hook 管线、公告真实打开 `https://rinotice.liu-qi.cn/` 且历史不变、suspected_downgrade/work_unverifiable/failed 判定、local-chatgpt 会话关联）；篡改反向退出码 2（浏览器前拒绝）；输出保护退出码 6。迭代 run1–run3 红灯证据全保留。

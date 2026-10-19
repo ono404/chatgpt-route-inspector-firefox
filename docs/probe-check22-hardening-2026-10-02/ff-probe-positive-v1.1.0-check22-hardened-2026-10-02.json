@@ -5,7 +5,7 @@
   "startedAt": "2026-10-02T09:45:42+0800",
   "finishedAt": "2026-10-02T09:46:26+0800",
   "label": "check22-final",
-  "probeFile": "C:\\workspace\\sync-v109-isolated\\ff-marionette.py",
+  "probeFile": "C:\\workspace\\run-01\\ff-marionette.py",
   "probeSha256": "17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e",
   "stage": "checks",
   "reachedStages": [
@@ -18,9 +18,9 @@
    "checks"
   ],
   "identity": {
-   "xpi": "C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.1.0.xpi",
-   "distDir": "C:\\workspace\\sync-v109-isolated\\dist\\firefox",
-   "buildRecordPath": "C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.1.0.build.json",
+   "xpi": "C:\\workspace\\run-01\\release\\chatgpt-route-inspector-firefox-1.1.0.xpi",
+   "distDir": "C:\\workspace\\run-01\\dist\\firefox",
+   "buildRecordPath": "C:\\workspace\\run-01\\release\\chatgpt-route-inspector-firefox-1.1.0.build.json",
    "expectedXpiSha256": "04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae",
    "xpiSha256": "04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae",
    "manifestSha256": "19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee",
@@ -32,13 +32,13 @@
    "parseError": null
   },
   "expectation": {
-   "source": "build-record: C:\\workspace\\sync-v109-isolated\\release\\chatgpt-route-inspector-firefox-1.1.0.build.json",
+   "source": "build-record: C:\\workspace\\run-01\\release\\chatgpt-route-inspector-firefox-1.1.0.build.json",
    "expectedXpiSha256": "04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae",
    "buildRecordSha256": "a2028179ed18602da5d6be288dd2142a0140dab0d64bfdb6fcd267afaba263a1",
    "buildRecordError": null
   },
   "git": {
-   "repoDir": "C:\\workspace\\sync-v109-isolated",
+   "repoDir": "C:\\workspace\\run-01",
    "available": true,
    "head": "653944c40124a91e9206aea6e6bdd6045262ca47",
    "dirty": true,
@@ -135,7 +135,7 @@
   },
   "exitCode": 0,
   "exitReason": "all expected checks ran and passed",
-  "resultsPath": "C:\\workspace\\sync-v110-check22-2026-10-02-evidence\\probe-frozen-final-20261002-014541.json",
+  "resultsPath": "C:\\workspace\\run-04\\probe-frozen-final-20261002-014541.json",
   "notes": []
  },
  "results": [
@@ -297,7 +297,7 @@
   {
    "check": "19.new-chat-navigation-association",
    "ok": true,
-   "detail": "{\"probeSha256\": \"17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e\", \"xpi\": \"C:\\\\workspace\\\\sync-v109-isolated\\\\release\\\\chatgpt-route-inspector-firefox-1.1.0.xpi\", \"xpiSha256\": \"04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae\", \"buildRecord\": \"C:\\\\workspace\\\\sync-v109-isolated\\\\release\\\\chatgpt-route-inspector-firefox-1.1.0.build.json\", \"tabId\": 5, \"beforePageUrl\": \"https://chatgpt.com/\", \"beforeRevision\": 1, \"creationCtx\": \"b8961c3e-b577-4961-90b2-9198e31c2dea\", \"captureId\": \"625e4934-a52f-478c-92bf-6b116dd05148\", \"correlatedCaptureId\": \"e9b31ece-16af-4f22-96b9-d4225ade23b3\", \"tempStage\": {\"pushReturnedPathname\": \"/c/local-chatgpt%3Anavcheck-draft\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft\", \"revision\": 3, \"ctxId\": \"b8961c3e-b577-4961-90b2-9198e31c2dea\", \"ok\": true}, \"responseArrived\": {\"phase\": \"failed\", \"errorCode\": \"http_422\", \"ctx\": \"b8961c3e-b577-4961-90b2-9198e31c2dea\", \"ok\": true}, \"formalStage\": {\"pushReturnedPathname\": \"/c/navcheck-conv\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-conv\", \"revision\": 5, \"ctxId\": \"b8961c3e-b577-4961-90b2-9198e31c2dea\", \"ok\": true}, \"overlayShown\": {\"pathname\": \"/c/navcheck-conv\", \"text\": \"\\n      \\n        Route InspectorCreated by @liuqi\\n        \\u672a\\u53d6\\u5f97\\u5b9e\\u9645\\u8def\\u7531\\n      \\n      \\n        \\u5b9e\\u65f6\\u8bf7\\u6c42\\u4f1a\\u8bdd\\u91cd\\u8f7d\\n        \\u53d1\\u9001\\u65b0\\u6d88\\u606f\\uff0c\\u6355\\u83b7\\u8bf7\\u6c42\\u4e0e\\u672c\\u8f6e\\u54cd\\u5e94\\u3002\\n        \\u8bf7\\u6c42\\u6a21\\u578bgpt-5-6-pro-navcheck\\u2192\\u54cd\\u5e94\\u8def\\u7531\\u672a\\u53d6\\u5f97\\n        \\n          \\u6a21\\u5f0f\\u5b9e\\u65f6\\u8bf7\\u6c42\\n          \\u54cd\\u5e94\", \"ok\": true}, \"unrelatedStage\": {\"pushReturnedPathname\": \"/c/navcheck-unrelated\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-unrelated\", \"revision\": 6, \"ctxId\": \"fb1ea89f-bbb8-4c9b-b8d5-7116c6289a09\", \"oursCurrent\": false, \"ok\": true}, \"overlayAfterSwitch\": {\"pathname\": \"/c/navcheck-unrelated\", \"text\": \"\\n      \\n        Route InspectorCreated by @liuqi\\n        \\u7b49\\u5f85\\u4e0b\\u4e00\\u6b21\\u56de\\u7b54\\n      \\n      \\n        \\u5b9e\\u65f6\\u8bf7\\u6c42\\u4f1a\\u8bdd\\u91cd\\u8f7d\\n        \\u53d1\\u9001\\u65b0\\u6d88\\u606f\\uff0c\\u6355\\u83b7\\u8bf7\\u6c42\\u4e0e\\u672c\\u8f6e\\u54cd\\u5e94\\u3002\\n        \\u8bf7\\u6c42\\u6a21\\u578b\\u2014\\u2192\\u54cd\\u5e94\\u8def\\u7531\\u2014\\n        \\n          \\u6a21\\u5f0f\\u5b9e\\u65f6\\u8bf7\\u6c42\\n          \\u54cd\\u5e94\\u6765\\u6e90\\u672a\\u6355\\u83b7\\u54cd\\u5e94\\u6a21\\u578b\\u5b57\\u6bb5\\n         \", \"ok\": true}, \"ok\": true}"
+   "detail": "{\"probeSha256\": \"17297ab4e1d394f0b150fbcc5493cd1369c1271b1002f17e56087bed254e681e\", \"xpi\": \"C:\\\\workspace\\\\run-01\\\\release\\\\chatgpt-route-inspector-firefox-1.1.0.xpi\", \"xpiSha256\": \"04af228b03f85e954d894a859fb87afcf1bfbc9cd449da881c2f25f99c0165ae\", \"buildRecord\": \"C:\\\\workspace\\\\run-01\\\\release\\\\chatgpt-route-inspector-firefox-1.1.0.build.json\", \"tabId\": 5, \"beforePageUrl\": \"https://chatgpt.com/\", \"beforeRevision\": 1, \"creationCtx\": \"b8961c3e-b577-4961-90b2-9198e31c2dea\", \"captureId\": \"625e4934-a52f-478c-92bf-6b116dd05148\", \"correlatedCaptureId\": \"e9b31ece-16af-4f22-96b9-d4225ade23b3\", \"tempStage\": {\"pushReturnedPathname\": \"/c/local-chatgpt%3Anavcheck-draft\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/local-chatgpt%3Anavcheck-draft\", \"revision\": 3, \"ctxId\": \"b8961c3e-b577-4961-90b2-9198e31c2dea\", \"ok\": true}, \"responseArrived\": {\"phase\": \"failed\", \"errorCode\": \"http_422\", \"ctx\": \"b8961c3e-b577-4961-90b2-9198e31c2dea\", \"ok\": true}, \"formalStage\": {\"pushReturnedPathname\": \"/c/navcheck-conv\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-conv\", \"revision\": 5, \"ctxId\": \"b8961c3e-b577-4961-90b2-9198e31c2dea\", \"ok\": true}, \"overlayShown\": {\"pathname\": \"/c/navcheck-conv\", \"text\": \"\\n      \\n        Route InspectorCreated by @liuqi\\n        \\u672a\\u53d6\\u5f97\\u5b9e\\u9645\\u8def\\u7531\\n      \\n      \\n        \\u5b9e\\u65f6\\u8bf7\\u6c42\\u4f1a\\u8bdd\\u91cd\\u8f7d\\n        \\u53d1\\u9001\\u65b0\\u6d88\\u606f\\uff0c\\u6355\\u83b7\\u8bf7\\u6c42\\u4e0e\\u672c\\u8f6e\\u54cd\\u5e94\\u3002\\n        \\u8bf7\\u6c42\\u6a21\\u578bgpt-5-6-pro-navcheck\\u2192\\u54cd\\u5e94\\u8def\\u7531\\u672a\\u53d6\\u5f97\\n        \\n          \\u6a21\\u5f0f\\u5b9e\\u65f6\\u8bf7\\u6c42\\n          \\u54cd\\u5e94\", \"ok\": true}, \"unrelatedStage\": {\"pushReturnedPathname\": \"/c/navcheck-unrelated\", \"reached\": true, \"pageUrl\": \"https://chatgpt.com/c/navcheck-unrelated\", \"revision\": 6, \"ctxId\": \"fb1ea89f-bbb8-4c9b-b8d5-7116c6289a09\", \"oursCurrent\": false, \"ok\": true}, \"overlayAfterSwitch\": {\"pathname\": \"/c/navcheck-unrelated\", \"text\": \"\\n      \\n        Route InspectorCreated by @liuqi\\n        \\u7b49\\u5f85\\u4e0b\\u4e00\\u6b21\\u56de\\u7b54\\n      \\n      \\n        \\u5b9e\\u65f6\\u8bf7\\u6c42\\u4f1a\\u8bdd\\u91cd\\u8f7d\\n        \\u53d1\\u9001\\u65b0\\u6d88\\u606f\\uff0c\\u6355\\u83b7\\u8bf7\\u6c42\\u4e0e\\u672c\\u8f6e\\u54cd\\u5e94\\u3002\\n        \\u8bf7\\u6c42\\u6a21\\u578b\\u2014\\u2192\\u54cd\\u5e94\\u8def\\u7531\\u2014\\n        \\n          \\u6a21\\u5f0f\\u5b9e\\u65f6\\u8bf7\\u6c42\\n          \\u54cd\\u5e94\\u6765\\u6e90\\u672a\\u6355\\u83b7\\u54cd\\u5e94\\u6a21\\u578b\\u5b57\\u6bb5\\n         \", \"ok\": true}, \"ok\": true}"
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
   "active": {
-    "root": "C:\\workspace\\sync-v109-isolated",
+    "root": "C:\\workspace\\run-01",
     "beforeInventory": {
       "files": 368,
       "markdown": 17
@@ -38,128 +38,128 @@
   "businessSourceEqualsUpstream": true,
   "localLinks": [
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\docs\\handoff-2026-10-02\\HANDOFF.md",
+      "file": "C:\\workspace\\run-01\\docs\\handoff-2026-10-02\\HANDOFF.md",
       "target": "../upgrade-2026-10-01/UPGRADE-REPORT.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\docs\\handoff-2026-10-02\\HANDOFF.md",
+      "file": "C:\\workspace\\run-01\\docs\\handoff-2026-10-02\\HANDOFF.md",
       "target": "../../README-FIREFOX.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\docs\\handoff-2026-10-02\\HANDOFF.md",
+      "file": "C:\\workspace\\run-01\\docs\\handoff-2026-10-02\\HANDOFF.md",
       "target": "../../BLOCKED.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\docs\\handoff-2026-10-02\\HANDOFF.md",
+      "file": "C:\\workspace\\run-01\\docs\\handoff-2026-10-02\\HANDOFF.md",
       "target": "../upgrade-2026-10-01/UPGRADE-REPORT.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\docs\\handoff-2026-10-02\\HANDOFF.md",
+      "file": "C:\\workspace\\run-01\\docs\\handoff-2026-10-02\\HANDOFF.md",
       "target": "../probe-check22-hardening-2026-10-02/HARDENING-REPORT.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\README-FIREFOX.md",
+      "file": "C:\\workspace\\run-01\\README-FIREFOX.md",
       "target": "docs/handoff-2026-10-02/HANDOFF.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\README-FIREFOX.md",
+      "file": "C:\\workspace\\run-01\\README-FIREFOX.md",
       "target": "docs/upgrade-2026-10-01/UPGRADE-REPORT.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\README-FIREFOX.md",
+      "file": "C:\\workspace\\run-01\\README-FIREFOX.md",
       "target": "docs/upgrade-2026-10-01/UPGRADE-REPORT.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\README-FIREFOX.md",
+      "file": "C:\\workspace\\run-01\\README-FIREFOX.md",
       "target": "BLOCKED.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\README-FIREFOX.md",
+      "file": "C:\\workspace\\run-01\\README-FIREFOX.md",
       "target": "docs/probe-check22-hardening-2026-10-02/HARDENING-REPORT.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\README-FIREFOX.md",
+      "file": "C:\\workspace\\run-01\\README-FIREFOX.md",
       "target": "docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\README-FIREFOX.md",
+      "file": "C:\\workspace\\run-01\\README-FIREFOX.md",
       "target": "docs/upgrade-2026-09-20/UPGRADE-REPORT.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\BLOCKED.md",
+      "file": "C:\\workspace\\run-01\\BLOCKED.md",
       "target": "docs/handoff-2026-10-02/HANDOFF.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\BLOCKED.md",
+      "file": "C:\\workspace\\run-01\\BLOCKED.md",
       "target": "docs/upgrade-2026-10-01/UPGRADE-REPORT.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\BLOCKED.md",
+      "file": "C:\\workspace\\run-01\\BLOCKED.md",
       "target": "docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\AGENTS.md",
+      "file": "C:\\workspace\\run-01\\AGENTS.md",
       "target": "docs/handoff-2026-10-02/HANDOFF.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\AGENTS.md",
+      "file": "C:\\workspace\\run-01\\AGENTS.md",
       "target": "docs/upgrade-2026-10-01/UPGRADE-REPORT.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\PROGRESS.md",
+      "file": "C:\\workspace\\run-01\\PROGRESS.md",
       "target": "docs/handoff-2026-10-02/HANDOFF.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\PROGRESS.md",
+      "file": "C:\\workspace\\run-01\\PROGRESS.md",
       "target": "docs/upgrade-2026-10-01/UPGRADE-REPORT.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\PROGRESS.md",
+      "file": "C:\\workspace\\run-01\\PROGRESS.md",
       "target": "docs/upgrade-2026-09-27/independent-acceptance/ACCEPTANCE.md",
       "exists": true
     },
     {
-      "file": "C:\\workspace\\sync-v109-isolated\\PROGRESS.md",
+      "file": "C:\\workspace\\run-01\\PROGRESS.md",
       "target": "docs/verify-hardening-2026-09-27/REPORT.md",
       "exists": true
     },
     {
       "file": "C:\\workspace\\chatgpt-route-inspector-firefox\\README-FIREFOX.md",
-      "target": "../sync-v109-isolated/docs/handoff-2026-10-02/HANDOFF.md",
+      "target": "../run-01/docs/handoff-2026-10-02/HANDOFF.md",
       "exists": true
     },
     {
       "file": "C:\\workspace\\chatgpt-route-inspector-firefox\\BLOCKED.md",
-      "target": "../sync-v109-isolated/docs/handoff-2026-10-02/HANDOFF.md",
+      "target": "../run-01/docs/handoff-2026-10-02/HANDOFF.md",
       "exists": true
     },
     {
       "file": "C:\\workspace\\chatgpt-route-inspector-firefox\\AGENTS.md",
-      "target": "../sync-v109-isolated/docs/handoff-2026-10-02/HANDOFF.md",
+      "target": "../run-01/docs/handoff-2026-10-02/HANDOFF.md",
       "exists": true
     },
     {
       "file": "C:\\workspace\\chatgpt-route-inspector-firefox\\PROGRESS.md",
-      "target": "../sync-v109-isolated/docs/handoff-2026-10-02/HANDOFF.md",
+      "target": "../run-01/docs/handoff-2026-10-02/HANDOFF.md",
       "exists": true
     }
   ],

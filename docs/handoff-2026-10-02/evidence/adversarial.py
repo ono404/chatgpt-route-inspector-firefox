@@ -6,7 +6,7 @@ import pathlib
 import sys
 
 sys.dont_write_bytecode = True
-ROOT = pathlib.Path(r'C:\workspace\sync-v109-isolated')
+ROOT = pathlib.Path(r'C:\workspace\run-01')
 OUT = pathlib.Path(__file__).parent
 sys.path.insert(0, str(ROOT / 'tests/firefox-tooling'))
 import test_ff_marionette_run as mod

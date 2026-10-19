@@ -3,7 +3,7 @@
 > vitest run --coverage
 
 
-[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/LAB/chatgpt-route-inspector-firefox[39m
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/workspace/chatgpt-route-inspector-firefox[39m
       [2mCoverage enabled with [22m[33mv8[39m
 
  [32m✓[39m tests/unit/websocket-parser.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 16[2mms[22m[39m

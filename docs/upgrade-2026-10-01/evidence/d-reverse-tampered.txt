@@ -1,7 +1,7 @@
 PASS 0f.build-record | xpi=45ce3d10b5d4acd1 files=30
 FAIL 0a.xpi-sha256 | actual=09da34f2ce1e2446440514000e1ebc6144f08039c895e319689062c1a991057c expected=45ce3d10b5d4acd166cdddeacbd3b6515c3d0ff505aadcf443ad821062d949a0
 FAIL 0b.xpi-contents | content differs: content/page-hook.js
-FAIL 0c.dist-matches-record | record xpiPath=C:\workspace\sync-v110-reverse-2026-10-01\chatgpt-route-inspector-firefox-1.1.0.xpi but probing C:\workspace\sync-v110-reverse-2026-10-01\tampered.xpi; XPI content differs from record: content/page-hook.js
+FAIL 0c.dist-matches-record | record xpiPath=C:\workspace\run-09\chatgpt-route-inspector-firefox-1.1.0.xpi but probing C:\workspace\run-09\tampered.xpi; XPI content differs from record: content/page-hook.js
 PASS 0d.manifest-sha256 | sha256=19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee version=1.1.0 gecko=chatgpt-route-inspector-firefox@local min=128.0 (record=19bec35aef869de7f9928b2385597d52684e6c113e9b2d7bc6997a9e3539f6ee)
 2 passed / 3 failed / 27 missing -> exit 2 (artifact identity rejected before browser interaction)
-saved D:/LAB/sync-v110-reverse-2026-10-01/r-tampered.json
+saved C:/workspace/run-09/r-tampered.json

@@ -1,5 +1,5 @@
 === TDD red attribution (2026-10-02) ===
-Method: new tests run ALONE against the UNCHANGED probe (git HEAD:e830b4e, sha256 7c56cfd3...0ac6), external copy at D:/LAB/sync-v110-check22-red-2026-10-02
+Method: new tests run ALONE against the UNCHANGED probe (git HEAD:e830b4e, sha256 7c56cfd3...0ac6), external copy at C:/workspace/run-05
 
 13 counterexamples that exited 0 on the unchanged probe (must be exit 4):
   missing_capture_id, empty_capture_id, blank_capture_id, malformed_capture_id,

@@ -65,4 +65,4 @@ PASS 23.ui-task-filters | {'url': 'moz-extension://8bf072de-73ca-4560-bb33-c2d69
 PASS 24.ui-research-model-split | {'url': 'moz-extension://8bf072de-73ca-4560-bb33-c2d690c5a8e6/ui/dashboard/index.html', 'ui': {'planner': 'gpt-5-6-thinking', 'report': 'gpt-5-6-instant', 'pairs': [['规划模型', 'gpt-5-6-thinking'], ['报告模型', 'gpt-5-6-instant'], ['捕获模式', '实时请求'], ['捕获状态', '已完成'], ['请求模型', 'gpt-6-pro']
 FAIL 19.new-chat-navigation-association | locked chatgpt tab not on any of ['/c/navcheck-conv']
 31 passed / 1 failed / 0 missing -> exit 4 (checks failed: 19.new-chat-navigation-association)
-saved D:/LAB/sync-v110-reverse-2026-10-01/r-no-navigation.json
+saved C:/workspace/run-09/r-no-navigation.json

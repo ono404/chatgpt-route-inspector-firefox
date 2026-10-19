@@ -1,7 +1,7 @@
 npm notice run chatgpt-route-inspector@1.1.0 test
 npm notice run vitest run --coverage
 
-[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/LAB/sync-v109-isolated[39m
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/workspace/run-01[39m
       [2mCoverage enabled with [22m[33mv8[39m
 
  [32m✓[39m tests/unit/assessment.test.ts [2m([22m[2m32 tests[22m[2m)[22m[32m 38[2mms[22m[39m
